@@ -32,7 +32,7 @@ class HomeController extends Controller
         // $role1 = Role::create(['name' => 'bmb-admin','company_id' => 2,'display_name' => 'admin']);
         // $roles = Role::where('company_id',1)->get();
         // dd($roles);
-// Auth::user()->assignRole('bme-admin');
+        // Auth::user()->assignRole('bme-admin');
         // exit;
 
         $data = array();
@@ -43,8 +43,7 @@ class HomeController extends Controller
         // $p=$user->projects;
         // dd(\DB::getQueryLog());
         // dd(Auth::user()->type);
-        return view('welcome',compact('data'));
-
+        return view('welcome', compact('data'));
     }
 
     public function files()
@@ -60,12 +59,12 @@ class HomeController extends Controller
         }
         $files = $req->file('images');
         // dd($files);
-    // loop through the files and save them
-    $resp= array();
-    foreach ($files as $file) {
-        // dd($file->getClientOriginalName());
-        $resp[] = $this->upload($file, 'test');
-    }
-    dd($resp);
+        // loop through the files and save them
+        $resp = array();
+        foreach ($files as $file) {
+            // dd($file->getClientOriginalName());
+            $resp[] = $this->upload($file, 'test');
+        }
+        dd($resp);
     }
 }

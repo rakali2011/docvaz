@@ -51,11 +51,6 @@ class User extends Authenticatable
     {
         return ucfirst($this->firstname) . " " . ucfirst($this->lastname);
     }
-
-    public function company()
-    {
-        return $this->belongsTo(Company::class);
-    }
     public function getInitialsAttribute()
     {
         $fname = explode(' ', trim($this->firstname));
@@ -64,50 +59,49 @@ class User extends Authenticatable
         $lastnameWord = $lname[0];
         return strtoupper($firstnameWord[0] . "" . $lastnameWord[0]);
     }
+    public function company()
+    {
+        return $this->belongsTo(Company::class);
+    }
     public function departments()
     {
-        return $this->belongsToMany(Department::class, 'user_departments')->wherePivot('user_id', '=', $this->id)->get();
+        return $this->belongsToMany(Department::class, 'department_user', 'user_id', 'department_id');
     }
-    public function teams()
-    {
-        return $this->belongsToMany(Team::class, 'user_teams')->wherePivot('user_id', '=', $this->id)->get();
-    }
-
-    public function assinged_practices()
-    {
-        return $this->belongsToMany(Practice::class, 'user_practices')->wherePivot('user_id', '=', $this->id)->get();
-    }
-    public function files()
-    {
-
-        // return $this->hasManyThrough(File::class, UserPractice::class, "practice_id", "practice_id")->get();
-
-        $practices = $this->assinged_practices_array();
-        $files = new Collection();
-        foreach ($practices as $key => $value) {
-            $pro = $value->files->get();
-            foreach ($pro as $key1 => $value1) {
-                $files->push($value1);
-            }
-        }
-        dd($files);
-    }
-    public function assinged_practices_array()
-    {
-        $practices = $this->belongsToMany(Practice::class, 'user_practices')->wherePivot('user_id', '=', $this->id)->pluck('practices.id');
-        return json_decode(json_encode($practices), true);
-    }
-
     public function assinged_departments()
     {
-        return $this->belongsToMany(Department::class, 'user_departments')->wherePivot('user_id', '=', $this->id)->get();
+        return $this->belongsToMany(Department::class, 'department_user')->wherePivot('user_id', '=', $this->id)->get();
     }
     public function assinged_departments_array()
     {
-        $Department = $this->belongsToMany(Department::class, 'user_departments')->wherePivot('user_id', '=', $this->id)->pluck('departments.id');
+        $Department = $this->belongsToMany(Department::class, 'department_user')->wherePivot('user_id', '=', $this->id)->pluck('departments.id');
         return json_decode(json_encode($Department), true);
     }
-
+    public function practices()
+    {
+        return $this->belongsToMany(DepaPracticertment::class, 'practice_user', 'user_id', 'practice_id');
+    }
+    public function assinged_practices()
+    {
+        return $this->belongsToMany(Practice::class, 'practice_user')->wherePivot('user_id', '=', $this->id)->get();
+    }
+    public function assinged_practices_array()
+    {
+        $practices = $this->belongsToMany(Practice::class, 'practice_user')->wherePivot('user_id', '=', $this->id)->pluck('practices.id');
+        return json_decode(json_encode($practices), true);
+    }
+    public function teams()
+    {
+        return $this->belongsToMany(Team::class, 'team_user', 'user_id', 'team_id');
+    }
+    public function assinged_teams()
+    {
+        return $this->belongsToMany(Team::class, 'team_user')->wherePivot('user_id', '=', $this->id)->get();
+    }
+    public function assinged_teams_array()
+    {
+        $teams = $this->belongsToMany(Team::class, 'team_user')->wherePivot('user_id', '=', $this->id)->pluck('teams.id');
+        return json_decode(json_encode($teams), true);
+    }
     public function isOnline()
     {
         return $this->last_activity;

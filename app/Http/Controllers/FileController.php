@@ -3,17 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\User;
 use App\Models\Practice;
-use App\Models\UserPractice;
 use App\Models\File;
 use Illuminate\Support\Facades\Auth;
-
-use App\Http\Requests\PostPractice;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\DB;
 use Exception;
-use Illuminate\Support\Facades\Crypt;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Eloquent\Collection;
 
 class FileController extends Controller
@@ -22,7 +17,17 @@ class FileController extends Controller
     {
         $this->middleware('auth');
     }
-
+    public function show($id)
+    {
+        if (auth()->user()->can('view file')) {
+            $id = $this->clean_id($id);
+            $document = File::findOrFail($id);
+            $file = storage_path() . "/app/" . $document->path;
+            return Response::file($file);
+        } else {
+            return abort(403);
+        }
+    }
     public function files()
     {
         $data = array();
@@ -41,7 +46,6 @@ class FileController extends Controller
     }
     public function import()
     {
-        // dd(Auth::user()->isOnline());
         $data['menu'] = "files-management";
         $data['sub_menu'] = "import";
         if (auth()->user()->hasRole('dev')) {
@@ -49,31 +53,45 @@ class FileController extends Controller
         } else {
             $practices = Auth::user()->assinged_practices();
         }
-        return view('files_management.import', compact('data', 'practices'));
+        $status = ["To Be Posted", "Posted", "In-Process", "Pending", "Complete", "Pending (For Coding)", "On-Hold (For Coding)", "Coded"];
+        sort($status, SORT_STRING);
+        return view('files_management.import', compact('data', 'practices', 'status'));
     }
-
+    function edit_file($id)
+    {
+        $id = $this->clean_id($id);
+        $file = File::findOrFail($id);
+        $data['menu'] = "files-management";
+        $data['sub_menu'] = "import";
+        if (auth()->user()->hasRole('dev')) {
+            $practices = Practice::orderBy('id', 'DESC')->get();
+        } else {
+            $practices = Auth::user()->assinged_practices();
+        }
+        $status = ["To Be Posted", "Posted", "In-Process", "Pending", "Complete", "Pending (For Coding)", "On-Hold (For Coding)", "Coded"];
+        sort($status, SORT_STRING);
+        return view('files_management.update', compact('data', 'practices', 'file', 'status'));
+    }
     public function post_file(Request $req)
     {
         $response = array();
         DB::beginTransaction();
         try {
-
             $practice = $this->clean_id($req->practice);
-
             if ($req->hasfile('files')) {
                 $files = $req->file('files');
-                // dd($files);
                 foreach ($files as $key => $value) {
                     $date = date('m-Y');
                     $file_info = $this->upload($value, 'files/' . $date);
                     $file = new File;
-                    $file->name = $file_info['file_name'];
-                    $file->ext = $file_info['ext'];
-                    $file->org_name = $file_info['file_org_name'];
-                    $file->size = $file_info['size'];
-                    $file->path = $file_info['path'];
                     $file->practice_id = $practice;
                     $file->user_id = Auth::user()->id;
+                    $file->status = $req->status;
+                    $file->name = $file_info['file_name'];
+                    $file->org_name = $file_info['file_org_name'];
+                    $file->path = $file_info['path'];
+                    $file->ext = $file_info['ext'];
+                    $file->size = $file_info['size'];
                     $file->save();
                 }
                 DB::commit();
@@ -87,7 +105,26 @@ class FileController extends Controller
             $response['success'] = 0;
             $response['message'] = $th->getMessage();
         }
-        // dd($response);
+        return response()->json($response);
+    }
+    public function update_file(Request $req, $id = '')
+    {
+        if ($id) {
+            $id = $this->clean_id($id);
+        }
+        DB::beginTransaction();
+        try {
+            $file = File::findorfail($id);
+            $file->status = $req->status;
+            $file->save();
+            DB::commit();
+            $response['success'] = 1;
+            $response['message'] = "File Updated Successfully";
+        } catch (\Throwable $th) {
+            DB::rollback();
+            $response['success'] = 0;
+            $response['message'] = $th->getMessage();
+        }
         return response()->json($response);
     }
 }

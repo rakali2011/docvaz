@@ -59,6 +59,19 @@
                   @enderror
                 </div>
               </div>
+              @can('assign role')
+              <div class="col-md-4">
+                <div class="form-group mb-3">
+                  <label for="email">Role</label>
+                  {!! Form::select('roles[]', $roles,$userRole, array('class' => 'form-control select2-multi','multiple')) !!}
+                  @error('role')
+                  <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                  </span>
+                  @enderror
+                </div>
+              </div>
+              @endcan
               {{-- <div class="col-md-3">
                   <div class="form-group mb-3">
                     <label for="type">Type</label>

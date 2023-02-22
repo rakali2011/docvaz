@@ -3,132 +3,107 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Auth;
+use Spatie\Permission\Models\Role as SpatieRole;
 use Spatie\Permission\Models\Permission;
-use DB;
+use App\Models\Company;
+use Illuminate\Support\Facades\DB;
 
 class RoleController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    function __construct()
+    public function __construct()
     {
-
-        $this->middleware('permission:role-list|role-create|role-edit|role-delete', ['only' => ['index', 'store']]);
-        $this->middleware('permission:role-create', ['only' => ['create', 'store']]);
-        $this->middleware('permission:role-edit', ['only' => ['edit', 'update']]);
-        $this->middleware('permission:role-delete', ['only' => ['destroy']]);
+        $this->middleware('auth');
     }
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index(Request $request)
+    public function roles()
     {
-        $roles = Role::orderBy('id', 'DESC')->paginate(5);
-        return view('roles.index', compact('roles'))->with('i', ($request->input('page', 1) - 1) * 5);
+        $data = array();
+        $data['menu'] = "role-management";
+        $data['sub_menu'] = "roles";
+        if (auth()->user()->hasRole('dev')) {
+            $roles = SpatieRole::where('company_id', '!=', 0)->orderBy('id', 'DESC')->get();
+        } else {
+            $roles = SpatieRole::where('company_id', '!=', 0)->where('company_id', Auth::user()->company->id)->orderBy('id', 'DESC')->get();
+        }
+
+        return view('role_management.roles', compact('data', 'roles'));
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function add_role()
     {
-        $permission = Permission::get();
-        return view('roles.create', compact('permission'));
+        $data['menu'] = 'role-management';
+        $data['sub_menu'] = 'roles';
+        $permissions = Permission::all();
+        $assign_permissions = [];
+        return view('role_management.add_role', compact('data', 'permissions', 'assign_permissions'));
     }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function edit_role($id)
     {
-        $this->validate($request, [
-            'name' => 'required|unique:roles,name',
-            'permission' => 'required',
-        ]);
-
-        $role = Role::create(['name' => $request->input('name')]);
-
-        $role->syncPermissions($request->input('permission'));
-
-        return redirect()->route('roles.index')->with('success', 'Role created successfully');
+        $id = $this->clean_id($id);
+        $data = array();
+        $data['menu'] = "role-management";
+        $data['sub_menu'] = "roles";
+        $role = SpatieRole::find($id);
+        $role->name = $role->name;
+        $permissions = Permission::get();
+        $permissions_count = array_count_values(json_decode(json_encode($permissions->pluck("type")), true));
+        $rolePermissions = $role->permissions()->get();
+        $assign_permissions = json_decode(json_encode($rolePermissions->pluck("id")), true);
+        $assign_permissions_count = array_count_values(json_decode(json_encode($rolePermissions->pluck("type")), true));
+        $check_all = [];
+        foreach ($permissions_count as $key => $value) {
+            $check_all[$key] = $this->check_all($key, $permissions_count, $assign_permissions_count);
+        }
+        return view('role_management.add_role', compact('data', 'role', 'permissions', 'assign_permissions', 'check_all'));
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function post_role(Request $req)
     {
-        $role = Role::find($id);
-        $rolePermissions = Permission::join("role_has_permissions", "role_has_permissions.permission_id", "=", "permissions.id")
-            ->where("role_has_permissions.role_id", $id)->get();
-
-        return view('roles.show', compact('role', 'rolePermissions'));
+        $role_array = array();
+        $role_array['display_name'] = $req->name;
+        if (auth()->user()->hasRole('dev')) {
+            $company_id = $req->company;
+            $company = Company::findorfail($company_id);
+            $role_array['name'] = $company->prefix . "-" . $req->name;
+            $role_array['company_id'] = $company->id;
+        } else {
+            $role_array['name'] = Auth::user()->company->prefix . "-" . $req->name;
+            $role_array['company_id'] = Auth::user()->company->id;
+        }
+        $role = SpatieRole::create($role_array);
+        $role->syncPermissions($req->input('permission'));
+        return redirect()->route('roles')->with('success', "Role Created Successfully");
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+    public function update_role(Request $req, $id = '')
     {
-        $role = Role::find($id);
-        $permission = Permission::get();
-        $rolePermissions = DB::table("role_has_permissions")->where("role_has_permissions.role_id", $id)
-            ->pluck('role_has_permissions.permission_id', 'role_has_permissions.permission_id')
-            ->all();
-
-        return view('roles.edit', compact('role', 'permission', 'rolePermissions'));
+        if ($id) {
+            $id = $this->clean_id($id);
+        }
+        DB::beginTransaction();
+        try {
+            $role = SpatieRole::find($id);
+            $role->display_name = $req->name;
+            if (auth()->user()->hasRole('dev')) {
+                $company_id = $req->company;
+                $company = Company::findorfail($company_id);
+                $role->name = $company->prefix . "-" . $req->name;
+                $role->company_id = $company->id;
+            } else {
+                $role->name = Auth::user()->company->prefix . "-" . $req->name;
+                $role->company_id = Auth::user()->company->id;
+            }
+            $role->save();
+            $role->syncPermissions($req->input('permission'));
+            DB::commit();
+            return redirect()->route('roles')->with('success', "Role Updated Successfully");
+        } catch (\Exception $e) {
+            return back()->withInput()->with('error', $e->getMessage());
+        }
     }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function check_all($key, $permissions_count, $assign_permissions_count)
     {
-        $this->validate($request, [
-            'name' => 'required',
-            'permission' => 'required',
-        ]);
-
-        $role = Role::find($id);
-        $role->name = $request->input('name');
-        $role->save();
-        $role->syncPermissions($request->input('permission'));
-
-        return redirect()->route('roles.index')->with('success', 'Role updated successfully');
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        DB::table("roles")->where('id', $id)->delete();
-        return redirect()->route('roles.index')->with('success', 'Role deleted successfully');
+        if (!key_exists($key, $assign_permissions_count))
+            return '';
+        if ($permissions_count[$key] === $assign_permissions_count[$key])
+            return 'checked="checked"';
+        return '';
     }
 }

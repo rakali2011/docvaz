@@ -55,7 +55,7 @@
               </div>
               @endif
               <div class="col-12">
-                <input type="submit" value="{{ 'Save' }}" class="btn btn-success float-right">
+                <input type="submit" value="{{ 'Update' }}" class="btn btn-success float-right">
               </div>
             </div>
           </div>
@@ -70,15 +70,7 @@
   var importform = document.getElementById('import-files');
   importform.addEventListener('submit', event => {
     event.preventDefault();
-    // access the files data selected by uppy
-    const files = uppy.getFiles();
-    // Create a FormData object
     const formData = new FormData(importform);
-
-    // Append the files to the FormData object
-    files.forEach(file => {
-      formData.append('files[]', file.data);
-    });
     fetch(importform.action, {
         method: "POST",
         body: formData

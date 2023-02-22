@@ -15,28 +15,17 @@ class Controller extends BaseController
 
     function formatSizeUnits($bytes)
     {
-        if ($bytes >= 1073741824)
-        {
+        if ($bytes >= 1073741824) {
             $bytes = number_format($bytes / 1073741824, 2) . ' GB';
-        }
-        elseif ($bytes >= 1048576)
-        {
+        } elseif ($bytes >= 1048576) {
             $bytes = number_format($bytes / 1048576, 2) . ' MB';
-        }
-        elseif ($bytes >= 1024)
-        {
+        } elseif ($bytes >= 1024) {
             $bytes = number_format($bytes / 1024, 2) . ' KB';
-        }
-        elseif ($bytes > 1)
-        {
+        } elseif ($bytes > 1) {
             $bytes = $bytes . ' bytes';
-        }
-        elseif ($bytes == 1)
-        {
+        } elseif ($bytes == 1) {
             $bytes = $bytes . ' byte';
-        }
-        else
-        {
+        } else {
             $bytes = '0 bytes';
         }
 
@@ -50,7 +39,7 @@ class Controller extends BaseController
                 $file_org_name = $file->getClientOriginalName();
                 $file_size = $file->getSize();
                 $fileName = $file->hashName();
-                $path = $file->store("uploads/".$folder);
+                $path = $file->store("uploads/" . $folder);
                 if ($path) {
                     $file_info['file_org_name'] = $file_org_name;
                     $file_info['file_name'] = $fileName;
@@ -84,13 +73,9 @@ class Controller extends BaseController
             if (in_array($value->id, $selected_item_array)) {
                 $selected = 'selected';
             }
-            $options.='<option value="'.Crypt::encrypt($value->id).'" '.$selected.' >'.$value->name.'</option>';
+            $options .= '<option value="' . Crypt::encrypt($value->id) . '" ' . $selected . ' >' . $value->name . '</option>';
         }
-        $select_html = '<label for="'.$name.'">'.$label.'</label>
-        <select class="form-control select2-multi" multiple name="'.$name.'" id="'.$name.'">
-        '.$options.'
-        </select>';
+        $select_html = '<label for="' . $name . '">' . $label . '</label><select class="form-control select2-multi" multiple name="' . $name . '" id="' . $name . '">' . $options . '</select>';
         return $select_html;
-
     }
 }

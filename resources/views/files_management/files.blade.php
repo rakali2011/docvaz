@@ -28,7 +28,7 @@
                 <tbody>
                   @foreach ($files as $item)
                   <tr>
-                    <td>{{ $item->org_name }}</td>
+                    <td><a href="{{ route('file', ['id' => Crypt::encrypt($item->id)]) }}" target="_blank" rel="noopener noreferrer">{{ $item->org_name }}</a></td>
                     <td>{{ $item->pname }}</td>
                     @role('dev')
                     <td>{{ @$item->company->name }}</td>
@@ -38,7 +38,9 @@
                         <span class="text-muted sr-only">Action</span>
                       </button>
                       <div class="dropdown-menu dropdown-menu-right">
-                        <a class="dropdown-item" href="#">Edit</a>
+                        @can('update file')
+                        <a class="dropdown-item" href="{{ route('edit_file', ['id' => Crypt::encrypt($item->id)]) }}">Edit</a>
+                        @endcan
                       </div>
                     </td>
                   </tr>
