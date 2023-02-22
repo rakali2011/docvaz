@@ -3,7 +3,7 @@
 <div class="container-fluid">
   <div class="row justify-content-center">
     <div class="col-12">
-      <span class="mb-2 page-title menu-head">Users</span>
+      <span class="mb-2 page-title menu-head">Clients</span>
       @can('add client')
       <a class="btn btn-primary float-right" href="{{ route('add_client') }}">Create Client</a>
 

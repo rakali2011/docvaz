@@ -11,6 +11,7 @@ use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\StatusController;
 use GuzzleHttp\Middleware;
 
 /*
@@ -90,3 +91,5 @@ Route::post('/get_users', [UserController::class, 'get_users'])->middleware('per
 Route::post('/update_user_departments', [UserController::class, 'update_user_departments'])->middleware('permission:assign department user')->name('update_user_departments');
 Route::post('/update_user_practices', [UserController::class, 'update_user_practices'])->middleware('permission:assign practice user')->name('update_user_practices');
 Route::post('/update_user_teams', [UserController::class, 'update_user_teams'])->middleware('permission:assign team user')->name('update_user_teams');
+
+Route::resource('statues', StatusController::class);

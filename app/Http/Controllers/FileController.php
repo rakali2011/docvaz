@@ -117,6 +117,9 @@ class FileController extends Controller
         }
         DB::beginTransaction();
         try {
+            $req->validate([
+                'status' => 'required'
+            ]);
             $file = File::findorfail($id);
             $file->status = $req->status;
             $file->save();

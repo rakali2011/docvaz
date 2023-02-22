@@ -3,13 +3,12 @@
 <div class="container-fluid">
   <div class="row justify-content-center">
     <div class="col-12">
-      <span class="mb-2 page-title menu-head">Roles</span>
-      @can('add role')
-      <a class="btn btn-primary float-right" href="{{ route('add_role') }}">Create Role</a>
+      <span class="mb-2 page-title menu-head">Statues</span>
+      @can('add team')
+      <a class="btn btn-primary float-right" href="{{ route('statues.create') }}">Create Status</a>
       @endcan
       <p class="card-text"></p>
       <div class="row my-4">
-        <!-- Small table -->
         <div class="col-md-12">
           <div class="card shadow">
             <div class="card-body">
@@ -25,18 +24,18 @@
                   </tr>
                 </thead>
                 <tbody>
-                  @foreach ($roles as $item)
+                  @foreach ($statues as $item)
                   <tr>
-                    <td>{{ $item->display_name }}</td>
+                    <td>{{ $item->name }}</td>
                     @role('dev')
-                    <td>{{ @$item->company_name }}</td>
+                    <td>{{ @$item->company->name }}</td>
                     @endrole
                     <td>
                       <button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <span class="text-muted sr-only">Action</span>
                       </button>
                       <div class="dropdown-menu dropdown-menu-right">
-                        <a class="dropdown-item" href="{{ route('edit_role', ['id' => Crypt::encrypt($item->id)]) }}">Edit</a>
+                        <a class="dropdown-item" href="{{ route('edit_team', ['id' => Crypt::encrypt($item->id)]) }}">Edit</a>
                       </div>
                     </td>
                   </tr>
@@ -45,10 +44,9 @@
               </table>
             </div>
           </div>
-        </div> <!-- simple table -->
-      </div> <!-- end section -->
-    </div> <!-- .col-12 -->
-  </div> <!-- .row -->
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
-
 @endsection

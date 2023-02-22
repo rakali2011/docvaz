@@ -21,11 +21,10 @@ class RoleController extends Controller
         $data['menu'] = "role-management";
         $data['sub_menu'] = "roles";
         if (auth()->user()->hasRole('dev')) {
-            $roles = SpatieRole::where('company_id', '!=', 0)->orderBy('id', 'DESC')->get();
+            $roles = SpatieRole::join('companies', 'companies.id', '=', 'roles.company_id')->where('roles.company_id', '!=', 0)->orderBy('roles.id', 'DESC')->get(['roles.*', 'companies.name as company_name']);
         } else {
             $roles = SpatieRole::where('company_id', '!=', 0)->where('company_id', Auth::user()->company->id)->orderBy('id', 'DESC')->get();
         }
-
         return view('role_management.roles', compact('data', 'roles'));
     }
     public function add_role()

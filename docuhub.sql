@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Feb 22, 2023 at 08:08 PM
+-- Generation Time: Feb 22, 2023 at 10:50 PM
 -- Server version: 5.7.36
 -- PHP Version: 7.4.26
 
@@ -273,7 +273,7 @@ CREATE TABLE IF NOT EXISTS `permissions` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `permissions_name_guard_name_unique` (`name`,`guard_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=55 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `permissions`
@@ -315,7 +315,11 @@ INSERT INTO `permissions` (`id`, `name`, `type`, `guard_name`, `created_at`, `up
 (47, 'update ticket', 'ticket', 'web', '2023-01-25 10:07:00', '2023-01-25 10:07:00'),
 (48, 'delete ticket', 'ticket', 'web', '2023-01-25 10:07:00', '2023-01-25 10:07:00'),
 (49, 'view ticket', 'ticket', 'web', '2023-01-25 10:07:00', '2023-01-25 10:07:00'),
-(50, 'assign role', 'role', 'web', '2023-01-19 11:21:41', '2023-01-19 11:21:41');
+(50, 'assign role', 'role', 'web', '2023-01-19 11:21:41', '2023-01-19 11:21:41'),
+(51, 'add status', 'status', 'web', '2023-01-25 10:07:00', '2023-01-25 10:07:00'),
+(52, 'delete status', 'status', 'web', '2023-01-25 10:07:00', '2023-01-25 10:07:00'),
+(53, 'update status', 'status', 'web', '2023-01-25 10:07:00', '2023-01-25 10:07:00'),
+(54, 'view status', 'status', 'web', '2023-01-19 11:21:41', '2023-01-19 11:21:41');
 
 -- --------------------------------------------------------
 
@@ -522,6 +526,10 @@ INSERT INTO `role_has_permissions` (`permission_id`, `role_id`) VALUES
 (48, 18),
 (49, 18),
 (50, 18),
+(51, 18),
+(52, 18),
+(53, 18),
+(54, 18),
 (15, 19),
 (16, 19),
 (19, 19),
@@ -539,6 +547,23 @@ INSERT INTO `role_has_permissions` (`permission_id`, `role_id`) VALUES
 (35, 19),
 (36, 19),
 (38, 19);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `statues`
+--
+
+DROP TABLE IF EXISTS `statues`;
+CREATE TABLE IF NOT EXISTS `statues` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `company_id` int(11) NOT NULL,
+  `name` varchar(128) NOT NULL,
+  `type` varchar(64) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -659,7 +684,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 
 INSERT INTO `users` (`id`, `company_id`, `type`, `status`, `firstname`, `lastname`, `email`, `email_verified_at`, `password`, `remember_token`, `last_activity`, `created_at`, `updated_at`) VALUES
-(10, 0, 0, 1, 'junaid', 'khan', 'junaid@mail.com', NULL, '$2a$12$TWJEfJ3kvFfnS49Yn5lvMe4qqxJUy/Oy1Gy5fvHgkzpshsC3WlApi', 'MLHiEM5MRMQATxf9pgP2hmLaIpT0Zze3fhq3J0iHsmmex3lwqm0WlCDBzsYU', NULL, '2023-01-04 04:24:33', '2023-01-04 04:24:33'),
+(10, 0, 0, 1, 'junaid', 'khan', 'junaid@mail.com', NULL, '$2a$12$TWJEfJ3kvFfnS49Yn5lvMe4qqxJUy/Oy1Gy5fvHgkzpshsC3WlApi', 'J9jdt6RA3qWqtAUQjRmLBhHbMD3O6EtUgw9M2VQ3XgmdEddJB7X5mTUfOjLH', NULL, '2023-01-04 04:24:33', '2023-01-04 04:24:33'),
 (11, 4, 2, 1, 'Super', 'Admin', 'superadmin4@bmb.com', NULL, '$2a$12$DAeA/CC/k2xUF8g1hN6toeW6cnwZFtWKDaBcEEW5Y4Fptw1OaVWAC', NULL, NULL, '2023-01-19 13:39:09', '2023-01-19 13:39:09'),
 (12, 5, 2, 1, 'Super', 'Admin', 'superadmin5@test.com', NULL, '$2a$12$DAeA/CC/k2xUF8g1hN6toeW6cnwZFtWKDaBcEEW5Y4Fptw1OaVWAC', NULL, NULL, '2023-01-22 12:33:56', '2023-01-22 12:33:56'),
 (13, 1, 2, 1, 'John D.', 'John D.', 'JohnDMurray@teleworm.us', NULL, '$2a$12$DAeA/CC/k2xUF8g1hN6toeW6cnwZFtWKDaBcEEW5Y4Fptw1OaVWAC', NULL, NULL, '2023-01-25 10:36:08', '2023-01-25 10:36:08'),
