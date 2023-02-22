@@ -77,6 +77,9 @@ class FileController extends Controller
         $response = array();
         DB::beginTransaction();
         try {
+            $req->validate([
+                'status' => 'required'
+            ]);
             $practice = $this->clean_id($req->practice);
             if ($req->hasfile('files')) {
                 $files = $req->file('files');

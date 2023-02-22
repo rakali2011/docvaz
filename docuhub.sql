@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Feb 17, 2023 at 10:39 PM
+-- Generation Time: Feb 22, 2023 at 08:08 PM
 -- Server version: 5.7.36
 -- PHP Version: 7.4.26
 
@@ -92,7 +92,7 @@ CREATE TABLE IF NOT EXISTS `departments` (
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `departments`
@@ -100,7 +100,33 @@ CREATE TABLE IF NOT EXISTS `departments` (
 
 INSERT INTO `departments` (`id`, `company_id`, `parent_id`, `name`, `description`, `status`, `created_at`, `updated_at`, `deleted_at`) VALUES
 (1, 1, 0, 'Billing', NULL, 1, '2023-01-25 17:10:51', '2023-02-17 21:32:05', NULL),
-(2, 1, 1, 'Claim Submission', NULL, 1, '2023-01-25 17:10:51', '2023-02-17 21:31:47', NULL);
+(2, 1, 1, 'Claim Submission', NULL, 1, '2023-01-25 17:10:51', '2023-02-17 21:31:47', NULL),
+(3, 6, 0, 'ABC', NULL, 1, '2023-02-21 20:53:42', '2023-02-21 20:53:42', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `department_user`
+--
+
+DROP TABLE IF EXISTS `department_user`;
+CREATE TABLE IF NOT EXISTS `department_user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `department_id` int(11) NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `department_user`
+--
+
+INSERT INTO `department_user` (`id`, `user_id`, `department_id`, `created_at`, `updated_at`) VALUES
+(3, 13, 2, '2023-02-06 15:23:25', '2023-02-06 15:23:25'),
+(4, 17, 3, '2023-02-22 02:02:47', '2023-02-22 02:02:47'),
+(5, 15, 3, '2023-02-22 02:03:02', '2023-02-22 02:03:02');
 
 -- --------------------------------------------------------
 
@@ -132,6 +158,7 @@ CREATE TABLE IF NOT EXISTS `files` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `practice_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
+  `status` varchar(32) DEFAULT NULL,
   `name` mediumtext NOT NULL,
   `org_name` tinytext NOT NULL,
   `path` mediumtext NOT NULL,
@@ -140,22 +167,25 @@ CREATE TABLE IF NOT EXISTS `files` (
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `files`
 --
 
-INSERT INTO `files` (`id`, `practice_id`, `user_id`, `name`, `org_name`, `path`, `ext`, `size`, `created_at`, `updated_at`) VALUES
-(1, 3, 10, 'qjbT8BZTaBs80aDtRk1FLxHKXOGmdXnQKVA6R2gD.png', 'secretm.me-verticle-share.png', 'uploads/files/02-2023/qjbT8BZTaBs80aDtRk1FLxHKXOGmdXnQKVA6R2gD.png', 'png', '385.82 KB', '2023-02-06 20:16:08', '2023-02-06 20:16:08'),
-(2, 3, 10, 'McPTd5iZYNSVvNXHxXoiMS1H0gPrugq2lfXz1qQK.png', 'screencapture-secretm-me-inbox-php-2022-09-08-21_15_52.png', 'uploads/files/02-2023/McPTd5iZYNSVvNXHxXoiMS1H0gPrugq2lfXz1qQK.png', 'png', '2.56 MB', '2023-02-06 20:16:08', '2023-02-06 20:16:08'),
-(3, 3, 10, 'K2S7gNAjlvGAWZhqFq2brsnY2hZ90hd0CoM884Oh.png', 'screencapture-publishers-adsterra-stats-2022-10-06-12_35_35.png', 'uploads/files/02-2023/K2S7gNAjlvGAWZhqFq2brsnY2hZ90hd0CoM884Oh.png', 'png', '191.23 KB', '2023-02-06 20:16:08', '2023-02-06 20:16:08'),
-(4, 3, 10, 'UmPHvRQg1nFiSUy8QSQIKaPZ5qGyBLwvyBUVr3De.png', 'secretm.me-verticle-share.png', 'uploads/files/02-2023/UmPHvRQg1nFiSUy8QSQIKaPZ5qGyBLwvyBUVr3De.png', 'png', '385.82 KB', '2023-02-06 20:16:18', '2023-02-06 20:16:18'),
-(5, 3, 10, '8DiR6bU392EtXfnlR2iuxS5ZRw7wOSTNK0P0zZsM.png', 'screencapture-secretm-me-inbox-php-2022-09-08-21_15_52.png', 'uploads/files/02-2023/8DiR6bU392EtXfnlR2iuxS5ZRw7wOSTNK0P0zZsM.png', 'png', '2.56 MB', '2023-02-06 20:16:18', '2023-02-06 20:16:18'),
-(6, 3, 10, 'VSfKIATTISBcvvDvY326lC1PIf9oVKqt0upd9MYi.png', 'screencapture-publishers-adsterra-stats-2022-10-06-12_35_35.png', 'uploads/files/02-2023/VSfKIATTISBcvvDvY326lC1PIf9oVKqt0upd9MYi.png', 'png', '191.23 KB', '2023-02-06 20:16:18', '2023-02-06 20:16:18'),
-(7, 1, 10, '7iO2YMMujOSB7GwIsBOCgruGBs0TVzF309q24SGu.png', 'Web Developer Php Laravel.png', 'uploads/files/02-2023/7iO2YMMujOSB7GwIsBOCgruGBs0TVzF309q24SGu.png', 'png', '52.81 KB', '2023-02-06 20:17:47', '2023-02-06 20:17:47'),
-(8, 4, 15, 'cqDk3feTSHL8ARw3xVExMCZMNVOFYHR0jZyaUAMk.jpg', 'image004.jpg', 'uploads/files/02-2023/cqDk3feTSHL8ARw3xVExMCZMNVOFYHR0jZyaUAMk.jpg', 'jpg', '97.22 KB', '2023-02-16 21:13:24', '2023-02-16 21:13:24'),
-(9, 4, 15, 'e892BTm1RqGla3X7RsDNoajOAi9G6za5WteoYtT8.jpg', '1933136_188282907860672_4388842_o.jpg', 'uploads/files/02-2023/e892BTm1RqGla3X7RsDNoajOAi9G6za5WteoYtT8.jpg', 'jpg', '408.74 KB', '2023-02-16 22:41:32', '2023-02-16 22:41:32');
+INSERT INTO `files` (`id`, `practice_id`, `user_id`, `status`, `name`, `org_name`, `path`, `ext`, `size`, `created_at`, `updated_at`) VALUES
+(1, 3, 10, NULL, 'qjbT8BZTaBs80aDtRk1FLxHKXOGmdXnQKVA6R2gD.png', 'secretm.me-verticle-share.png', 'uploads/files/02-2023/qjbT8BZTaBs80aDtRk1FLxHKXOGmdXnQKVA6R2gD.png', 'png', '385.82 KB', '2023-02-06 20:16:08', '2023-02-06 20:16:08'),
+(2, 3, 10, NULL, 'McPTd5iZYNSVvNXHxXoiMS1H0gPrugq2lfXz1qQK.png', 'screencapture-secretm-me-inbox-php-2022-09-08-21_15_52.png', 'uploads/files/02-2023/McPTd5iZYNSVvNXHxXoiMS1H0gPrugq2lfXz1qQK.png', 'png', '2.56 MB', '2023-02-06 20:16:08', '2023-02-06 20:16:08'),
+(3, 3, 10, NULL, 'K2S7gNAjlvGAWZhqFq2brsnY2hZ90hd0CoM884Oh.png', 'screencapture-publishers-adsterra-stats-2022-10-06-12_35_35.png', 'uploads/files/02-2023/K2S7gNAjlvGAWZhqFq2brsnY2hZ90hd0CoM884Oh.png', 'png', '191.23 KB', '2023-02-06 20:16:08', '2023-02-06 20:16:08'),
+(4, 3, 10, NULL, 'UmPHvRQg1nFiSUy8QSQIKaPZ5qGyBLwvyBUVr3De.png', 'secretm.me-verticle-share.png', 'uploads/files/02-2023/UmPHvRQg1nFiSUy8QSQIKaPZ5qGyBLwvyBUVr3De.png', 'png', '385.82 KB', '2023-02-06 20:16:18', '2023-02-06 20:16:18'),
+(5, 3, 10, NULL, '8DiR6bU392EtXfnlR2iuxS5ZRw7wOSTNK0P0zZsM.png', 'screencapture-secretm-me-inbox-php-2022-09-08-21_15_52.png', 'uploads/files/02-2023/8DiR6bU392EtXfnlR2iuxS5ZRw7wOSTNK0P0zZsM.png', 'png', '2.56 MB', '2023-02-06 20:16:18', '2023-02-06 20:16:18'),
+(6, 3, 10, NULL, 'VSfKIATTISBcvvDvY326lC1PIf9oVKqt0upd9MYi.png', 'screencapture-publishers-adsterra-stats-2022-10-06-12_35_35.png', 'uploads/files/02-2023/VSfKIATTISBcvvDvY326lC1PIf9oVKqt0upd9MYi.png', 'png', '191.23 KB', '2023-02-06 20:16:18', '2023-02-06 20:16:18'),
+(7, 1, 10, NULL, '7iO2YMMujOSB7GwIsBOCgruGBs0TVzF309q24SGu.png', 'Web Developer Php Laravel.png', 'uploads/files/02-2023/7iO2YMMujOSB7GwIsBOCgruGBs0TVzF309q24SGu.png', 'png', '52.81 KB', '2023-02-06 20:17:47', '2023-02-06 20:17:47'),
+(8, 4, 15, NULL, 'cqDk3feTSHL8ARw3xVExMCZMNVOFYHR0jZyaUAMk.jpg', 'image004.jpg', 'uploads/files/02-2023/cqDk3feTSHL8ARw3xVExMCZMNVOFYHR0jZyaUAMk.jpg', 'jpg', '97.22 KB', '2023-02-16 21:13:24', '2023-02-16 21:13:24'),
+(9, 4, 15, NULL, 'e892BTm1RqGla3X7RsDNoajOAi9G6za5WteoYtT8.jpg', '1933136_188282907860672_4388842_o.jpg', 'uploads/files/02-2023/e892BTm1RqGla3X7RsDNoajOAi9G6za5WteoYtT8.jpg', 'jpg', '408.74 KB', '2023-02-16 22:41:32', '2023-02-16 22:41:32'),
+(10, 4, 15, NULL, 'SbQPg6d3akY0Kv0bprp2H3rmMQXcnlu5nlYb6xwy.jpg', 'image004.jpg', 'uploads/files/02-2023/SbQPg6d3akY0Kv0bprp2H3rmMQXcnlu5nlYb6xwy.jpg', 'jpg', '97.22 KB', '2023-02-21 22:32:24', '2023-02-21 22:32:24'),
+(11, 4, 15, 'Pending', 'WPBx6rp0eCQCltRmF5kAAhOFIwNZ1Dw91ncjbz61.pdf', 'Document.pdf', 'uploads/files/02-2023/WPBx6rp0eCQCltRmF5kAAhOFIwNZ1Dw91ncjbz61.pdf', 'pdf', '13.62 KB', '2023-02-22 17:10:45', '2023-02-22 20:00:45'),
+(12, 4, 15, 'Posted', 'GDVa4jNRLK581Sr5yXfeeMqI32ltZ1MlcM50UGdA.xlsx', 'AttendanceList.xlsx', 'uploads/files/02-2023/GDVa4jNRLK581Sr5yXfeeMqI32ltZ1MlcM50UGdA.xlsx', 'xlsx', '22.46 KB', '2023-02-22 17:53:13', '2023-02-22 18:26:32');
 
 -- --------------------------------------------------------
 
@@ -210,7 +240,8 @@ INSERT INTO `model_has_roles` (`role_id`, `model_type`, `model_id`) VALUES
 (10, 'App\\Models\\User', 10),
 (14, 'App\\Models\\User', 11),
 (15, 'App\\Models\\User', 12),
-(18, 'App\\Models\\User', 15);
+(18, 'App\\Models\\User', 15),
+(12, 'App\\Models\\User', 17);
 
 -- --------------------------------------------------------
 
@@ -242,7 +273,7 @@ CREATE TABLE IF NOT EXISTS `permissions` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `permissions_name_guard_name_unique` (`name`,`guard_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `permissions`
@@ -274,10 +305,17 @@ INSERT INTO `permissions` (`id`, `name`, `type`, `guard_name`, `created_at`, `up
 (36, 'update practice', 'practice', 'web', '2023-02-05 11:38:40', '2023-02-05 11:38:40'),
 (37, 'delete practice', 'practice', 'web', '2023-02-05 11:38:48', '2023-02-05 11:38:48'),
 (38, 'assign department user', 'user', 'web', '2023-02-06 10:02:32', '2023-02-06 10:02:32'),
-(39, 'import file', NULL, 'web', '2023-02-06 14:30:10', '2023-02-06 14:30:10'),
-(40, 'view file', NULL, 'web', '2023-02-06 14:30:28', '2023-02-06 14:30:28'),
-(41, 'update file', NULL, 'web', '2023-02-06 14:30:41', '2023-02-06 14:30:41'),
-(42, 'delete file', NULL, 'web', '2023-02-06 14:30:49', '2023-02-06 14:30:49');
+(39, 'import file', 'file', 'web', '2023-02-06 14:30:10', '2023-02-06 14:30:10'),
+(40, 'view file', 'file', 'web', '2023-02-06 14:30:28', '2023-02-06 14:30:28'),
+(41, 'update file', 'file', 'web', '2023-02-06 14:30:41', '2023-02-06 14:30:41'),
+(42, 'delete file', 'file', 'web', '2023-02-06 14:30:49', '2023-02-06 14:30:49'),
+(44, 'assign team user', 'user', 'web', '2023-02-06 10:02:32', '2023-02-06 10:02:32'),
+(45, 'delete role', 'role', 'web', '2023-01-19 11:17:29', '2023-01-19 11:17:29'),
+(46, 'update role', 'role', 'web', '2023-01-19 11:21:41', '2023-01-19 11:21:41'),
+(47, 'update ticket', 'ticket', 'web', '2023-01-25 10:07:00', '2023-01-25 10:07:00'),
+(48, 'delete ticket', 'ticket', 'web', '2023-01-25 10:07:00', '2023-01-25 10:07:00'),
+(49, 'view ticket', 'ticket', 'web', '2023-01-25 10:07:00', '2023-01-25 10:07:00'),
+(50, 'assign role', 'role', 'web', '2023-01-19 11:21:41', '2023-01-19 11:21:41');
 
 -- --------------------------------------------------------
 
@@ -328,6 +366,33 @@ INSERT INTO `practices` (`id`, `company_id`, `name`, `status`, `created_at`, `up
 (2, 1, 'bme pract', 1, '2023-02-05 17:37:33', '2023-02-05 17:37:33', NULL),
 (3, 1, 'bme test p', 1, '2023-02-05 17:38:27', '2023-02-05 17:38:27', NULL),
 (4, 6, 'New Practice 123', 1, '2023-02-16 21:12:26', '2023-02-17 18:54:50', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `practice_user`
+--
+
+DROP TABLE IF EXISTS `practice_user`;
+CREATE TABLE IF NOT EXISTS `practice_user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `practice_id` int(11) NOT NULL,
+  `type` int(11) NOT NULL COMMENT '1:files, 2:dmail',
+  `user_type` int(11) NOT NULL COMMENT '1:user, 2:client',
+  `is_parent` int(11) DEFAULT NULL,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `practice_user`
+--
+
+INSERT INTO `practice_user` (`id`, `user_id`, `practice_id`, `type`, `user_type`, `is_parent`, `created_at`, `updated_at`) VALUES
+(23, 13, 3, 1, 1, NULL, '2023-02-06 15:22:38', '2023-02-06 15:22:38'),
+(24, 15, 4, 1, 1, NULL, '2023-02-16 21:13:10', '2023-02-16 21:13:10');
 
 -- --------------------------------------------------------
 
@@ -450,6 +515,13 @@ INSERT INTO `role_has_permissions` (`permission_id`, `role_id`) VALUES
 (40, 18),
 (41, 18),
 (42, 18),
+(44, 18),
+(45, 18),
+(46, 18),
+(47, 18),
+(48, 18),
+(49, 18),
+(50, 18),
 (15, 19),
 (16, 19),
 (19, 19),
@@ -485,7 +557,7 @@ CREATE TABLE IF NOT EXISTS `teams` (
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `teams`
@@ -493,7 +565,11 @@ CREATE TABLE IF NOT EXISTS `teams` (
 
 INSERT INTO `teams` (`id`, `company_id`, `name`, `description`, `status`, `created_at`, `updated_at`, `deleted_at`) VALUES
 (1, 1, 'Team A', NULL, 1, '2023-01-25 16:44:17', '2023-01-25 16:44:17', NULL),
-(2, 1, 'Team B', NULL, 1, '2023-02-17 20:12:34', '2023-02-17 20:13:16', NULL);
+(2, 1, 'Team B', NULL, 1, '2023-02-17 20:12:34', '2023-02-17 20:13:16', NULL),
+(3, 6, 'Team A', NULL, 1, '2023-02-21 17:54:56', '2023-02-21 17:54:56', NULL),
+(4, 6, 'Team B', NULL, 1, '2023-02-22 18:30:53', '2023-02-22 18:30:53', NULL),
+(5, 6, 'Team C', NULL, 1, '2023-02-22 18:31:00', '2023-02-22 18:31:00', NULL),
+(6, 6, 'Team D', NULL, 1, '2023-02-22 18:33:32', '2023-02-22 18:33:32', NULL);
 
 -- --------------------------------------------------------
 
@@ -530,6 +606,32 @@ CREATE TABLE IF NOT EXISTS `team_practices` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `team_user`
+--
+
+DROP TABLE IF EXISTS `team_user`;
+CREATE TABLE IF NOT EXISTS `team_user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `team_id` int(11) NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `deleted_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `team_user`
+--
+
+INSERT INTO `team_user` (`id`, `user_id`, `team_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 13, 1, '2023-02-21 16:21:50', '2023-02-21 16:21:50', NULL),
+(3, 15, 3, '2023-02-21 18:38:08', '2023-02-21 18:38:08', NULL),
+(5, 17, 3, '2023-02-22 01:21:58', '2023-02-22 01:21:58', NULL);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `users`
 --
 
@@ -550,88 +652,21 @@ CREATE TABLE IF NOT EXISTS `users` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `users_email_unique` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`id`, `company_id`, `type`, `status`, `firstname`, `lastname`, `email`, `email_verified_at`, `password`, `remember_token`, `last_activity`, `created_at`, `updated_at`) VALUES
-(10, 0, 0, 1, 'junaid', 'khan', 'junaid@mail.com', NULL, '$2a$12$TWJEfJ3kvFfnS49Yn5lvMe4qqxJUy/Oy1Gy5fvHgkzpshsC3WlApi', 'Cp3QaAnPI7ZhsYkF0EoGU0rpGEXcck3szEt19TeUumDRe4BrZoS06f6wE4q7', NULL, '2023-01-04 04:24:33', '2023-01-04 04:24:33'),
+(10, 0, 0, 1, 'junaid', 'khan', 'junaid@mail.com', NULL, '$2a$12$TWJEfJ3kvFfnS49Yn5lvMe4qqxJUy/Oy1Gy5fvHgkzpshsC3WlApi', 'MLHiEM5MRMQATxf9pgP2hmLaIpT0Zze3fhq3J0iHsmmex3lwqm0WlCDBzsYU', NULL, '2023-01-04 04:24:33', '2023-01-04 04:24:33'),
 (11, 4, 2, 1, 'Super', 'Admin', 'superadmin4@bmb.com', NULL, '$2a$12$DAeA/CC/k2xUF8g1hN6toeW6cnwZFtWKDaBcEEW5Y4Fptw1OaVWAC', NULL, NULL, '2023-01-19 13:39:09', '2023-01-19 13:39:09'),
 (12, 5, 2, 1, 'Super', 'Admin', 'superadmin5@test.com', NULL, '$2a$12$DAeA/CC/k2xUF8g1hN6toeW6cnwZFtWKDaBcEEW5Y4Fptw1OaVWAC', NULL, NULL, '2023-01-22 12:33:56', '2023-01-22 12:33:56'),
 (13, 1, 2, 1, 'John D.', 'John D.', 'JohnDMurray@teleworm.us', NULL, '$2a$12$DAeA/CC/k2xUF8g1hN6toeW6cnwZFtWKDaBcEEW5Y4Fptw1OaVWAC', NULL, NULL, '2023-01-25 10:36:08', '2023-01-25 10:36:08'),
 (14, 1, 3, 1, 'test', 'client', 'client@gmail.com', NULL, '$2a$12$DAeA/CC/k2xUF8g1hN6toeW6cnwZFtWKDaBcEEW5Y4Fptw1OaVWAC', NULL, NULL, '2023-02-05 10:19:42', '2023-02-05 10:19:42'),
 (15, 6, 2, 1, 'Super', 'Admin', 'superadmin6@new.com', NULL, '$2y$10$T9jRrchuuBhVQfaaYMdlLubDgSlSz/x9UR0V8J0XZkE4zLYKM6U4W', NULL, NULL, '2023-02-16 16:08:10', '2023-02-17 12:33:27'),
-(16, 6, 3, 1, 'New Client 1', 'New Client 1', 'newclient@gmail.com', NULL, '$2y$10$PYEfP6Pb1kM97kkS.M9yvOR5Eov6NcjjXqrHOCnu6NIVRkxYo7vg2', NULL, NULL, '2023-02-16 16:10:37', '2023-02-16 16:10:37');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `user_departments`
---
-
-DROP TABLE IF EXISTS `user_departments`;
-CREATE TABLE IF NOT EXISTS `user_departments` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) NOT NULL,
-  `department_id` int(11) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `user_departments`
---
-
-INSERT INTO `user_departments` (`id`, `user_id`, `department_id`, `created_at`, `updated_at`) VALUES
-(3, 13, 2, '2023-02-06 15:23:25', '2023-02-06 15:23:25');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `user_practices`
---
-
-DROP TABLE IF EXISTS `user_practices`;
-CREATE TABLE IF NOT EXISTS `user_practices` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) NOT NULL,
-  `practice_id` int(11) NOT NULL,
-  `type` int(11) NOT NULL COMMENT '1:files, 2:dmail',
-  `user_type` int(11) NOT NULL COMMENT '1:user, 2:client',
-  `is_parent` int(11) DEFAULT NULL,
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `user_practices`
---
-
-INSERT INTO `user_practices` (`id`, `user_id`, `practice_id`, `type`, `user_type`, `is_parent`, `created_at`, `updated_at`) VALUES
-(23, 13, 3, 1, 1, NULL, '2023-02-06 15:22:38', '2023-02-06 15:22:38'),
-(24, 15, 4, 1, 1, NULL, '2023-02-16 21:13:10', '2023-02-16 21:13:10');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `user_teams`
---
-
-DROP TABLE IF EXISTS `user_teams`;
-CREATE TABLE IF NOT EXISTS `user_teams` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) NOT NULL,
-  `team_id` int(11) NOT NULL,
-  `role` int(11) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `deleted_at` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+(16, 6, 3, 1, 'New Client 1', 'New Client 1', 'newclient@gmail.com', NULL, '$2y$10$PYEfP6Pb1kM97kkS.M9yvOR5Eov6NcjjXqrHOCnu6NIVRkxYo7vg2', NULL, NULL, '2023-02-16 16:10:37', '2023-02-16 16:10:37'),
+(17, 6, 2, 1, 'Test', 'Test', 'test@gmail.com', NULL, '$2y$10$KA8vHn1FJekCLjBDir/Lhupag4peomZl1wjv46CfjoePjiO3s1UfS', NULL, NULL, '2023-02-21 12:54:37', '2023-02-21 12:54:37');
 
 --
 -- Constraints for dumped tables
