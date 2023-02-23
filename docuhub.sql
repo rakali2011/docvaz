@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Feb 22, 2023 at 10:50 PM
+-- Generation Time: Feb 23, 2023 at 08:50 PM
 -- Server version: 5.7.36
 -- PHP Version: 7.4.26
 
@@ -92,7 +92,7 @@ CREATE TABLE IF NOT EXISTS `departments` (
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `departments`
@@ -101,7 +101,9 @@ CREATE TABLE IF NOT EXISTS `departments` (
 INSERT INTO `departments` (`id`, `company_id`, `parent_id`, `name`, `description`, `status`, `created_at`, `updated_at`, `deleted_at`) VALUES
 (1, 1, 0, 'Billing', NULL, 1, '2023-01-25 17:10:51', '2023-02-17 21:32:05', NULL),
 (2, 1, 1, 'Claim Submission', NULL, 1, '2023-01-25 17:10:51', '2023-02-17 21:31:47', NULL),
-(3, 6, 0, 'ABC', NULL, 1, '2023-02-21 20:53:42', '2023-02-21 20:53:42', NULL);
+(3, 6, 0, 'ABC', NULL, 1, '2023-02-21 20:53:42', '2023-02-21 20:53:42', NULL),
+(4, 6, 3, 'XYZ', NULL, 1, '2023-02-23 19:32:09', '2023-02-23 19:32:09', NULL),
+(5, 6, 0, 'DEF', NULL, 1, '2023-02-23 19:34:15', '2023-02-23 19:34:15', NULL);
 
 -- --------------------------------------------------------
 
@@ -127,6 +129,22 @@ INSERT INTO `department_user` (`id`, `user_id`, `department_id`, `created_at`, `
 (3, 13, 2, '2023-02-06 15:23:25', '2023-02-06 15:23:25'),
 (4, 17, 3, '2023-02-22 02:02:47', '2023-02-22 02:02:47'),
 (5, 15, 3, '2023-02-22 02:03:02', '2023-02-22 02:03:02');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `document_types`
+--
+
+DROP TABLE IF EXISTS `document_types`;
+CREATE TABLE IF NOT EXISTS `document_types` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `company_id` int(11) NOT NULL,
+  `name` varchar(128) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -181,7 +199,7 @@ INSERT INTO `files` (`id`, `practice_id`, `user_id`, `status`, `name`, `org_name
 (5, 3, 10, NULL, '8DiR6bU392EtXfnlR2iuxS5ZRw7wOSTNK0P0zZsM.png', 'screencapture-secretm-me-inbox-php-2022-09-08-21_15_52.png', 'uploads/files/02-2023/8DiR6bU392EtXfnlR2iuxS5ZRw7wOSTNK0P0zZsM.png', 'png', '2.56 MB', '2023-02-06 20:16:18', '2023-02-06 20:16:18'),
 (6, 3, 10, NULL, 'VSfKIATTISBcvvDvY326lC1PIf9oVKqt0upd9MYi.png', 'screencapture-publishers-adsterra-stats-2022-10-06-12_35_35.png', 'uploads/files/02-2023/VSfKIATTISBcvvDvY326lC1PIf9oVKqt0upd9MYi.png', 'png', '191.23 KB', '2023-02-06 20:16:18', '2023-02-06 20:16:18'),
 (7, 1, 10, NULL, '7iO2YMMujOSB7GwIsBOCgruGBs0TVzF309q24SGu.png', 'Web Developer Php Laravel.png', 'uploads/files/02-2023/7iO2YMMujOSB7GwIsBOCgruGBs0TVzF309q24SGu.png', 'png', '52.81 KB', '2023-02-06 20:17:47', '2023-02-06 20:17:47'),
-(8, 4, 15, NULL, 'cqDk3feTSHL8ARw3xVExMCZMNVOFYHR0jZyaUAMk.jpg', 'image004.jpg', 'uploads/files/02-2023/cqDk3feTSHL8ARw3xVExMCZMNVOFYHR0jZyaUAMk.jpg', 'jpg', '97.22 KB', '2023-02-16 21:13:24', '2023-02-16 21:13:24'),
+(8, 4, 15, 'To Be Posted', 'cqDk3feTSHL8ARw3xVExMCZMNVOFYHR0jZyaUAMk.jpg', 'image004.jpg', 'uploads/files/02-2023/cqDk3feTSHL8ARw3xVExMCZMNVOFYHR0jZyaUAMk.jpg', 'jpg', '97.22 KB', '2023-02-16 21:13:24', '2023-02-23 16:51:02'),
 (9, 4, 15, NULL, 'e892BTm1RqGla3X7RsDNoajOAi9G6za5WteoYtT8.jpg', '1933136_188282907860672_4388842_o.jpg', 'uploads/files/02-2023/e892BTm1RqGla3X7RsDNoajOAi9G6za5WteoYtT8.jpg', 'jpg', '408.74 KB', '2023-02-16 22:41:32', '2023-02-16 22:41:32'),
 (10, 4, 15, NULL, 'SbQPg6d3akY0Kv0bprp2H3rmMQXcnlu5nlYb6xwy.jpg', 'image004.jpg', 'uploads/files/02-2023/SbQPg6d3akY0Kv0bprp2H3rmMQXcnlu5nlYb6xwy.jpg', 'jpg', '97.22 KB', '2023-02-21 22:32:24', '2023-02-21 22:32:24'),
 (11, 4, 15, 'Pending', 'WPBx6rp0eCQCltRmF5kAAhOFIwNZ1Dw91ncjbz61.pdf', 'Document.pdf', 'uploads/files/02-2023/WPBx6rp0eCQCltRmF5kAAhOFIwNZ1Dw91ncjbz61.pdf', 'pdf', '13.62 KB', '2023-02-22 17:10:45', '2023-02-22 20:00:45'),
@@ -267,59 +285,82 @@ DROP TABLE IF EXISTS `permissions`;
 CREATE TABLE IF NOT EXISTS `permissions` (
   `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `display_name` varchar(64) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `type` varchar(16) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `guard_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `permissions_name_guard_name_unique` (`name`,`guard_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=55 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=77 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `permissions`
 --
 
-INSERT INTO `permissions` (`id`, `name`, `type`, `guard_name`, `created_at`, `updated_at`) VALUES
-(13, 'add role', 'role', 'web', '2023-01-19 11:17:29', '2023-01-19 11:17:29'),
-(14, 'view role', 'role', 'web', '2023-01-19 11:21:41', '2023-01-19 11:21:41'),
-(15, 'view user', 'user', 'web', '2023-01-19 11:53:09', '2023-01-19 11:53:09'),
-(16, 'add user', 'user', 'web', '2023-01-19 11:54:04', '2023-01-19 11:54:04'),
-(17, 'delete user', 'user', 'web', '2023-01-19 11:56:04', '2023-01-19 11:56:04'),
-(19, 'create ticket', 'ticket', 'web', '2023-01-25 10:07:00', '2023-01-25 10:07:00'),
-(20, 'view client', 'client', 'web', '2023-01-25 11:06:26', '2023-01-25 11:06:26'),
-(21, 'add client', 'client', 'web', '2023-01-25 11:06:34', '2023-01-25 11:06:34'),
-(22, 'delete client', 'client', 'web', '2023-01-25 11:06:49', '2023-01-25 11:06:49'),
-(23, 'update client', 'client', 'web', '2023-01-25 11:07:03', '2023-01-25 11:07:03'),
-(24, 'add team', 'team', 'web', '2023-01-25 11:28:20', '2023-01-25 11:28:20'),
-(25, 'view team', 'team', 'web', '2023-01-25 11:28:32', '2023-01-25 11:28:32'),
-(26, 'update team', 'team', 'web', '2023-01-25 11:28:40', '2023-01-25 11:28:40'),
-(27, 'delete team', 'team', 'web', '2023-01-25 11:28:48', '2023-01-25 11:28:48'),
-(28, 'view department', 'department', 'web', '2023-01-25 11:33:52', '2023-01-25 11:33:52'),
-(29, 'add department', 'department', 'web', '2023-01-25 11:33:58', '2023-01-25 11:33:58'),
-(30, 'update department', 'department', 'web', '2023-01-25 11:34:06', '2023-01-25 11:34:06'),
-(31, 'delete department', 'department', 'web', '2023-01-25 11:34:14', '2023-01-25 11:34:14'),
-(32, 'assign practice user', 'user', 'web', '2023-02-05 10:23:45', '2023-02-05 10:23:45'),
-(33, 'update user', 'user', 'web', '2023-02-05 10:25:02', '2023-02-05 10:25:02'),
-(34, 'view practice', 'practice', 'web', '2023-02-05 11:38:14', '2023-02-05 11:38:14'),
-(35, 'add practice', 'practice', 'web', '2023-02-05 11:38:27', '2023-02-05 11:38:27'),
-(36, 'update practice', 'practice', 'web', '2023-02-05 11:38:40', '2023-02-05 11:38:40'),
-(37, 'delete practice', 'practice', 'web', '2023-02-05 11:38:48', '2023-02-05 11:38:48'),
-(38, 'assign department user', 'user', 'web', '2023-02-06 10:02:32', '2023-02-06 10:02:32'),
-(39, 'import file', 'file', 'web', '2023-02-06 14:30:10', '2023-02-06 14:30:10'),
-(40, 'view file', 'file', 'web', '2023-02-06 14:30:28', '2023-02-06 14:30:28'),
-(41, 'update file', 'file', 'web', '2023-02-06 14:30:41', '2023-02-06 14:30:41'),
-(42, 'delete file', 'file', 'web', '2023-02-06 14:30:49', '2023-02-06 14:30:49'),
-(44, 'assign team user', 'user', 'web', '2023-02-06 10:02:32', '2023-02-06 10:02:32'),
-(45, 'delete role', 'role', 'web', '2023-01-19 11:17:29', '2023-01-19 11:17:29'),
-(46, 'update role', 'role', 'web', '2023-01-19 11:21:41', '2023-01-19 11:21:41'),
-(47, 'update ticket', 'ticket', 'web', '2023-01-25 10:07:00', '2023-01-25 10:07:00'),
-(48, 'delete ticket', 'ticket', 'web', '2023-01-25 10:07:00', '2023-01-25 10:07:00'),
-(49, 'view ticket', 'ticket', 'web', '2023-01-25 10:07:00', '2023-01-25 10:07:00'),
-(50, 'assign role', 'role', 'web', '2023-01-19 11:21:41', '2023-01-19 11:21:41'),
-(51, 'add status', 'status', 'web', '2023-01-25 10:07:00', '2023-01-25 10:07:00'),
-(52, 'delete status', 'status', 'web', '2023-01-25 10:07:00', '2023-01-25 10:07:00'),
-(53, 'update status', 'status', 'web', '2023-01-25 10:07:00', '2023-01-25 10:07:00'),
-(54, 'view status', 'status', 'web', '2023-01-19 11:21:41', '2023-01-19 11:21:41');
+INSERT INTO `permissions` (`id`, `name`, `display_name`, `type`, `guard_name`, `created_at`, `updated_at`) VALUES
+(13, 'add role', 'can create', 'role', 'web', '2023-01-19 11:17:29', '2023-01-19 11:17:29'),
+(14, 'view role', 'can view', 'role', 'web', '2023-01-19 11:21:41', '2023-01-19 11:21:41'),
+(15, 'view user', 'can view', 'user', 'web', '2023-01-19 11:53:09', '2023-01-19 11:53:09'),
+(16, 'add user', 'can create', 'user', 'web', '2023-01-19 11:54:04', '2023-01-19 11:54:04'),
+(17, 'delete user', 'can delete', 'user', 'web', '2023-01-19 11:56:04', '2023-01-19 11:56:04'),
+(19, 'create ticket', 'can create', 'ticket', 'web', '2023-01-25 10:07:00', '2023-01-25 10:07:00'),
+(20, 'view client', 'can view', 'client', 'web', '2023-01-25 11:06:26', '2023-01-25 11:06:26'),
+(21, 'add client', 'can create', 'client', 'web', '2023-01-25 11:06:34', '2023-01-25 11:06:34'),
+(22, 'delete client', 'can delete', 'client', 'web', '2023-01-25 11:06:49', '2023-01-25 11:06:49'),
+(23, 'update client', 'can update', 'client', 'web', '2023-01-25 11:07:03', '2023-01-25 11:07:03'),
+(24, 'add team', 'can create', 'team', 'web', '2023-01-25 11:28:20', '2023-01-25 11:28:20'),
+(25, 'view team', 'can view', 'team', 'web', '2023-01-25 11:28:32', '2023-01-25 11:28:32'),
+(26, 'update team', 'can update', 'team', 'web', '2023-01-25 11:28:40', '2023-01-25 11:28:40'),
+(27, 'delete team', 'can delete', 'team', 'web', '2023-01-25 11:28:48', '2023-01-25 11:28:48'),
+(28, 'view department', 'can view', 'department', 'web', '2023-01-25 11:33:52', '2023-01-25 11:33:52'),
+(29, 'add department', 'can create', 'department', 'web', '2023-01-25 11:33:58', '2023-01-25 11:33:58'),
+(30, 'update department', 'can update', 'department', 'web', '2023-01-25 11:34:06', '2023-01-25 11:34:06'),
+(31, 'delete department', 'can delete', 'department', 'web', '2023-01-25 11:34:14', '2023-01-25 11:34:14'),
+(32, 'assign practice user', 'can assign practice', 'user', 'web', '2023-02-05 10:23:45', '2023-02-05 10:23:45'),
+(33, 'update user', 'can update', 'user', 'web', '2023-02-05 10:25:02', '2023-02-05 10:25:02'),
+(34, 'view practice', 'can view', 'practice', 'web', '2023-02-05 11:38:14', '2023-02-05 11:38:14'),
+(35, 'add practice', 'can create', 'practice', 'web', '2023-02-05 11:38:27', '2023-02-05 11:38:27'),
+(36, 'update practice', 'can update', 'practice', 'web', '2023-02-05 11:38:40', '2023-02-05 11:38:40'),
+(37, 'delete practice', 'can delete', 'practice', 'web', '2023-02-05 11:38:48', '2023-02-05 11:38:48'),
+(38, 'assign department user', 'can assign department', 'user', 'web', '2023-02-06 10:02:32', '2023-02-06 10:02:32'),
+(39, 'import file', 'can create', 'file', 'web', '2023-02-06 14:30:10', '2023-02-06 14:30:10'),
+(40, 'view file', 'can view', 'file', 'web', '2023-02-06 14:30:28', '2023-02-06 14:30:28'),
+(41, 'update file', 'can update', 'file', 'web', '2023-02-06 14:30:41', '2023-02-06 14:30:41'),
+(42, 'delete file', 'can delete', 'file', 'web', '2023-02-06 14:30:49', '2023-02-06 14:30:49'),
+(44, 'assign team user', 'can assign team', 'user', 'web', '2023-02-06 10:02:32', '2023-02-06 10:02:32'),
+(45, 'delete role', 'can delete', 'role', 'web', '2023-01-19 11:17:29', '2023-01-19 11:17:29'),
+(46, 'update role', 'can update', 'role', 'web', '2023-01-19 11:21:41', '2023-01-19 11:21:41'),
+(47, 'update ticket', 'can update', 'ticket', 'web', '2023-01-25 10:07:00', '2023-01-25 10:07:00'),
+(48, 'delete ticket', 'can delete', 'ticket', 'web', '2023-01-25 10:07:00', '2023-01-25 10:07:00'),
+(49, 'view ticket', 'can view', 'ticket', 'web', '2023-01-25 10:07:00', '2023-01-25 10:07:00'),
+(50, 'assign role', 'can assign', 'role', 'web', '2023-01-19 11:21:41', '2023-01-19 11:21:41'),
+(51, 'add status', 'can create', 'status', 'web', '2023-01-25 10:07:00', '2023-01-25 10:07:00'),
+(52, 'delete status', 'can delete', 'status', 'web', '2023-01-25 10:07:00', '2023-01-25 10:07:00'),
+(53, 'update status', 'can update', 'status', 'web', '2023-01-25 10:07:00', '2023-01-25 10:07:00'),
+(54, 'view status', 'can view', 'status', 'web', '2023-01-19 11:21:41', '2023-01-19 11:21:41'),
+(55, 'add document type', 'can create', 'document_type', 'web', '2023-01-25 10:07:00', '2023-01-25 10:07:00'),
+(56, 'delete document type', 'can delete', 'document_type', 'web', '2023-01-25 10:07:00', '2023-01-25 10:07:00'),
+(57, 'update document type', 'can update', 'document_type', 'web', '2023-01-25 10:07:00', '2023-01-25 10:07:00'),
+(58, 'view document type', 'can view', 'document_type', 'web', '2023-01-19 11:21:41', '2023-01-19 11:21:41'),
+(59, 'delete activity', 'can delete', 'activity', 'web', '2023-01-19 11:21:41', '2023-01-19 11:21:41'),
+(60, 'view activity', 'can view', 'activity', 'web', '2023-01-19 11:21:41', '2023-01-19 11:21:41'),
+(61, 'assign department client', 'can assign department', 'client', 'web', '2023-01-25 11:07:03', '2023-01-25 11:07:03'),
+(62, 'assign practice client', 'can assign practice', 'client', 'web', '2023-01-25 11:07:03', '2023-01-25 11:07:03'),
+(63, 'assign team client', 'can assign team', 'client', 'web', '2023-01-25 11:07:03', '2023-01-25 11:07:03'),
+(64, 'email file', 'can email', 'file', 'web', '2023-02-06 14:30:49', '2023-02-06 14:30:49'),
+(65, 'download file', 'can download', 'file', 'web', '2023-02-06 14:30:49', '2023-02-06 14:30:49'),
+(66, 'view document report', 'can view document report', 'reports', 'web', '2023-02-06 14:30:49', '2023-02-06 14:30:49'),
+(67, 'view tickets report', 'can view tickets report', 'reports', 'web', '2023-02-06 14:30:49', '2023-02-06 14:30:49'),
+(68, 'view users report', 'can view users report', 'reports', 'web', '2023-02-06 14:30:49', '2023-02-06 14:30:49'),
+(69, 'refer ticket', 'can refer ticket', 'ticket', 'web', '2023-01-25 10:07:00', '2023-01-25 10:07:00'),
+(70, 'change status', 'can change status', 'ticket', 'web', '2023-01-25 10:07:00', '2023-01-25 10:07:00'),
+(71, 'approve ticket', 'can approve ticket', 'ticket', 'web', '2023-01-25 10:07:00', '2023-01-25 10:07:00'),
+(72, 'required approval', 'can required approval', 'ticket', 'web', '2023-01-25 10:07:00', '2023-01-25 10:07:00'),
+(73, 'allow dmail', 'allow dmail', 'ticket', 'web', '2023-01-25 10:07:00', '2023-01-25 10:07:00'),
+(74, 'browser notification', 'Browser Notification', 'notification', 'web', '2023-01-25 10:07:00', '2023-01-25 10:07:00'),
+(75, 'push notification', 'Push Notification', 'notification', 'web', '2023-01-25 10:07:00', '2023-01-25 10:07:00'),
+(76, 'sms alerts', 'SMS Alerts', 'notification', 'web', '2023-01-25 10:07:00', '2023-01-25 10:07:00');
 
 -- --------------------------------------------------------
 
@@ -530,6 +571,28 @@ INSERT INTO `role_has_permissions` (`permission_id`, `role_id`) VALUES
 (52, 18),
 (53, 18),
 (54, 18),
+(55, 18),
+(56, 18),
+(57, 18),
+(58, 18),
+(59, 18),
+(60, 18),
+(61, 18),
+(62, 18),
+(63, 18),
+(64, 18),
+(65, 18),
+(66, 18),
+(67, 18),
+(68, 18),
+(69, 18),
+(70, 18),
+(71, 18),
+(72, 18),
+(73, 18),
+(74, 18),
+(75, 18),
+(76, 18),
 (15, 19),
 (16, 19),
 (19, 19),
@@ -551,11 +614,11 @@ INSERT INTO `role_has_permissions` (`permission_id`, `role_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `statues`
+-- Table structure for table `statuses`
 --
 
-DROP TABLE IF EXISTS `statues`;
-CREATE TABLE IF NOT EXISTS `statues` (
+DROP TABLE IF EXISTS `statuses`;
+CREATE TABLE IF NOT EXISTS `statuses` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `company_id` int(11) NOT NULL,
   `name` varchar(128) NOT NULL,
@@ -563,7 +626,15 @@ CREATE TABLE IF NOT EXISTS `statues` (
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `statuses`
+--
+
+INSERT INTO `statuses` (`id`, `company_id`, `name`, `type`, `created_at`, `updated_at`) VALUES
+(1, 6, 'To Be Posted', 'document', '2023-02-22 18:07:25', '2023-02-23 17:12:17'),
+(2, 6, 'Active', 'user', '2023-02-23 11:40:41', '2023-02-23 11:40:41');
 
 -- --------------------------------------------------------
 

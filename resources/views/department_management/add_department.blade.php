@@ -14,7 +14,6 @@
                 <div class="form-group mb-3">
                   <label for="company">Company</label>
                   <select class="form-control @error('company') is-invalid @enderror" name="company" id="company">
-
                     @foreach (companies() as $item)
                     <option value="{{ $item->id }}" {{(@$department) ? (@$department->company_id==$item->id ? 'selected="selected"' : '') : '' }}>{{ $item->name }}</option>
                     @endforeach
@@ -32,6 +31,22 @@
                   <label for="name">Name</label>
                   <input name="name" value="{{ (@$department) ? @$department->name : old('name') }}" required type="text" id="name" class="form-control @error('name') is-invalid @enderror">
                   @error('name')
+                  <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                  </span>
+                  @enderror
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group mb-3">
+                  <label for="parent_department">Parent Department</label>
+                  <select name="parent_department" id="parent_department" class="form-control @error('company') is-invalid @enderror">
+                    <option value="0">--Please Selcet--</option>
+                    @foreach ($departments as $item)
+                    <option value="{{ $item->id }}" {{(@$department) ? (@$department->parent_id==$item->id ? 'selected="selected"' : '') : '' }}>{{ $item->name }}</option>
+                    @endforeach
+                  </select>
+                  @error('company')
                   <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
                   </span>

@@ -30,7 +30,7 @@ class StatusController extends Controller
         } else {
             $statues = Status::where('company_id', Auth::user()->company->id)->orderBy('id', 'DESC')->get();
         }
-        return view('statues_management.index', compact('data', 'statues'));
+        return view('statuses_management.index', compact('data', 'statues'));
     }
 
     /**
@@ -41,10 +41,8 @@ class StatusController extends Controller
     public function create()
     {
         $data['menu'] = "general-management";
-        $data['sub_menu'] = "teams";
-        $types = ["Practice", "User", "Client", "File", "Team"];
-        sort($types);
-        return view('statues_management.create', compact('data', 'types'));
+        $data['sub_menu'] = "statues";
+        return view('statuses_management.create', compact('data'));
     }
 
     /**
@@ -55,7 +53,20 @@ class StatusController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request);
+        $this->validate($request, [
+            'name' => 'required',
+            'type' => 'required',
+        ]);
+        $data["name"] = $request->name;
+        $data["type"] = $request->type;
+        if (auth()->user()->hasRole('dev')) {
+            $company_id = $request->company;
+        } else {
+            $company_id = Auth::user()->company->id;
+        }
+        $data["company_id"] = $company_id;
+        Status::create($data);
+        return redirect()->route('statuses.index')->with('success', "Status Created Successfully");
     }
 
     /**
@@ -64,7 +75,7 @@ class StatusController extends Controller
      * @param  \App\Models\status  $status
      * @return \Illuminate\Http\Response
      */
-    public function show(status $status)
+    public function show(Status $status)
     {
         //
     }
@@ -75,9 +86,11 @@ class StatusController extends Controller
      * @param  \App\Models\status  $status
      * @return \Illuminate\Http\Response
      */
-    public function edit(status $status)
+    public function edit(Status $status)
     {
-        //
+        $data['menu'] = "general-management";
+        $data['sub_menu'] = "statues";
+        return view('statuses_management.edit', compact('data', 'status'));
     }
 
     /**
@@ -87,9 +100,11 @@ class StatusController extends Controller
      * @param  \App\Models\status  $status
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, status $status)
+    public function update(Request $request, Status $status)
     {
-        //
+        $input["name"] = $request->name;
+        $status->update($input);
+        return redirect()->route('statuses.index')->with('success', "Status Updated Successfully");
     }
 
     /**
@@ -98,8 +113,9 @@ class StatusController extends Controller
      * @param  \App\Models\status  $status
      * @return \Illuminate\Http\Response
      */
-    public function destroy(status $status)
+    public function destroy(Status $status)
     {
-        //
+        $status->delete();
+        return redirect()->route('statuses.index')->with('success', 'Status Deleted Successfully');
     }
 }

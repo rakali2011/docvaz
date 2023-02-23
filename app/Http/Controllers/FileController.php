@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Practice;
 use App\Models\File;
+use App\Models\Status;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\DB;
@@ -53,8 +54,7 @@ class FileController extends Controller
         } else {
             $practices = Auth::user()->assinged_practices();
         }
-        $status = ["To Be Posted", "Posted", "In-Process", "Pending", "Complete", "Pending (For Coding)", "On-Hold (For Coding)", "Coded"];
-        sort($status, SORT_STRING);
+        $status = json_decode(json_encode(Status::where('company_id', Auth::user()->company->id)->where('type', 'document')->orderBy('name', 'ASC')->pluck("name")), true);
         return view('files_management.import', compact('data', 'practices', 'status'));
     }
     function edit_file($id)
@@ -68,8 +68,7 @@ class FileController extends Controller
         } else {
             $practices = Auth::user()->assinged_practices();
         }
-        $status = ["To Be Posted", "Posted", "In-Process", "Pending", "Complete", "Pending (For Coding)", "On-Hold (For Coding)", "Coded"];
-        sort($status, SORT_STRING);
+        $status = json_decode(json_encode(Status::where('company_id', Auth::user()->company->id)->where('type', 'document')->orderBy('name', 'ASC')->pluck("name")), true);
         return view('files_management.update', compact('data', 'practices', 'file', 'status'));
     }
     public function post_file(Request $req)

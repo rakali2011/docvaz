@@ -3,9 +3,9 @@
 <div class="container-fluid">
   <div class="row justify-content-center">
     <div class="col-12">
-      <span class="mb-2 page-title menu-head">Statues</span>
-      @can('add team')
-      <a class="btn btn-primary float-right" href="{{ route('statues.create') }}">Create Status</a>
+      <span class="mb-2 page-title menu-head">Statuses</span>
+      @can('create ticket')
+      <a class="btn btn-primary float-right" href="{{ route('tickets.create') }}">Create Ticket</a>
       @endcan
       <p class="card-text"></p>
       <div class="row my-4">
@@ -17,6 +17,7 @@
                 <thead>
                   <tr>
                     <th>Name</th>
+                    <th>Type</th>
                     @role('dev')
                     <th>Company</th>
                     @endrole
@@ -24,9 +25,10 @@
                   </tr>
                 </thead>
                 <tbody>
-                  @foreach ($statues as $item)
+                  @foreach ($tickets as $item)
                   <tr>
                     <td>{{ $item->name }}</td>
+                    <td>{{ ucwords($item->type) }}</td>
                     @role('dev')
                     <td>{{ @$item->company->name }}</td>
                     @endrole
@@ -35,7 +37,14 @@
                         <span class="text-muted sr-only">Action</span>
                       </button>
                       <div class="dropdown-menu dropdown-menu-right">
-                        <a class="dropdown-item" href="{{ route('edit_team', ['id' => Crypt::encrypt($item->id)]) }}">Edit</a>
+                        @can('update ticket')
+                        <a class="dropdown-item" href="{{ route('tickets.edit',$item->id) }}">Edit</a>
+                        @endcan
+                        @can('delete ticket')
+                        {!! Form::open(['method' => 'DELETE','route' => ['tickets.destroy', $item->id],'style'=>'display:inline']) !!}
+                        {!! Form::submit('Delete', ['class' => 'dropdown-item']) !!}
+                        {!! Form::close() !!}
+                        @endcan
                       </div>
                     </td>
                   </tr>

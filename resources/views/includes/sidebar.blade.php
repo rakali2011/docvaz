@@ -134,9 +134,15 @@
           <span class="ml-3 item-text">General Management</span>
         </a>
         <ul class="collapse list-unstyled pl-4 w-100" id="general-management-sub">
+          @can('view document type')
+          <li class="nav-item">
+            <a class="nav-link pl-3 sub-menu" id="document_types" href="{{ route('document_types.index') }}"><span class="ml-1 item-text">Document Types</span>
+            </a>
+          </li>
+          @endcan
           @can('view status')
           <li class="nav-item">
-            <a class="nav-link pl-3 sub-menu" id="statues" href="{{ route('statues.index') }}"><span class="ml-1 item-text">Statues</span>
+            <a class="nav-link pl-3 sub-menu" id="statues" href="{{ route('statuses.index') }}"><span class="ml-1 item-text">Statues</span>
             </a>
           </li>
           @endcan
@@ -180,11 +186,25 @@
           @endcan
         </ul>
       </li>
-
     </ul>
-
     @endcan
-
-
+    @can('allow dmail')
+    <ul class="navbar-nav flex-fill w-100 mb-2">
+      <li class="nav-item dropdown">
+        <a href="#dmail-management-sub" id="dmail-management" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link menu">
+          <i class="fe fe-box fe-16"></i>
+          <span class="ml-3 item-text">Dmail</span>
+        </a>
+        <ul class="collapse list-unstyled pl-4 w-100" id="dmail-management-sub">
+          @can('view ticket')
+          <li class="nav-item">
+            <a class="nav-link pl-3 sub-menu" id="tickets" href="{{ route('tickets.index') }}"><span class="ml-1 item-text">Tickets</span>
+            </a>
+          </li>
+          @endcan
+        </ul>
+      </li>
+    </ul>
+    @endcan
   </nav>
 </aside>

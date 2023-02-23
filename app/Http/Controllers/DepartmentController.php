@@ -31,7 +31,11 @@ class DepartmentController extends Controller
     {
         $data['menu'] = "general-management";
         $data['sub_menu'] = "departments";
-        return view('department_management.add_department', compact('data'));
+        if (auth()->user()->hasRole('dev'))
+            $departments = Department::where('parent_id', 0)->orderBy('id', 'DESC')->get();
+        else
+            $departments = Department::where('company_id', Auth::user()->company->id)->where('parent_id', 0)->orderBy('id', 'DESC')->get();
+        return view('department_management.add_department', compact('data', 'departments'));
     }
     public function edit_department($id)
     {
@@ -40,18 +44,22 @@ class DepartmentController extends Controller
         $data['menu'] = "general-management";
         $data['sub_menu'] = "departments";
         $department = Department::findorfail($id);
-        return view('department_management.add_department', compact('data', 'department'));
+        if (auth()->user()->hasRole('dev'))
+            $departments = Department::where('parent_id', 0)->orderBy('id', 'DESC')->get();
+        else
+            $departments = Department::where('company_id', Auth::user()->company->id)->where('parent_id', 0)->orderBy('id', 'DESC')->get();
+        return view('department_management.add_department', compact('data', 'department', 'departments'));
     }
     public function post_department(Request $req)
     {
         $role_array = array();
         $department = new Department;
         $department->name = $req->name;
-        if (auth()->user()->hasRole('dev')) {
+        $department->parent_id = $req->parent_department;
+        if (auth()->user()->hasRole('dev'))
             $company_id = $req->company;
-        } else {
+        else
             $company_id = Auth::user()->company->id;
-        }
         $department->company_id = $company_id;
         $department->save();
         return redirect()->route('departments')->with('success', "Department Created Successfully");
@@ -63,14 +71,14 @@ class DepartmentController extends Controller
         }
         DB::beginTransaction();
         try {
-            if (auth()->user()->hasRole('dev')) {
+            if (auth()->user()->hasRole('dev'))
                 $company_id = $req->company;
-            } else {
+            else
                 $company_id = Auth::user()->company->id;
-            }
             $department = Department::findorfail($id);
             $department->name = $req->name;
             $department->company_id = $company_id;
+            $department->parent_id = $req->parent_department;
             $department->save();
             DB::commit();
             return redirect()->route('departments')->with('success', "Department Updated Successfully");

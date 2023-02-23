@@ -54,8 +54,8 @@
                   @enderror
                 </div>
               </div>
-              <div class="col-xs-12 col-sm-12 col-md-12 text-center" style="margin-bottom:20px;">
-                <strong class="btn-primary">Permissions:</strong>
+              <div class="col-xs-12 col-sm-12 col-md-12 text-center" style="margin-bottom:30px;margin-top:10px;">
+                <strong class="btn-primary" style="padding:10px 20px 8px 20px;">Permissions:</strong>
               </div>
               <div class="col-xs-6 col-sm-6 col-md-3">
                 <strong class="btn-success"><label for="activity">Activity</label><input type="checkbox" name="check-all" id="activity" {{ @$check_all["activity"] }}></strong>
@@ -64,20 +64,7 @@
                   @if($value->type=="activity")
                   <div class="form-check form-check-inline">
                     {{ Form::checkbox('permission[]', $value->id, in_array($value->id, @$assign_permissions) ? true : false, array('class' => 'form-check-input activity','id'=>$value->name)) }}
-                    <label for="{{ $value->name }}" class="form-check-label">{{ ucwords(str_replace("-"," ",$value->name)) }}</label>
-                  </div>
-                  @endif
-                  @endforeach
-                </div>
-              </div>
-              <div class="col-xs-6 col-sm-6 col-md-3">
-                <strong class="btn-success"><label for="application">Application</label><input type="checkbox" name="check-all" id="application" {{ @$check_all["application"] }}></strong>
-                <div class="form-group">
-                  @foreach($permissions as $value)
-                  @if($value->type=="application")
-                  <div class="form-check form-check-inline">
-                    {{ Form::checkbox('permission[]', $value->id, in_array($value->id, @$assign_permissions) ? true : false, array('class' => 'form-check-input application','id'=>$value->name)) }}
-                    <label for="{{ $value->name }}" class="form-check-label">{{ ucwords(str_replace("-"," ",$value->name)) }}</label>
+                    <label for="{{ $value->name }}" class="form-check-label">{{ ucwords(str_replace("-"," ",$value->display_name)) }}</label>
                   </div>
                   @endif
                   @endforeach
@@ -90,7 +77,7 @@
                   @if($value->type=="client")
                   <div class="form-check form-check-inline">
                     {{ Form::checkbox('permission[]', $value->id, in_array($value->id, @$assign_permissions) ? true : false, array('class' => 'form-check-input client','id'=>$value->name)) }}
-                    <label for="{{ $value->name }}" class="form-check-label">{{ ucwords(str_replace("-"," ",$value->name)) }}</label>
+                    <label for="{{ $value->name }}" class="form-check-label">{{ ucwords(str_replace("-"," ",$value->display_name)) }}</label>
                   </div>
                   @endif
                   @endforeach
@@ -103,20 +90,20 @@
                   @if($value->type=="department")
                   <div class="form-check form-check-inline">
                     {{ Form::checkbox('permission[]', $value->id, in_array($value->id, @$assign_permissions) ? true : false, array('class' => 'form-check-input department','id'=>$value->name)) }}
-                    <label for="{{ $value->name }}" class="form-check-label">{{ ucwords(str_replace("-"," ",$value->name)) }}</label>
+                    <label for="{{ $value->name }}" class="form-check-label">{{ ucwords(str_replace("-"," ",$value->display_name)) }}</label>
                   </div>
                   @endif
                   @endforeach
                 </div>
               </div>
               <div class="col-xs-6 col-sm-6 col-md-3">
-                <strong class="btn-success"><label for="document">Document</label><input type="checkbox" name="check-all" id="document" {{ @$check_all["document"] }}></strong>
+                <strong class="btn-success"><label for="document_type">Document Type</label><input type="checkbox" name="check-all" id="document_type" {{ @$check_all["document_type"] }}></strong>
                 <div class="form-group">
                   @foreach($permissions as $value)
-                  @if($value->type=="document")
+                  @if($value->type=="document_type")
                   <div class="form-check form-check-inline">
-                    {{ Form::checkbox('permission[]', $value->id, in_array($value->id, @$assign_permissions) ? true : false, array('class' => 'form-check-input document','id'=>$value->name)) }}
-                    <label for="{{ $value->name }}" class="form-check-label">{{ ucwords(str_replace("-"," ",$value->name)) }}</label>
+                    {{ Form::checkbox('permission[]', $value->id, in_array($value->id, @$assign_permissions) ? true : false, array('class' => 'form-check-input document_type','id'=>$value->name)) }}
+                    <label for="{{ $value->name }}" class="form-check-label">{{ ucwords(str_replace("-"," ",$value->display_name)) }}</label>
                   </div>
                   @endif
                   @endforeach
@@ -129,20 +116,20 @@
                   @if($value->type=="file")
                   <div class="form-check form-check-inline">
                     {{ Form::checkbox('permission[]', $value->id, in_array($value->id, @$assign_permissions) ? true : false, array('class' => 'form-check-input file','id'=>$value->name)) }}
-                    <label for="{{ $value->name }}" class="form-check-label">{{ ucwords(str_replace("-"," ",$value->name)) }}</label>
+                    <label for="{{ $value->name }}" class="form-check-label">{{ ucwords(str_replace("-"," ",$value->display_name)) }}</label>
                   </div>
                   @endif
                   @endforeach
                 </div>
               </div>
               <div class="col-xs-6 col-sm-6 col-md-3">
-                <strong class="btn-success"><label for="payer">Payer</label><input type="checkbox" name="check-all" id="payer" {{ @$check_all["payer"] }}></strong>
+                <strong class="btn-success"><label for="notification">Notification</label><input type="checkbox" name="check-all" id="notification" {{ @$check_all["notification"] }}></strong>
                 <div class="form-group">
                   @foreach($permissions as $value)
-                  @if($value->type=="payer")
+                  @if($value->type=="notification")
                   <div class="form-check form-check-inline">
-                    {{ Form::checkbox('permission[]', $value->id, in_array($value->id, @$assign_permissions) ? true : false, array('class' => 'form-check-input payer','id'=>$value->name)) }}
-                    <label for="{{ $value->name }}" class="form-check-label">{{ ucwords(str_replace("-"," ",$value->name)) }}</label>
+                    {{ Form::checkbox('permission[]', $value->id, in_array($value->id, @$assign_permissions) ? true : false, array('class' => 'form-check-input notification','id'=>$value->name)) }}
+                    <label for="{{ $value->name }}" class="form-check-label">{{ $value->display_name }}</label>
                   </div>
                   @endif
                   @endforeach
@@ -155,20 +142,7 @@
                   @if($value->type=="practice")
                   <div class="form-check form-check-inline">
                     {{ Form::checkbox('permission[]', $value->id, in_array($value->id, @$assign_permissions) ? true : false, array('class' => 'form-check-input practice','id'=>$value->name)) }}
-                    <label for="{{ $value->name }}" class="form-check-label">{{ ucwords(str_replace("-"," ",$value->name)) }}</label>
-                  </div>
-                  @endif
-                  @endforeach
-                </div>
-              </div>
-              <div class="col-xs-6 col-sm-6 col-md-3">
-                <strong class="btn-success"><label for="provider">Provider</label><input type="checkbox" name="check-all" id="provider" {{ @$check_all["provider"] }}></strong>
-                <div class="form-group">
-                  @foreach($permissions as $value)
-                  @if($value->type=="provider")
-                  <div class="form-check form-check-inline">
-                    {{ Form::checkbox('permission[]', $value->id, in_array($value->id, @$assign_permissions) ? true : false, array('class' => 'form-check-input provider','id'=>$value->name)) }}
-                    <label for="{{ $value->name }}" class="form-check-label">{{ ucwords(str_replace("-"," ",$value->name)) }}</label>
+                    <label for="{{ $value->name }}" class="form-check-label">{{ ucwords(str_replace("-"," ",$value->display_name)) }}</label>
                   </div>
                   @endif
                   @endforeach
@@ -181,7 +155,7 @@
                   @if($value->type=="reports")
                   <div class="form-check form-check-inline">
                     {{ Form::checkbox('permission[]', $value->id, in_array($value->id, @$assign_permissions) ? true : false, array('class' => 'form-check-input reports','id'=>$value->name)) }}
-                    <label for="{{ $value->name }}" class="form-check-label">{{ ucwords(str_replace("-"," ",$value->name)) }}</label>
+                    <label for="{{ $value->name }}" class="form-check-label">{{ ucwords(str_replace("-"," ",$value->display_name)) }}</label>
                   </div>
                   @endif
                   @endforeach
@@ -194,7 +168,7 @@
                   @if($value->type=="role")
                   <div class="form-check form-check-inline">
                     {{ Form::checkbox('permission[]', $value->id, in_array($value->id, @$assign_permissions) ? true : false, array('class' => 'form-check-input role','id'=>$value->name)) }}
-                    <label for="{{ $value->name }}" class="form-check-label">{{ ucwords(str_replace("-"," ",$value->name)) }}</label>
+                    <label for="{{ $value->name }}" class="form-check-label">{{ ucwords(str_replace("-"," ",$value->display_name)) }}</label>
                   </div>
                   @endif
                   @endforeach
@@ -207,7 +181,7 @@
                   @if($value->type=="status")
                   <div class="form-check form-check-inline">
                     {{ Form::checkbox('permission[]', $value->id, in_array($value->id, @$assign_permissions) ? true : false, array('class' => 'form-check-input status','id'=>$value->name)) }}
-                    <label for="{{ $value->name }}" class="form-check-label">{{ ucwords(str_replace("-"," ",$value->name)) }}</label>
+                    <label for="{{ $value->name }}" class="form-check-label">{{ ucwords(str_replace("-"," ",$value->display_name)) }}</label>
                   </div>
                   @endif
                   @endforeach
@@ -220,7 +194,7 @@
                   @if($value->type=="team")
                   <div class="form-check form-check-inline">
                     {{ Form::checkbox('permission[]', $value->id, in_array($value->id, @$assign_permissions) ? true : false, array('class' => 'form-check-input team','id'=>$value->name)) }}
-                    <label for="{{ $value->name }}" class="form-check-label">{{ ucwords(str_replace("-"," ",$value->name)) }}</label>
+                    <label for="{{ $value->name }}" class="form-check-label">{{ ucwords(str_replace("-"," ",$value->display_name)) }}</label>
                   </div>
                   @endif
                   @endforeach
@@ -233,7 +207,7 @@
                   @if($value->type=="ticket")
                   <div class="form-check form-check-inline">
                     {{ Form::checkbox('permission[]', $value->id, in_array($value->id, @$assign_permissions) ? true : false, array('class' => 'form-check-input ticket','id'=>$value->name)) }}
-                    <label for="{{ $value->name }}" class="form-check-label">{{ ucwords(str_replace("-"," ",$value->name)) }}</label>
+                    <label for="{{ $value->name }}" class="form-check-label">{{ ucwords(str_replace("-"," ",$value->display_name)) }}</label>
                   </div>
                   @endif
                   @endforeach
@@ -246,7 +220,7 @@
                   @if($value->type=="user")
                   <div class="form-check form-check-inline">
                     {{ Form::checkbox('permission[]', $value->id, in_array($value->id, @$assign_permissions) ? true : false, array('class' => 'form-check-input user','id'=>$value->name)) }}
-                    <label for="{{ $value->name }}" class="form-check-label">{{ ucwords(str_replace("-"," ",$value->name)) }}</label>
+                    <label for="{{ $value->name }}" class="form-check-label">{{ ucwords(str_replace("-"," ",$value->display_name)) }}</label>
                   </div>
                   @endif
                   @endforeach

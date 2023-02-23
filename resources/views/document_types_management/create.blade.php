@@ -1,11 +1,11 @@
 @extends('includes.main')
 @section('content')
 <div class="container-fluid">
-  <div class="row justify-content-center">
+  <div class="row">
     <div class="col-12">
-      <h2 class="page-title menu-head">Add Status</h2>
+      <h2 class="page-title menu-head">Add Document Type</h2>
       <div class="card shadow mb-4">
-        {!! Form::open(array('route' => 'statues.store','method'=>'POST')) !!}
+        {!! Form::open(array('route' => 'document_types.store','method'=>'POST')) !!}
         <div class="card-body">
           <div class="row">
             @role('dev')
@@ -36,23 +36,7 @@
                 @enderror
               </div>
             </div>
-            <div class="col-md-6">
-              <div class="form-group mb-3">
-                <label for="type">Type</label>
-                <select name="type" id="type" class="form-control @error('type') is-invalid @enderror">
-                  <option value="">--Please Select--</option>
-                  @foreach ($types as $item)
-                  <option value="{{ $item }}">{{ $item }}</option>
-                  @endforeach
-                </select>
-                @error('type')
-                <span class="invalid-feedback" role="alert">
-                  <strong>{{ $message }}</strong>
-                </span>
-                @enderror
-              </div>
-            </div>
-            <div class="col-12">
+            <div class="col-md-12">
               <input type="submit" value="{{ 'Save' }}" class="btn btn-success float-right">
             </div>
           </div>
