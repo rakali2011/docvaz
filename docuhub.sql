@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Feb 23, 2023 at 08:50 PM
+-- Generation Time: Feb 24, 2023 at 10:05 PM
 -- Server version: 5.7.36
 -- PHP Version: 7.4.26
 
@@ -119,7 +119,7 @@ CREATE TABLE IF NOT EXISTS `department_user` (
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `department_user`
@@ -127,8 +127,8 @@ CREATE TABLE IF NOT EXISTS `department_user` (
 
 INSERT INTO `department_user` (`id`, `user_id`, `department_id`, `created_at`, `updated_at`) VALUES
 (3, 13, 2, '2023-02-06 15:23:25', '2023-02-06 15:23:25'),
-(4, 17, 3, '2023-02-22 02:02:47', '2023-02-22 02:02:47'),
-(5, 15, 3, '2023-02-22 02:03:02', '2023-02-22 02:03:02');
+(5, 15, 3, '2023-02-22 02:03:02', '2023-02-22 02:03:02'),
+(6, 17, 4, '2023-02-24 02:21:09', '2023-02-24 02:21:09');
 
 -- --------------------------------------------------------
 
@@ -400,7 +400,7 @@ CREATE TABLE IF NOT EXISTS `practices` (
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `practices`
@@ -410,7 +410,8 @@ INSERT INTO `practices` (`id`, `company_id`, `name`, `status`, `created_at`, `up
 (1, 1, 'test practice', 1, '2023-02-05 16:57:06', '2023-02-05 16:57:06', NULL),
 (2, 1, 'bme pract', 1, '2023-02-05 17:37:33', '2023-02-05 17:37:33', NULL),
 (3, 1, 'bme test p', 1, '2023-02-05 17:38:27', '2023-02-05 17:38:27', NULL),
-(4, 6, 'New Practice 123', 1, '2023-02-16 21:12:26', '2023-02-17 18:54:50', NULL);
+(4, 6, 'New Practice 123', 1, '2023-02-16 21:12:26', '2023-02-17 18:54:50', NULL),
+(5, 6, 'Practice ABC', 1, '2023-02-24 17:34:02', '2023-02-24 21:48:29', NULL);
 
 -- --------------------------------------------------------
 
@@ -429,15 +430,15 @@ CREATE TABLE IF NOT EXISTS `practice_user` (
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `practice_user`
 --
 
 INSERT INTO `practice_user` (`id`, `user_id`, `practice_id`, `type`, `user_type`, `is_parent`, `created_at`, `updated_at`) VALUES
-(23, 13, 3, 1, 1, NULL, '2023-02-06 15:22:38', '2023-02-06 15:22:38'),
-(24, 15, 4, 1, 1, NULL, '2023-02-16 21:13:10', '2023-02-16 21:13:10');
+(2, 17, 4, 2, 1, NULL, '2023-02-24 03:08:43', '2023-02-24 03:08:43'),
+(3, 16, 5, 1, 1, NULL, '2023-02-25 02:48:09', '2023-02-25 02:48:09');
 
 -- --------------------------------------------------------
 
@@ -614,6 +615,26 @@ INSERT INTO `role_has_permissions` (`permission_id`, `role_id`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `role_user`
+--
+
+DROP TABLE IF EXISTS `role_user`;
+CREATE TABLE IF NOT EXISTS `role_user` (
+  `role_id` bigint(20) NOT NULL,
+  `user_id` bigint(20) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `created_by` varchar(32) DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  `deleted_by` varchar(32) DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `updated_by` varchar(32) DEFAULT NULL,
+  PRIMARY KEY (`role_id`,`user_id`),
+  KEY `role_user_user_id_foreign` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `statuses`
 --
 
@@ -714,7 +735,7 @@ CREATE TABLE IF NOT EXISTS `team_user` (
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `team_user`
@@ -723,7 +744,76 @@ CREATE TABLE IF NOT EXISTS `team_user` (
 INSERT INTO `team_user` (`id`, `user_id`, `team_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
 (1, 13, 1, '2023-02-21 16:21:50', '2023-02-21 16:21:50', NULL),
 (3, 15, 3, '2023-02-21 18:38:08', '2023-02-21 18:38:08', NULL),
-(5, 17, 3, '2023-02-22 01:21:58', '2023-02-22 01:21:58', NULL);
+(5, 17, 3, '2023-02-22 01:21:58', '2023-02-22 01:21:58', NULL),
+(8, 16, 5, '2023-02-25 03:04:35', '2023-02-25 03:04:35', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tickets`
+--
+
+DROP TABLE IF EXISTS `tickets`;
+CREATE TABLE IF NOT EXISTS `tickets` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `company_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `creator_name` varchar(128) NOT NULL,
+  `from` int(11) NOT NULL,
+  `department_name` varchar(128) NOT NULL,
+  `to_provider` int(11) NOT NULL,
+  `practice_name` varchar(256) NOT NULL,
+  `team` varchar(128) NOT NULL,
+  `type` varchar(32) NOT NULL,
+  `priority` varchar(32) NOT NULL,
+  `subject` text NOT NULL,
+  `message` text NOT NULL,
+  `creator` varchar(32) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `response_at` timestamp NULL DEFAULT NULL,
+  `status` int(11) NOT NULL DEFAULT '0',
+  `remarks` varchar(256) DEFAULT NULL,
+  `updated_at` timestamp NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tickets`
+--
+
+INSERT INTO `tickets` (`id`, `company_id`, `user_id`, `creator_name`, `from`, `department_name`, `to_provider`, `practice_name`, `team`, `type`, `priority`, `subject`, `message`, `creator`, `created_at`, `response_at`, `status`, `remarks`, `updated_at`) VALUES
+(1, 6, 15, 'Asad Nazir', 3, 'ABC', 4, 'New Practice 123', '', 'Info/Other', 'Concerning', 'Test subject', 'test message', 'New Test Company', '2023-02-24 16:17:37', NULL, 0, NULL, '2023-02-24 16:17:37'),
+(2, 6, 15, 'Asad Nazir', 3, 'ABC', 5, 'practice ABC', '', 'Info/Other', 'Concerning', 'Test subject', 'test message', 'New Test Company', '2023-02-24 16:17:37', NULL, 0, NULL, '2023-02-24 16:17:37');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ticket_ccs`
+--
+
+DROP TABLE IF EXISTS `ticket_ccs`;
+CREATE TABLE IF NOT EXISTS `ticket_ccs` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `ticket_id` int(11) NOT NULL,
+  `department_id` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `ticket_id` (`ticket_id`),
+  KEY `department_id` (`department_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `ticket_ccs`
+--
+
+INSERT INTO `ticket_ccs` (`id`, `ticket_id`, `department_id`, `created_at`, `updated_at`) VALUES
+(1, 1, 3, '2023-02-24 16:17:37', '2023-02-24 16:17:37'),
+(2, 1, 5, '2023-02-24 16:17:37', '2023-02-24 16:17:37'),
+(3, 1, 4, '2023-02-24 16:17:37', '2023-02-24 16:17:37'),
+(4, 2, 3, '2023-02-24 16:17:37', '2023-02-24 16:17:37'),
+(5, 2, 5, '2023-02-24 16:17:37', '2023-02-24 16:17:37'),
+(6, 2, 4, '2023-02-24 16:17:37', '2023-02-24 16:17:37');
 
 -- --------------------------------------------------------
 
@@ -755,12 +845,12 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 
 INSERT INTO `users` (`id`, `company_id`, `type`, `status`, `firstname`, `lastname`, `email`, `email_verified_at`, `password`, `remember_token`, `last_activity`, `created_at`, `updated_at`) VALUES
-(10, 0, 0, 1, 'junaid', 'khan', 'junaid@mail.com', NULL, '$2a$12$TWJEfJ3kvFfnS49Yn5lvMe4qqxJUy/Oy1Gy5fvHgkzpshsC3WlApi', 'J9jdt6RA3qWqtAUQjRmLBhHbMD3O6EtUgw9M2VQ3XgmdEddJB7X5mTUfOjLH', NULL, '2023-01-04 04:24:33', '2023-01-04 04:24:33'),
+(10, 0, 0, 1, 'Junaid', 'Khan', 'junaid@mail.com', NULL, '$2a$12$TWJEfJ3kvFfnS49Yn5lvMe4qqxJUy/Oy1Gy5fvHgkzpshsC3WlApi', 'hLYUJCQFWXl5upRMlNLjxykhHAYVFaOPg9mHsJaZ6l5OoozCbba8jR43IptG', NULL, '2023-01-04 04:24:33', '2023-02-24 09:42:42'),
 (11, 4, 2, 1, 'Super', 'Admin', 'superadmin4@bmb.com', NULL, '$2a$12$DAeA/CC/k2xUF8g1hN6toeW6cnwZFtWKDaBcEEW5Y4Fptw1OaVWAC', NULL, NULL, '2023-01-19 13:39:09', '2023-01-19 13:39:09'),
 (12, 5, 2, 1, 'Super', 'Admin', 'superadmin5@test.com', NULL, '$2a$12$DAeA/CC/k2xUF8g1hN6toeW6cnwZFtWKDaBcEEW5Y4Fptw1OaVWAC', NULL, NULL, '2023-01-22 12:33:56', '2023-01-22 12:33:56'),
 (13, 1, 2, 1, 'John D.', 'John D.', 'JohnDMurray@teleworm.us', NULL, '$2a$12$DAeA/CC/k2xUF8g1hN6toeW6cnwZFtWKDaBcEEW5Y4Fptw1OaVWAC', NULL, NULL, '2023-01-25 10:36:08', '2023-01-25 10:36:08'),
 (14, 1, 3, 1, 'test', 'client', 'client@gmail.com', NULL, '$2a$12$DAeA/CC/k2xUF8g1hN6toeW6cnwZFtWKDaBcEEW5Y4Fptw1OaVWAC', NULL, NULL, '2023-02-05 10:19:42', '2023-02-05 10:19:42'),
-(15, 6, 2, 1, 'Super', 'Admin', 'superadmin6@new.com', NULL, '$2y$10$T9jRrchuuBhVQfaaYMdlLubDgSlSz/x9UR0V8J0XZkE4zLYKM6U4W', NULL, NULL, '2023-02-16 16:08:10', '2023-02-17 12:33:27'),
+(15, 6, 2, 1, 'Asad', 'Nazir', 'superadmin6@new.com', NULL, '$2y$10$T9jRrchuuBhVQfaaYMdlLubDgSlSz/x9UR0V8J0XZkE4zLYKM6U4W', NULL, NULL, '2023-02-16 16:08:10', '2023-02-24 11:30:56'),
 (16, 6, 3, 1, 'New Client 1', 'New Client 1', 'newclient@gmail.com', NULL, '$2y$10$PYEfP6Pb1kM97kkS.M9yvOR5Eov6NcjjXqrHOCnu6NIVRkxYo7vg2', NULL, NULL, '2023-02-16 16:10:37', '2023-02-16 16:10:37'),
 (17, 6, 2, 1, 'Test', 'Test', 'test@gmail.com', NULL, '$2y$10$KA8vHn1FJekCLjBDir/Lhupag4peomZl1wjv46CfjoePjiO3s1UfS', NULL, NULL, '2023-02-21 12:54:37', '2023-02-21 12:54:37');
 

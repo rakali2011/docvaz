@@ -7,6 +7,7 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\Crypt;
+use phpDocumentor\Reflection\PseudoTypes\True_;
 
 class Controller extends BaseController
 {
@@ -64,7 +65,7 @@ class Controller extends BaseController
         }
     }
 
-    public function multiselect($items, $selected_item_array, $name, $label)
+    public function multiselect($items, $selected_item_array, $name, $label, $multiple = true)
     {
 
         $options = '';
@@ -75,7 +76,10 @@ class Controller extends BaseController
             }
             $options .= '<option value="' . Crypt::encrypt($value->id) . '" ' . $selected . ' >' . $value->name . '</option>';
         }
-        $select_html = '<label for="' . $name . '">' . $label . '</label><select class="form-control select2-multi" multiple name="' . $name . '" id="' . $name . '">' . $options . '</select>';
+        if ($multiple)
+            $select_html = '<label for="' . $name . '">' . $label . '</label><select class="form-control select2-multi" multiple name="' . $name . '" id="' . $name . '">' . $options . '</select>';
+        else
+            $select_html = '<label for="' . $name . '">' . $label . '</label><select class="form-control select2-multi" name="' . $name . '" id="' . $name . '">' . $options . '</select>';
         return $select_html;
     }
 }

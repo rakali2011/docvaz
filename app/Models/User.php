@@ -78,7 +78,7 @@ class User extends Authenticatable
     }
     public function practices()
     {
-        return $this->belongsToMany(DepaPracticertment::class, 'practice_user', 'user_id', 'practice_id');
+        return $this->belongsToMany(Practice::class, 'practice_user', 'user_id', 'practice_id');
     }
     public function assinged_practices()
     {

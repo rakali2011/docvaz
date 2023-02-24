@@ -41,7 +41,7 @@
                 <div class="form-group mb-3">
                   <label for="parent_department">Parent Department</label>
                   <select name="parent_department" id="parent_department" class="form-control @error('company') is-invalid @enderror">
-                    <option value="0">--Please Selcet--</option>
+                    <option value="0">Make This Parent</option>
                     @foreach ($departments as $item)
                     <option value="{{ $item->id }}" {{(@$department) ? (@$department->parent_id==$item->id ? 'selected="selected"' : '') : '' }}>{{ $item->name }}</option>
                     @endforeach

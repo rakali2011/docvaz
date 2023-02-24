@@ -12,6 +12,7 @@ use App\Http\Requests\PostUser;
 use App\Http\Requests\PostClient;
 use Illuminate\Support\Facades\DB;
 use Exception;
+use App\Rules\MatchOldPassword;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
@@ -132,6 +133,43 @@ class UserController extends Controller
         }
         return response()->json($response);
     }
+    public function profile()
+    {
+        $user = Auth::user();
+        $data = array();
+        $data['menu'] = "user-management";
+        $data['sub_menu'] = "users";
+        return view('user_management.profile', compact('data', 'user'));
+    }
+    public function update_profile(Request $request)
+    {
+        $user_id = Auth::user()->id;
+        $this->validate($request, [
+            'lastname' => 'required',
+            'lastname' => 'required',
+        ]);
+        $user = User::findorfail($user_id);
+        $user->firstname = $request->firstname;
+        $user->lastname = $request->lastname;
+        $user->save();
+        return redirect()->route('profile')->with('success', "Profile Updated Successfully");
+    }
+    public function change_password()
+    {
+        $data['menu'] = "user-management";
+        $data['sub_menu'] = "users";
+        return view('user_management.change_password', compact('data'));
+    }
+    public function update_password(Request $request)
+    {
+        $request->validate([
+            'current_password' => ['required', new MatchOldPassword],
+            'new_password' => ['required', 'string', 'min:6', 'different:current_password'],
+            'new_confirm_password' => ['required_with:new_password', 'string', 'same:new_password', 'min:6'],
+        ]);
+        User::find(auth()->user()->id)->update(['password' => Hash::make($request->new_password)]);
+        return redirect()->route('change_password')->with('success', "Password Change Successfully");
+    }
     public function update_user_departments(Request $request)
     {
         $response = array();
@@ -158,10 +196,13 @@ class UserController extends Controller
             $user_id = $this->clean_id($request->ref);
             $practices = $request->user_practices;
             $user = User::findorfail($user_id);
+            $practices_data = [];
             foreach ($practices as $key => $value) {
-                $practices[$key] = $this->clean_id($value);
+                $practices_data[$key]["practice_id"] = $this->clean_id($value);
+                $practices_data[$key]["type"] = 1;
+                $practices_data[$key]["user_type"] = 1;
             }
-            $user->departments()->sync($practices, TRUE);
+            $user->practices()->sync($practices_data, TRUE);
             $response['success'] = 1;
             $response['message'] = "Updated Successfully";
         } catch (\Throwable $th) {
@@ -175,7 +216,7 @@ class UserController extends Controller
         $response = array();
         try {
             $user_id = $this->clean_id($request->ref);
-            $teams = $request->user_teams;
+            $teams = is_array($request->user_teams) ? $request->user_teams : explode(",", $request->user_teams);
             $user = User::findorfail($user_id);
             foreach ($teams as $key => $value) {
                 $teams[$key] = $this->clean_id($value);

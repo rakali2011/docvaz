@@ -87,6 +87,7 @@ class TeamController extends Controller
         try {
             $user_id = $this->clean_id($req->ref);
             $user = User::find($user_id);
+            $type = isset($req->type) ? $req->type : "";
             if (auth()->user()->can('assign team user')) {
                 $team = Team::where('company_id', $user->company_id)->orderBy('name', 'ASC')->get();
             } else {
@@ -94,7 +95,9 @@ class TeamController extends Controller
             }
             $assigned_team = $user->assinged_teams_array();
             $response['success'] = 1;
-            $select = $this->multiselect($team, $assigned_team, 'user_teams[]', 'User teams');
+            $name = empty($type) ? "user_teams[]" : "user_teams";
+
+            $select = $this->multiselect($team, $assigned_team, $name, 'User teams', empty($type) ? true : false);
             $response['content'] = $select;
         } catch (\Throwable $th) {
             $response['success'] = 0;

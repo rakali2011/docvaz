@@ -1,19 +1,19 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ClientController;
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\DocumentTypeController;
+use App\Http\Controllers\FileController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\PracticeController;
-use App\Http\Controllers\FileController;
-use App\Http\Controllers\TeamController;
-use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\RoleController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\ClientController;
 use App\Http\Controllers\StatusController;
-use App\Http\Controllers\DocumentTypeController;
+use App\Http\Controllers\TeamController;
 use App\Http\Controllers\TicketController;
+use App\Http\Controllers\UserController;
 use GuzzleHttp\Middleware;
 
 /*
@@ -90,10 +90,16 @@ Route::post('/post-user', [UserController::class, 'post_user'])->middleware('per
 Route::get('/edit-user/{id}', [UserController::class, 'edit_user'])->middleware('permission:update user')->name('edit_user');
 Route::post('/update-user/{id}', [UserController::class, 'update_user'])->middleware('permission:update user')->name('update_user');
 Route::post('/get_users', [UserController::class, 'get_users'])->middleware('permission:update user')->name('get_users');
+Route::get('/profile', [UserController::class, 'profile'])->middleware('permission:update user')->name('profile');
+Route::post('/update_profile', [UserController::class, 'update_profile'])->middleware('permission:update user')->name('update_profile');
+Route::get('/change-password', [UserController::class, 'change_password'])->middleware('permission:update user')->name('change_password');
+Route::post('/update-password', [UserController::class, 'update_password'])->middleware('permission:update user')->name('update_password');
 Route::post('/update_user_departments', [UserController::class, 'update_user_departments'])->middleware('permission:assign department user')->name('update_user_departments');
 Route::post('/update_user_practices', [UserController::class, 'update_user_practices'])->middleware('permission:assign practice user')->name('update_user_practices');
 Route::post('/update_user_teams', [UserController::class, 'update_user_teams'])->middleware('permission:assign team user')->name('update_user_teams');
-
+// Statuses
 Route::resource('statuses', StatusController::class);
+// Document Types
 Route::resource('document_types', DocumentTypeController::class);
+// Tickets
 Route::resource('tickets', TicketController::class);

@@ -3,7 +3,7 @@
 <div class="container-fluid">
   <div class="row justify-content-center">
     <div class="col-12">
-      <span class="mb-2 page-title menu-head">Statuses</span>
+      <span class="mb-2 page-title menu-head">Tickets</span>
       @can('create ticket')
       <a class="btn btn-primary float-right" href="{{ route('tickets.create') }}">Create Ticket</a>
       @endcan
@@ -16,8 +16,18 @@
               <table class="table datatables" id="dataTable-1">
                 <thead>
                   <tr>
-                    <th>Name</th>
-                    <th>Type</th>
+                    <th>Ticket#</th>
+                    <th>Response</th>
+                    <th>Created</th>
+                    <th>Creator</th>
+                    <th>User Name</th>
+                    <th>Practice</th>
+                    <th>Department</th>
+                    <th>Team</th>
+                    <th>Subject</th>
+                    <th>Priority</th>
+                    <th>Status</th>
+                    <th>Remarks</th>
                     @role('dev')
                     <th>Company</th>
                     @endrole
@@ -27,8 +37,18 @@
                 <tbody>
                   @foreach ($tickets as $item)
                   <tr>
-                    <td>{{ $item->name }}</td>
-                    <td>{{ ucwords($item->type) }}</td>
+                    <td>{{ $item->id }}</td>
+                    <td>{{ $item->response_at }}</td>
+                    <td>{{ date("d/m/y h:i",strtotime($item->created_at)) }}</td>
+                    <td>{{ $item->creator }}</td>
+                    <td>{{ $item->creator_name }}</td>
+                    <td>{{ $item->practice_name }}</td>
+                    <td>{{ $item->department_name }}</td>
+                    <td>{{ $item->team }}</td>
+                    <td>{{ $item->subject }}</td>
+                    <td>{{ $item->priority }}</td>
+                    <td>{{ $item->status }}</td>
+                    <td>{{ $item->remarks }}</td>
                     @role('dev')
                     <td>{{ @$item->company->name }}</td>
                     @endrole
