@@ -5,7 +5,7 @@
     <div class="col-md-12">
       <h2 class="page-title menu-head">Create Ticket</h2>
       <div class="card shadow mb-4">
-        {!! Form::open(array('route' => 'tickets.store','method'=>'POST')) !!}
+        {!! Form::open(array('route' => 'tickets.store','method'=>'POST','id'=>'create-ticket','enctype'=>'multipart/form-data')) !!}
         <div class="card-body">
           <div class="row">
             @role('dev')
@@ -123,6 +123,11 @@
               </div>
             </div>
             <div class="col-md-12">
+              <div class="form-group mb-3">
+                <div id="uppy"></div>
+              </div>
+            </div>
+            <div class="col-md-12">
               <input type="submit" value="{{ 'Save' }}" class="btn btn-success float-right">
             </div>
           </div>
@@ -132,5 +137,50 @@
     </div>
   </div>
 </div>
+@push('scripts')
+<script>
+  var importform = document.getElementById('create-ticket');
+  importform.addEventListener('submit', event => {
+    event.preventDefault();
+    // access the files data selected by uppy
+    const files = uppy.getFiles();
+    // Create a FormData object
+    const formData = new FormData(importform);
 
+    // Append the files to the FormData object
+    files.forEach(file => {
+      formData.append('files[]', file.data);
+    });
+    fetch(importform.action, {
+        method: "POST",
+        body: formData
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+
+      })
+      .then(data => {
+        if (data.success == 1) {
+          Swal.fire({
+            icon: 'success',
+            text: data.message,
+          });
+          uppy.reset();
+          window.location.replace(data.route);
+        } else {
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: data.message,
+          });
+        }
+      })
+      .catch(error => console.error("There was a problem with the fetch operation:", error));
+
+  });
+</script>
+@endpush
 @endsection

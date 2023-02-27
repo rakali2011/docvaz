@@ -59,51 +59,51 @@
                                     @enderror
                                 </div>
                             </div>
-                            {{-- <div class="col-md-3">
-                  <div class="form-group mb-3">
-                    <label for="type">Type</label>
-                    <select class="form-control @error('type') is-invalid @enderror" name="type" id="type" >
-                      <option value="1">Client</option>
-                      <option value="2">Archiwiz Admin</option>
-                      <option value="3">Vendor</option>
-                      <option value="4">Worker</option>
-                    </select>
-                    @error('type')
-                      <span class="invalid-feedback" role="alert">
-                          <strong>{{ $message }}</strong>
-                            </span>
-                            @enderror
-                        </div>
-                    </div> --}}
-                    @if(!@$user)
-                    <div class="col-md-4">
-                        <div class="form-group mb-3">
-                            <label for="password">Password</label>
-                            <input name="password" type="password" id="password" class="form-control @error('password') is-invalid @enderror" value="{{ old('password') }}" {{ (@$user) ? '' : 'required="required="' }}>
-                            @error('password')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                            @enderror
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group mb-3">
-                            <label for="password_confirmation">Confirm Password</label>
-                            <input name="password_confirmation" type="password" id="password_confirmation" class="form-control" value="{{ old('password_confirmation') }}" {{ (@$user) ? '' : 'required="required="' }}>
-                        </div>
-                    </div>
-                    @endif
-                    <div class="col-12">
-                        <input type="submit" value="{{ (@$user)?'Update':'Save' }}" class="btn btn-success float-right">
-                    </div>
-            </div>
-        </div>
-        </form>
-    </div> <!-- / .card -->
+                            <div class="col-md-4">
+                                <div class="form-group mb-3">
+                                    <label for="team">Team</label>
+                                    <select name="team" id="team" class="form-control @error('team') is-invalid @enderror" required="required">
+                                        @foreach ($teams as $team)
+                                        <option value="{{ $team->id }}" {{ in_array($team->id,$assigned_teams)?'selected':'' }}>{{ $team->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('team')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            @if(!@$user)
+                            <div class="col-md-4">
+                                <div class="form-group mb-3">
+                                    <label for="password">Password</label>
+                                    <input name="password" type="password" id="password" class="form-control @error('password') is-invalid @enderror" value="{{ old('password') }}" {{ (@$user) ? '' : 'required="required="' }}>
+                                    @error('password')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group mb-3">
+                                    <label for="password_confirmation">Confirm Password</label>
+                                    <input name="password_confirmation" type="password" id="password_confirmation" class="form-control" value="{{ old('password_confirmation') }}" {{ (@$user) ? '' : 'required="required="' }}>
+                                </div>
+                            </div>
 
-</div> <!-- .col-12 -->
-</div> <!-- .row -->
+                            @endif
+                            <div class="col-12">
+                                <input type="submit" value="{{ (@$user)?'Update':'Save' }}" class="btn btn-success float-right">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div> <!-- / .card -->
+
+        </div> <!-- .col-12 -->
+    </div> <!-- .row -->
 </div>
 
 @endsection

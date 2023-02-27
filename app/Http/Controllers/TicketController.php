@@ -6,6 +6,7 @@ use App\Models\Company;
 use App\Models\Department;
 use App\Models\Practice;
 use App\Models\Ticket;
+use App\Models\TicketAttachment;
 use App\Models\TicketCC;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -73,43 +74,67 @@ class TicketController extends Controller
      */
     public function store(Request $request)
     {
-        $user = Auth::user();
-        $creator = $user->type == 3 ? "Provider" : Company::where('id', $user->company_id)->pluck("name")[0];
-        $creator_name = $user->firstname . " " . $user->lastname;
-        if (auth()->user()->hasRole('dev'))
-            $company_id = $request->company;
-        else
-            $company_id = $user->company_id;
-        $to_provider = $request->to_provider;
-        foreach ($to_provider as $value) {
-            $department_name = Department::where('id', $request->from)->pluck("name")[0];
-            $practice = Practice::findorfail($value);
-            $practice_name = $practice->name;
-            $associated_client = $practice->associated_user(3);
-            $client_id = $associated_client->pluck("id")[0];
-            $team = User::findorfail($client_id)->assinged_teams();
-            $ticket["company_id"] = $company_id;
-            $ticket["user_id"] = $user->id;
-            $ticket["creator_name"] = $creator_name;
-            $ticket["from"] = $request->from;
-            $ticket["department_name"] = $department_name;
-            $ticket["practice_id"] = $value;
-            $ticket["practice_name"] = $practice_name;
-            $ticket["team_id"] = $team[0]->id;
-            $ticket["team_name"] = $team[0]->name;
-            $ticket["type"] = $request->type;
-            $ticket["priority"] = $request->priority;
-            $ticket["subject"] = $request->subject;
-            $ticket["message"] = $request->message;
-            $ticket["creator"] = $creator;
-            $id = Ticket::create($ticket);
-            $cc = isset($request->cc) ? $request->cc : [];
-            foreach ($cc as $value) {
-                $ticket_cc["ticket_id"] = $id->id;
-                $ticket_cc["department_id"] = $value;
-                TicketCC::create($ticket_cc);
+        try {
+            $user = Auth::user();
+            $creator = $user->type == 3 ? "Provider" : Company::where('id', $user->company_id)->pluck("name")[0];
+            $creator_name = $user->firstname . " " . $user->lastname;
+            if (auth()->user()->hasRole('dev'))
+                $company_id = $request->company;
+            else
+                $company_id = $user->company_id;
+            $to_provider = $request->to_provider;
+            foreach ($to_provider as $value) {
+                $department_name = Department::where('id', $request->from)->pluck("name")[0];
+                $practice = Practice::findorfail($value);
+                $practice_name = $practice->name;
+                $associated_client = $practice->associated_user(3);
+                $client_id = isset($associated_client->pluck("id")[0]) ? $associated_client->pluck("id")[0] : 0;
+                $team = $client_id > 0 ? User::findorfail($client_id)->assinged_teams() : "";
+                $ticket["company_id"] = $company_id;
+                $ticket["user_id"] = $user->id;
+                $ticket["creator_name"] = $creator_name;
+                $ticket["from"] = $request->from;
+                $ticket["department_name"] = $department_name;
+                $ticket["practice_id"] = $value;
+                $ticket["practice_name"] = $practice_name;
+                $ticket["team_id"] = isset($team[0]->id) ? $team[0]->id : 0;
+                $ticket["team_name"] = isset($team[0]->name) ? $team[0]->name : "";
+                $ticket["type"] = $request->type;
+                $ticket["priority"] = $request->priority;
+                $ticket["subject"] = $request->subject;
+                $ticket["message"] = $request->message;
+                $ticket["creator"] = $creator;
+                $id = Ticket::create($ticket);
+                $cc = isset($request->cc) ? $request->cc : [];
+                foreach ($cc as $value) {
+                    $ticket_cc["ticket_id"] = $id->id;
+                    $ticket_cc["department_id"] = $value;
+                    TicketCC::create($ticket_cc);
+                }
+                if ($request->hasfile('files')) {
+                    $files = $request->file('files');
+                    foreach ($files as $key => $value) {
+                        $attachment_info = $this->upload($value, 'ticket_attachments');
+                        $attachment = new TicketAttachment;
+                        $attachment->ticket_id = $id->id;
+                        $attachment->name = $attachment_info['file_name'];
+                        $attachment->org_name = $attachment_info['file_org_name'];
+                        $attachment->path = $attachment_info['path'];
+                        $attachment->ext = $attachment_info['ext'];
+                        $attachment->size = $attachment_info['size'];
+                        $attachment->save();
+                    }
+                }
             }
+            $response['success'] = 1;
+            $response['message'] = "Ticket Created Successfully";
+            $response["route"] = route('tickets.index');
+        } catch (\Throwable $th) {
+            DB::rollback();
+            $response['success'] = 0;
+            $response['message'] = $th->getMessage();
         }
+        return response()->json($response);
         return redirect()->route('tickets.index')->with('success', "Ticket Created Successfully");
     }
 

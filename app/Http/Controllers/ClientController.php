@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
+use App\Models\Team;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\PostClient;
@@ -33,7 +35,12 @@ class ClientController extends Controller
     {
         $data['menu'] = "client-management";
         $data['sub_menu'] = "clients";
-        return view('user_management.add_client', compact('data'));
+        if (auth()->user()->can('assign team user'))
+            $teams = Team::where('company_id', Auth::user()->company->id)->orderBy('name', 'ASC')->get();
+        else
+            $teams = Auth::user()->assinged_teams();
+        $assigned_teams = [];
+        return view('user_management.add_client', compact('data', 'teams', 'assigned_teams'));
     }
     public function edit_client($id)
     {
@@ -42,7 +49,12 @@ class ClientController extends Controller
         $data['menu'] = "client-management";
         $data['sub_menu'] = "clients";
         $user = User::findorfail($id);
-        return view('user_management.add_client', compact('data', 'user'));
+        if (auth()->user()->can('assign team user'))
+            $teams = Team::where('company_id', Auth::user()->company->id)->orderBy('name', 'ASC')->get();
+        else
+            $teams = Auth::user()->assinged_teams();
+        $assigned_teams = $user->assinged_teams_array();
+        return view('user_management.add_client', compact('data', 'user', 'teams', 'assigned_teams'));
     }
     public function post_client(PostClient $req)
     {
@@ -61,6 +73,7 @@ class ClientController extends Controller
             $user->password = Hash::make($req->password);
             $user->type = 3;
             $user->save();
+            $user->teams()->sync([$req->team], TRUE);
             DB::commit();
             return redirect()->route('clients')->with('success', "Client Created Successfully");
         } catch (\Throwable $th) {
@@ -68,7 +81,7 @@ class ClientController extends Controller
             return back()->withInput()->with('error', $th->getMessage());
         }
     }
-    public function update_client(PostClient $req, $id = '')
+    public function update_client(Request $req, $id = '')
     {
         if ($id) {
             $id = $this->clean_id($id);
@@ -88,6 +101,7 @@ class ClientController extends Controller
             $user->lastname = $req->lastname;
             $user->email = $req->email;
             $user->company_id = $company_id;
+            $user->teams()->sync([$req->team], TRUE);
             $user->save();
             DB::commit();
             return redirect()->route('clients')->with('success', "User Updated Successfully");

@@ -42,7 +42,12 @@ class UserController extends Controller
         else
             $roles = SpatieRole::where('company_id', Auth::user()->company->id)->pluck('display_name', 'name')->all();
         $userRole = [];
-        return view('user_management.add_user', compact('data', 'roles', 'userRole'));
+        if (auth()->user()->can('assign team user'))
+            $teams = Team::where('company_id', Auth::user()->company->id)->orderBy('name', 'ASC')->get();
+        else
+            $teams = Auth::user()->assinged_teams();
+        $assigned_teams = [];
+        return view('user_management.add_user', compact('data', 'roles', 'userRole', 'teams', 'assigned_teams'));
     }
     public function edit_user($id)
     {
@@ -56,7 +61,12 @@ class UserController extends Controller
         else
             $roles = SpatieRole::where('company_id', Auth::user()->company->id)->pluck('display_name', 'name')->all();
         $userRole = $user->roles->pluck('name', 'name')->all();
-        return view('user_management.add_user', compact('data', 'user', 'roles', 'userRole'));
+        if (auth()->user()->can('assign team user'))
+            $teams = Team::where('company_id', Auth::user()->company->id)->orderBy('name', 'ASC')->get();
+        else
+            $teams = Auth::user()->assinged_teams();
+        $assigned_teams = $user->assinged_teams_array();
+        return view('user_management.add_user', compact('data', 'user', 'roles', 'userRole', 'teams', 'assigned_teams'));
     }
     public function post_user(PostUser $req)
     {
@@ -80,6 +90,7 @@ class UserController extends Controller
             $user->type = 2;
             $user->save();
             $user->assignRole($req->input('roles'));
+            $user->teams()->sync($req->teams, TRUE);
             DB::commit();
             return redirect()->route('users')->with('success', "User Created Successfully");
         } catch (\Throwable $th) {

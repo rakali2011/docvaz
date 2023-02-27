@@ -72,6 +72,21 @@
                 </div>
               </div>
               @endcan
+              <div class="col-md-4">
+                <div class="form-group mb-3">
+                  <label for="teams">Team</label>
+                  <select name="teams[]" id="teams" class="form-control @error('teams') is-invalid @enderror select2-multi" multiple="multiple" required="required">
+                    @foreach ($teams as $team)
+                    <option value="{{ $team->id }}" {{ in_array($team->id,$assigned_teams)?'selected':'' }}>{{ $team->name }}</option>
+                    @endforeach
+                  </select>
+                  @error('teams')
+                  <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                  </span>
+                  @enderror
+                </div>
+              </div>
               {{-- <div class="col-md-3">
                   <div class="form-group mb-3">
                     <label for="type">Type</label>

@@ -89,6 +89,10 @@ class User extends Authenticatable
         $practices = $this->belongsToMany(Practice::class, 'practice_user')->wherePivot('user_id', '=', $this->id)->pluck('practices.id');
         return json_decode(json_encode($practices), true);
     }
+    public function associated_practices($type = NULL)
+    {
+        return $this->belongsToMany(Practice::class, 'practice_user')->wherePivot('user_id', '=', $this->id)->wherePivot('users.type', '=', $type)->get();
+    }
     public function teams()
     {
         return $this->belongsToMany(Team::class, 'team_user', 'user_id', 'team_id');

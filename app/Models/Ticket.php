@@ -8,7 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Ticket extends Model
 {
     use HasFactory;
-
+    public function attachments()
+    {
+        return $this->hasMany(TicketAttachment::class);
+    }
     protected $fillable = [
         'company_id',
         'user_id',

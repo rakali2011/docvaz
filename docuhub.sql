@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Feb 27, 2023 at 05:21 PM
+-- Generation Time: Feb 27, 2023 at 08:55 PM
 -- Server version: 5.7.36
 -- PHP Version: 7.4.26
 
@@ -430,7 +430,7 @@ CREATE TABLE IF NOT EXISTS `practice_user` (
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `practice_user`
@@ -438,7 +438,9 @@ CREATE TABLE IF NOT EXISTS `practice_user` (
 
 INSERT INTO `practice_user` (`id`, `user_id`, `practice_id`, `type`, `user_type`, `is_parent`, `created_at`, `updated_at`) VALUES
 (2, 17, 5, 2, 1, NULL, '2023-02-24 03:08:43', '2023-02-27 20:00:55'),
-(3, 16, 5, 1, 1, NULL, '2023-02-25 02:48:09', '2023-02-25 02:48:09');
+(3, 16, 5, 1, 1, NULL, '2023-02-25 02:48:09', '2023-02-25 02:48:09'),
+(4, 15, 4, 1, 1, NULL, '2023-02-27 23:16:30', '2023-02-27 23:16:30'),
+(5, 15, 5, 1, 1, NULL, '2023-02-27 23:16:30', '2023-02-27 23:16:30');
 
 -- --------------------------------------------------------
 
@@ -735,7 +737,7 @@ CREATE TABLE IF NOT EXISTS `team_user` (
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `team_user`
@@ -745,7 +747,9 @@ INSERT INTO `team_user` (`id`, `user_id`, `team_id`, `created_at`, `updated_at`,
 (1, 13, 1, '2023-02-21 16:21:50', '2023-02-21 16:21:50', NULL),
 (3, 15, 3, '2023-02-21 18:38:08', '2023-02-21 18:38:08', NULL),
 (5, 17, 3, '2023-02-22 01:21:58', '2023-02-22 01:21:58', NULL),
-(11, 16, 4, '2023-02-25 03:21:00', '2023-02-25 03:21:00', NULL);
+(12, 18, 3, '2023-02-27 22:43:41', '2023-02-27 22:43:41', NULL),
+(13, 18, 4, '2023-02-27 22:43:41', '2023-02-27 22:43:41', NULL),
+(14, 16, 5, '2023-02-27 23:06:19', '2023-02-27 23:06:19', NULL);
 
 -- --------------------------------------------------------
 
@@ -776,7 +780,7 @@ CREATE TABLE IF NOT EXISTS `tickets` (
   `remarks` varchar(256) DEFAULT NULL,
   `updated_at` timestamp NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tickets`
@@ -788,7 +792,43 @@ INSERT INTO `tickets` (`id`, `company_id`, `user_id`, `creator_name`, `from`, `d
 (3, 6, 15, 'Asad Nazir', 3, 'ABC', 5, 'test practice', 0, 'Team B', 'Info/Other', 'Concerning', 'Test', 'message', 'New Test Company', '2023-02-27 11:23:47', NULL, 0, NULL, '2023-02-27 11:23:47'),
 (4, 6, 15, 'Asad Nazir', 3, 'ABC', 5, 'test practice', 4, 'Team B', 'Info/Other', 'Concerning', 'Test', 'dsadsad', 'New Test Company', '2023-02-27 11:51:23', NULL, 0, NULL, '2023-02-27 11:51:23'),
 (5, 6, 15, 'Asad Nazir', 3, 'ABC', 5, 'Practice ABC', 4, 'Team B', 'Info/Other', 'Concerning', 'dsf', 'dsfdsfsd', 'New Test Company', '2023-02-27 11:56:17', NULL, 0, NULL, '2023-02-27 11:56:17'),
-(6, 6, 15, 'Asad Nazir', 3, 'ABC', 5, 'Practice ABC', 4, 'Team B', 'Info/Other', 'Concerning', 'Testdsadsa', 'asdsadsadsad', 'New Test Company', '2023-02-27 11:57:24', NULL, 0, NULL, '2023-02-27 11:57:24');
+(6, 6, 15, 'Asad Nazir', 3, 'ABC', 5, 'Practice ABC', 4, 'Team B', 'Info/Other', 'Concerning', 'Testdsadsa', 'asdsadsadsad', 'New Test Company', '2023-02-27 11:57:24', NULL, 0, NULL, '2023-02-27 11:57:24'),
+(7, 6, 15, 'Asad Nazir', 3, 'ABC', 5, 'Practice ABC', 5, 'Team C', 'Info/Other', 'Concerning', 'Test', 'sadsadsad', 'New Test Company', '2023-02-27 14:34:36', NULL, 0, NULL, '2023-02-27 14:34:36'),
+(8, 6, 15, 'Asad Nazir', 3, 'ABC', 4, 'New Practice 123', 0, '', 'Info/Other', 'Concerning', 'Testsadsa', 'asdsadsadsad', 'New Test Company', '2023-02-27 14:41:23', NULL, 0, NULL, '2023-02-27 14:41:23'),
+(9, 6, 15, 'Asad Nazir', 3, 'ABC', 5, 'Practice ABC', 5, 'Team C', 'Info/Other', 'Concerning', 'Test', 'sadsad', 'New Test Company', '2023-02-27 15:27:16', NULL, 0, NULL, '2023-02-27 15:27:16'),
+(10, 6, 15, 'Asad Nazir', 3, 'ABC', 5, 'Practice ABC', 5, 'Team C', 'Info/Other', 'Concerning', 'Test', 'sadsad', 'New Test Company', '2023-02-27 15:29:38', NULL, 0, NULL, '2023-02-27 15:29:38'),
+(11, 6, 15, 'Asad Nazir', 3, 'ABC', 5, 'Practice ABC', 5, 'Team C', 'Info/Other', 'Concerning', 'Testfg', 'fdgfdgfdg', 'New Test Company', '2023-02-27 15:30:53', NULL, 0, NULL, '2023-02-27 15:30:53'),
+(12, 6, 15, 'Asad Nazir', 3, 'ABC', 5, 'Practice ABC', 5, 'Team C', 'Info/Other', 'Concerning', 'Test', 'sadsadsad', 'New Test Company', '2023-02-27 15:34:19', NULL, 0, NULL, '2023-02-27 15:34:19'),
+(13, 6, 15, 'Asad Nazir', 3, 'ABC', 5, 'Practice ABC', 5, 'Team C', 'Info/Other', 'Concerning', 'sdsad', 'adsad', 'New Test Company', '2023-02-27 15:37:34', NULL, 0, NULL, '2023-02-27 15:37:34');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ticket_attachments`
+--
+
+DROP TABLE IF EXISTS `ticket_attachments`;
+CREATE TABLE IF NOT EXISTS `ticket_attachments` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `ticket_id` int(11) NOT NULL,
+  `name` mediumtext NOT NULL,
+  `org_name` tinytext NOT NULL,
+  `path` mediumtext NOT NULL,
+  `ext` varchar(50) NOT NULL,
+  `size` varchar(100) NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `ticket_attachments`
+--
+
+INSERT INTO `ticket_attachments` (`id`, `ticket_id`, `name`, `org_name`, `path`, `ext`, `size`, `created_at`, `updated_at`) VALUES
+(1, 11, 'UmU9JYLoqORaVoXIids3rHGHl7X51VI5ZGNl0t7I.xlsx', 'AttendanceList.xlsx', 'uploads/ticket_attachments/UmU9JYLoqORaVoXIids3rHGHl7X51VI5ZGNl0t7I.xlsx', 'xlsx', '22.46 KB', '2023-02-27 20:30:54', '2023-02-27 20:30:54'),
+(2, 12, 'UIRQAfyGBerJlnjksiN7awLYXb6qaicdy7i4OAAb.xlsx', 'AttendanceList.xlsx', 'uploads/ticket_attachments/UIRQAfyGBerJlnjksiN7awLYXb6qaicdy7i4OAAb.xlsx', 'xlsx', '22.46 KB', '2023-02-27 20:34:19', '2023-02-27 20:34:19'),
+(3, 13, 'fcyAw274dujqS6KP8l8xN2cg0ObhhigBoK2jS83d.xlsx', 'AttendanceList (1).xlsx', 'uploads/ticket_attachments/fcyAw274dujqS6KP8l8xN2cg0ObhhigBoK2jS83d.xlsx', 'xlsx', '22.49 KB', '2023-02-27 20:37:35', '2023-02-27 20:37:35');
 
 -- --------------------------------------------------------
 
@@ -846,7 +886,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `users_email_unique` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `users`
@@ -860,7 +900,8 @@ INSERT INTO `users` (`id`, `company_id`, `type`, `status`, `firstname`, `lastnam
 (14, 1, 3, 1, 'test', 'client', 'client@gmail.com', NULL, '$2a$12$DAeA/CC/k2xUF8g1hN6toeW6cnwZFtWKDaBcEEW5Y4Fptw1OaVWAC', NULL, NULL, '2023-02-05 10:19:42', '2023-02-05 10:19:42'),
 (15, 6, 2, 1, 'Asad', 'Nazir', 'superadmin6@new.com', NULL, '$2y$10$T9jRrchuuBhVQfaaYMdlLubDgSlSz/x9UR0V8J0XZkE4zLYKM6U4W', NULL, NULL, '2023-02-16 16:08:10', '2023-02-24 11:30:56'),
 (16, 6, 3, 1, 'New Client 1', 'New Client 1', 'newclient@gmail.com', NULL, '$2y$10$PYEfP6Pb1kM97kkS.M9yvOR5Eov6NcjjXqrHOCnu6NIVRkxYo7vg2', NULL, NULL, '2023-02-16 16:10:37', '2023-02-16 16:10:37'),
-(17, 6, 2, 1, 'Test', 'Test', 'test@gmail.com', NULL, '$2y$10$KA8vHn1FJekCLjBDir/Lhupag4peomZl1wjv46CfjoePjiO3s1UfS', NULL, NULL, '2023-02-21 12:54:37', '2023-02-21 12:54:37');
+(17, 6, 2, 1, 'Test', 'Test', 'test@gmail.com', NULL, '$2y$10$KA8vHn1FJekCLjBDir/Lhupag4peomZl1wjv46CfjoePjiO3s1UfS', NULL, NULL, '2023-02-21 12:54:37', '2023-02-21 12:54:37'),
+(18, 6, 2, 1, 'Test', 'User', 'testuser@gmail.com', NULL, '$2y$10$ZQuRQ6iuGSvo7nmORZGVy.lMWvW02ow3pYCkJltN5U/f4JLmKO.wi', NULL, NULL, '2023-02-27 12:43:41', '2023-02-27 12:43:41');
 
 --
 -- Constraints for dumped tables
