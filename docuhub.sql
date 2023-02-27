@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Feb 24, 2023 at 10:05 PM
+-- Generation Time: Feb 27, 2023 at 05:21 PM
 -- Server version: 5.7.36
 -- PHP Version: 7.4.26
 
@@ -437,7 +437,7 @@ CREATE TABLE IF NOT EXISTS `practice_user` (
 --
 
 INSERT INTO `practice_user` (`id`, `user_id`, `practice_id`, `type`, `user_type`, `is_parent`, `created_at`, `updated_at`) VALUES
-(2, 17, 4, 2, 1, NULL, '2023-02-24 03:08:43', '2023-02-24 03:08:43'),
+(2, 17, 5, 2, 1, NULL, '2023-02-24 03:08:43', '2023-02-27 20:00:55'),
 (3, 16, 5, 1, 1, NULL, '2023-02-25 02:48:09', '2023-02-25 02:48:09');
 
 -- --------------------------------------------------------
@@ -735,7 +735,7 @@ CREATE TABLE IF NOT EXISTS `team_user` (
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `team_user`
@@ -745,7 +745,7 @@ INSERT INTO `team_user` (`id`, `user_id`, `team_id`, `created_at`, `updated_at`,
 (1, 13, 1, '2023-02-21 16:21:50', '2023-02-21 16:21:50', NULL),
 (3, 15, 3, '2023-02-21 18:38:08', '2023-02-21 18:38:08', NULL),
 (5, 17, 3, '2023-02-22 01:21:58', '2023-02-22 01:21:58', NULL),
-(8, 16, 5, '2023-02-25 03:04:35', '2023-02-25 03:04:35', NULL);
+(11, 16, 4, '2023-02-25 03:21:00', '2023-02-25 03:21:00', NULL);
 
 -- --------------------------------------------------------
 
@@ -761,9 +761,10 @@ CREATE TABLE IF NOT EXISTS `tickets` (
   `creator_name` varchar(128) NOT NULL,
   `from` int(11) NOT NULL,
   `department_name` varchar(128) NOT NULL,
-  `to_provider` int(11) NOT NULL,
+  `practice_id` int(11) NOT NULL,
   `practice_name` varchar(256) NOT NULL,
-  `team` varchar(128) NOT NULL,
+  `team_id` int(11) NOT NULL,
+  `team_name` varchar(128) NOT NULL,
   `type` varchar(32) NOT NULL,
   `priority` varchar(32) NOT NULL,
   `subject` text NOT NULL,
@@ -775,15 +776,19 @@ CREATE TABLE IF NOT EXISTS `tickets` (
   `remarks` varchar(256) DEFAULT NULL,
   `updated_at` timestamp NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tickets`
 --
 
-INSERT INTO `tickets` (`id`, `company_id`, `user_id`, `creator_name`, `from`, `department_name`, `to_provider`, `practice_name`, `team`, `type`, `priority`, `subject`, `message`, `creator`, `created_at`, `response_at`, `status`, `remarks`, `updated_at`) VALUES
-(1, 6, 15, 'Asad Nazir', 3, 'ABC', 4, 'New Practice 123', '', 'Info/Other', 'Concerning', 'Test subject', 'test message', 'New Test Company', '2023-02-24 16:17:37', NULL, 0, NULL, '2023-02-24 16:17:37'),
-(2, 6, 15, 'Asad Nazir', 3, 'ABC', 5, 'practice ABC', '', 'Info/Other', 'Concerning', 'Test subject', 'test message', 'New Test Company', '2023-02-24 16:17:37', NULL, 0, NULL, '2023-02-24 16:17:37');
+INSERT INTO `tickets` (`id`, `company_id`, `user_id`, `creator_name`, `from`, `department_name`, `practice_id`, `practice_name`, `team_id`, `team_name`, `type`, `priority`, `subject`, `message`, `creator`, `created_at`, `response_at`, `status`, `remarks`, `updated_at`) VALUES
+(1, 6, 15, 'Asad Nazir', 3, 'ABC', 4, 'New Practice 123', 0, '', 'Info/Other', 'Concerning', 'Test subject', 'test message', 'New Test Company', '2023-02-24 16:17:37', NULL, 0, NULL, '2023-02-24 16:17:37'),
+(2, 6, 15, 'Asad Nazir', 3, 'ABC', 5, 'practice ABC', 0, '', 'Info/Other', 'Concerning', 'Test subject', 'test message', 'New Test Company', '2023-02-24 16:17:37', NULL, 0, NULL, '2023-02-24 16:17:37'),
+(3, 6, 15, 'Asad Nazir', 3, 'ABC', 5, 'test practice', 0, 'Team B', 'Info/Other', 'Concerning', 'Test', 'message', 'New Test Company', '2023-02-27 11:23:47', NULL, 0, NULL, '2023-02-27 11:23:47'),
+(4, 6, 15, 'Asad Nazir', 3, 'ABC', 5, 'test practice', 4, 'Team B', 'Info/Other', 'Concerning', 'Test', 'dsadsad', 'New Test Company', '2023-02-27 11:51:23', NULL, 0, NULL, '2023-02-27 11:51:23'),
+(5, 6, 15, 'Asad Nazir', 3, 'ABC', 5, 'Practice ABC', 4, 'Team B', 'Info/Other', 'Concerning', 'dsf', 'dsfdsfsd', 'New Test Company', '2023-02-27 11:56:17', NULL, 0, NULL, '2023-02-27 11:56:17'),
+(6, 6, 15, 'Asad Nazir', 3, 'ABC', 5, 'Practice ABC', 4, 'Team B', 'Info/Other', 'Concerning', 'Testdsadsa', 'asdsadsadsad', 'New Test Company', '2023-02-27 11:57:24', NULL, 0, NULL, '2023-02-27 11:57:24');
 
 -- --------------------------------------------------------
 
@@ -801,7 +806,7 @@ CREATE TABLE IF NOT EXISTS `ticket_ccs` (
   PRIMARY KEY (`id`),
   KEY `ticket_id` (`ticket_id`),
   KEY `department_id` (`department_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `ticket_ccs`
@@ -813,7 +818,10 @@ INSERT INTO `ticket_ccs` (`id`, `ticket_id`, `department_id`, `created_at`, `upd
 (3, 1, 4, '2023-02-24 16:17:37', '2023-02-24 16:17:37'),
 (4, 2, 3, '2023-02-24 16:17:37', '2023-02-24 16:17:37'),
 (5, 2, 5, '2023-02-24 16:17:37', '2023-02-24 16:17:37'),
-(6, 2, 4, '2023-02-24 16:17:37', '2023-02-24 16:17:37');
+(6, 2, 4, '2023-02-24 16:17:37', '2023-02-24 16:17:37'),
+(7, 3, 3, '2023-02-27 11:23:47', '2023-02-27 11:23:47'),
+(8, 4, 5, '2023-02-27 11:51:23', '2023-02-27 11:51:23'),
+(9, 5, 5, '2023-02-27 11:56:17', '2023-02-27 11:56:17');
 
 -- --------------------------------------------------------
 

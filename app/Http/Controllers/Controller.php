@@ -68,7 +68,7 @@ class Controller extends BaseController
     public function multiselect($items, $selected_item_array, $name, $label, $multiple = true)
     {
 
-        $options = '';
+        $options = $multiple == false ? '<option value="">--Plesase Select--</option>' : '';
         foreach ($items as $key => $value) {
             $selected = '';
             if (in_array($value->id, $selected_item_array)) {

@@ -28,6 +28,8 @@ class TicketController extends Controller
      */
     public function index()
     {
+
+
         $data['menu'] = "dmail-management";
         $data['sub_menu'] = "tickets";
         if (auth()->user()->hasRole('dev')) {
@@ -81,15 +83,20 @@ class TicketController extends Controller
         $to_provider = $request->to_provider;
         foreach ($to_provider as $value) {
             $department_name = Department::where('id', $request->from)->pluck("name")[0];
-            $practice_name = Practice::where('id', $value)->pluck("name")[0];
+            $practice = Practice::findorfail($value);
+            $practice_name = $practice->name;
+            $associated_client = $practice->associated_user(3);
+            $client_id = $associated_client->pluck("id")[0];
+            $team = User::findorfail($client_id)->assinged_teams();
             $ticket["company_id"] = $company_id;
             $ticket["user_id"] = $user->id;
             $ticket["creator_name"] = $creator_name;
             $ticket["from"] = $request->from;
             $ticket["department_name"] = $department_name;
-            $ticket["to_provider"] = $value;
+            $ticket["practice_id"] = $value;
             $ticket["practice_name"] = $practice_name;
-            $ticket["team"] = "";
+            $ticket["team_id"] = $team[0]->id;
+            $ticket["team_name"] = $team[0]->name;
             $ticket["type"] = $request->type;
             $ticket["priority"] = $request->priority;
             $ticket["subject"] = $request->subject;

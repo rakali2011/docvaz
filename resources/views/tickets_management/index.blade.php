@@ -44,7 +44,7 @@
                     <td>{{ $item->creator_name }}</td>
                     <td>{{ $item->practice_name }}</td>
                     <td>{{ $item->department_name }}</td>
-                    <td>{{ $item->team }}</td>
+                    <td>{{ $item->team_name }}</td>
                     <td>{{ $item->subject }}</td>
                     <td>{{ $item->priority }}</td>
                     <td>{{ $item->status }}</td>
