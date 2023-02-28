@@ -101,6 +101,12 @@
               </div>
             </div>
             <div class="col-md-12">
+              <label for="">Attachments</label>
+              <div class="form-group mb-3">
+                <div id="uppy"></div>
+              </div>
+            </div>
+            <div class="col-md-12">
               <div class="form-group mb-3">
                 <label for="subject">Subject</label>
                 <input type="text" name="subject" id="subject" class="form-control @error('subject') is-invalid @enderror" value="{{ old('subject') }}" required="required">
@@ -122,11 +128,7 @@
                 @enderror
               </div>
             </div>
-            <div class="col-md-12">
-              <div class="form-group mb-3">
-                <div id="uppy"></div>
-              </div>
-            </div>
+
             <div class="col-md-12">
               <input type="submit" value="{{ 'Save' }}" class="btn btn-success float-right">
             </div>

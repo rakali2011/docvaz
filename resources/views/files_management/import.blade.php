@@ -48,7 +48,7 @@
                 </div>
               </div>
               @if(!@$file)
-              <div class="col-13">
+              <div class="col-md-12">
                 <div class="form-group mb-3">
                   <div id="uppy"></div>
                 </div>

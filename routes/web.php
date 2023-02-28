@@ -103,3 +103,4 @@ Route::resource('statuses', StatusController::class);
 Route::resource('document_types', DocumentTypeController::class);
 // Tickets
 Route::resource('tickets', TicketController::class);
+Route::post('/all-tickets', [TicketController::class, 'allTickets'])->middleware('permission:view ticket')->name('all_tickets');

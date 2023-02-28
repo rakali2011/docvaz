@@ -146,7 +146,7 @@ class TicketController extends Controller
      */
     public function show(Ticket $ticket)
     {
-        //
+        dd($ticket);
     }
 
     /**
@@ -157,7 +157,7 @@ class TicketController extends Controller
      */
     public function edit(Ticket $ticket)
     {
-        //
+        dd($ticket->attachments);
     }
 
     /**
@@ -181,5 +181,102 @@ class TicketController extends Controller
     public function destroy(Ticket $ticket)
     {
         //
+    }
+    public function allTickets(Request $request)
+    {
+        $columns = ['id', 'response_at', 'created_at', 'creator', 'creator_name', 'practice_name', 'department_name', 'team_name', 'subject', 'priority', 'status', 'remarks'];
+        $date_range = array(
+            "from_date" => $request->input('from_date') != "" ? $request->input('from_date') . ' 00:00:00' : $request->input('from_date'),
+            "to_date" => $request->input('to_date') != "" ? $request->input('to_date') . ' 23:59:59' : $request->input('to_date')
+        );
+
+        $filter = array(
+            "practice_id" => $request->input('practice_id'),
+            "status" => $request->input('status'),
+            "pro_speciality" => $request->input('pro_speciality'),
+            "pro_state" => $request->input('pro_state'),
+        );
+
+        $provider = new Provider;
+        if (auth()->user()->hasRole('super') || auth()->user()->hasRole('manager') || auth()->user()->hasRole('provider')) {
+            $totalData = $provider->count_providers($date_range, $filter);
+        } else {
+            $totalData = $provider->count_agent_providers($date_range, $filter);
+        }
+
+        $totalFiltered = $totalData;
+
+        $limit = $request->input('length');
+        $start = $request->input('start');
+        $order = $columns[$request->input('order.0.column')];
+        $dir = $request->input('order.0.dir');
+
+        if (empty($request->input('search.value'))) {
+            if (auth()->user()->hasRole('super') || auth()->user()->hasRole('manager') || auth()->user()->hasRole('provider')) {
+                $providers = $provider->all_providers($date_range, $filter, $start, $limit, $order, $dir);
+            } else {
+                $providers = $provider->all_agent_providers($date_range, $filter, $start, $limit, $order, $dir);
+            }
+        } else {
+            $search = $request->input('search.value');
+            if (auth()->user()->hasRole('super') || auth()->user()->hasRole('manager') || auth()->user()->hasRole('provider')) {
+                $providers = $provider->all_search_providers($date_range, $filter, $search, $start, $limit, $order, $dir);
+            } else {
+                $providers = $provider->all_search_agent_providers($date_range, $filter, $search, $start, $limit, $order, $dir);
+            }
+            if (auth()->user()->hasRole('super') || auth()->user()->hasRole('manager') || auth()->user()->hasRole('provider')) {
+                $totalFiltered = $provider->count_search_providers($date_range, $filter, $search, $start, $limit, $order, $dir);
+            } else {
+                $totalFiltered = $provider->count_search_agent_providers($date_range, $filter, $search, $start, $limit, $order, $dir);
+            }
+        }
+
+        $data = array();
+        if (!empty($providers)) {
+            foreach ($providers as $provider) {
+
+                $status = $provider->status == 'active' ? 'checked' : '';
+                $delete = route('provider.delete', $provider->id);
+                $edit = route('provider.edit', $provider->id);
+                $signup_status = "<span class='signup_status' >Unassigned</span>";
+                foreach ($provider->assigned_users as  $assigned) {
+
+                    if ($assigned->hasRole('agent') || $assigned->hasRole('lead')) {
+                        $signup_status = "";
+                        break;
+                    } else {
+                        $signup_status = "<span class='signup_status' >Unassigned</span>";
+                    }
+                }
+                //$signup_status = "";
+                //   $view='<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#favoritesModal">Add to Favorites</button>';
+                $view = '<a href="#favoritesModal" title="Info" id="' . $provider->id . '"  data-toggle="modal" class="provider_detail_view"
+   ><i class="fa fa-info-circle" aria-hidden="true"></i></a>&emsp;';
+
+                $del = (auth()->user()->hasRole('provider') || auth()->user()->hasRole('provider-office')) ? "" : "<a onclick='return confirm(\"Are you sure to delete?\")' href='{$delete}' title='DELETE' ><i class='fa fa-times' aria-hidden='true'></i></a>&emsp;";
+                $edi = (auth()->user()->hasRole('provider') || auth()->user()->hasRole('provider-office')) ? "" : "<a onclick='return confirm(\"Are you sure to update?\")' href='{$edit}' title='EDIT' ><i class='fa fa-pencil' aria-hidden='true'></i></a>&emsp;";
+                $history = "<a href='#historyModal' title='History' id='" . $provider->id . "' data-toggle='modal' class='provider_history_view' ><i class='fa fa-history' aria-hidden='true'></i></a>&emsp;";
+                $active = (auth()->user()->hasRole('provider') || auth()->user()->hasRole('provider-office')) ? "" :
+                    '<label class="switch"><input type="checkbox" class="togBtn" id="' . $provider->id . '" ' . $status . ' ><div class="slider round"></span></div></label>';
+                $nestedData['name'] = $provider->name . " " . $provider->middle_initial . " " . $provider->last_name;
+                $nestedData['individual_npi'] = $provider->individual_npi;
+                $nestedData['practice_name'] = isset($provider->practice->practice_name) ? '(' . $provider->practice->practice_code . ') ' . $provider->practice->practice_name : "";
+                //                $nestedData['practice_name'] = $provider->practice_name;
+                $nestedData['email'] = $provider->email;
+                $nestedData['status'] = $provider->status;
+                $nestedData['created_at'] = date("M j, Y", strtotime($provider->created_at));
+                $nestedData['action'] = $view . $del . $edi . $history . $active;
+                $data[] = $nestedData;
+            }
+        }
+
+        $json_data = array(
+            "draw" => intval($request->input('draw')),
+            "recordsTotal" => intval($totalData),
+            "recordsFiltered" => intval($totalFiltered),
+            "data" => $data
+        );
+
+        echo json_encode($json_data);
     }
 }

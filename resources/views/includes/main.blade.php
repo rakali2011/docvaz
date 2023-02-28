@@ -232,7 +232,7 @@
       inline: true,
       showLinkToFileUploadResult: false,
       showProgressDetails: false,
-      width: 770,
+      width: '100%',
       height: 210,
       proudlyDisplayPoweredByUppy: false,
     });
