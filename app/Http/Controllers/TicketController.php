@@ -117,6 +117,8 @@ class TicketController extends Controller
                         $attachment_info = $this->upload($value, 'ticket_attachments');
                         $attachment = new TicketAttachment;
                         $attachment->ticket_id = $id->id;
+                        $attachment->reply_id = 0;
+                        $attachment->type = 0;
                         $attachment->name = $attachment_info['file_name'];
                         $attachment->org_name = $attachment_info['file_org_name'];
                         $attachment->path = $attachment_info['path'];
@@ -146,7 +148,7 @@ class TicketController extends Controller
      */
     public function show(Ticket $ticket)
     {
-        dd($ticket);
+        // dd($ticket);
     }
 
     /**
@@ -157,7 +159,7 @@ class TicketController extends Controller
      */
     public function edit(Ticket $ticket)
     {
-        dd($ticket->attachments);
+        dd($ticket);
     }
 
     /**
@@ -180,7 +182,8 @@ class TicketController extends Controller
      */
     public function destroy(Ticket $ticket)
     {
-        //
+        $ticket->delete();
+        return redirect()->route('tickets.index')->with('success', 'Ticket Deleted Successfully');
     }
     public function allTickets(Request $request)
     {
@@ -189,87 +192,48 @@ class TicketController extends Controller
             "from_date" => $request->input('from_date') != "" ? $request->input('from_date') . ' 00:00:00' : $request->input('from_date'),
             "to_date" => $request->input('to_date') != "" ? $request->input('to_date') . ' 23:59:59' : $request->input('to_date')
         );
-
         $filter = array(
             "practice_id" => $request->input('practice_id'),
             "status" => $request->input('status'),
             "pro_speciality" => $request->input('pro_speciality'),
             "pro_state" => $request->input('pro_state'),
         );
-
-        $provider = new Provider;
-        if (auth()->user()->hasRole('super') || auth()->user()->hasRole('manager') || auth()->user()->hasRole('provider')) {
-            $totalData = $provider->count_providers($date_range, $filter);
-        } else {
-            $totalData = $provider->count_agent_providers($date_range, $filter);
-        }
-
-        $totalFiltered = $totalData;
-
         $limit = $request->input('length');
         $start = $request->input('start');
-        $order = $columns[$request->input('order.0.column')];
-        $dir = $request->input('order.0.dir');
-
-        if (empty($request->input('search.value'))) {
-            if (auth()->user()->hasRole('super') || auth()->user()->hasRole('manager') || auth()->user()->hasRole('provider')) {
-                $providers = $provider->all_providers($date_range, $filter, $start, $limit, $order, $dir);
-            } else {
-                $providers = $provider->all_agent_providers($date_range, $filter, $start, $limit, $order, $dir);
-            }
-        } else {
-            $search = $request->input('search.value');
-            if (auth()->user()->hasRole('super') || auth()->user()->hasRole('manager') || auth()->user()->hasRole('provider')) {
-                $providers = $provider->all_search_providers($date_range, $filter, $search, $start, $limit, $order, $dir);
-            } else {
-                $providers = $provider->all_search_agent_providers($date_range, $filter, $search, $start, $limit, $order, $dir);
-            }
-            if (auth()->user()->hasRole('super') || auth()->user()->hasRole('manager') || auth()->user()->hasRole('provider')) {
-                $totalFiltered = $provider->count_search_providers($date_range, $filter, $search, $start, $limit, $order, $dir);
-            } else {
-                $totalFiltered = $provider->count_search_agent_providers($date_range, $filter, $search, $start, $limit, $order, $dir);
-            }
-        }
-
+        $order = !empty($request->input('order.0.column')) ? $request->input('order.0.column') : 0;
+        $order = $columns[$order];
+        $dir = !empty($request->input('order.0.dir')) ? strtoupper($request->input('order.0.dir')) : "DESC";
+        $search = $request->input('search.value');
+        $ticket = new Ticket();
+        $totalData = $ticket->countTotalTickets();
+        $totalFiltered = $ticket->countFilteredTickets($date_range, $filter, $search, $start, $limit, $order, $dir);
+        $tickets = $ticket->allTickets($date_range, $filter, $search, $start, $limit, $order, $dir);
         $data = array();
-        if (!empty($providers)) {
-            foreach ($providers as $provider) {
-
-                $status = $provider->status == 'active' ? 'checked' : '';
-                $delete = route('provider.delete', $provider->id);
-                $edit = route('provider.edit', $provider->id);
-                $signup_status = "<span class='signup_status' >Unassigned</span>";
-                foreach ($provider->assigned_users as  $assigned) {
-
-                    if ($assigned->hasRole('agent') || $assigned->hasRole('lead')) {
-                        $signup_status = "";
-                        break;
-                    } else {
-                        $signup_status = "<span class='signup_status' >Unassigned</span>";
-                    }
+        if (!empty($tickets)) {
+            foreach ($tickets as $ticket) {
+                $edit = '';
+                $delete = '';
+                if (auth()->user()->can('update ticket'))
+                    $edit = '<a class="dropdown-item" href="' . route('tickets.edit', $ticket->id) . '">Edit</a>';
+                if (auth()->user()->can('delete ticket')) {
+                    $delete = '<form method="POST" action="' . route('tickets.destroy', $ticket->id) . '" accept-charset="UTF-8" style="display:inline"><input name="_method" type="hidden" value="DELETE"><input name="_token" type="hidden" value="' . csrf_token() . '"><input class="dropdown-item" type="submit" value="Delete"></form>';
                 }
-                //$signup_status = "";
-                //   $view='<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#favoritesModal">Add to Favorites</button>';
-                $view = '<a href="#favoritesModal" title="Info" id="' . $provider->id . '"  data-toggle="modal" class="provider_detail_view"
-   ><i class="fa fa-info-circle" aria-hidden="true"></i></a>&emsp;';
-
-                $del = (auth()->user()->hasRole('provider') || auth()->user()->hasRole('provider-office')) ? "" : "<a onclick='return confirm(\"Are you sure to delete?\")' href='{$delete}' title='DELETE' ><i class='fa fa-times' aria-hidden='true'></i></a>&emsp;";
-                $edi = (auth()->user()->hasRole('provider') || auth()->user()->hasRole('provider-office')) ? "" : "<a onclick='return confirm(\"Are you sure to update?\")' href='{$edit}' title='EDIT' ><i class='fa fa-pencil' aria-hidden='true'></i></a>&emsp;";
-                $history = "<a href='#historyModal' title='History' id='" . $provider->id . "' data-toggle='modal' class='provider_history_view' ><i class='fa fa-history' aria-hidden='true'></i></a>&emsp;";
-                $active = (auth()->user()->hasRole('provider') || auth()->user()->hasRole('provider-office')) ? "" :
-                    '<label class="switch"><input type="checkbox" class="togBtn" id="' . $provider->id . '" ' . $status . ' ><div class="slider round"></span></div></label>';
-                $nestedData['name'] = $provider->name . " " . $provider->middle_initial . " " . $provider->last_name;
-                $nestedData['individual_npi'] = $provider->individual_npi;
-                $nestedData['practice_name'] = isset($provider->practice->practice_name) ? '(' . $provider->practice->practice_code . ') ' . $provider->practice->practice_name : "";
-                //                $nestedData['practice_name'] = $provider->practice_name;
-                $nestedData['email'] = $provider->email;
-                $nestedData['status'] = $provider->status;
-                $nestedData['created_at'] = date("M j, Y", strtotime($provider->created_at));
-                $nestedData['action'] = $view . $del . $edi . $history . $active;
+                $nestedData['id'] = '<a class="assign-practice" ref="' . $ticket->id . '" href="javascript:void(0)">' . $ticket->id . '</a>';
+                $nestedData['response_at'] = !empty($ticket->response_at) ? date("M j, y, h:i A", strtotime($ticket->response_at)) : "";
+                $nestedData['created_at'] = !empty($ticket->created_at) ? date("M j, y, h:i A", strtotime($ticket->created_at)) : "";
+                $nestedData['creator'] = $ticket->creator;
+                $nestedData['creator_name'] = $ticket->creator_name;
+                $nestedData['practice_name'] = $ticket->practice_name;
+                $nestedData['department_name'] = $ticket->department_name;
+                $nestedData['team_name'] = $ticket->team_name;
+                $nestedData['subject'] = $ticket->subject;
+                $nestedData['priority'] = $ticket->priority;
+                $nestedData['status'] = ticket_statuses($ticket->status);
+                $nestedData['remarks'] = $ticket->remarks;
+                $nestedData['action'] = '<button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="text-muted sr-only">Action</span></button><div class="dropdown-menu dropdown-menu-right">' . $edit . $delete . '</div>';
                 $data[] = $nestedData;
             }
         }
-
         $json_data = array(
             "draw" => intval($request->input('draw')),
             "recordsTotal" => intval($totalData),

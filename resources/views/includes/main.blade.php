@@ -7,7 +7,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
   <link rel="icon" href="favicon.ico">
-  <title>Archiwiz - Dashboard</title>
+  <title>Docuhub - Dashboard</title>
   @livewireStyles
   @include('includes.header_scripts')
   <style>
@@ -141,68 +141,6 @@
       },
       placeholder: "___.___.___.___"
     });
-    // editor
-    var editor = document.getElementById('editor');
-    if (editor) {
-      var toolbarOptions = [
-        [{
-          'font': []
-        }],
-        [{
-          'header': [1, 2, 3, 4, 5, 6, false]
-        }],
-        ['bold', 'italic', 'underline', 'strike'],
-        ['blockquote', 'code-block'],
-        [{
-            'header': 1
-          },
-          {
-            'header': 2
-          }
-        ],
-        [{
-            'list': 'ordered'
-          },
-          {
-            'list': 'bullet'
-          }
-        ],
-        [{
-            'script': 'sub'
-          },
-          {
-            'script': 'super'
-          }
-        ],
-        [{
-            'indent': '-1'
-          },
-          {
-            'indent': '+1'
-          }
-        ], // outdent/indent
-        [{
-          'direction': 'rtl'
-        }], // text direction
-        [{
-            'color': []
-          },
-          {
-            'background': []
-          }
-        ], // dropdown with defaults from theme
-        [{
-          'align': []
-        }],
-        ['clean'] // remove formatting button
-      ];
-      var quill = new Quill(editor, {
-        modules: {
-          toolbar: toolbarOptions
-        },
-        theme: 'snow'
-      });
-    }
     // Example starter JavaScript for disabling form submissions if there are invalid fields
     (function() {
       'use strict';
@@ -221,21 +159,6 @@
         });
       }, false);
     })();
-    var uptarg = document.getElementById('uppy');
-    const uppy = Uppy.Core({
-      autoProceed: false,
-      restrictions: {
-        allowedFileTypes: ['image/*', 'application/pdf', '.pdf', '.doc', '.docx', '.xls', '.xlsx', '.csv', '.tsv', '.ppt', '.pptx', '.pages', '.odt', '.rtf', '.hl7', '.zip']
-      }
-    }).use(Uppy.Dashboard, {
-      target: uptarg,
-      inline: true,
-      showLinkToFileUploadResult: false,
-      showProgressDetails: false,
-      width: '100%',
-      height: 210,
-      proudlyDisplayPoweredByUppy: false,
-    });
   </script>
   @stack('scripts')
 </body>

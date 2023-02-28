@@ -13,7 +13,7 @@
           <div class="card shadow">
             <div class="card-body">
               <!-- table -->
-              <table class="table datatables" id="tickets">
+              <table id="tickets-table" class="display" style="width:100%">
                 <thead>
                   <tr>
                     <th>Ticket#</th>
@@ -28,12 +28,26 @@
                     <th>Priority</th>
                     <th>Status</th>
                     <th>Remarks</th>
-                    @role('dev')
-                    <th>Company</th>
-                    @endrole
                     <th>Action</th>
                   </tr>
                 </thead>
+                <tfoot>
+                  <tr>
+                    <th>Ticket#</th>
+                    <th>Response</th>
+                    <th>Created</th>
+                    <th>Creator</th>
+                    <th>User Name</th>
+                    <th>Practice</th>
+                    <th>Department</th>
+                    <th>Team</th>
+                    <th>Subject</th>
+                    <th>Priority</th>
+                    <th>Status</th>
+                    <th>Remarks</th>
+                    <th>Action</th>
+                  </tr>
+                </tfoot>
               </table>
             </div>
           </div>
@@ -42,18 +56,95 @@
     </div>
   </div>
 </div>
+<div class="modal fade" id="assign-practice-modal" tabindex="-1" role="dialog" aria-labelledby="verticalModalTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <form action="{{ route('update_user_practices') }}" method="post" id="assign-practice-form">
+        @csrf
+        <div class="modal-header">
+          <h5 class="modal-title" id="verticalModalTitle">Assign Practices</h5>
+          <input type="hidden" name="type" value="client">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group col-12" id="assign-practice-body"></div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn mb-2 btn-secondary" data-dismiss="modal">Close</button>
+          <input type="submit" class="btn mb-2 btn-primary">
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
 @push('scripts')
-<script src="{{ asset('assets/DataTable-1.12.1/js/jquery.dataTables.min.js') }}"></script>
-<script src="{{ asset('assets/DataTable-1.12.1/js/dataTables.buttons.min.js') }}"></script>
-<script src="{{ asset('assets/DataTable-1.12.1/js/jszip.min.js') }}"></script>
-<script src="{{ asset('assets/DataTable-1.12.1/js/pdfmake.min.js') }}"></script>
-<script src="{{ asset('assets/DataTable-1.12.1/js/vfs_fonts.js') }}"></script>
-<script src="{{ asset('assets/DataTable-1.12.1/js/buttons.html5.min.js') }}"></script>
-<script src="{{ asset('assets/DataTable-1.12.1/js/buttons.print.min.js') }}"></script>
-<script src="{{ asset('assets/DataTable-1.12.1/js/buttons.colVis.min.js') }}"></script>
 <script>
+  var ref = '';
+  $(document).on('click', '.assign-practice', function() {
+    ref = $(this).attr('ref');
+    $.ajax({
+      type: "post",
+      data: {
+        id: ref,
+        _token: '{{ csrf_token() }}'
+      },
+      url: "{{ route('get_practices') }}",
+      success: function(response) {
+        if (response.success == 1) {
+          $('#assign-practice-body').html(response.content);
+          $('.select2-multi').select2({
+            theme: 'bootstrap4',
+          });
+        } else {
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: response.message,
+          });
+        }
+      }
+    });
+    $('#assign-practice-modal').modal('show');
+  });
+  var form = document.getElementById('assign-practice-form');
+  form.addEventListener('submit', event => {
+    event.preventDefault();
+    let formData = new FormData(form);
+    formData.append('ref', ref);
+    fetch(form.action, {
+        method: "POST",
+        body: formData
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+
+      })
+      .then(data => {
+        if (data.success == 1) {
+          $('#assign-practice-modal').modal('hide');
+          $('#assign-practice-body').html('');
+          ref = "";
+          Swal.fire({
+            icon: 'success',
+            text: data.message,
+          });
+        } else {
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: data.message,
+          });
+        }
+      })
+      .catch(error => console.error("There was a problem with the fetch operation:", error));
+  });
   $(document).ready(function() {
-    $('#tickets').DataTable({
+    $('#tickets-table').DataTable({
       "processing": true,
       "serverSide": true,
       "ajax": {
@@ -61,66 +152,48 @@
         "dataType": "json",
         "type": "POST",
         "data": {
-          _token: "{{csrf_token()}}",
-          'from_date': function() {
-            return $("#from_date").val();
-          },
-          'to_date': function() {
-            return $("#to_date").val();
-          },
-          'practice_id': function() {
-            return $("#practice").val();
-          },
-          'status': function() {
-            return $("#status").val();
-          },
-          'pro_speciality': function() {
-            return $("#pro_speciality").val();
-          },
-          'pro_state': function() {
-            return $("#pro_state").val();
-          }
+          _token: "{{csrf_token()}}"
         }
       },
       "columns": [{
           "data": "id",
-          "orderable": false
+          "orderable": true
         },
         {
           "data": "response_at",
-          "orderable": false
+          "orderable": true
         },
         {
           "data": "created_at",
-          "orderable": false
+          "orderable": true
         },
         {
           "data": "creator",
-          "orderable": false
+          "orderable": true
         },
         {
           "data": "creator_name",
-          "orderable": false
+          "orderable": true
         },
         {
           "data": "practice_name",
-          "orderable": false
+          "orderable": true
         },
         {
           "data": "department_name",
-          "orderable": false
+          "orderable": true
         },
         {
           "data": "team_name",
-          "orderable": false
+          "orderable": true
         },
         {
           "data": "subject",
-          "orderable": false
+          "orderable": true
         },
         {
           "data": "priority",
-          "orderable": false
+          "orderable": true
         },
         {
           "data": "status",
@@ -128,7 +201,7 @@
         },
         {
           "data": "remarks",
-          "orderable": false
+          "orderable": true
         },
         {
           "data": "action",

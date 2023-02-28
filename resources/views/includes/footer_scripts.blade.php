@@ -27,6 +27,14 @@
 <script src="{{ asset('assets/js/uppy.min.js') }}"></script>
 <script src="{{ asset('assets/js/quill.min.js') }}"></script>
 <script src="{{ asset('assets/js/apps.js') }}"></script>
-<script src="{{ asset('assets/js/jquery.dataTables.min.js') }}"></script>
-<script src="{{ asset('assets/js/dataTables.bootstrap4.min.js') }}"></script>
+<!-- <script src="{{ asset('assets/js/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('assets/js/dataTables.bootstrap4.min.js') }}"></script> -->
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="{{ asset('assets/DataTable-1.12.1/js/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('assets/DataTable-1.12.1/js/dataTables.buttons.min.js') }}"></script>
+<script src="{{ asset('assets/DataTable-1.12.1/js/jszip.min.js') }}"></script>
+<script src="{{ asset('assets/DataTable-1.12.1/js/pdfmake.min.js') }}"></script>
+<script src="{{ asset('assets/DataTable-1.12.1/js/vfs_fonts.js') }}"></script>
+<script src="{{ asset('assets/DataTable-1.12.1/js/buttons.html5.min.js') }}"></script>
+<script src="{{ asset('assets/DataTable-1.12.1/js/buttons.print.min.js') }}"></script>
+<script src="{{ asset('assets/DataTable-1.12.1/js/buttons.colVis.min.js') }}"></script>

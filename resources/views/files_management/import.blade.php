@@ -67,6 +67,21 @@
 </div>
 @push('scripts')
 <script>
+  var uptarg = document.getElementById('uppy');
+  const uppy = Uppy.Core({
+    autoProceed: false,
+    restrictions: {
+      allowedFileTypes: ['image/*', 'application/pdf', '.pdf', '.doc', '.docx', '.xls', '.xlsx', '.csv', '.tsv', '.ppt', '.pptx', '.pages', '.odt', '.rtf', '.hl7', '.zip']
+    }
+  }).use(Uppy.Dashboard, {
+    target: uptarg,
+    inline: true,
+    showLinkToFileUploadResult: false,
+    showProgressDetails: false,
+    width: '100%',
+    height: 210,
+    proudlyDisplayPoweredByUppy: false,
+  });
   var importform = document.getElementById('import-files');
   importform.addEventListener('submit', event => {
     event.preventDefault();
