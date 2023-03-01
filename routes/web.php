@@ -104,3 +104,4 @@ Route::resource('document_types', DocumentTypeController::class);
 // Tickets
 Route::resource('tickets', TicketController::class);
 Route::post('/all-tickets', [TicketController::class, 'allTickets'])->middleware('permission:view ticket')->name('all_tickets');
+Route::post('/get-ticket', [TicketController::class, 'getTicket'])->middleware('permission:view ticket')->name('get_ticket');

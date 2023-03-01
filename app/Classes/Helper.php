@@ -10,8 +10,24 @@ if (!function_exists('companies')) {
         return $companies;
     }
 }
-function ticket_statuses($status = 0)
+function ticket_statuses()
+{
+    return ["Open", "Inprocess", "Closed", "Reopen", "Onhold", "Waiting Approval", "Rejected"];
+}
+function get_ticket_status($status = 0)
 {
     $statuses = ["Open", "Inprocess", "Closed", "Reopen", "Onhold", "Waiting Approval", "Rejected"];
     return $statuses[$status];
+}
+function ticket_types()
+{
+    $types = ["Query", "Other", "Info/Other"];
+    sort($types);
+    return $types;
+}
+function ticket_priorities()
+{
+    $priorities = ["Low", "Medium", "High", "Concerning"];
+    sort($priorities);
+    return $priorities;
 }

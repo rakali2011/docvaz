@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Feb 27, 2023 at 08:55 PM
+-- Generation Time: Mar 01, 2023 at 10:41 PM
 -- Server version: 5.7.36
 -- PHP Version: 7.4.26
 
@@ -92,7 +92,7 @@ CREATE TABLE IF NOT EXISTS `departments` (
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `departments`
@@ -101,9 +101,10 @@ CREATE TABLE IF NOT EXISTS `departments` (
 INSERT INTO `departments` (`id`, `company_id`, `parent_id`, `name`, `description`, `status`, `created_at`, `updated_at`, `deleted_at`) VALUES
 (1, 1, 0, 'Billing', NULL, 1, '2023-01-25 17:10:51', '2023-02-17 21:32:05', NULL),
 (2, 1, 1, 'Claim Submission', NULL, 1, '2023-01-25 17:10:51', '2023-02-17 21:31:47', NULL),
-(3, 6, 0, 'ABC', NULL, 1, '2023-02-21 20:53:42', '2023-02-21 20:53:42', NULL),
-(4, 6, 3, 'XYZ', NULL, 1, '2023-02-23 19:32:09', '2023-02-23 19:32:09', NULL),
-(5, 6, 0, 'DEF', NULL, 1, '2023-02-23 19:34:15', '2023-02-23 19:34:15', NULL);
+(3, 6, 0, 'Sales', NULL, 1, '2023-02-21 20:53:42', '2023-02-27 21:19:07', NULL),
+(4, 6, 0, 'Audit', NULL, 1, '2023-02-23 19:32:09', '2023-02-27 21:18:50', NULL),
+(5, 6, 0, 'Software', NULL, 1, '2023-02-23 19:34:15', '2023-02-27 21:18:36', NULL),
+(6, 6, 0, 'CRM', NULL, 1, '2023-02-27 21:19:14', '2023-02-27 21:19:14', NULL);
 
 -- --------------------------------------------------------
 
@@ -774,32 +775,35 @@ CREATE TABLE IF NOT EXISTS `tickets` (
   `subject` text NOT NULL,
   `message` text NOT NULL,
   `creator` varchar(32) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `response_at` timestamp NULL DEFAULT NULL,
-  `status` int(11) NOT NULL DEFAULT '0',
+  `status` int(11) NOT NULL DEFAULT '0' COMMENT '0=Open,1=Inprocess,2=Closed,3=Reopen,4=Onhold,5=Waiting Approval,6=Rejected',
   `remarks` varchar(256) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `deleted_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tickets`
 --
 
-INSERT INTO `tickets` (`id`, `company_id`, `user_id`, `creator_name`, `from`, `department_name`, `practice_id`, `practice_name`, `team_id`, `team_name`, `type`, `priority`, `subject`, `message`, `creator`, `created_at`, `response_at`, `status`, `remarks`, `updated_at`) VALUES
-(1, 6, 15, 'Asad Nazir', 3, 'ABC', 4, 'New Practice 123', 0, '', 'Info/Other', 'Concerning', 'Test subject', 'test message', 'New Test Company', '2023-02-24 16:17:37', NULL, 0, NULL, '2023-02-24 16:17:37'),
-(2, 6, 15, 'Asad Nazir', 3, 'ABC', 5, 'practice ABC', 0, '', 'Info/Other', 'Concerning', 'Test subject', 'test message', 'New Test Company', '2023-02-24 16:17:37', NULL, 0, NULL, '2023-02-24 16:17:37'),
-(3, 6, 15, 'Asad Nazir', 3, 'ABC', 5, 'test practice', 0, 'Team B', 'Info/Other', 'Concerning', 'Test', 'message', 'New Test Company', '2023-02-27 11:23:47', NULL, 0, NULL, '2023-02-27 11:23:47'),
-(4, 6, 15, 'Asad Nazir', 3, 'ABC', 5, 'test practice', 4, 'Team B', 'Info/Other', 'Concerning', 'Test', 'dsadsad', 'New Test Company', '2023-02-27 11:51:23', NULL, 0, NULL, '2023-02-27 11:51:23'),
-(5, 6, 15, 'Asad Nazir', 3, 'ABC', 5, 'Practice ABC', 4, 'Team B', 'Info/Other', 'Concerning', 'dsf', 'dsfdsfsd', 'New Test Company', '2023-02-27 11:56:17', NULL, 0, NULL, '2023-02-27 11:56:17'),
-(6, 6, 15, 'Asad Nazir', 3, 'ABC', 5, 'Practice ABC', 4, 'Team B', 'Info/Other', 'Concerning', 'Testdsadsa', 'asdsadsadsad', 'New Test Company', '2023-02-27 11:57:24', NULL, 0, NULL, '2023-02-27 11:57:24'),
-(7, 6, 15, 'Asad Nazir', 3, 'ABC', 5, 'Practice ABC', 5, 'Team C', 'Info/Other', 'Concerning', 'Test', 'sadsadsad', 'New Test Company', '2023-02-27 14:34:36', NULL, 0, NULL, '2023-02-27 14:34:36'),
-(8, 6, 15, 'Asad Nazir', 3, 'ABC', 4, 'New Practice 123', 0, '', 'Info/Other', 'Concerning', 'Testsadsa', 'asdsadsadsad', 'New Test Company', '2023-02-27 14:41:23', NULL, 0, NULL, '2023-02-27 14:41:23'),
-(9, 6, 15, 'Asad Nazir', 3, 'ABC', 5, 'Practice ABC', 5, 'Team C', 'Info/Other', 'Concerning', 'Test', 'sadsad', 'New Test Company', '2023-02-27 15:27:16', NULL, 0, NULL, '2023-02-27 15:27:16'),
-(10, 6, 15, 'Asad Nazir', 3, 'ABC', 5, 'Practice ABC', 5, 'Team C', 'Info/Other', 'Concerning', 'Test', 'sadsad', 'New Test Company', '2023-02-27 15:29:38', NULL, 0, NULL, '2023-02-27 15:29:38'),
-(11, 6, 15, 'Asad Nazir', 3, 'ABC', 5, 'Practice ABC', 5, 'Team C', 'Info/Other', 'Concerning', 'Testfg', 'fdgfdgfdg', 'New Test Company', '2023-02-27 15:30:53', NULL, 0, NULL, '2023-02-27 15:30:53'),
-(12, 6, 15, 'Asad Nazir', 3, 'ABC', 5, 'Practice ABC', 5, 'Team C', 'Info/Other', 'Concerning', 'Test', 'sadsadsad', 'New Test Company', '2023-02-27 15:34:19', NULL, 0, NULL, '2023-02-27 15:34:19'),
-(13, 6, 15, 'Asad Nazir', 3, 'ABC', 5, 'Practice ABC', 5, 'Team C', 'Info/Other', 'Concerning', 'sdsad', 'adsad', 'New Test Company', '2023-02-27 15:37:34', NULL, 0, NULL, '2023-02-27 15:37:34');
+INSERT INTO `tickets` (`id`, `company_id`, `user_id`, `creator_name`, `from`, `department_name`, `practice_id`, `practice_name`, `team_id`, `team_name`, `type`, `priority`, `subject`, `message`, `creator`, `response_at`, `status`, `remarks`, `created_at`, `deleted_at`, `updated_at`) VALUES
+(1, 6, 15, 'Asad Nazir', 3, 'ABC', 4, 'New Practice 123', 0, '', 'Info/Other', 'High', 'Test subject', 'test message', 'New Test Company', NULL, 0, NULL, '2023-02-24 16:17:37', NULL, '2023-02-28 15:58:46'),
+(2, 6, 15, 'Asad Nazir', 3, 'ABC', 5, 'practice ABC', 0, '', 'Info/Other', 'Concerning', 'Test subject', 'test message', 'New Test Company', NULL, 0, NULL, '2023-02-24 16:17:37', NULL, '2023-02-24 16:17:37'),
+(3, 6, 15, 'Asad Nazir', 3, 'ABC', 5, 'test practice', 0, 'Team B', 'Info/Other', 'Low', 'Test', 'message', 'New Test Company', NULL, 0, NULL, '2023-02-27 11:23:47', NULL, '2023-02-27 11:23:47'),
+(4, 6, 15, 'Asad Nazir', 3, 'ABC', 5, 'test practice', 4, 'Team B', 'Info/Other', 'Concerning', 'Test', 'dsadsad', 'New Test Company', NULL, 0, NULL, '2023-02-27 11:51:23', NULL, '2023-02-27 11:51:23'),
+(5, 6, 15, 'Asad Nazir', 3, 'ABC', 5, 'Practice ABC', 4, 'Team B', 'Info/Other', 'Concerning', 'dsf', 'dsfdsfsd', 'New Test Company', NULL, 0, NULL, '2023-02-27 11:56:17', NULL, '2023-02-27 11:56:17'),
+(6, 6, 15, 'Asad Nazir', 3, 'ABC', 5, 'Practice ABC', 4, 'Team B', 'Info/Other', 'Medium', 'Testdsadsa', 'asdsadsadsad', 'New Test Company', NULL, 0, NULL, '2023-02-27 11:57:24', NULL, '2023-02-27 11:57:24'),
+(7, 6, 15, 'Asad Nazir', 3, 'ABC', 5, 'Practice ABC', 5, 'Team C', 'Info/Other', 'Concerning', 'Test', 'sadsadsad', 'New Test Company', NULL, 0, NULL, '2023-02-27 14:34:36', NULL, '2023-02-27 14:34:36'),
+(8, 6, 15, 'Asad Nazir', 3, 'ABC', 4, 'New Practice 123', 0, '', 'Info/Other', 'Concerning', 'Testsadsa', 'asdsadsadsad', 'New Test Company', NULL, 0, NULL, '2023-02-27 14:41:23', NULL, '2023-02-27 14:41:23'),
+(9, 6, 15, 'Asad Nazir', 3, 'ABC', 5, 'Practice ABC', 5, 'Team C', 'Info/Other', 'Concerning', 'Test', 'sadsad', 'New Test Company', NULL, 0, NULL, '2023-02-27 15:27:16', NULL, '2023-02-27 15:27:16'),
+(10, 6, 15, 'Asad Nazir', 3, 'ABC', 5, 'Practice ABC', 5, 'Team C', 'Info/Other', 'Concerning', 'Test', 'sadsad', 'New Test Company', NULL, 0, NULL, '2023-02-27 15:29:38', NULL, '2023-02-27 15:29:38'),
+(11, 6, 15, 'Asad Nazir', 3, 'ABC', 5, 'Practice ABC', 5, 'Team C', 'Info/Other', 'Concerning', 'Testfg', 'fdgfdgfdg', 'New Test Company', NULL, 0, NULL, '2023-02-27 15:30:53', NULL, '2023-02-27 15:30:53'),
+(12, 6, 15, 'Asad Nazir', 3, 'ABC', 5, 'Practice ABC', 5, 'Team C', 'Info/Other', 'Concerning', 'Test', 'sadsadsad', 'New Test Company', NULL, 0, NULL, '2023-02-27 15:34:19', NULL, '2023-02-27 15:34:19'),
+(13, 6, 15, 'Asad Nazir', 3, 'ABC', 5, 'Practice ABC', 5, 'Team C', 'Info/Other', 'Concerning', 'sdsad', 'adsad', 'New Test Company', NULL, 0, NULL, '2023-02-27 15:37:34', NULL, '2023-02-27 15:37:34'),
+(14, 6, 15, 'Asad Nazir', 6, 'CRM', 4, 'New Practice 123', 0, '', 'Info/Other', 'Concerning', 'Test', 'Asad Nazir\r\nsadsadsa\r\nasdsad', 'New Test Company', NULL, 0, NULL, '2023-02-28 16:34:53', NULL, '2023-02-28 16:34:53'),
+(15, 6, 15, 'Asad Nazir', 4, 'Audit', 4, 'New Practice 123', 0, '', 'Info/Other', 'Low', 'Test', '<p><strong>Hi Ewa and Team,</strong><br />\n<br />\nAfter reviewing the patient account in detail. We have found that all the services are getting paid by both insurances except the lab services.<br />\nAs we already discussed his lab services amount is on the patient end because of the denials we had received from his both insurance. Now we send all his lab services balance on the patient end. There is a $6744.80 patient balance left as of now.&nbsp;<br />\n<br />\nWarm Regards,<br />\n<strong>Peter Alex!</strong></p>', 'New Test Company', NULL, 0, NULL, '2023-03-01 11:35:16', NULL, '2023-03-01 11:35:16');
 
 -- --------------------------------------------------------
 
@@ -811,6 +815,8 @@ DROP TABLE IF EXISTS `ticket_attachments`;
 CREATE TABLE IF NOT EXISTS `ticket_attachments` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `ticket_id` int(11) NOT NULL,
+  `reply_id` int(11) NOT NULL,
+  `type` int(11) NOT NULL COMMENT '0=ticket,1=reply',
   `name` mediumtext NOT NULL,
   `org_name` tinytext NOT NULL,
   `path` mediumtext NOT NULL,
@@ -825,10 +831,10 @@ CREATE TABLE IF NOT EXISTS `ticket_attachments` (
 -- Dumping data for table `ticket_attachments`
 --
 
-INSERT INTO `ticket_attachments` (`id`, `ticket_id`, `name`, `org_name`, `path`, `ext`, `size`, `created_at`, `updated_at`) VALUES
-(1, 11, 'UmU9JYLoqORaVoXIids3rHGHl7X51VI5ZGNl0t7I.xlsx', 'AttendanceList.xlsx', 'uploads/ticket_attachments/UmU9JYLoqORaVoXIids3rHGHl7X51VI5ZGNl0t7I.xlsx', 'xlsx', '22.46 KB', '2023-02-27 20:30:54', '2023-02-27 20:30:54'),
-(2, 12, 'UIRQAfyGBerJlnjksiN7awLYXb6qaicdy7i4OAAb.xlsx', 'AttendanceList.xlsx', 'uploads/ticket_attachments/UIRQAfyGBerJlnjksiN7awLYXb6qaicdy7i4OAAb.xlsx', 'xlsx', '22.46 KB', '2023-02-27 20:34:19', '2023-02-27 20:34:19'),
-(3, 13, 'fcyAw274dujqS6KP8l8xN2cg0ObhhigBoK2jS83d.xlsx', 'AttendanceList (1).xlsx', 'uploads/ticket_attachments/fcyAw274dujqS6KP8l8xN2cg0ObhhigBoK2jS83d.xlsx', 'xlsx', '22.49 KB', '2023-02-27 20:37:35', '2023-02-27 20:37:35');
+INSERT INTO `ticket_attachments` (`id`, `ticket_id`, `reply_id`, `type`, `name`, `org_name`, `path`, `ext`, `size`, `created_at`, `updated_at`) VALUES
+(1, 11, 0, 0, 'UmU9JYLoqORaVoXIids3rHGHl7X51VI5ZGNl0t7I.xlsx', 'AttendanceList.xlsx', 'uploads/ticket_attachments/UmU9JYLoqORaVoXIids3rHGHl7X51VI5ZGNl0t7I.xlsx', 'xlsx', '22.46 KB', '2023-02-27 20:30:54', '2023-02-27 20:30:54'),
+(2, 12, 0, 0, 'UIRQAfyGBerJlnjksiN7awLYXb6qaicdy7i4OAAb.xlsx', 'AttendanceList.xlsx', 'uploads/ticket_attachments/UIRQAfyGBerJlnjksiN7awLYXb6qaicdy7i4OAAb.xlsx', 'xlsx', '22.46 KB', '2023-02-27 20:34:19', '2023-02-27 20:34:19'),
+(3, 13, 0, 0, 'fcyAw274dujqS6KP8l8xN2cg0ObhhigBoK2jS83d.xlsx', 'AttendanceList (1).xlsx', 'uploads/ticket_attachments/fcyAw274dujqS6KP8l8xN2cg0ObhhigBoK2jS83d.xlsx', 'xlsx', '22.49 KB', '2023-02-27 20:37:35', '2023-02-27 20:37:35');
 
 -- --------------------------------------------------------
 
@@ -846,7 +852,7 @@ CREATE TABLE IF NOT EXISTS `ticket_ccs` (
   PRIMARY KEY (`id`),
   KEY `ticket_id` (`ticket_id`),
   KEY `department_id` (`department_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `ticket_ccs`
@@ -861,7 +867,35 @@ INSERT INTO `ticket_ccs` (`id`, `ticket_id`, `department_id`, `created_at`, `upd
 (6, 2, 4, '2023-02-24 16:17:37', '2023-02-24 16:17:37'),
 (7, 3, 3, '2023-02-27 11:23:47', '2023-02-27 11:23:47'),
 (8, 4, 5, '2023-02-27 11:51:23', '2023-02-27 11:51:23'),
-(9, 5, 5, '2023-02-27 11:56:17', '2023-02-27 11:56:17');
+(9, 5, 5, '2023-02-27 11:56:17', '2023-02-27 11:56:17'),
+(10, 14, 5, '2023-02-28 16:34:53', '2023-02-28 16:34:53');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ticket_replies`
+--
+
+DROP TABLE IF EXISTS `ticket_replies`;
+CREATE TABLE IF NOT EXISTS `ticket_replies` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `ticket_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `creator_name` varchar(128) NOT NULL,
+  `message` text NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `ticket_replies`
+--
+
+INSERT INTO `ticket_replies` (`id`, `ticket_id`, `user_id`, `creator_name`, `message`, `created_at`, `deleted_at`, `updated_at`) VALUES
+(1, 11, 15, 'Asad Nazir', '<p><strong>Hi Ewa and Team,</strong><br />\r\n<br />\r\nAfter reviewing the patient account in detail. We have found that all the services are getting paid by both insurances except the lab services.<br />\r\nAs we already discussed his lab services amount is on the patient end because of the denials we had received from his both insurance. Now we send all his lab services balance on the patient end. There is a $6744.80 patient balance left as of now.&nbsp;<br />\r\n<br />\r\nWarm Regards,<br />\r\n<strong>Peter Alex!</strong></p>', '2023-03-01 19:42:24', NULL, '2023-03-01 20:49:49'),
+(2, 11, 15, 'Asad Nazir', '<p><strong>Hi Ewa and Team,</strong><br />\r\n<br />\r\nAfter reviewing the patient account in detail. We have found that all the services are getting paid by both insurances except the lab services.<br />\r\nAs we already discussed his lab services amount is on the patient end because of the denials we had received from his both insurance. Now we send all his lab services balance on the patient end. There is a $6744.80 patient balance left as of now.&nbsp;<br />\r\n<br />\r\nWarm Regards,<br />\r\n<strong>Peter Alex!</strong></p>', '2023-03-01 19:42:24', NULL, '2023-03-01 20:49:54');
 
 -- --------------------------------------------------------
 
@@ -893,7 +927,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 
 INSERT INTO `users` (`id`, `company_id`, `type`, `status`, `firstname`, `lastname`, `email`, `email_verified_at`, `password`, `remember_token`, `last_activity`, `created_at`, `updated_at`) VALUES
-(10, 0, 0, 1, 'Junaid', 'Khan', 'junaid@mail.com', NULL, '$2a$12$TWJEfJ3kvFfnS49Yn5lvMe4qqxJUy/Oy1Gy5fvHgkzpshsC3WlApi', 'hLYUJCQFWXl5upRMlNLjxykhHAYVFaOPg9mHsJaZ6l5OoozCbba8jR43IptG', NULL, '2023-01-04 04:24:33', '2023-02-24 09:42:42'),
+(10, 0, 0, 1, 'Junaid', 'Khan', 'junaid@mail.com', NULL, '$2a$12$TWJEfJ3kvFfnS49Yn5lvMe4qqxJUy/Oy1Gy5fvHgkzpshsC3WlApi', 'Yu3nC3wtLAcvmGeLzckQYwpRm98x5Y2dXablIKTaDDrZ5cXg5vjG6InCRTUZ', NULL, '2023-01-04 04:24:33', '2023-02-24 09:42:42'),
 (11, 4, 2, 1, 'Super', 'Admin', 'superadmin4@bmb.com', NULL, '$2a$12$DAeA/CC/k2xUF8g1hN6toeW6cnwZFtWKDaBcEEW5Y4Fptw1OaVWAC', NULL, NULL, '2023-01-19 13:39:09', '2023-01-19 13:39:09'),
 (12, 5, 2, 1, 'Super', 'Admin', 'superadmin5@test.com', NULL, '$2a$12$DAeA/CC/k2xUF8g1hN6toeW6cnwZFtWKDaBcEEW5Y4Fptw1OaVWAC', NULL, NULL, '2023-01-22 12:33:56', '2023-01-22 12:33:56'),
 (13, 1, 2, 1, 'John D.', 'John D.', 'JohnDMurray@teleworm.us', NULL, '$2a$12$DAeA/CC/k2xUF8g1hN6toeW6cnwZFtWKDaBcEEW5Y4Fptw1OaVWAC', NULL, NULL, '2023-01-25 10:36:08', '2023-01-25 10:36:08'),

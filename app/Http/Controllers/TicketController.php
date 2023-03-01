@@ -33,12 +33,15 @@ class TicketController extends Controller
 
         $data['menu'] = "dmail-management";
         $data['sub_menu'] = "tickets";
-        if (auth()->user()->hasRole('dev')) {
+        if (auth()->user()->hasRole('dev'))
             $tickets = Ticket::where('company_id', '!=', 0)->orderBy('id', 'DESC')->get();
-        } else {
+        else
             $tickets = Ticket::where('company_id', Auth::user()->company->id)->orderBy('id', 'DESC')->get();
-        }
-        return view('tickets_management.index', compact('data', 'tickets'));
+        if (auth()->user()->can('assign department user'))
+            $departments = Department::where('company_id', auth()->user()->company_id)->orderBy('name', 'ASC')->get();
+        else
+            $departments = Auth::user()->assinged_departments();
+        return view('tickets_management.index', compact('data', 'tickets', 'departments'));
     }
 
     /**
@@ -59,11 +62,7 @@ class TicketController extends Controller
             $practices = Practice::where('company_id', $user->company_id)->orderBy('name', 'ASC')->get();
         else
             $practices = Auth::user()->assinged_practices();
-        $types = ["Query", "Other", "Info/Other"];
-        sort($types);
-        $priorities = ["Low", "Medium", "High", "Concerning"];
-        sort($priorities);
-        return view('tickets_management.create', compact('data', 'departments', 'practices', 'types', 'priorities'));
+        return view('tickets_management.create', compact('data', 'departments', 'practices'));
     }
 
     /**
@@ -102,7 +101,7 @@ class TicketController extends Controller
                 $ticket["type"] = $request->type;
                 $ticket["priority"] = $request->priority;
                 $ticket["subject"] = $request->subject;
-                $ticket["message"] = $request->message;
+                $ticket["message"] = addslashes($request->message);
                 $ticket["creator"] = $creator;
                 $id = Ticket::create($ticket);
                 $cc = isset($request->cc) ? $request->cc : [];
@@ -218,17 +217,17 @@ class TicketController extends Controller
                 if (auth()->user()->can('delete ticket')) {
                     $delete = '<form method="POST" action="' . route('tickets.destroy', $ticket->id) . '" accept-charset="UTF-8" style="display:inline"><input name="_method" type="hidden" value="DELETE"><input name="_token" type="hidden" value="' . csrf_token() . '"><input class="dropdown-item" type="submit" value="Delete"></form>';
                 }
-                $nestedData['id'] = '<a class="assign-practice" ref="' . $ticket->id . '" href="javascript:void(0)">' . $ticket->id . '</a>';
+                $nestedData['id'] = '<a class="ticket-replies" ref="' . $ticket->id . '" href="javascript:void(0)">' . $ticket->id . '</a>';
                 $nestedData['response_at'] = !empty($ticket->response_at) ? date("M j, y, h:i A", strtotime($ticket->response_at)) : "";
-                $nestedData['created_at'] = !empty($ticket->created_at) ? date("M j, y, h:i A", strtotime($ticket->created_at)) : "";
+                $nestedData['created_at'] = $ticket->created_at;
                 $nestedData['creator'] = $ticket->creator;
                 $nestedData['creator_name'] = $ticket->creator_name;
                 $nestedData['practice_name'] = $ticket->practice_name;
                 $nestedData['department_name'] = $ticket->department_name;
                 $nestedData['team_name'] = $ticket->team_name;
                 $nestedData['subject'] = $ticket->subject;
-                $nestedData['priority'] = $ticket->priority;
-                $nestedData['status'] = ticket_statuses($ticket->status);
+                $nestedData['priority'] = '<span class="' . strtolower($ticket->priority) . '">' . $ticket->priority . '</span>';
+                $nestedData['status'] = $ticket->status;
                 $nestedData['remarks'] = $ticket->remarks;
                 $nestedData['action'] = '<button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="text-muted sr-only">Action</span></button><div class="dropdown-menu dropdown-menu-right">' . $edit . $delete . '</div>';
                 $data[] = $nestedData;
@@ -240,7 +239,21 @@ class TicketController extends Controller
             "recordsFiltered" => intval($totalFiltered),
             "data" => $data
         );
-
         echo json_encode($json_data);
+    }
+    public function getTicket(Request $request)
+    {
+        $response = array();
+        try {
+            $id = $request->id;
+            $ticket = Ticket::find($id);
+            $ticket = $ticket->load("replies")->load("attachments");
+            $response['success'] = 1;
+            $response['content'] = $ticket;
+        } catch (\Throwable $th) {
+            $response['success'] = 0;
+            $response['message'] = "Something Went Wrong Try Again";
+        }
+        return response()->json($response);
     }
 }

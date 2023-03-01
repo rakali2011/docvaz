@@ -74,7 +74,7 @@
               <div class="form-group mb-3">
                 <label for="type">Type</label>
                 <select name="type" id="type" class="form-control @error('type') is-invalid @enderror">
-                  @foreach ($types as $item)
+                  @foreach (ticket_types() as $item)
                   <option value="{{ $item }}">{{ $item }}</option>
                   @endforeach
                 </select>
@@ -89,7 +89,7 @@
               <div class="form-group mb-3">
                 <label for="priority">Priority</label>
                 <select name="priority" id="priority" class="form-control @error('priority') is-invalid @enderror">
-                  @foreach ($priorities as $item)
+                  @foreach (ticket_priorities() as $item)
                   <option value="{{ $item }}">{{ $item }}</option>
                   @endforeach
                 </select>

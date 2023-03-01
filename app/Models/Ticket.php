@@ -9,9 +9,27 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Ticket extends Model
 {
     use HasFactory, SoftDeletes;
+    public function getCreatedAtAttribute($date)
+    {
+        // return \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $date)->format('M j, Y h:i A');
+        return date("M j, Y h:i A", strtotime($date));
+    }
+    public function getUpdatedAtAttribute($date)
+    {
+        // return Carbon::createFromFormat('Y-m-d H:i:s', $date)->format('M j, Y h:i A');
+        return date("M j, Y h:i A", strtotime($date));
+    }
+    public function getStatusAttribute($value)
+    {
+        return get_ticket_status($value);
+    }
     public function attachments()
     {
         return $this->hasMany(TicketAttachment::class);
+    }
+    public function replies()
+    {
+        return $this->hasMany(TicketReply::class);
     }
     protected $fillable = [
         'company_id',
