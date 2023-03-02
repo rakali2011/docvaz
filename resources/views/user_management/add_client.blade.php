@@ -59,6 +59,19 @@
                                     @enderror
                                 </div>
                             </div>
+                            @can('assign role')
+                            <div class="col-md-4">
+                                <div class="form-group mb-3">
+                                    <label for="email">Role</label>
+                                    {!! Form::select('roles[]', $roles,$userRole, array('class' => 'form-control select2-multi','multiple')) !!}
+                                    @error('role')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            @endcan
                             <div class="col-md-4">
                                 <div class="form-group mb-3">
                                     <label for="team">Team</label>
@@ -68,6 +81,21 @@
                                         @endforeach
                                     </select>
                                     @error('team')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group mb-3">
+                                    <label for="timezone">Timezone</label>
+                                    <select name="timezone" id="timezone" class="form-control @error('timezone') is-invalid @enderror">
+                                        @foreach (timezones() as $key => $timezone)
+                                        <option value="{{ $key }}" {{(@$user) ? (@$user->timezone==$key ? 'selected' : '') : '' }}>{{ $timezone }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('timezone')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>

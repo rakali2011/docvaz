@@ -11,6 +11,7 @@ class TicketCC extends Model
     protected $table = "ticket_ccs";
     protected $fillable = [
         'ticket_id',
-        'department_id'
+        'resource_id',
+        'resource_type'
     ];
 }

@@ -12,6 +12,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use stdClass;
 
 class TicketController extends Controller
 {
@@ -29,8 +30,6 @@ class TicketController extends Controller
      */
     public function index()
     {
-
-
         $data['menu'] = "dmail-management";
         $data['sub_menu'] = "tickets";
         if (auth()->user()->hasRole('dev'))
@@ -62,7 +61,22 @@ class TicketController extends Controller
             $practices = Practice::where('company_id', $user->company_id)->orderBy('name', 'ASC')->get();
         else
             $practices = Auth::user()->assinged_practices();
-        return view('tickets_management.create', compact('data', 'departments', 'practices'));
+        $share_to = [];
+        if (auth()->user()->type == 3) {
+            foreach ($practices as $key => $value) {
+                $practice = Practice::findorfail($value->id);
+                $associated_client = $practice->associated_user(3);
+                foreach ($associated_client as $index => $client) {
+                    if (auth()->user()->id != $client->id) {
+                        $row = new stdClass;
+                        $row->id = $client->id;
+                        $row->name = $client->firstname . " " . $client->lastname;
+                        $share_to[] = $row;
+                    }
+                }
+            }
+        }
+        return view('tickets_management.create', compact('data', 'departments', 'practices', 'share_to'));
     }
 
     /**
@@ -73,6 +87,7 @@ class TicketController extends Controller
      */
     public function store(Request $request)
     {
+        DB::beginTransaction();
         try {
             $user = Auth::user();
             $creator = $user->type == 3 ? "Provider" : Company::where('id', $user->company_id)->pluck("name")[0];
@@ -81,7 +96,7 @@ class TicketController extends Controller
                 $company_id = $request->company;
             else
                 $company_id = $user->company_id;
-            $to_provider = $request->to_provider;
+            $to_provider = is_array($request->to_provider) ? $request->to_provider : explode(",", $request->to_provider);
             foreach ($to_provider as $value) {
                 $department_name = Department::where('id', $request->from)->pluck("name")[0];
                 $practice = Practice::findorfail($value);
@@ -91,8 +106,9 @@ class TicketController extends Controller
                 $team = $client_id > 0 ? User::findorfail($client_id)->assinged_teams() : "";
                 $ticket["company_id"] = $company_id;
                 $ticket["user_id"] = $user->id;
+                $ticket["user_type"] = $user->type;
                 $ticket["creator_name"] = $creator_name;
-                $ticket["from"] = $request->from;
+                $ticket["department_id"] = $request->from;
                 $ticket["department_name"] = $department_name;
                 $ticket["practice_id"] = $value;
                 $ticket["practice_name"] = $practice_name;
@@ -107,7 +123,15 @@ class TicketController extends Controller
                 $cc = isset($request->cc) ? $request->cc : [];
                 foreach ($cc as $value) {
                     $ticket_cc["ticket_id"] = $id->id;
-                    $ticket_cc["department_id"] = $value;
+                    $ticket_cc["resource_id"] = $value;
+                    $ticket_cc["resource_type"] = 0;
+                    TicketCC::create($ticket_cc);
+                }
+                $share_to = isset($request->share_to) ? $request->share_to : [];
+                foreach ($share_to as $value) {
+                    $ticket_cc["ticket_id"] = $id->id;
+                    $ticket_cc["resource_id"] = $value;
+                    $ticket_cc["resource_type"] = 1;
                     TicketCC::create($ticket_cc);
                 }
                 if ($request->hasfile('files')) {
@@ -127,6 +151,7 @@ class TicketController extends Controller
                     }
                 }
             }
+            DB::commit();
             $response['success'] = 1;
             $response['message'] = "Ticket Created Successfully";
             $response["route"] = route('tickets.index');

@@ -101,7 +101,7 @@
 <div class="modal fade" id="ticket-replies-modal" tabindex="-1" role="dialog" aria-labelledby="verticalModalTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
-      <form action="{{ route('update_user_practices') }}" method="post" id="ticket-replies-form">
+      <form action="{{ route('ticket_replies.store') }}" method="POST" id="ticket-replies-form" enctype="multipart/form-data">
         @csrf
         <div class="modal-header">
           <h6 class="modal-title mr-3" id="title"></h6>
@@ -159,8 +159,8 @@
                 </select>
               </div>
               <div class="form-group col-md-4">
-                <label for="Priority--">Priority</label>
-                <select name="Priority" id="Priority--" class="form-control">
+                <label for="priority--">Priority</label>
+                <select name="priority" id="priority--" class="form-control">
                   <option value="">--Please Select--</option>
                   @foreach (ticket_priorities() as $key => $item)
                   <option value="{{ $item }}">{{ $item }}</option>
@@ -252,89 +252,6 @@
 @push('scripts')
 <script src="{{ asset('assets/ckeditor/ckeditor.js') }}"></script>
 <script>
-  var ref = '';
-  $(document).on('click', '.ticket-replies', function() {
-    ref = $(this).attr('ref');
-    $.ajax({
-      type: "post",
-      data: {
-        id: ref,
-        _token: '{{ csrf_token() }}'
-      },
-      url: "{{ route('get_ticket') }}",
-      success: function(response) {
-        console.log(response);
-        if (response.success == 1) {
-          $('#title').text(response.content.department_name);
-          $('#ticket-number').text(response.content.id);
-          $('#ticket-status').text(response.content.status);
-          $('#ticket-date--').text(response.content.created_at);
-          $('#practice').val(response.content.practice_name);
-          $('#sender').val(response.content.department_name);
-          $('#type').val(response.content.type);
-          $('#priority').val(response.content.priority);
-          $('#priority').removeClass('concerning');
-          $('#priority').removeClass('high');
-          $('#priority').removeClass('low');
-          $('#priority').removeClass('medium');
-          $('#priority').addClass(response.content.priority.toLowerCase());
-          $('#subject').val(response.content.subject);
-          $('#ticket-message').html(response.content.message);
-          $('#ticket-date').html(response.content.created_at);
-          $("select#status option:contains('" + response.content.status + "')").attr("selected", "selected");
-          $('#Priority-- option[value="' + response.content.priority + '"]').attr("selected", "selected");
-          var replies = '';
-          $.each(response.content.replies, function(key, value) {
-            color = key % 2 == 0 ? '#fffaf0' : '#e9ecef';
-            replies += '<div class="row reply" style="background:' + color + ';"><div class="col-md-8"><strong class="text-main"><img class="icon" src="https://docuhub.com/chat/user-icon.png">' + value.creator_name + '</strong><span>' + value.created_at + '</span><div class="reply-container">' + value.message + '</div></div></div>';
-          });
-          $('#ticket-replies').html(replies);
-        } else {
-          Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: response.message,
-          });
-        }
-      }
-    });
-    $('#ticket-replies-modal').modal('show');
-  });
-  var form = document.getElementById('ticket-replies-form');
-  form.addEventListener('submit', event => {
-    event.preventDefault();
-    let formData = new FormData(form);
-    formData.append('ref', ref);
-    fetch(form.action, {
-        method: "POST",
-        body: formData
-      })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json();
-
-      })
-      .then(data => {
-        if (data.success == 1) {
-          $('#ticket-replies-modal').modal('hide');
-          $('#ticket-replies-body').html('');
-          ref = "";
-          Swal.fire({
-            icon: 'success',
-            text: data.message,
-          });
-        } else {
-          Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: data.message,
-          });
-        }
-      })
-      .catch(error => console.error("There was a problem with the fetch operation:", error));
-  });
   $(document).ready(function() {
     $('#tickets-table').DataTable({
       "processing": true,
@@ -421,6 +338,61 @@
       // }
     });
   });
+  var ref = '';
+  $(document).on('click', '.ticket-replies', function() {
+    ref = $(this).attr('ref');
+    $.ajax({
+      type: "post",
+      data: {
+        id: ref,
+        _token: '{{ csrf_token() }}'
+      },
+      url: "{{ route('get_ticket') }}",
+      success: function(response) {
+        console.log(response);
+        if (response.success == 1) {
+          $('#ticket-replies-form')[0].reset();
+          CKEDITOR.instances.message.setData('');
+          $('#title').text(response.content.department_name);
+          $('#ticket-number').text(response.content.id);
+          $('#ticket-status').text(response.content.status);
+          $('#ticket-date--').text(response.content.created_at);
+          $('#practice').val(response.content.practice_name);
+          $('#sender').val(response.content.department_name);
+          $('#type').val(response.content.type);
+          $('#priority').val(response.content.priority);
+          $('#priority').removeClass('concerning');
+          $('#priority').removeClass('high');
+          $('#priority').removeClass('low');
+          $('#priority').removeClass('medium');
+          $('#priority').addClass(response.content.priority.toLowerCase());
+          $('#subject').val(response.content.subject);
+          $('#ticket-message').html(response.content.message);
+          $('#ticket-date').html(response.content.created_at);
+          $("select#status option:contains('" + response.content.status + "')").attr("selected", "selected");
+          $('#priority-- option[value="' + response.content.priority + '"]').attr("selected", "selected");
+          $('#refer_to option[value="' + response.content.department_id + '"]').remove();
+          var replies = '';
+          $.each(response.content.replies, function(key, value) {
+            color = key % 2 == 0 ? '#fffaf0' : '#e9ecef';
+            if (value.is_refered)
+              replies += '<div class="row reply" style="background:' + color + ';"><div class="col-md-12"><div class="reply-container">' + value.message + '<p class="text-center">' + value.creator_name + '<br>' + value.created_at + '</p></div></div></div>';
+            else
+              replies += '<div class="row reply" style="background:' + color + ';"><div class="col-md-8"><strong class="text-main"><img class="icon" src="https://docuhub.com/chat/user-icon.png">' + value.creator_name + '</strong><span>' + value.created_at + '</span><div class="reply-container">' + value.message + '</div></div></div>';
+
+          });
+          $('#ticket-replies').html(replies);
+        } else {
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: response.message,
+          });
+        }
+      }
+    });
+    $('#ticket-replies-modal').modal('show');
+  });
   CKEDITOR.replace('message');
   var uptarg = document.getElementById('uppy');
   const uppy = Uppy.Core({
@@ -437,19 +409,18 @@
     height: 210,
     proudlyDisplayPoweredByUppy: false,
   });
-  var importform = document.getElementById('create-ticket');
-  importform.addEventListener('submit', event => {
+  var form = document.getElementById('ticket-replies-form');
+  form.addEventListener('submit', event => {
     event.preventDefault();
-    // access the files data selected by uppy
+    let formData = new FormData(form);
+    var data = CKEDITOR.instances.message.getData();
+    formData.append('ticket_id', ref);
+    formData.append('message', data);
     const files = uppy.getFiles();
-    // Create a FormData object
-    const formData = new FormData(importform);
-
-    // Append the files to the FormData object
     files.forEach(file => {
       formData.append('files[]', file.data);
     });
-    fetch(importform.action, {
+    fetch(form.action, {
         method: "POST",
         body: formData
       })
@@ -462,12 +433,14 @@
       })
       .then(data => {
         if (data.success == 1) {
+          $('#ticket-replies-modal').modal('hide');
+          $('#ticket-replies-form')[0].reset();
+          CKEDITOR.instances.message.setData('');
+          ref = "";
           Swal.fire({
             icon: 'success',
             text: data.message,
           });
-          uppy.reset();
-          window.location.replace(data.route);
         } else {
           Swal.fire({
             icon: 'error',
@@ -477,7 +450,6 @@
         }
       })
       .catch(error => console.error("There was a problem with the fetch operation:", error));
-
   });
 </script>
 @endpush

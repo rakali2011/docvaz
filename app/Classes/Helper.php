@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use App\Models\Company;
 use App\Models\User;
 
@@ -10,24 +11,57 @@ if (!function_exists('companies')) {
         return $companies;
     }
 }
-function ticket_statuses()
-{
-    return ["Open", "Inprocess", "Closed", "Reopen", "Onhold", "Waiting Approval", "Rejected"];
+if (!function_exists('ticket_statuses')) {
+    function ticket_statuses()
+    {
+        return ["Open", "Inprocess", "Closed", "Reopen", "Onhold", "Waiting Approval", "Rejected"];
+    }
 }
-function get_ticket_status($status = 0)
-{
-    $statuses = ["Open", "Inprocess", "Closed", "Reopen", "Onhold", "Waiting Approval", "Rejected"];
-    return $statuses[$status];
+if (!function_exists('get_ticket_status')) {
+    function get_ticket_status($status = 0)
+    {
+        $statuses = ["Open", "Inprocess", "Closed", "Reopen", "Onhold", "Waiting Approval", "Rejected"];
+        return $statuses[$status];
+    }
 }
-function ticket_types()
-{
-    $types = ["Query", "Other", "Info/Other"];
-    sort($types);
-    return $types;
+if (!function_exists('ticket_types')) {
+    function ticket_types()
+    {
+        $types = ["Query", "Other", "Info/Other"];
+        sort($types);
+        return $types;
+    }
 }
-function ticket_priorities()
-{
-    $priorities = ["Low", "Medium", "High", "Concerning"];
-    sort($priorities);
-    return $priorities;
+if (!function_exists('ticket_priorities')) {
+    function ticket_priorities()
+    {
+        $priorities = ["Low", "Medium", "High", "Concerning"];
+        sort($priorities);
+        return $priorities;
+    }
+}
+if (!function_exists('timezones')) {
+    function timezones()
+    {
+        $timezones = ["Asia/Karachi", "US/Alaska", "US/Arizona", "US/Central", "US/Eastern", "US/Hawaii", "US/Mountain", "US/Pacific"];
+        sort($timezones);
+        return $timezones;
+    }
+}
+if (!function_exists('get_timezone')) {
+    function get_timezone($timezone)
+    {
+        $timezones = ["Asia/Karachi", "US/Alaska", "US/Arizona", "US/Central", "US/Eastern", "US/Hawaii", "US/Mountain", "US/Pacific"];
+        return $timezones[$timezone];
+    }
+}
+if (!function_exists('users')) {
+    function users($type = NULL)
+    {
+        if (!empty($type))
+            $users = User::where('company_id', Auth::user()->company_id)->where('type', $type)->get();
+        else
+            $users = User::where('company_id', Auth::user()->company_id)->get();
+        return $users;
+    }
 }

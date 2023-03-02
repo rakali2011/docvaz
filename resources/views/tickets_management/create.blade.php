@@ -25,6 +25,7 @@
               </div>
             </div>
             @endrole
+            @if(Auth::user()->type==2)
             <div class="col-md-4">
               <div class="form-group mb-3">
                 <label for="from">From</label>
@@ -55,6 +56,54 @@
                 @enderror
               </div>
             </div>
+            @endif
+            @if(Auth::user()->type==3)
+            <div class="col-md-4">
+              <div class="form-group mb-3">
+                <label for="to_provider">From</label>
+                <select name="to_provider" id="to_provider" class="form-control @error('to_provider') is-invalid @enderror" required="required">
+                  @foreach ($practices as $item)
+                  <option value="{{ $item->id }}">{{ $item->name }}</option>
+                  @endforeach
+                </select>
+                @error('to_provider')
+                <span class="invalid-feedback" role="alert">
+                  <strong>{{ $message }}</strong>
+                </span>
+                @enderror
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group mb-3">
+                <label for="from">To Department</label>
+                <select name="from" id="from" class="form-control @error('from') is-invalid @enderror">
+                  @foreach ($departments as $item)
+                  <option value="{{ $item->id }}">{{ $item->name }}</option>
+                  @endforeach
+                </select>
+                @error('from')
+                <span class="invalid-feedback" role="alert">
+                  <strong>{{ $message }}</strong>
+                </span>
+                @enderror
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group mb-3">
+                <label for="share_to">Share To</label>
+                <select name="share_to[]" id="share_to" class="form-control select2-multi @error('share_to') is-invalid @enderror" multiple="multiple">
+                  @foreach ($share_to as $item)
+                  <option value="{{ $item->id }}">{{ $item->name }}</option>
+                  @endforeach
+                </select>
+                @error('share_to')
+                <span class="invalid-feedback" role="alert">
+                  <strong>{{ $message }}</strong>
+                </span>
+                @enderror
+              </div>
+            </div>
+            @endif
             <div class="col-md-4">
               <div class="form-group mb-3">
                 <label for="cc">CC</label>

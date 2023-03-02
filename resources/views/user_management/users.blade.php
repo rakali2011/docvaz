@@ -44,11 +44,11 @@
                                                 @can('update user')
                                                 <a class="dropdown-item" href="{{ route('edit_user', ['id' => Crypt::encrypt($item->id)]) }}">Edit</a>
                                                 @endcan
-                                                @can('assign practice user')
-                                                <a class="dropdown-item assign-practice" ref="{{ Crypt::encrypt($item->id) }}" href="javascript:;">Assign Practice</a>
-                                                @endcan
                                                 @can('assign department user')
                                                 <a class="dropdown-item assign-department" ref="{{ Crypt::encrypt($item->id) }}" href="javascript:;">Assign Department</a>
+                                                @endcan
+                                                @can('assign practice user')
+                                                <a class="dropdown-item assign-practice" ref="{{ Crypt::encrypt($item->id) }}" href="javascript:;">Assign Practice</a>
                                                 @endcan
                                                 @can('assign team user')
                                                 <a class="dropdown-item assign-team" ref="{{ Crypt::encrypt($item->id) }}" href="javascript:;">Assign Team</a>
@@ -65,28 +65,6 @@
             </div> <!-- end section -->
         </div> <!-- .col-12 -->
     </div> <!-- .row -->
-</div>
-<div class="modal fade" id="assign-practice-modal" tabindex="-1" role="dialog" aria-labelledby="verticalModalTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <form action="{{ route('update_user_practices') }}" method="post" id="assign-practice-form">
-                @csrf
-                <div class="modal-header">
-                    <h5 class="modal-title" id="verticalModalTitle">Assign Practices</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group col-12" id="assign-practice-body"></div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn mb-2 btn-secondary" data-dismiss="modal">Close</button>
-                    <input type="submit" class="btn mb-2 btn-primary">
-                </div>
-            </form>
-        </div>
-    </div>
 </div>
 <div class="modal fade" id="assign-department-modal" tabindex="-1" role="dialog" aria-labelledby="verticalModalTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -110,7 +88,28 @@
         </div>
     </div>
 </div>
-
+<div class="modal fade" id="assign-practice-modal" tabindex="-1" role="dialog" aria-labelledby="verticalModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <form action="{{ route('update_user_practices') }}" method="post" id="assign-practice-form">
+                @csrf
+                <div class="modal-header">
+                    <h5 class="modal-title" id="verticalModalTitle">Assign Practices</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group col-12" id="assign-practice-body"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn mb-2 btn-secondary" data-dismiss="modal">Close</button>
+                    <input type="submit" class="btn mb-2 btn-primary">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 <div class="modal fade" id="assign-team-modal" tabindex="-1" role="dialog" aria-labelledby="verticalModalTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -137,35 +136,6 @@
 @push('scripts')
 <script>
     var ref = '';
-    $('.assign-practice').click(function() {
-        ref = $(this).attr('ref');
-        $.ajax({
-            type: "post",
-            data: {
-                ref: ref,
-                _token: '{{ csrf_token() }}'
-            },
-            url: "{{ route('get_practices') }}",
-
-            success: function(response) {
-                if (response.success == 1) {
-                    $('#assign-practice-body').html(response.content);
-                    $('.select2-multi').select2({
-                        theme: 'bootstrap4',
-                    });
-                } else {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Oops...',
-                        text: response.message,
-                    });
-                }
-
-
-            }
-        });
-        $('#assign-practice-modal').modal('show');
-    });
     $('.assign-department').click(function() {
         ref = $(this).attr('ref');
         $.ajax({
@@ -189,11 +159,36 @@
                         text: response.message,
                     });
                 }
-
-
             }
         });
         $('#assign-department-modal').modal('show');
+    });
+    $('.assign-practice').click(function() {
+        ref = $(this).attr('ref');
+        $.ajax({
+            type: "post",
+            data: {
+                ref: ref,
+                _token: '{{ csrf_token() }}'
+            },
+            url: "{{ route('get_practices') }}",
+
+            success: function(response) {
+                if (response.success == 1) {
+                    $('#assign-practice-body').html(response.content);
+                    $('.select2-multi').select2({
+                        theme: 'bootstrap4',
+                    });
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: response.message,
+                    });
+                }
+            }
+        });
+        $('#assign-practice-modal').modal('show');
     });
     $('.assign-team').click(function() {
         ref = $(this).attr('ref');
@@ -204,7 +199,6 @@
                 _token: '{{ csrf_token() }}'
             },
             url: "{{ route('get_teams') }}",
-
             success: function(response) {
                 if (response.success == 1) {
                     $('#assign-team-body').html(response.content);
@@ -218,11 +212,43 @@
                         text: response.message,
                     });
                 }
-
-
             }
         });
         $('#assign-team-modal').modal('show');
+    });
+    var form2 = document.getElementById('assign-department-form');
+    form2.addEventListener('submit', event => {
+        event.preventDefault();
+        let formData2 = new FormData(form2);
+        formData2.append('ref', ref);
+        fetch(form2.action, {
+                method: "POST",
+                body: formData2
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Network response was not ok");
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.success == 1) {
+                    $('#assign-department-modal').modal('hide');
+                    $('#assign-department-body').html('');
+                    ref = "";
+                    Swal.fire({
+                        icon: 'success',
+                        text: data.message,
+                    });
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: data.message,
+                    });
+                }
+            })
+            .catch(error => console.error("There was a problem with the fetch operation:", error));
     });
     var form = document.getElementById('assign-practice-form');
     form.addEventListener('submit', event => {
@@ -244,42 +270,6 @@
                 if (data.success == 1) {
                     $('#assign-practice-modal').modal('hide');
                     $('#assign-practice-body').html('');
-                    ref = "";
-                    Swal.fire({
-                        icon: 'success',
-                        text: data.message,
-                    });
-                } else {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Oops...',
-                        text: data.message,
-                    });
-                }
-            })
-            .catch(error => console.error("There was a problem with the fetch operation:", error));
-
-    });
-    var form2 = document.getElementById('assign-department-form');
-    form2.addEventListener('submit', event => {
-        event.preventDefault();
-        let formData2 = new FormData(form2);
-        formData2.append('ref', ref);
-        fetch(form2.action, {
-                method: "POST",
-                body: formData2
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error("Network response was not ok");
-                }
-                return response.json();
-
-            })
-            .then(data => {
-                if (data.success == 1) {
-                    $('#assign-department-modal').modal('hide');
-                    $('#assign-department-body').html('');
                     ref = "";
                     Swal.fire({
                         icon: 'success',

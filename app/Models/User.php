@@ -47,18 +47,32 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-    public function getFullnameAttribute($value)
+    public function getCreatedAtAttribute($date)
     {
-        return ucfirst($this->firstname) . " " . ucfirst($this->lastname);
+        // return \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $date)->format('M j, Y h:i A');
+        return date("M j, Y h:i A", strtotime($date));
     }
-    public function getInitialsAttribute()
+    public function getUpdatedAtAttribute($date)
     {
-        $fname = explode(' ', trim($this->firstname));
-        $lname = explode(' ', trim($this->lastname));
-        $firstnameWord = $fname[0];
-        $lastnameWord = $lname[0];
-        return strtoupper($firstnameWord[0] . "" . $lastnameWord[0]);
+        // return Carbon::createFromFormat('Y-m-d H:i:s', $date)->format('M j, Y h:i A');
+        return date("M j, Y h:i A", strtotime($date));
     }
+    public function getTimezoneAttribute($value)
+    {
+        return get_timezone($value);
+    }
+    // public function getFullnameAttribute($value)
+    // {
+    //     return ucfirst($this->firstname) . " " . ucfirst($this->lastname);
+    // }
+    // public function getInitialsAttribute()
+    // {
+    //     $fname = explode(' ', trim($this->firstname));
+    //     $lname = explode(' ', trim($this->lastname));
+    //     $firstnameWord = $fname[0];
+    //     $lastnameWord = $lname[0];
+    //     return strtoupper($firstnameWord[0] . "" . $lastnameWord[0]);
+    // }
     public function company()
     {
         return $this->belongsTo(Company::class);

@@ -13,6 +13,7 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\StatusController;
 use App\Http\Controllers\TeamController;
 use App\Http\Controllers\TicketController;
+use App\Http\Controllers\TicketReplyController;
 use App\Http\Controllers\UserController;
 use GuzzleHttp\Middleware;
 
@@ -105,3 +106,5 @@ Route::resource('document_types', DocumentTypeController::class);
 Route::resource('tickets', TicketController::class);
 Route::post('/all-tickets', [TicketController::class, 'allTickets'])->middleware('permission:view ticket')->name('all_tickets');
 Route::post('/get-ticket', [TicketController::class, 'getTicket'])->middleware('permission:view ticket')->name('get_ticket');
+// Ticket Replies
+Route::resource('ticket_replies', TicketReplyController::class);
