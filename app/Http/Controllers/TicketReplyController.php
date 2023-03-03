@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Department;
 use App\Models\Ticket;
 use App\Models\TicketAttachment;
+use App\Models\TicketCC;
 use App\Models\TicketReply;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -40,6 +41,7 @@ class TicketReplyController extends Controller
      */
     public function store(Request $request)
     {
+        dd($request);
         DB::beginTransaction();
         try {
             $ticket_id = $request->ticket_id;
@@ -97,6 +99,13 @@ class TicketReplyController extends Controller
                 $ticket_reply->message = '<p class="text-center text-danger mb-0 font-weight-bold">This ticket is forwarded from ' . $department_old . ' to ' . $department_new . '</p>';
                 $ticket_reply->is_refered = 1;
                 $ticket_reply->save();
+            }
+            $share_to = isset($request->share_to) ? $request->share_to : [];
+            foreach ($share_to as $value) {
+                $ticket_cc["ticket_id"] = $ticket_id;
+                $ticket_cc["resource_id"] = $value;
+                $ticket_cc["resource_type"] = 1;
+                TicketCC::create($ticket_cc);
             }
             DB::commit();
             $response['success'] = 1;

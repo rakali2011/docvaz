@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Auth;
 use App\Models\Company;
+use App\Models\Practice;
 use App\Models\User;
 
 if (!function_exists('companies')) {
@@ -64,4 +65,27 @@ if (!function_exists('users')) {
             $users = User::where('company_id', Auth::user()->company_id)->get();
         return $users;
     }
+}
+function share_to()
+{
+    if (auth()->user()->can('assign practice user'))
+        $practices = Practice::where('company_id', auth()->user()->company_id)->orderBy('name', 'ASC')->get();
+    else
+        $practices = Auth::user()->assinged_practices();
+    $share_to = [];
+    if (auth()->user()->type == 3) {
+        foreach ($practices as $key => $value) {
+            $practice = Practice::findorfail($value->id);
+            $associated_client = $practice->associated_user(3);
+            foreach ($associated_client as $index => $client) {
+                if (auth()->user()->id != $client->id) {
+                    $row = new stdClass;
+                    $row->id = $client->id;
+                    $row->name = $client->firstname . " " . $client->lastname;
+                    $share_to[] = $row;
+                }
+            }
+        }
+    }
+    return ["practices" => $practices, "share_to" => $share_to];
 }

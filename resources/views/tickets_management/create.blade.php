@@ -210,15 +210,13 @@
   var importform = document.getElementById('create-ticket');
   importform.addEventListener('submit', event => {
     event.preventDefault();
-    // access the files data selected by uppy
     const files = uppy.getFiles();
-    // Create a FormData object
     const formData = new FormData(importform);
-
-    // Append the files to the FormData object
     files.forEach(file => {
       formData.append('files[]', file.data);
     });
+    var data = CKEDITOR.instances.message.getData();
+    formData.append('message', data);
     fetch(importform.action, {
         method: "POST",
         body: formData

@@ -131,16 +131,22 @@
                 <label>Priority</label>
                 <input type="text" id="priority" class="form-control" value="" disabled="disabled">
               </div>
-              <div class="form-group col-md-6">
+              <div class="form-group col-md-5">
                 <label>Subject</label>
                 <input type="text" id="subject" class="form-control" value="" disabled="disabled">
               </div>
-
-              <div class="form-group col-md-6">
+              @if(Auth::user()->type==3)
+              <div class="form-group col-md-3">
                 <label>Share To</label>
-                <input type="text" class="form-control" value="Medium" disabled="disabled" style=" text-align:center;padding-bottom:3px;">
+                <select name="share_to[]" id="share_to" class="form-control select2-multi" multiple="multiple">
+                  @foreach (share_to()["share_to"] as $item)
+                  <option value="{{ $item->id }}">{{ $item->name }}</option>
+                  @endforeach
+                </select>
               </div>
-              <div class="form-group col-md-4">
+              @endif
+              @if(Auth::user()->type==2)
+              <div class="form-group col-md-3">
                 <label for="refer_to">Refer To</label>
                 <select name="refer_to" id="refer_to" class="form-control">
                   <option value="">--Please Select--</option>
@@ -149,7 +155,8 @@
                   @endforeach
                 </select>
               </div>
-              <div class="form-group col-md-4">
+              @endif
+              <div class="form-group col-md-2">
                 <label for="status">Status</label>
                 <select name="status" id="status" class="form-control">
                   <option value="">--Please Select--</option>
@@ -158,7 +165,7 @@
                   @endforeach
                 </select>
               </div>
-              <div class="form-group col-md-4">
+              <div class="form-group col-md-2">
                 <label for="priority--">Priority</label>
                 <select name="priority" id="priority--" class="form-control">
                   <option value="">--Please Select--</option>
@@ -379,9 +386,16 @@
               replies += '<div class="row reply" style="background:' + color + ';"><div class="col-md-12"><div class="reply-container">' + value.message + '<p class="text-center">' + value.creator_name + '<br>' + value.created_at + '</p></div></div></div>';
             else
               replies += '<div class="row reply" style="background:' + color + ';"><div class="col-md-8"><strong class="text-main"><img class="icon" src="https://docuhub.com/chat/user-icon.png">' + value.creator_name + '</strong><span>' + value.created_at + '</span><div class="reply-container">' + value.message + '</div></div></div>';
-
           });
           $('#ticket-replies').html(replies);
+          $('#share_to').select2('destroy');
+          $('#share_to option:selected').removeAttr('selected');
+          $.each(response.content.ccs, function(key, value) {
+            if (value.resource_type) {
+              $('#share_to option[value="' + value.resource_id + '"]').attr("selected", "selected");
+            }
+          });
+          $('#share_to').select2();
         } else {
           Swal.fire({
             icon: 'error',

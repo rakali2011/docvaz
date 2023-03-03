@@ -92,7 +92,7 @@
                                     <label for="timezone">Timezone</label>
                                     <select name="timezone" id="timezone" class="form-control @error('timezone') is-invalid @enderror">
                                         @foreach (timezones() as $key => $timezone)
-                                        <option value="{{ $key }}" {{(@$user) ? (@$user->timezone==$key ? 'selected' : '') : '' }}>{{ $timezone }}</option>
+                                        <option value="{{ $key }}" {{(@$user) ? (@$user->timezone==$timezone ? 'selected' : '') : '' }}>{{ $timezone }}</option>
                                         @endforeach
                                     </select>
                                     @error('timezone')

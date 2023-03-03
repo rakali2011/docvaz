@@ -57,25 +57,9 @@ class TicketController extends Controller
             $departments = Department::where('company_id', $user->company_id)->orderBy('name', 'ASC')->get();
         else
             $departments = Auth::user()->assinged_departments();
-        if (auth()->user()->can('assign practice user'))
-            $practices = Practice::where('company_id', $user->company_id)->orderBy('name', 'ASC')->get();
-        else
-            $practices = Auth::user()->assinged_practices();
-        $share_to = [];
-        if (auth()->user()->type == 3) {
-            foreach ($practices as $key => $value) {
-                $practice = Practice::findorfail($value->id);
-                $associated_client = $practice->associated_user(3);
-                foreach ($associated_client as $index => $client) {
-                    if (auth()->user()->id != $client->id) {
-                        $row = new stdClass;
-                        $row->id = $client->id;
-                        $row->name = $client->firstname . " " . $client->lastname;
-                        $share_to[] = $row;
-                    }
-                }
-            }
-        }
+        $share_to = share_to();
+        $practices = $share_to["practices"];
+        $share_to = $share_to["share_to"];
         return view('tickets_management.create', compact('data', 'departments', 'practices', 'share_to'));
     }
 
@@ -183,7 +167,9 @@ class TicketController extends Controller
      */
     public function edit(Ticket $ticket)
     {
-        dd($ticket);
+        $data['menu'] = "dmail-management";
+        $data['sub_menu'] = "tickets";
+        return view('tickets_management.edit', compact('data', 'ticket'));
     }
 
     /**
@@ -195,7 +181,9 @@ class TicketController extends Controller
      */
     public function update(Request $request, Ticket $ticket)
     {
-        //
+        $input["message"] = $request->message;
+        $ticket->update($input);
+        return redirect()->route('tickets.index')->with('success', "Ticket Updated Successfully");
     }
 
     /**
@@ -235,9 +223,13 @@ class TicketController extends Controller
         $data = array();
         if (!empty($tickets)) {
             foreach ($tickets as $ticket) {
+                $ticket = $ticket->load("replies");
+                $to_time = strtotime(date("Y-m-d H:is"));
+                $from_time = strtotime($ticket->created_at);
+                $difference = round(abs($to_time - $from_time) / 60, 2);
                 $edit = '';
                 $delete = '';
-                if (auth()->user()->can('update ticket'))
+                if (auth()->user()->can('update ticket') && count($ticket->replies) == 0)
                     $edit = '<a class="dropdown-item" href="' . route('tickets.edit', $ticket->id) . '">Edit</a>';
                 if (auth()->user()->can('delete ticket')) {
                     $delete = '<form method="POST" action="' . route('tickets.destroy', $ticket->id) . '" accept-charset="UTF-8" style="display:inline"><input name="_method" type="hidden" value="DELETE"><input name="_token" type="hidden" value="' . csrf_token() . '"><input class="dropdown-item" type="submit" value="Delete"></form>';
@@ -272,7 +264,7 @@ class TicketController extends Controller
         try {
             $id = $request->id;
             $ticket = Ticket::find($id);
-            $ticket = $ticket->load("replies")->load("attachments");
+            $ticket = $ticket->load("attachments")->load("ccs")->load("replies");
             $response['success'] = 1;
             $response['content'] = $ticket;
         } catch (\Throwable $th) {
