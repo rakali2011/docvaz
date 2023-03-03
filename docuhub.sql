@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Mar 03, 2023 at 10:16 PM
+-- Generation Time: Mar 03, 2023 at 10:45 PM
 -- Server version: 5.7.36
 -- PHP Version: 7.4.26
 
@@ -303,7 +303,7 @@ CREATE TABLE IF NOT EXISTS `permissions` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `permissions_name_guard_name_unique` (`name`,`guard_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=77 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=83 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `permissions`
@@ -371,7 +371,12 @@ INSERT INTO `permissions` (`id`, `name`, `display_name`, `type`, `guard_name`, `
 (73, 'allow dmail', 'allow dmail', 'ticket', 'web', '2023-01-25 10:07:00', '2023-01-25 10:07:00'),
 (74, 'browser notification', 'Browser Notification', 'notification', 'web', '2023-01-25 10:07:00', '2023-01-25 10:07:00'),
 (75, 'push notification', 'Push Notification', 'notification', 'web', '2023-01-25 10:07:00', '2023-01-25 10:07:00'),
-(76, 'sms alerts', 'SMS Alerts', 'notification', 'web', '2023-01-25 10:07:00', '2023-01-25 10:07:00');
+(76, 'sms alerts', 'SMS Alerts', 'notification', 'web', '2023-01-25 10:07:00', '2023-01-25 10:07:00'),
+(77, 'view company', 'Can View Company', 'setting', 'web', '2023-01-25 10:07:00', '2023-01-25 10:07:00'),
+(78, 'update company', 'Can Update Company', 'setting', 'web', '2023-01-25 10:07:00', '2023-01-25 10:07:00'),
+(79, 'view business', 'Can View Business', 'business', 'web', '2023-01-25 10:07:00', '2023-01-25 10:07:00'),
+(80, 'update business', 'Can Update Business', 'business', 'web', '2023-01-25 10:07:00', '2023-01-25 10:07:00'),
+(82, 'update business status', 'Can Update Business Status', 'business', 'web', '2023-01-25 10:07:00', '2023-01-25 10:07:00');
 
 -- --------------------------------------------------------
 
