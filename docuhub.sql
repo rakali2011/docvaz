@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Mar 02, 2023 at 10:53 PM
+-- Generation Time: Mar 03, 2023 at 10:16 PM
 -- Server version: 5.7.36
 -- PHP Version: 7.4.26
 
@@ -820,7 +820,7 @@ CREATE TABLE IF NOT EXISTS `tickets` (
   `deleted_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tickets`
@@ -844,7 +844,8 @@ INSERT INTO `tickets` (`id`, `company_id`, `user_id`, `user_type`, `creator_name
 (15, 6, 15, 2, 'Asad Nazir', 4, 'Audit', 4, 'New Practice 123', 0, '', 'Info/Other', 'Low', 'Test', '<p><strong>Hi Ewa and Team,</strong><br />\n<br />\nAfter reviewing the patient account in detail. We have found that all the services are getting paid by both insurances except the lab services.<br />\nAs we already discussed his lab services amount is on the patient end because of the denials we had received from his both insurance. Now we send all his lab services balance on the patient end. There is a $6744.80 patient balance left as of now.&nbsp;<br />\n<br />\nWarm Regards,<br />\n<strong>Peter Alex!</strong></p>', 'New Test Company', NULL, 0, NULL, '2023-03-01 11:35:16', NULL, '2023-03-01 11:35:16'),
 (16, 6, 16, 3, 'New Client 1', 6, 'CRM', 4, 'New Practice 123', 3, 'Team A', 'Info/Other', 'Concerning', 'Client ticket', '<p>Client ticket message</p>', 'Provider', NULL, 0, NULL, '2023-03-02 16:40:14', NULL, '2023-03-02 16:40:14'),
 (17, 6, 16, 3, 'New Client 1', 6, 'CRM', 4, 'New Practice 123', 3, 'Team A', 'Info/Other', 'Concerning', 'Client ticket', '<p>Client ticket message</p>', 'Provider', NULL, 0, NULL, '2023-03-02 16:40:53', NULL, '2023-03-02 16:40:53'),
-(18, 6, 16, 3, 'New Client 1', 6, 'CRM', 4, 'New Practice 123', 3, 'Team A', 'Info/Other', 'Concerning', 'Client ticket', '<p>Client ticket message</p>', 'Provider', NULL, 0, NULL, '2023-03-02 16:42:38', NULL, '2023-03-02 16:42:38');
+(18, 6, 16, 3, 'New Client 1', 6, 'CRM', 4, 'New Practice 123', 3, 'Team A', 'Info/Other', 'Concerning', 'Client ticket', '<p>Client ticket message</p>', 'Provider', NULL, 0, NULL, '2023-03-02 16:42:38', NULL, '2023-03-02 16:42:38'),
+(19, 6, 15, 2, 'Asad Nazir', 6, 'CRM', 5, 'Practice ABC', 3, 'Team A', 'Info/Other', 'Concerning', 'Testing notification', '<h2>What is Lorem Ipsum?</h2>\r\n\r\n<p><strong>Lorem Ipsum</strong>&nbsp;is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry&#39;s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>', 'New Test Company', NULL, 0, NULL, '2023-03-03 12:13:55', NULL, '2023-03-03 12:24:51');
 
 -- --------------------------------------------------------
 
@@ -894,7 +895,7 @@ CREATE TABLE IF NOT EXISTS `ticket_ccs` (
   PRIMARY KEY (`id`),
   KEY `ticket_id` (`ticket_id`),
   KEY `department_id` (`resource_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `ticket_ccs`
@@ -913,7 +914,8 @@ INSERT INTO `ticket_ccs` (`id`, `ticket_id`, `resource_id`, `resource_type`, `cr
 (10, 14, 5, 0, '2023-02-28 16:34:53', '2023-02-28 16:34:53'),
 (11, 18, 3, 0, '2023-03-02 16:42:38', '2023-03-02 16:42:38'),
 (12, 18, 19, 1, '2023-03-02 16:42:38', '2023-03-02 16:42:38'),
-(13, 18, 20, 1, '2023-03-02 16:42:38', '2023-03-02 16:42:38');
+(13, 18, 20, 1, '2023-03-02 16:42:38', '2023-03-02 16:42:38'),
+(14, 19, 3, 0, '2023-03-03 12:13:55', '2023-03-03 12:13:55');
 
 -- --------------------------------------------------------
 
@@ -983,7 +985,7 @@ INSERT INTO `users` (`id`, `company_id`, `type`, `status`, `firstname`, `lastnam
 (13, 1, 2, 1, 'John D.', 'John D.', 'JohnDMurray@teleworm.us', NULL, '$2a$12$DAeA/CC/k2xUF8g1hN6toeW6cnwZFtWKDaBcEEW5Y4Fptw1OaVWAC', NULL, NULL, 0, '2023-01-25 10:36:08', '2023-01-25 10:36:08'),
 (14, 1, 3, 1, 'test', 'client', 'client@gmail.com', NULL, '$2a$12$DAeA/CC/k2xUF8g1hN6toeW6cnwZFtWKDaBcEEW5Y4Fptw1OaVWAC', NULL, NULL, 0, '2023-02-05 10:19:42', '2023-02-05 10:19:42'),
 (15, 6, 2, 1, 'Asad', 'Nazir', 'superadmin6@new.com', NULL, '$2y$10$T9jRrchuuBhVQfaaYMdlLubDgSlSz/x9UR0V8J0XZkE4zLYKM6U4W', NULL, NULL, 7, '2023-02-16 16:08:10', '2023-03-02 17:38:34'),
-(16, 6, 3, 1, 'New', 'Client 1', 'newclient@gmail.com', NULL, '$2y$10$T9jRrchuuBhVQfaaYMdlLubDgSlSz/x9UR0V8J0XZkE4zLYKM6U4W', NULL, NULL, 0, '2023-02-16 16:10:37', '2023-03-02 15:50:01'),
+(16, 6, 3, 1, 'New', 'Client 1', 'newclient@gmail.com', NULL, '$2y$10$T9jRrchuuBhVQfaaYMdlLubDgSlSz/x9UR0V8J0XZkE4zLYKM6U4W', NULL, NULL, 4, '2023-02-16 16:10:37', '2023-03-02 17:56:34'),
 (17, 6, 2, 1, 'Test', 'Test', 'test@gmail.com', NULL, '$2y$10$KA8vHn1FJekCLjBDir/Lhupag4peomZl1wjv46CfjoePjiO3s1UfS', NULL, NULL, 0, '2023-02-21 12:54:37', '2023-02-21 12:54:37'),
 (18, 6, 2, 1, 'Test', 'User', 'testuser@gmail.com', NULL, '$2y$10$ZQuRQ6iuGSvo7nmORZGVy.lMWvW02ow3pYCkJltN5U/f4JLmKO.wi', NULL, NULL, 0, '2023-02-27 12:43:41', '2023-02-27 12:43:41'),
 (19, 6, 3, 1, 'New', 'Client 2', 'newclient2@gmail.com', NULL, '$2y$10$Ovd3DnCDg5o2iAv0YELZnuBf8fqNsUFxZBiLClLDaxIyWiRDKYKi.', NULL, NULL, 0, '2023-03-02 15:49:40', '2023-03-02 15:49:40'),
