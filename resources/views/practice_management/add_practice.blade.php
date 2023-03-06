@@ -1,6 +1,68 @@
 @extends('includes.main')
 @section('content')
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer">
+<style>
+  #main {
+    margin: 50px 0;
+  }
+
+  #main #faq .card {
+    margin-bottom: 30px;
+    border: 0;
+  }
+
+  #main #faq .card .card-header {
+    border: 0;
+    -webkit-box-shadow: 0 0 20px 0 rgba(213, 213, 213, 0.5);
+    box-shadow: 0 0 20px 0 rgba(213, 213, 213, 0.5);
+    border-radius: 2px;
+    padding: 0;
+  }
+
+  #main #faq .card .card-header .btn-header-link {
+    color: #fff;
+    display: block;
+    text-align: left;
+    background: #FFE472;
+    color: #222;
+    padding: 20px;
+  }
+
+  #main #faq .card .card-header .btn-header-link:after {
+    content: "\f107";
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    float: right;
+  }
+
+  #main #faq .card .card-header .btn-header-link.collapsed {
+    background: #A541BB;
+    color: #fff;
+  }
+
+  #main #faq .card .card-header .btn-header-link.collapsed:after {
+    content: "\f106";
+  }
+
+  #main #faq .card .collapsing {
+    background: #FFE472;
+    line-height: 30px;
+  }
+
+  #main #faq .card .collapse {
+    border: 0;
+  }
+
+  #main #faq .card .collapse.show {
+    background: #FFE472;
+    line-height: 30px;
+    color: #222;
+  }
+
+  label {
+    margin-bottom: 0;
+  }
+</style>
 <div class="container-fluid">
   <div class="row justify-content-center">
     <div class="col-12">
@@ -16,7 +78,7 @@
                   <label for="type">Company</label>
                   <select class="form-control @error('company') is-invalid @enderror" name="company" id="company">
                     @foreach (companies() as $item)
-                    <option value="{{ $item->id }}" {{(@$practice) ? (@$practice->company_id==$item->id ? 'selected' : '') : '' }}>{{ $item->name }}</option>
+                    <option value="{{ $item->id }}" @if(old('company')==$item->id || $item->id == $practice->company_id) selected @endif>{{ $item->name }}</option>
                     @endforeach
                   </select>
                   @error('company')
@@ -27,79 +89,47 @@
                 </div>
               </div>
               @endrole
-              <div class="col-md-6">
-                <div class="form-group mb-3">
-                  <label for="name">Name</label>
-                  <input name="name" required type="text" id="name" class="form-control @error('name') is-invalid @enderror" value="{{ (@$practice)?@$practice->name:old('name') }}">
-                  @error('name')
-                  <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                  </span>
-                  @enderror
-                </div>
-              </div>
               <div class="col-md-12">
-                <style>
-                  #main {
-                    margin: 50px 0;
-                  }
-
-                  #main #faq .card {
-                    margin-bottom: 30px;
-                    border: 0;
-                  }
-
-                  #main #faq .card .card-header {
-                    border: 0;
-                    -webkit-box-shadow: 0 0 20px 0 rgba(213, 213, 213, 0.5);
-                    box-shadow: 0 0 20px 0 rgba(213, 213, 213, 0.5);
-                    border-radius: 2px;
-                    padding: 0;
-                  }
-
-                  #main #faq .card .card-header .btn-header-link {
-                    color: #fff;
-                    display: block;
-                    text-align: left;
-                    background: #FFE472;
-                    color: #222;
-                    padding: 20px;
-                  }
-
-                  #main #faq .card .card-header .btn-header-link:after {
-                    content: "\f107";
-                    font-family: 'Font Awesome 5 Free';
-                    font-weight: 900;
-                    float: right;
-                  }
-
-                  #main #faq .card .card-header .btn-header-link.collapsed {
-                    background: #A541BB;
-                    color: #fff;
-                  }
-
-                  #main #faq .card .card-header .btn-header-link.collapsed:after {
-                    content: "\f106";
-                  }
-
-                  #main #faq .card .collapsing {
-                    background: #FFE472;
-                    line-height: 30px;
-                  }
-
-                  #main #faq .card .collapse {
-                    border: 0;
-                  }
-
-                  #main #faq .card .collapse.show {
-                    background: #FFE472;
-                    line-height: 30px;
-                    color: #222;
-                  }
-                </style>
                 <div id="main">
                   <div class="container">
                     <div class="accordion" id="faq">
+                      @can('update business status')
+                      <div class="card">
+                        <div class="card-header" id="accordion0">
+                          <a href="#" class="btn btn-header-link collapsed" data-toggle="collapse" data-target="#faq0" aria-expanded="true" aria-controls="faq0">Practice Status</a>
+                        </div>
+                        <div id="faq0" class="collapse" aria-labelledby="accordion0" data-parent="#faq">
+                          <div class="card-body">
+                            <div class="row">
+                              <div class="col-md-2" style="margin-left: 18px;">
+                                <div class="mb-3">
+                                  <label for="p_status" class="form-label">Status</label>
+                                  <select class="form-control" id="p_status" name="status">
+                                    <option value="0">--Please Select--</option>
+                                    @foreach($statuses as $key => $value)
+                                    <option value="{{ $value->id }}" @if(old('status')==$value->id || $value->id == $practice->status) selected @endif>{{ $value->name }}</option>
+                                    @endforeach
+                                  </select>
+                                </div>
+                              </div>
+                              <div class="col-md-2 p_status-sub">
+                                <div class="mb-3">
+                                  <label for="reason" class="form-label">Reason</label>
+                                  <input type="text" onkeyup="this.value=upercase(this.value);" value="" name="reason" class="form-control" id="reason" placeholder="Reason">
+                                </div>
+                              </div>
+                              <div class="col-md-2 p_status-sub">
+                                <div class="mb-3">
+                                  <label for="date" class="form-label">Date</label>
+                                  <input type="date" value="" class="form-control" name="date" id="date">
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      @endcan
+                      @can('update business info')
                       <div class="card">
                         <div class="card-header" id="accordion1">
                           <a href="#" class="btn btn-header-link collapsed" data-toggle="collapse" data-target="#faq1" aria-expanded="true" aria-controls="faq1">Practice Information</a>
@@ -148,6 +178,8 @@
                           </div>
                         </div>
                       </div>
+                      @endcan
+                      @can('update business address')
                       <div class="card">
                         <div class="card-header" id="accordion2">
                           <a href="#" class="btn btn-header-link collapsed" data-toggle="collapse" data-target="#faq2" aria-expanded="true" aria-controls="faq2">Address</a>
@@ -155,7 +187,7 @@
                         <div id="faq2" class="collapse" aria-labelledby="accordion2" data-parent="#faq">
                           <div class="row">
                             <div class="card-body">
-                              <div id="physical_address" class="row" style="background-color: aliceblue;">
+                              <div id="physical_address" class="row">
                                 <div class="col-md-3 p-dynamic_add-">
                                   <div class="mb-3">
                                     <label for="physical_address-" class="form-label">Physical Address</label>
@@ -186,7 +218,7 @@
                                   </div>
                                 </div>
                               </div>
-                              <div id="mailing_address" class="row" style="border-left: 1px solid lightgray; background-color: aliceblue;">
+                              <div id="mailing_address" class="row">
                                 <div class="col-md-3 m-dynamic_add-">
                                   <div class="mb-3">
                                     <label for="mailing_address-" class="form-label">Mailing Address</label>
@@ -217,7 +249,7 @@
                                   </div>
                                 </div>
                               </div>
-                              <div id="service_location" class="row" style="background-color: aliceblue;">
+                              <div id="service_location" class="row">
                                 <div class="col-md-3 la-dynamic_add-">
                                   <div class="mb-3">
                                     <label for="location_address-" class="form-label">Service Location</label>
@@ -252,6 +284,8 @@
                           </div>
                         </div>
                       </div>
+                      @endcan
+                      @can('update business contact info')
                       <div class="card">
                         <div class="card-header" id="accordion3">
                           <a href="#" class="btn btn-header-link collapsed" data-toggle="collapse" data-target="#faq3" aria-expanded="true" aria-controls="faq3">Contact Information</a>
@@ -260,7 +294,7 @@
                           <div class="row">
                             <div class="card-body">
                               <div class="col-md-12">
-                                <div id="owner_info" class="row" style="background-color: aliceblue;">
+                                <div id="owner_info" class="row">
                                   <div class="col-md-2 o-dynamic_add-">
                                     <div class="mb-3">
                                       <label for="owner_title-" class="form-label">Title(Mr/Ms/Dr)</label>
@@ -300,7 +334,7 @@
                                 </div>
                               </div>
                               <div class="col-md-12">
-                                <div id="focal_info" class="row" style="border-left: 1px solid lightgray; background-color: aliceblue;">
+                                <div id="focal_info" class="row">
                                   <div class="col-md-3 f-dynamic_add-">
                                     <div class="mb-3">
                                       <label for="focal_name-" class="form-label">Focal Person Name</label>
@@ -349,6 +383,7 @@
                           </div>
                         </div>
                       </div>
+                      @endcan
                       <div class="card">
                         <div class="card-header" id="accordion4">
                           <a href="#" class="btn btn-header-link collapsed" data-toggle="collapse" data-target="#faq4" aria-expanded="true" aria-controls="faq4">Docuhub Credentials</a>
@@ -393,6 +428,7 @@
                           </div>
                         </div>
                       </div>
+                      @can('update business provider info')
                       <div class="card">
                         <div class="card-header" id="accordion5">
                           <a href="#" class="btn btn-header-link collapsed" data-toggle="collapse" data-target="#faq5" aria-expanded="true" aria-controls="faq5">Provider Information</a>
@@ -445,6 +481,8 @@
                           </div>
                         </div>
                       </div>
+                      @endcan
+                      @can('update business system detail')
                       <div class="card">
                         <div class="card-header" id="accordion6">
                           <a href="#" class="btn btn-header-link collapsed" data-toggle="collapse" data-target="#faq6" aria-expanded="true" aria-controls="faq6">System Details</a>
@@ -559,6 +597,8 @@
                           </div>
                         </div>
                       </div>
+                      @endcan
+                      @can('update business payers enrollment info')
                       <div class="card">
                         <div class="card-header" id="accordion7">
                           <a href="#" class="btn btn-header-link collapsed" data-toggle="collapse" data-target="#faq7" aria-expanded="true" aria-controls="faq7">Payers Enrollment Information</a>
@@ -617,6 +657,8 @@
                           </div>
                         </div>
                       </div>
+                      @endcan
+                      @can('update business claim frequency')
                       <div class="card">
                         <div class="card-header" id="accordion8">
                           <a href="#" class="btn btn-header-link collapsed" data-toggle="collapse" data-target="#faq8" aria-expanded="true" aria-controls="faq8">Claim Creation Frequency</a>
@@ -641,6 +683,8 @@
                           </div>
                         </div>
                       </div>
+                      @endcan
+                      @can('update business attachment')
                       <div class="card">
                         <div class="card-header" id="accordion9">
                           <a href="#" class="btn btn-header-link collapsed" data-toggle="collapse" data-target="#faq9" aria-expanded="true" aria-controls="faq9">Attachment</a>
@@ -662,6 +706,8 @@
                           </div>
                         </div>
                       </div>
+                      @endcan
+                      @can('update business services')
                       <div class="card">
                         <div class="card-header" id="accordion10">
                           <a href="#" class="btn btn-header-link collapsed" data-toggle="collapse" data-target="#faq10" aria-expanded="true" aria-controls="faq10">BellMedEx Services</a>
@@ -766,87 +812,8 @@
                           </div>
                         </div>
                       </div>
-                      <div class="card">
-                        <div class="card-header" id="accordion11">
-                          <a href="#" class="btn btn-header-link collapsed" data-toggle="collapse" data-target="#faq11" aria-expanded="true" aria-controls="faq11">BellMedEx Assigned Team</a>
-                        </div>
-                        <div id="faq11" class="collapse" aria-labelledby="accordion11" data-parent="#faq">
-                          <div class="card-body">
-                            <div class="row">
-                              <div class="col-md-2">
-                                <div class="mb-3">
-                                  <label for="team" class="form-label">Team</label>
-                                  <select class="form-control" name="team" id="team">
-                                    <option value="">Select Team</option>
-                                  </select>
-                                </div>
-                              </div>
-                              <div class="col-md-2">
-                                <div class="mb-3">
-                                  <label for="vp" class="form-label">VP</label>
-                                  <select class="form-control" id="vp" name="vp" disabled></select>
-                                </div>
-                              </div>
-                              <div class="col-md-2">
-                                <div class="mb-3">
-                                  <label for="director" class="form-label">Director</label>
-                                  <select class="form-control" id="director" disabled></select>
-                                </div>
-                              </div>
-                              <div class="col-md-2">
-                                <div class="mb-3">
-                                  <label for="smo" class="form-label">SMO</label>
-                                  <select class="form-control" id="smo"></select>
-                                </div>
-                              </div>
-                              <div class="col-md-2">
-                                <div class="mb-3">
-                                  <label for="mo" class="form-label">MO</label>
-                                  <select class="form-control" id="mo"></select>
-                                </div>
-                              </div>
-                              <div class="col-md-2">
-                                <div class="mb-3">
-                                  <label for="amo" class="form-label">AMO</label>
-                                  <select class="form-control" id="amo"></select>
-                                </div>
-                              </div>
-                            </div>
-                            <div class="row">
-                              <div class="col-md-2">
-                                <div class="mb-3">
-                                  <label for="tl" class="form-label">TL</label>
-                                  <select class="form-control" id="tl"></select>
-                                </div>
-                              </div>
-                              <div class="col-md-2">
-                                <div class="mb-3">
-                                  <label for="tl_r" class="form-label">TL Reconcilation</label>
-                                  <select class="form-control" id="tl_r"></select>
-                                </div>
-                              </div>
-                              <div class="col-md-2">
-                                <div class="mb-3">
-                                  <label for="tl_ar" class="form-label">TL A/R</label>
-                                  <select class="form-control" id="tl_ar"></select>
-                                </div>
-                              </div>
-                              <div class="col-md-2">
-                                <div class="mb-3">
-                                  <label for="users" class="form-label">Users</label>
-                                  <select class="form-control" id="users"></select>
-                                </div>
-                              </div>
-                              <div class="col-md-2">
-                                <div class="mb-3">
-                                  <label for="sales_rep" class="form-label">Sales Rep</label>
-                                  <input type="text" onkeyup="this.value=upercase(this.value);" class="form-control" value="" id="sales_rep" name="sales_rep" />
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
+                      @endcan
+                      @can('update business crm')
                       <div class="card">
                         <div class="card-header" id="accordion12">
                           <a href="#" class="btn btn-header-link collapsed" data-toggle="collapse" data-target="#faq12" aria-expanded="true" aria-controls="faq12">CRM</a>
@@ -904,6 +871,8 @@
                           </div>
                         </div>
                       </div>
+                      @endcan
+                      @can('update business operations')
                       <div class="card">
                         <div class="card-header" id="accordion13">
                           <a href="#" class="btn btn-header-link collapsed" data-toggle="collapse" data-target="#faq13" aria-expanded="true" aria-controls="faq13">Operations</a>
@@ -991,6 +960,8 @@
                           </div>
                         </div>
                       </div>
+                      @endcan
+                      @can('update business threshold per hour')
                       <div class="card">
                         <div class="card-header" id="accordion14">
                           <a href="#" class="btn btn-header-link collapsed" data-toggle="collapse" data-target="#faq14" aria-expanded="true" aria-controls="faq14">Practice Threshold Per Hour</a>
@@ -1070,13 +1041,16 @@
                           </div>
                         </div>
                       </div>
+                      @endcan
                     </div>
                   </div>
                 </div>
               </div>
+              @can('update business')
               <div class="col-12">
                 <input type="submit" value="{{ (@$practice)?'Update':'Save' }}" class="btn btn-success float-right">
               </div>
+              @endcan
             </div>
           </div>
         </form>

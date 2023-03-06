@@ -26,11 +26,13 @@ class StatusController extends Controller
         $data['menu'] = "general-management";
         $data['sub_menu'] = "statues";
         if (auth()->user()->hasRole('dev')) {
-            $statues = Status::where('company_id', '!=', 0)->orderBy('id', 'DESC')->get();
+            $statuses = Status::where('company_id', '!=', 0)->orderBy('id', 'DESC')->get();
+            $types = Status::distinct()->select('type')->where('company_id', '!=', 0)->groupBy('type')->get();
         } else {
-            $statues = Status::where('company_id', Auth::user()->company->id)->orderBy('id', 'DESC')->get();
+            $statuses = Status::where('company_id', Auth::user()->company->id)->orderBy('id', 'DESC')->get();
+            $types = Status::distinct()->select('type')->where('company_id', Auth::user()->company->id)->groupBy('type')->get();
         }
-        return view('statuses_management.index', compact('data', 'statues'));
+        return view('statuses_management.index', compact('data', 'statuses', 'types'));
     }
 
     /**

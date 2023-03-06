@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Mar 03, 2023 at 10:45 PM
+-- Generation Time: Mar 06, 2023 at 10:39 PM
 -- Server version: 5.7.36
 -- PHP Version: 7.4.26
 
@@ -303,7 +303,7 @@ CREATE TABLE IF NOT EXISTS `permissions` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `permissions_name_guard_name_unique` (`name`,`guard_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=83 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=96 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `permissions`
@@ -374,9 +374,22 @@ INSERT INTO `permissions` (`id`, `name`, `display_name`, `type`, `guard_name`, `
 (76, 'sms alerts', 'SMS Alerts', 'notification', 'web', '2023-01-25 10:07:00', '2023-01-25 10:07:00'),
 (77, 'view company', 'Can View Company', 'setting', 'web', '2023-01-25 10:07:00', '2023-01-25 10:07:00'),
 (78, 'update company', 'Can Update Company', 'setting', 'web', '2023-01-25 10:07:00', '2023-01-25 10:07:00'),
-(79, 'view business', 'Can View Business', 'business', 'web', '2023-01-25 10:07:00', '2023-01-25 10:07:00'),
-(80, 'update business', 'Can Update Business', 'business', 'web', '2023-01-25 10:07:00', '2023-01-25 10:07:00'),
-(82, 'update business status', 'Can Update Business Status', 'business', 'web', '2023-01-25 10:07:00', '2023-01-25 10:07:00');
+(79, 'view business', 'Can View', 'business', 'web', '2023-01-25 10:07:00', '2023-01-25 10:07:00'),
+(80, 'update business', 'Can Update', 'business', 'web', '2023-01-25 10:07:00', '2023-01-25 10:07:00'),
+(82, 'update business status', 'Can Update Status', 'business', 'web', '2023-01-25 10:07:00', '2023-01-25 10:07:00'),
+(83, 'update business info', 'Can Update Info', 'business', 'web', '2023-01-25 10:07:00', '2023-01-25 10:07:00'),
+(84, 'update business address', 'Can Update Address', 'business', 'web', '2023-01-25 10:07:00', '2023-01-25 10:07:00'),
+(85, 'update business contact info', 'Can Update Contact Info', 'business', 'web', '2023-01-25 10:07:00', '2023-01-25 10:07:00'),
+(86, 'update business provider info', 'Can Update Provider Info', 'business', 'web', '2023-01-25 10:07:00', '2023-01-25 10:07:00'),
+(87, 'update business system detail', 'Can Update System Detail', 'business', 'web', '2023-01-25 10:07:00', '2023-01-25 10:07:00'),
+(88, 'update business payers enrollment info', 'Can Update Payers Enrollment Info', 'business', 'web', '2023-01-25 10:07:00', '2023-01-25 10:07:00'),
+(89, 'update business claim frequency', 'Can Update Claim Frequency', 'business', 'web', '2023-01-25 10:07:00', '2023-01-25 10:07:00'),
+(90, 'update business attachment', 'Can Update Attachment', 'business', 'web', '2023-01-25 10:07:00', '2023-01-25 10:07:00'),
+(91, 'update business services', 'Can Update Services', 'business', 'web', '2023-01-25 10:07:00', '2023-01-25 10:07:00'),
+(92, 'update business assigned team', 'Can Update Assigned Team', 'business', 'web', '2023-01-25 10:07:00', '2023-01-25 10:07:00'),
+(93, 'update business crm', 'Can Update CRM', 'business', 'web', '2023-01-25 10:07:00', '2023-01-25 10:07:00'),
+(94, 'update business operations', 'Can Update Operations', 'business', 'web', '2023-01-25 10:07:00', '2023-01-25 10:07:00'),
+(95, 'update business threshold per hour', 'Can Update Threshold Per Hour', 'business', 'web', '2023-01-25 10:07:00', '2023-01-25 10:07:00');
 
 -- --------------------------------------------------------
 
@@ -409,25 +422,51 @@ CREATE TABLE IF NOT EXISTS `personal_access_tokens` (
 DROP TABLE IF EXISTS `practices`;
 CREATE TABLE IF NOT EXISTS `practices` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `company_id` int(11) NOT NULL,
-  `name` mediumtext NOT NULL,
-  `status` int(11) NOT NULL DEFAULT '1',
+  `company_id` int(11) DEFAULT NULL,
+  `name` mediumtext,
+  `status` int(11) DEFAULT NULL,
+  `reason` varchar(128) DEFAULT NULL,
+  `date` date DEFAULT NULL,
+  `speciality` text,
+  `avg_charges` int(11) DEFAULT NULL,
+  `group_npi` varchar(64) DEFAULT NULL,
+  `group_ptan` varchar(64) DEFAULT NULL,
+  `tax_id` varchar(64) DEFAULT NULL,
+  `physical_address` json NOT NULL,
+  `mailing_address` json NOT NULL,
+  `location_address` json NOT NULL,
+  `dmail_emails` varchar(256) DEFAULT NULL,
+  `focal_info` json NOT NULL,
+  `owner_info` json NOT NULL,
+  `provider_information` json NOT NULL,
+  `caqh` json NOT NULL,
+  `clearinghouse` json NOT NULL,
+  `ehr` json NOT NULL,
+  `management_software` json NOT NULL,
+  `payers_info` json NOT NULL,
+  `claim_creation_frequency` json NOT NULL,
+  `bellmedex_services` json NOT NULL,
+  `crm` json NOT NULL,
+  `operations` json NOT NULL,
+  `practice_threshold_per_hour` json NOT NULL,
+  `thresh_payer` json NOT NULL,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `practices`
 --
 
-INSERT INTO `practices` (`id`, `company_id`, `name`, `status`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 1, 'test practice', 1, '2023-02-05 16:57:06', '2023-02-05 16:57:06', NULL),
-(2, 1, 'bme pract', 1, '2023-02-05 17:37:33', '2023-02-05 17:37:33', NULL),
-(3, 1, 'bme test p', 1, '2023-02-05 17:38:27', '2023-02-05 17:38:27', NULL),
-(4, 6, 'New Practice 123', 1, '2023-02-16 21:12:26', '2023-02-17 18:54:50', NULL),
-(5, 6, 'Practice ABC', 1, '2023-02-24 17:34:02', '2023-02-24 21:48:29', NULL);
+INSERT INTO `practices` (`id`, `company_id`, `name`, `status`, `reason`, `date`, `speciality`, `avg_charges`, `group_npi`, `group_ptan`, `tax_id`, `physical_address`, `mailing_address`, `location_address`, `dmail_emails`, `focal_info`, `owner_info`, `provider_information`, `caqh`, `clearinghouse`, `ehr`, `management_software`, `payers_info`, `claim_creation_frequency`, `bellmedex_services`, `crm`, `operations`, `practice_threshold_per_hour`, `thresh_payer`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 1, 'test practice', 1, '', NULL, '', 0, '', '', '', 'null', 'null', 'null', '0', 'null', 'null', 'null', 'null', 'null', 'null', 'null', 'null', 'null', 'null', 'null', 'null', 'null', 'null', '2023-02-05 16:57:06', '2023-02-05 16:57:06', NULL),
+(2, 1, 'bme pract', 1, '', NULL, '', 0, '', '', '', 'null', 'null', 'null', '0', 'null', 'null', 'null', 'null', 'null', 'null', 'null', 'null', 'null', 'null', 'null', 'null', 'null', 'null', '2023-02-05 17:37:33', '2023-02-05 17:37:33', NULL),
+(3, 1, 'bme test p', 1, '', NULL, '', 0, '', '', '', 'null', 'null', 'null', '0', 'null', 'null', 'null', 'null', 'null', 'null', 'null', 'null', 'null', 'null', 'null', 'null', 'null', 'null', '2023-02-05 17:38:27', '2023-02-05 17:38:27', NULL),
+(4, 6, 'New Practice 123', 1, '', NULL, '', 0, '', '', '', 'null', 'null', 'null', '0', 'null', 'null', 'null', 'null', 'null', 'null', 'null', 'null', 'null', 'null', 'null', 'null', 'null', 'null', '2023-02-16 21:12:26', '2023-02-17 18:54:50', NULL),
+(5, 6, 'Practice ABC', 1, '', NULL, '', 0, '', '', '', 'null', 'null', 'null', '0', 'null', 'null', 'null', 'null', 'null', 'null', 'null', 'null', 'null', 'null', 'null', 'null', 'null', 'null', '2023-02-24 17:34:02', '2023-02-24 21:48:29', NULL),
+(6, 6, 'Test ABC 123', 3, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '[{\"zip\": null, \"city\": null, \"state\": null, \"address\": null}]', '[{\"zip\": null, \"city\": null, \"state\": null, \"address\": null}]', '[{\"zip\": null, \"city\": null, \"state\": null, \"address\": null}]', NULL, '[{\"fax\": null, \"name\": null, \"email\": null, \"phone\": null, \"designation\": null}]', '[{\"fax\": null, \"name\": null, \"email\": null, \"phone\": null, \"title\": null}]', '[{\"dob\": null, \"ssn\": null, \"name\": null, \"tax_id\": null, \"individual_npi\": null, \"individual_ptan\": null}]', '{\"url\": null, \"name\": null, \"password\": null, \"username\": null}', '{\"url\": null, \"name\": null, \"password\": null, \"username\": null}', '{\"url\": null, \"name\": null, \"password\": null, \"username\": null}', '[{\"url\": null, \"name\": null, \"password\": null, \"username\": null}]', '[{\"npi\": null, \"payer_name\": null, \"enroll_type\": \"individual\", \"enroll_with\": \"tax_id\", \"provider_name\": null, \"effective_date\": null}]', '{\"value\": null, \"option\": null}', '{\"ar\": 0, \"phd\": 0, \"coding\": 0, \"billing\": 0, \"ar_start\": null, \"authorization\": 0, \"credentialing\": 0, \"eligibility_check\": 0, \"patient_statement\": 0, \"key_billing_issues\": null, \"special_instructions\": null, \"complementary_services\": null}', '{\"welcome_email\": null, \"orientation_by\": null, \"mom_sharing_date\": null, \"docuhub_orientation\": 0, \"attended_by_crm_team\": null, \"orientation_datetime\": null, \"onboarding_metting_date\": null}', '{\"logins_receipt\": null, \"sop_preparation\": 0, \"preparation_date\": null, \"first_billing_received\": null, \"first_service_provided_name\": null}', '{\"thresh_auth\": null, \"thresh_elect\": null, \"thresh_portal\": null, \"thresh_denials\": null, \"thresh_posting\": null, \"thresh_rejections\": null, \"thresh_eligibility\": null, \"thresh_charge_entry\": null, \"thresh_posting_elect\": null, \"thresh_charge_elect_checkbox\": 0, \"thresh_charge_manual_checkbox\": 0, \"thresh_posting_elect_checkbox\": 0, \"thresh_posting_manual_checkbox\": 0, \"thresh_eligibility_cal_checkbox\": 0, \"thresh_eligibility_portal_checkbox\": 0, \"thresh_charge_with_demo_graphics_checkbox\": 0}', '[{\"name\": null, \"claims\": null}]', '2023-03-06 21:27:31', '2023-03-06 21:27:31', NULL);
 
 -- --------------------------------------------------------
 
@@ -492,7 +531,7 @@ INSERT INTO `roles` (`id`, `name`, `guard_name`, `company_id`, `display_name`, `
 (15, 'test-superadmin', 'web', 5, 'superadmin', '2023-01-22 12:33:56', '2023-01-22 12:33:56'),
 (16, 'test-admin', 'web', 5, 'admin', '2023-01-22 12:37:45', '2023-01-22 12:37:45'),
 (17, 'bmb-admin', 'web', 4, 'admin', '2023-02-05 12:48:59', '2023-02-05 12:48:59'),
-(18, 'new-superadmin', 'web', 6, 'superadmin', '2023-02-16 16:08:10', '2023-02-16 16:08:10'),
+(18, 'new-Super Admin', 'web', 6, 'Super Admin', '2023-02-16 16:08:10', '2023-03-03 17:52:54'),
 (19, 'bme-Team Lead', 'web', 1, 'Team Lead', '2023-02-17 17:35:14', '2023-02-17 17:35:14'),
 (20, 'new-Client', 'web', 6, 'Client', '2023-03-02 14:54:21', '2023-03-02 14:54:21');
 
@@ -616,6 +655,24 @@ INSERT INTO `role_has_permissions` (`permission_id`, `role_id`) VALUES
 (74, 18),
 (75, 18),
 (76, 18),
+(77, 18),
+(78, 18),
+(79, 18),
+(80, 18),
+(82, 18),
+(83, 18),
+(84, 18),
+(85, 18),
+(86, 18),
+(87, 18),
+(88, 18),
+(89, 18),
+(90, 18),
+(91, 18),
+(92, 18),
+(93, 18),
+(94, 18),
+(95, 18),
 (15, 19),
 (16, 19),
 (19, 19),
@@ -690,7 +747,7 @@ CREATE TABLE IF NOT EXISTS `statuses` (
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `statuses`
@@ -698,7 +755,14 @@ CREATE TABLE IF NOT EXISTS `statuses` (
 
 INSERT INTO `statuses` (`id`, `company_id`, `name`, `type`, `created_at`, `updated_at`) VALUES
 (1, 6, 'To Be Posted', 'document', '2023-02-22 18:07:25', '2023-02-23 17:12:17'),
-(2, 6, 'Active', 'user', '2023-02-23 11:40:41', '2023-02-23 11:40:41');
+(2, 6, 'Active', 'user', '2023-02-23 11:40:41', '2023-02-23 11:40:41'),
+(3, 6, 'Active', 'practice', '2023-03-06 15:35:08', '2023-03-06 15:35:08'),
+(4, 6, 'On Hold', 'practice', '2023-03-06 15:35:20', '2023-03-06 15:35:20'),
+(5, 6, 'Terminated', 'practice', '2023-03-06 15:50:03', '2023-03-06 15:50:03'),
+(6, 6, 'On Termination Notice', 'practice', '2023-03-06 15:50:12', '2023-03-06 15:50:12'),
+(7, 6, 'On Boarding In Process', 'practice', '2023-03-06 15:50:23', '2023-03-06 15:50:23'),
+(8, 6, 'Retention In Progress', 'practice', '2023-03-06 15:50:32', '2023-03-06 15:50:32'),
+(9, 6, 'Not Onboarded', 'practice', '2023-03-06 15:50:43', '2023-03-06 15:50:43');
 
 -- --------------------------------------------------------
 
