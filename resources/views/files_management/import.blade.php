@@ -36,8 +36,8 @@
                   <label for="status">Status</label>
                   <select class="form-control @error('practice') is-invalid @enderror" name="status" id="status">
                     <option value="">--Please Select--</option>
-                    @foreach ($status as $item)
-                    <option value="{{ $item }}" {{(@@$file) ? (@@$file->status==$item ? 'selected' : '') : '' }}>{{ $item }}</option>
+                    @foreach (statuses('document') as $status)
+                    <option value="{{ $status->id }}" {{(@$file) ? (@$file->status==$status->id ? 'selected' : '') : '' }}>{{ $status->name }}</option>
                     @endforeach
                   </select>
                   @error('status')

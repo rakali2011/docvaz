@@ -54,8 +54,7 @@ class FileController extends Controller
         } else {
             $practices = Auth::user()->assinged_practices();
         }
-        $status = json_decode(json_encode(Status::where('company_id', Auth::user()->company->id)->where('type', 'document')->orderBy('name', 'ASC')->pluck("name")), true);
-        return view('files_management.import', compact('data', 'practices', 'status'));
+        return view('files_management.import', compact('data', 'practices'));
     }
     function edit_file($id)
     {

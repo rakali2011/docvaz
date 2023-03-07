@@ -187,23 +187,24 @@
                         <div id="faq2" class="collapse" aria-labelledby="accordion2" data-parent="#faq">
                           <div class="row">
                             <div class="card-body">
+
                               <div id="physical_address" class="row">
                                 <div class="col-md-3 p-dynamic_add">
                                   <div class="mb-3">
-                                    <label for="physical_address-" class="form-label">Physical Address</label>
+                                    <label for="physical_address" class="form-label">Physical Address</label>
                                     <input type="text" value="" class="form-control" id="physical_address-" name="physical_address[]" />
                                   </div>
                                 </div>
                                 <div class="col-md-2 p-dynamic_add">
                                   <div class=" mb-3">
-                                    <label for="physical_zip-" class="form-label">Zip</label>
-                                    <input type="text" value="" class="form-control" id="physical_zip-" name="physical_zip[]" />
+                                    <label for="physical_zip-0" class="form-label">Zip</label>
+                                    <input type="text" value="" class="form-control" id="physical_zip-0" name="physical_zip[]" />
                                   </div>
                                 </div>
                                 <div class="col-md-3 p-dynamic_add">
                                   <div class=" mb-3">
-                                    <label for="physical_state-" class="form-label">State</label>
-                                    <input type="text" class="form-control" value="" id="physical_state-" name="physical_state[]" />
+                                    <label for="physical_state" class="form-label">State</label>
+                                    <input type="text" class="form-control" value="" id="physical_state" name="physical_state[]" />
                                   </div>
                                 </div>
                                 <div class="col-md-3 p-dynamic_add">
@@ -217,69 +218,170 @@
                                     <i style="cursor: pointer" id="add-physical_address" class="fa fa-plus-circle fs-2"></i>
                                   </div>
                                 </div>
+                                @foreach(json_decode(@$practice->physical_address) as $key => $value)
+                                @if(empty($value->address) && empty($value->zip) && empty($value->state) && empty($value->city))
+                                @continue
+                                @endif
+                                <div class="col-md-3 p-dynamic_add-{{$key}}">
+                                  <div class="mb-3">
+                                    <label for="physical_address-{{$key}}" class="form-label">Physical Address</label>
+                                    <input type="text" class="form-control" id="physical_address-{{$key}}" name="physical_address[]" value="{{ is_array(old('physical_address')) ? old('physical_address')[$key] : $value->address }}">
+                                  </div>
+                                </div>
+                                <div class="col-md-2 p-dynamic_add-{{$key}}">
+                                  <div class=" mb-3">
+                                    <label for="physical_zip-{{$key}}" class="form-label">Zip</label>
+                                    <input type="text" class="form-control" id="physical_zip-{{$key}}" name="physical_zip[]" value="{{ is_array(old('physical_zip')) ? old('physical_zip')[$key] : $value->zip }}">
+                                  </div>
+                                </div>
+                                <div class="col-md-3 p-dynamic_add-{{$key}}">
+                                  <div class=" mb-3">
+                                    <label for="physical_state-{{$key}}" class="form-label">State</label>
+                                    <input type="text" class="form-control" id="physical_state-{{$key}}" name="physical_state[]" value="{{ is_array(old('physical_state')) ? old('physical_state')[$key] : $value->state }}">
+                                  </div>
+                                </div>
+                                <div class="col-md-3 p-dynamic_add-{{$key}}">
+                                  <div class=" mb-3">
+                                    <label for="physical_city-{{$key}}" class="form-label">City</label>
+                                    <input type="text" class="form-control" id="physical_city-{{$key}}" name="physical_city[]" value="{{ is_array(old('physical_city')) ? old('physical_city')[$key] : $value->city }}">
+                                  </div>
+                                </div>
+                                <div class="col-md-1 d-flex justify-content-center align-items-center p-dynamic_add-{{$key}}">
+                                  <div class="mb-3 pt-4">
+                                    <i style="cursor: pointer" onclick="remove_physical_address({{$key}})" id="add-address" class="fa fa-minus-circle fs-2"></i>
+                                  </div>
+                                </div>
+                                @endforeach
                               </div>
-
                               <div id="mailing_address" class="row">
+                                <div class="col-md-3 m-dynamic_add">
+                                  <div class="mb-3">
+                                    <label for="mailing_address" class="form-label">Mailing Address</label>
+                                    <input type="text" class="form-control" value="" id="mailing_address" name="mailing_address[]" />
+                                  </div>
+                                </div>
+                                <div class="col-md-2 m-dynamic_add">
+                                  <div class="mb-3">
+                                    <label for="mailing_zip" class="form-label">Zip</label>
+                                    <input type="text" class="form-control" value="" id="mailing_zip" name="mailing_zip[]" />
+                                  </div>
+                                </div>
+                                <div class="col-md-3 m-dynamic_add">
+                                  <div class="mb-3">
+                                    <label for="mailing_state" class="form-label">State</label>
+                                    <input type="text" class="form-control" value="" id="mailing_state" name="mailing_state[]" />
+                                  </div>
+                                </div>
                                 <div class="col-md-3 m-dynamic_add-">
                                   <div class="mb-3">
-                                    <label for="mailing_address-" class="form-label">Mailing Address</label>
-                                    <input type="text" class="form-control" value="" id="mailing_address-" name="mailing_address[]" />
+                                    <label for="mailing_city" class="form-label">City</label>
+                                    <input type="text" class="form-control" value="" id="mailing_city" name="mailing_city[]" />
                                   </div>
                                 </div>
-                                <div class="col-md-2 m-dynamic_add-">
-                                  <div class="mb-3">
-                                    <label for="mailing_zip-" class="form-label">Zip</label>
-                                    <input type="text" class="form-control" value="" id="mailing_zip-" name="mailing_zip[]" />
-                                  </div>
-                                </div>
-                                <div class="col-md-3 m-dynamic_add-">
-                                  <div class="mb-3">
-                                    <label for="mailing_state-" class="form-label">State</label>
-                                    <input type="text" class="form-control" value="" id="mailing_state-" name="mailing_state[]" />
-                                  </div>
-                                </div>
-                                <div class="col-md-3 m-dynamic_add-">
-                                  <div class="mb-3">
-                                    <label for="mailing_city-" class="form-label">City</label>
-                                    <input type="text" class="form-control" value="" id="mailing_city-" name="mailing_city[]" />
-                                  </div>
-                                </div>
-                                <div class="col-md-1 d-flex justify-content-center align-items-center m-dynamic_add-">
+                                <div class="col-md-1 d-flex justify-content-center align-items-center m-dynamic_add">
                                   <div class="mb-3 pt-4">
                                     <i style="cursor: pointer" id="add-mailing_address" class="fa fa-plus-circle fs-2"></i>
                                   </div>
                                 </div>
+                                @foreach(json_decode(@$practice->mailing_address) as $key => $value)
+                                @if(empty($value->address) && empty($value->zip) && empty($value->state) && empty($value->city))
+                                @continue
+                                @endif
+                                <div class="col-md-3 m-dynamic_add-{{$key}}">
+                                  <div class="mb-3">
+                                    <label for="mailing_address-{{$key}}" class="form-label">Physical Address</label>
+                                    <input type="text" class="form-control" id="mailing_address-{{$key}}" name="mailing_address[]" value="{{ is_array(old('mailing_address')) ? old('mailing_address')[$key] : $value->address }}">
+                                  </div>
+                                </div>
+                                <div class="col-md-2 m-dynamic_add-{{$key}}">
+                                  <div class=" mb-3">
+                                    <label for="mailing_zip-{{$key}}" class="form-label">Zip</label>
+                                    <input type="text" class="form-control" id="mailing_zip-{{$key}}" name="mailing_zip[]" value="{{ is_array(old('mailing_zip')) ? old('mailing_zip')[$key] : $value->zip }}">
+                                  </div>
+                                </div>
+                                <div class="col-md-3 m-dynamic_add-{{$key}}">
+                                  <div class=" mb-3">
+                                    <label for="mailing_state-{{$key}}" class="form-label">State</label>
+                                    <input type="text" class="form-control" id="mailing_state-{{$key}}" name="mailing_state[]" value="{{ is_array(old('mailing_state')) ? old('mailing_state')[$key] : $value->state }}">
+                                  </div>
+                                </div>
+                                <div class="col-md-3 m-dynamic_add-{{$key}}">
+                                  <div class=" mb-3">
+                                    <label for="mailing_city-{{$key}}" class="form-label">City</label>
+                                    <input type="text" class="form-control" id="mailing_city-{{$key}}" name="mailing_city[]" value="{{ is_array(old('mailing_city')) ? old('mailing_city')[$key] : $value->city }}">
+                                  </div>
+                                </div>
+                                <div class="col-md-1 d-flex justify-content-center align-items-center m-dynamic_add-{{$key}}">
+                                  <div class="mb-3 pt-4">
+                                    <i style="cursor: pointer" onclick="remove_mailing_address({{$key}})" id="add-address" class="fa fa-minus-circle fs-2"></i>
+                                  </div>
+                                </div>
+                                @endforeach
                               </div>
                               <div id="service_location" class="row">
-                                <div class="col-md-3 la-dynamic_add-">
+                                <div class="col-md-3 la-dynamic_add">
                                   <div class="mb-3">
-                                    <label for="location_address-" class="form-label">Service Location</label>
-                                    <input type="text" class="form-control" value="" id="location_address-" name="location_address[]" />
+                                    <label for="location_address" class="form-label">Service Location</label>
+                                    <input type="text" class="form-control" value="" id="location_address" name="location_address[]" />
                                   </div>
                                 </div>
-                                <div class="col-md-2 la-dynamic_add-">
+                                <div class="col-md-2 la-dynamic_add">
                                   <div class="mb-3">
                                     <label for="location_zip-" class="form-label">Zip</label>
-                                    <input type="text" class="form-control" value="" id="location_zip-" name="location_zip[]" />
+                                    <input type="text" class="form-control" value="" id="location_zip" name="location_zip[]" />
                                   </div>
                                 </div>
-                                <div class="col-md-3 la-dynamic_add-">
+                                <div class="col-md-3 la-dynamic_add">
                                   <div class="mb-3">
                                     <label for="location_state-" class="form-label">State</label>
-                                    <input type="text" class="form-control" value="" id="location_state-" name="location_state[]" />
+                                    <input type="text" class="form-control" value="" id="location_state" name="location_state[]" />
                                   </div>
                                 </div>
-                                <div class="col-md-3 la-dynamic_add-">
+                                <div class="col-md-3 la-dynamic_add">
                                   <div class="mb-3">
-                                    <label for="location_city-" class="form-label">City</label>
+                                    <label for="location_city" class="form-label">City</label>
                                     <input type="text" class="form-control" value="" id="location_city-" name="location_city[]" />
                                   </div>
                                 </div>
-                                <div class="col-md-1 d-flex justify-content-center align-items-center la-dynamic_add-">
+                                <div class="col-md-1 d-flex justify-content-center align-items-center la-dynamic_add">
                                   <div class="mb-3 pt-4">
                                     <i style="cursor: pointer" id="add-location_address" class="fa fa-plus-circle fs-2"></i>
                                   </div>
                                 </div>
+                                @foreach(json_decode(@$practice->location_address) as $key => $value)
+                                @if(empty($value->address) && empty($value->zip) && empty($value->state) && empty($value->city))
+                                @continue
+                                @endif
+                                <div class="col-md-3 la-dynamic_add-{{$key}}">
+                                  <div class="mb-3">
+                                    <label for="location_address-{{$key}}" class="form-label">Physical Address</label>
+                                    <input type="text" class="form-control" id="location_address-{{$key}}" name="location_address[]" value="{{ is_array(old('location_address')) ? old('location_address')[$key] : $value->address }}">
+                                  </div>
+                                </div>
+                                <div class="col-md-2 la-dynamic_add-{{$key}}">
+                                  <div class=" mb-3">
+                                    <label for="location_zip-{{$key}}" class="form-label">Zip</label>
+                                    <input type="text" class="form-control" id="location_zip-{{$key}}" name="location_zip[]" value="{{ is_array(old('location_zip')) ? old('location_zip')[$key] : $value->zip }}">
+                                  </div>
+                                </div>
+                                <div class="col-md-3 la-dynamic_add-{{$key}}">
+                                  <div class=" mb-3">
+                                    <label for="location_state-{{$key}}" class="form-label">State</label>
+                                    <input type="text" class="form-control" id="location_state-{{$key}}" name="location_state[]" value="{{ is_array(old('location_state')) ? old('location_state')[$key] : $value->state }}">
+                                  </div>
+                                </div>
+                                <div class="col-md-3 la-dynamic_add-{{$key}}">
+                                  <div class=" mb-3">
+                                    <label for="location_city-{{$key}}" class="form-label">City</label>
+                                    <input type="text" class="form-control" id="location_city-{{$key}}" name="location_city[]" value="{{ is_array(old('location_city')) ? old('location_city')[$key] : $value->city }}">
+                                  </div>
+                                </div>
+                                <div class="col-md-1 d-flex justify-content-center align-items-center la-dynamic_add-{{$key}}">
+                                  <div class="mb-3 pt-4">
+                                    <i style="cursor: pointer" onclick="remove_location_address({{$key}})" id="add-address" class="fa fa-minus-circle fs-2"></i>
+                                  </div>
+                                </div>
+                                @endforeach
                               </div>
                             </div>
                           </div>
@@ -296,42 +398,83 @@
                             <div class="card-body">
                               <div class="col-md-12">
                                 <div id="owner_info" class="row">
-                                  <div class="col-md-2 o-dynamic_add-">
+                                  <div class="col-md-2 o-dynamic_add">
                                     <div class="mb-3">
-                                      <label for="owner_title-" class="form-label">Title(Mr/Ms/Dr)</label>
-                                      <input type="text" name="owner_title[]" id="owner_title-" value="" class="form-control">
+                                      <label for="owner_title" class="form-label">Title(Mr/Ms/Dr)</label>
+                                      <input type="text" name="owner_title[]" id="owner_title" value="" class="form-control">
                                     </div>
                                   </div>
                                   <div class="col-md-3 o-dynamic_add-">
                                     <div class="mb-3">
-                                      <label for="owner_name-" class="form-label">Owner/Prov Name</label>
-                                      <input type="text" value="" class="form-control" id="owner_name-" name="owner_name[]" />
+                                      <label for="owner_name" class="form-label">Owner/Prov Name</label>
+                                      <input type="text" value="" class="form-control" id="owner_name" name="owner_name[]">
                                     </div>
                                   </div>
                                   <div class="col-md-2 o-dynamic_add-">
                                     <div class="mb-3">
-                                      <label for="owner_fax-" class="form-label">Fax</label>
-                                      <input type="text" class="form-control" value="" id="owner_fax-" name="owner_fax[]" onchange="this.value=formatPhoneNumber(this.value);" />
+                                      <label for="owner_fax" class="form-label">Fax</label>
+                                      <input type="text" class="form-control" value="" id="owner_fax" name="owner_fax[]">
                                     </div>
                                   </div>
-                                  <div class="col-md-2 o-dynamic_add-">
+                                  <div class="col-md-2 o-dynamic_add">
                                     <div class="mb-3">
-                                      <label for="owner_email-" class="form-label">
+                                      <label for="owner_email" class="form-label">
                                         Email</label>
-                                      <input type="email" class="form-control" value="" id="owner_email-" name="owner_email[]" />
+                                      <input type="email" class="form-control" value="" id="owner_email" name="owner_email[]">
                                     </div>
                                   </div>
                                   <div class="col-md-2 o-dynamic_add-">
                                     <div class="mb-3">
-                                      <label for="owner_phone-" class="form-label">Phone#</label>
-                                      <input onchange="this.value=formatPhoneNumber(this.value);" type="tel" class="form-control" value="" id="owner_phone-" name="owner_phone[]" onkeypress="return validateNumber(event)" />
+                                      <label for="owner_phone" class="form-label">Phone#</label>
+                                      <input type="tel" class="form-control" value="" id="owner_phone" name="owner_phone[]">
                                     </div>
                                   </div>
-                                  <div class="col-md-1 d-flex justify-content-center align-items-center o-dynamic_add-">
+                                  <div class="col-md-1 d-flex justify-content-center align-items-center o-dynamic_add">
                                     <div class="mb-3 pt-4">
                                       <i style="cursor: pointer" id="add-owner_info" class="fa fa-plus-circle fs-2"></i>
                                     </div>
                                   </div>
+                                  @foreach(json_decode(@$practice->owner_info) as $key => $value)
+                                  @if(empty($value->title) && empty($value->name) && empty($value->fax) && empty($value->email) && empty($value->phone))
+                                  @continue
+                                  @endif
+                                  <div class="col-md-2 o-dynamic_add-{{$key}}">
+                                    <div class="mb-3">
+                                      <label for="owner_title-{{$key}}" class="form-label">Title(Mr/Ms/Dr)</label>
+                                      <input type="text" name="owner_title[]" id="owner_title-{{$key}}" class="form-control" value="{{ is_array(old('owner_title')) ? old('owner_title')[$key] : $value->title }}">
+                                    </div>
+                                  </div>
+                                  <div class="col-md-3 o-dynamic_add-{{$key}}">
+                                    <div class="mb-3">
+                                      <label for="owner_name-{{$key}}" class="form-label">Owner/Prov Name</label>
+                                      <input type="text" class="form-control" id="owner_name-{{$key}}" name="owner_name[]" value="{{ is_array(old('owner_name')) ? old('owner_name')[$key] : $value->name }}">
+                                    </div>
+                                  </div>
+                                  <div class="col-md-2 o-dynamic_add-{{$key}}">
+                                    <div class="mb-3">
+                                      <label for="owner_fax-{{$key}}" class="form-label">Fax</label>
+                                      <input type="text" class="form-control" id="owner_fax-{{$key}}" name="owner_fax[]" value="{{ is_array(old('owner_fax')) ? old('owner_fax')[$key] : $value->fax }}">
+                                    </div>
+                                  </div>
+                                  <div class="col-md-2 o-dynamic_add-{{$key}}">
+                                    <div class="mb-3">
+                                      <label for="owner_email-" class="form-label">
+                                        Email</label>
+                                      <input type="email" class="form-control" id="owner_email-" name="owner_email[]" value="{{ is_array(old('owner_email')) ? old('owner_email')[$key] : $value->email }}">
+                                    </div>
+                                  </div>
+                                  <div class="col-md-2 o-dynamic_add-{{$key}}">
+                                    <div class="mb-3">
+                                      <label for="owner_phone-" class="form-label">Phone#</label>
+                                      <input type="tel" class="form-control" id="owner_phone-" name="owner_phone[]" value="{{ is_array(old('owner_phone')) ? old('owner_phone')[$key] : $value->phone }}">
+                                    </div>
+                                  </div>
+                                  <div class="col-md-1 d-flex justify-content-center align-items-center o-dynamic_add-{{$key}}">
+                                    <div class="mb-3 pt-4">
+                                      <i style="cursor: pointer" onclick="remove_owner_info({{$key}})" id="add-address" class="fa fa-minus-circle fs-2"></i>
+                                    </div>
+                                  </div>
+                                  @endforeach
                                 </div>
                               </div>
                               <div class="col-md-12">
@@ -372,12 +515,52 @@
                                       <i style="cursor: pointer" id="add-focal_info" class="fa fa-plus-circle fs-2"></i>
                                     </div>
                                   </div>
+                                  @foreach(json_decode(@$practice->focal_info) as $key => $value)
+                                  @if(empty($value->name) && empty($value->fax) && empty($value->email) && empty($value->phone) && empty($value->designation))
+                                  @continue
+                                  @endif
+                                  <div class="col-md-3 f-dynamic_add-">
+                                    <div class="mb-3">
+                                      <label for="focal_name-" class="form-label">Focal Person Name</label>
+                                      <input type="text" class="form-control" id="focal_name-" name="focal_name[]" value="{{ is_array(old('focal_name')) ? old('focal_name')[$key] : $value->name }}">
+                                    </div>
+                                  </div>
+                                  <div class="col-md-2 f-dynamic_add-">
+                                    <div class="mb-3">
+                                      <label for="focal_fax-" class="form-label">Fax</label>
+                                      <input type="text" class="form-control" id="focal_fax-" name="focal_fax[]" value="{{ is_array(old('focal_fax')) ? old('focal_fax')[$key] : $value->fax }}">
+                                    </div>
+                                  </div>
+                                  <div class="col-md-2 f-dynamic_add-">
+                                    <div class="mb-3">
+                                      <label for="focal_email-" class="form-label">Email</label>
+                                      <input type="email" class="form-control" id="focal_email-" name="focal_email[]" value="{{ is_array(old('focal_email')) ? old('focal_email')[$key] : $value->email }}">
+                                    </div>
+                                  </div>
+                                  <div class="col-md-2 f-dynamic_add-">
+                                    <div class="mb-3">
+                                      <label for="focal_phone-" class="form-label">Phone#</label>
+                                      <input type="tel" class="form-control" id="focal_phone-" name="focal_phone[]" value="{{ is_array(old('focal_phone')) ? old('focal_phone')[$key] : $value->phone }}">
+                                    </div>
+                                  </div>
+                                  <div class="col-md-2 f-dynamic_add-">
+                                    <div class="mb-3">
+                                      <label for="focal_designation-" class="form-label">Designation</label>
+                                      <input type="text" name="focal_designation[]" id="focal_designation-" class="form-control" value="{{ is_array(old('focal_designation')) ? old('focal_designation')[$key] : $value->designation }}">
+                                    </div>
+                                  </div>
+                                  <div class="col-md-1 d-flex justify-content-center align-items-center f-dynamic_add-{{$key}}">
+                                    <div class="mb-3 pt-4">
+                                      <i style="cursor: pointer" onclick="remove_owner_info({{$key}})" id="add-address" class="fa fa-minus-circle fs-2"></i>
+                                    </div>
+                                  </div>
+                                  @endforeach
                                 </div>
                               </div>
                               <div class="col-md-12">
                                 <div class="mb-3">
                                   <label for="dmail_emails" class="form-label">Emails Used For DocuHub Credentials</label>
-                                  <input type="text" value="" class="form-control" id="dmail_emails" name="dmail_emails" />
+                                  <input type="text" class="form-control" id="dmail_emails" name="dmail_emails" value="{{ empty(old('dmail_emails')) ? @$practice->dmail_emails : old('dmail_emails') }}">
                                 </div>
                               </div>
                             </div>
@@ -437,40 +620,40 @@
                         <div id="faq5" class="collapse" aria-labelledby="accordion5" data-parent="#faq">
                           <div class="card-body">
                             <div class="row" id="practice-info-tab">
-                              <div class="col-md-2 pi-dynamic_add-">
+                              <div class="col-md-2 pi-dynamic_add">
                                 <div class="mb-3">
-                                  <label for="provider_name-" class="form-label">Name</label>
-                                  <input type="text" name="provider_name[]" id="provider_name-" value="" class="form-control">
+                                  <label for="provider_name" class="form-label">Name</label>
+                                  <input type="text" name="provider_name[]" id="provider_name" value="" class="form-control">
                                 </div>
                               </div>
-                              <div class="col-md-2 pi-dynamic_add-">
+                              <div class="col-md-2 pi-dynamic_add">
                                 <div class="mb-3">
-                                  <label for="provider_dob-" class="form-label">DOB</label>
-                                  <input type="date" name="provider_dob[]" id="provider_dob-" value="" class="form-control">
+                                  <label for="provider_dob" class="form-label">DOB</label>
+                                  <input type="date" name="provider_dob[]" id="provider_dob" value="" class="form-control">
                                 </div>
                               </div>
-                              <div class="col-md-2 pi-dynamic_add-">
+                              <div class="col-md-2 pi-dynamic_add">
                                 <div class="mb-3">
-                                  <label for="provider_ind_npi-" class="form-label">Individual NPI</label>
-                                  <input maxlength="10" type="text" name="provider_ind_npi[]" id="provider_ind_npi-" value="" class="form-control" onkeypress="return validateNumber(event)" maxlength="10">
+                                  <label for="provider_ind_npi" class="form-label">Individual NPI</label>
+                                  <input maxlength="10" type="text" name="provider_ind_npi[]" id="provider_ind_npi" value="" class="form-control" onkeypress="return validateNumber(event)" maxlength="10">
                                 </div>
                               </div>
-                              <div class="col-md-2 5 pi-dynamic_add-">
+                              <div class="col-md-2 5 pi-dynamic_add">
                                 <div class="mb-3">
                                   <label for="individual_ptan" class="form-label">Individual PTAN</label>
-                                  <input type="text" name="individual_ptan[]" id="individual_ptan-" value="" class="form-control" onkeypress="return validateAlphaNumeric(event)">
+                                  <input type="text" name="individual_ptan[]" id="individual_ptan" value="" class="form-control" onkeypress="return validateAlphaNumeric(event)">
                                 </div>
                               </div>
-                              <div class="col-md-2 pi-dynamic_add-">
+                              <div class="col-md-2 pi-dynamic_add">
                                 <div class="mb-3">
                                   <label for="provider_ssn" class="form-label">Provider SSN#</label>
-                                  <input type="text" name="provider_ssn[]" id="provider_ssn-" onchange="this.value=rtaxx(this.value);" value="" class="form-control" onkeypress="return validateNumber(event)" />
+                                  <input type="text" name="provider_ssn[]" id="provider_ssn" onchange="this.value=rtaxx(this.value);" value="" class="form-control" onkeypress="return validateNumber(event)" />
                                 </div>
                               </div>
-                              <div class="col-md-1 pi-dynamic_add-">
+                              <div class="col-md-1 pi-dynamic_add">
                                 <div class="mb-3">
-                                  <label for="provider_tax_id-" class="form-label">Tax ID</label>
-                                  <input type="text" onchange="this.value=rtax(this.value);" maxlength="10" value="" class="form-control" id="provider_tax_id-" name="provider_tax_id[]" onkeypress="return validateNumber(event)" />
+                                  <label for="provider_tax_id" class="form-label">Tax ID</label>
+                                  <input type="text" onchange="this.value=rtax(this.value);" maxlength="10" value="" class="form-control" id="provider_tax_id" name="provider_tax_id[]" onkeypress="return validateNumber(event)" />
                                 </div>
                               </div>
                               <div class="col-md-1 d-flex justify-content-center align-items-center pi-dynamic_add-">
@@ -478,6 +661,52 @@
                                   <i style="cursor: pointer" id="add-provider-info" class="fa fa-plus-circle fs-2"></i>
                                 </div>
                               </div>
+                              @foreach(json_decode(@$practice->provider_information) as $key => $value)
+                              @if(empty($value->name) && empty($value->dob) && empty($value->individual_npi) && empty($value->individual_ptan) && empty($value->ssn) && empty($value->tax_id))
+                              @continue
+                              @endif
+                              <div class="col-md-2 pi-dynamic_add-{{$key}}">
+                                <div class="mb-3">
+                                  <label for="provider_name-{{$key}}" class="form-label">Name</label>
+                                  <input type="text" name="provider_name[]" id="provider_name-{{$key}}" class="form-control" value="{{ is_array(old('provider_name')) ? old('provider_name')[$key] : $value->name }}">
+                                </div>
+                              </div>
+                              <div class="col-md-2 pi-dynamic_add-{{$key}}">
+                                <div class="mb-3">
+                                  <label for="provider_dob-{{$key}}" class="form-label">DOB</label>
+                                  <input type="date" name="provider_dob[]" id="provider_dob-{{$key}}" class="form-control" value="{{ is_array(old('provider_dob')) ? old('provider_dob')[$key] : $value->dob }}">
+                                </div>
+                              </div>
+                              <div class="col-md-2 pi-dynamic_add-{{$key}}">
+                                <div class="mb-3">
+                                  <label for="provider_ind_npi-{{$key}}" class="form-label">Individual NPI</label>
+                                  <input maxlength="10" type="text" name="provider_ind_npi[]" id="provider_ind_npi-{{$key}}" class="form-control" maxlength="10" value="{{ is_array(old('provider_ind_npi')) ? old('provider_ind_npi')[$key] : $value->individual_npi }}">
+                                </div>
+                              </div>
+                              <div class="col-md-2 5 pi-dynamic_add-{{$key}}">
+                                <div class="mb-3">
+                                  <label for="individual_ptan-{{$key}}" class="form-label">Individual PTAN</label>
+                                  <input type="text" name="individual_ptan[]" id="individual_ptan-{{$key}}" class="form-control" value="{{ is_array(old('individual_ptan')) ? old('individual_ptan')[$key] : $value->individual_ptan }}">
+                                </div>
+                              </div>
+                              <div class="col-md-2 pi-dynamic_add-{{$key}}">
+                                <div class="mb-3">
+                                  <label for="provider_ssn-{{$key}}" class="form-label">Provider SSN#</label>
+                                  <input type="text" name="provider_ssn[]" id="provider_ssn-{{$key}}" class="form-control" value="{{ is_array(old('provider_ssn')) ? old('provider_ssn')[$key] : $value->ssn }}">
+                                </div>
+                              </div>
+                              <div class="col-md-1 pi-dynamic_add-{{$key}}">
+                                <div class="mb-3">
+                                  <label for="provider_tax_id-{{$key}}" class="form-label">Tax ID</label>
+                                  <input type="text" maxlength="10" class="form-control" id="provider_tax_id-{{$key}}" name="provider_tax_id[]" value="{{ is_array(old('provider_tax_id')) ? old('provider_tax_id')[$key] : $value->tax_id }}">
+                                </div>
+                              </div>
+                              <div class="col-md-1 d-flex justify-content-center align-items-center pi-dynamic_add-{{$key}}">
+                                <div class="mb-3 pt-4">
+                                  <i style="cursor: pointer" onclick="remove_provider_info({{$key}})" id="add-address" class="fa fa-minus-circle fs-2"></i>
+                                </div>
+                              </div>
+                              @endforeach
                             </div>
                           </div>
                         </div>
@@ -491,107 +720,162 @@
                         <div id="faq6" class="collapse" aria-labelledby="accordion6" data-parent="#faq">
                           <div class="card-body">
                             <div id="practice_management" class="row">
-                              <div class="col-md-3 p-dynamic_add-">
+                              <div class="col-md-3 p-dynamic_add">
                                 <div class="mb-3">
-                                  <label for="pms_name-" class="form-label">Practice Management Software</label>
-                                  <input type="text" class="form-control" value="" id="pms_name-" name="pms_name[]" />
+                                  <label for="pms_name" class="form-label">Practice Management Software</label>
+                                  <input type="text" class="form-control" value="" id="pms_name" name="pms_name[]" />
+                                </div>
+                              </div>
+                              <div class="col-md-3 p-dynamic_add">
+                                <div class="mb-3">
+                                  <label for="pms_url" class="form-label">URL</label>
+                                  <input type="text" class="form-control" value="" id="pms_url" name="pms_url[]" />
                                 </div>
                               </div>
                               <div class="col-md-3 p-dynamic_add-">
                                 <div class="mb-3">
-                                  <label for="pms_url-" class="form-label">URL</label>
-                                  <input type="text" class="form-control" value="" id="pms_url-" name="pms_url[]" />
+                                  <label for="pms_username" class="form-label">User Name</label>
+                                  <input type="text" class="form-control" value="" id="pms_username" name="pms_username[]" />
                                 </div>
                               </div>
-                              <div class="col-md-3 p-dynamic_add-">
+                              <div class="col-md-2 p-dynamic_add">
                                 <div class="mb-3">
-                                  <label for="pms_username-" class="form-label">User Name</label>
-                                  <input type="text" class="form-control" value="" id="pms_username-" name="pms_username[]" />
+                                  <label for="pms_password" class="form-label">Password</label>
+                                  <input type="text" class="form-control" value="" id="pms_password" name="pms_password[]" />
                                 </div>
                               </div>
-                              <div class="col-md-2 p-dynamic_add-">
-                                <div class="mb-3">
-                                  <label for="pms_password-" class="form-label">Password</label>
-                                  <input type="text" class="form-control" value="" id="pms_password-" name="pms_password[]" />
-                                </div>
-                              </div>
-                              <div class="col-md-1 d-flex justify-content-center align-items-center p-dynamic_add-">
+                              <div class="col-md-1 d-flex justify-content-center align-items-center p-dynamic_add">
                                 <div class="mb-3 pt-4">
                                   <i style="cursor: pointer" id="add-practice_management" class="fa fa-plus-circle fs-2"></i>
                                 </div>
                               </div>
+                              @foreach(json_decode(@$practice->payers_info) as $key => $value)
+                              @if(empty($value->payer_name) && empty($value->payer_provider_name) && empty($value->npi) && empty($value->enroll_type) && empty($value->enroll_with) && empty($value->effective_date))
+                              @continue
+                              @endif
+                              <div class="col-md-2 e-dynamic_add-{{$key}}">
+                                <div class="mb-3">
+                                  <label for="payer_name-{{$key}}" class="form-label">Payer Name</label>
+                                  <input type="text" class="form-control" id="payer_name-{{$key}}" name="payer_name[]" value="{{ is_array(old('physical_city')) ? old('physical_city')[$key] : $value->payer_name }}">
+                                </div>
+                              </div>
+                              <div class="col-md-2 e-dynamic_add-{{$key}}">
+                                <div class="mb-3">
+                                  <label for="payer_provider_name-{{$key}}" class="form-label">Provider Name</label>
+                                  <input type="text" class="form-control payer_provider_name" id="payer_provider_name-{{$key}}" name="payer_provider_name[]" value="{{ is_array(old('payer_provider_name')) ? old('payer_provider_name')[$key] : $value->provider_name }}">
+                                </div>
+                              </div>
+                              <div class="col-md-1 e-dynamic_add-{{$key}}">
+                                <div class="mb-3">
+                                  <label for="payer_npi-{{$key}}" class="form-label">NPI</label>
+                                  <input type="text" class="form-control payer_npi" id="payer_npi-{{$key}}" name="payer_npi[]" value="{{ is_array(old('payer_npi')) ? old('payer_npi')[$key] : $value->npi }}">
+                                </div>
+                              </div>
+                              <div class="col-md-2 e-dynamic_add-{{$key}}">
+                                <div class="mb-3">
+                                  <label for="payer_enroll_type-{{$key}}" class="form-label">Enroll Type</label>
+                                  <select name="payer_enroll_type[]" onchange="change_npi()" class="form-control payer_enroll_type" id="payer_enroll_type-{{$key}}" value="{{ is_array(old('payer_enroll_type')) ? old('payer_enroll_type')[$key] : $value->enroll_type }}">
+                                    <option value="individual">Individual</option>
+                                    <option value="group">Group</option>
+                                  </select>
+                                </div>
+                              </div>
+                              <div class="col-md-2 e-dynamic_add-{{$key}}">
+                                <div class="mb-3">
+                                  <label for="payer_enroll_with-{{$key}}" class="form-label">Enroll With</label>
+                                  <select name="payer_enroll_with[]" class="form-control" id="payer_enroll_with-{{$key}}" value="{{ is_array(old('payer_enroll_with')) ? old('payer_enroll_with')[$key] : $value->enroll_with }}">
+                                    <option value="tax_id">Tax Id</option>
+                                    <option value="ssn">SSN</option>
+                                  </select>
+                                </div>
+                              </div>
+                              <div class="col-md-2 e-dynamic_add-{{$key}}">
+                                <div class="mb-3">
+                                  <label for="payer_effective_date-{{$key}}" class="form-label">Enroll Effective</label>
+                                  <input type="date" class="form-control" id="payer_effective_date-{{$key}}" name="payer_effective_date[]" value="{{ is_array(old('payer_effective_date')) ? old('payer_effective_date')[$key] : $value->effective_date }}">
+                                </div>
+                              </div>
+                              <div class="col-md-1 d-flex justify-content-center align-items-center p-dynamic_add-{{$key}}">
+                                <div class="mb-3 pt-4">
+                                  <i style="cursor: pointer" onclick="remove_pms({{$key}})" id="add-address" class="fa fa-minus-circle fs-2"></i>
+                                </div>
+                              </div>
+                              @endforeach
                             </div>
+                            <?php @$caqh = json_decode(@$practice->caqh) ?>
+                            <?php @$clearinghouse = json_decode(@$practice->clearinghouse) ?>
+                            <?php @$ehr = json_decode(@$practice->ehr) ?>
                             <div class="row">
                               <div class="col-md-2">
                                 <div class="mb-3">
                                   <label for="ehr_name" class="form-label">EHR</label>
-                                  <input type="text" value="" class="form-control" id="ehr_name" name="ehr_name" />
+                                  <input type="text" class="form-control" id="ehr_name" name="ehr_name" value="{{ empty(old('ehr_name')) ? @$ehr->name : old('ehr_name') }}">
                                 </div>
                               </div>
                               <div class="col-md-2">
                                 <div class="mb-3">
                                   <label for="ehr_url" class="form-label">URL</label>
-                                  <input type="text" value="" class="form-control" id="ehr_url" name="ehr_url" />
+                                  <input type="text" class="form-control" id="ehr_url" name="ehr_url" value="{{ empty(old('ehr_url')) ? @$ehr->url : old('ehr_url') }}">
                                 </div>
                               </div>
                               <div class="col-md-2">
                                 <div class="mb-3">
                                   <label for="ehr_username" class="form-label">User Name</label>
-                                  <input type="text" value="" class="form-control" id="ehr_username" name="ehr_username" />
+                                  <input type="text" class="form-control" id="ehr_username" name="ehr_username" value="{{ empty(old('ehr_username')) ? @$ehr->username : old('ehr_username') }}">
                                 </div>
                               </div>
                               <div class="col-md-2">
                                 <div class="mb-3">
                                   <label for="ehr_password" class="form-label">Password</label>
-                                  <input type="text" value="" class="form-control" id="ehr_password" name="ehr_password" />
+                                  <input type="text" class="form-control" id="ehr_password" name="ehr_password" value="{{ empty(old('ehr_password')) ? @$ehr->password : old('ehr_password') }}">
                                 </div>
                               </div>
                               <div class="col-md-2">
                                 <div class="mb-3">
                                   <label for="clearinghouse_name" class="form-label">Clearinghouse</label>
-                                  <input type="text" value="" class="form-control" id="clearinghouse_name" name="clearinghouse_name" />
+                                  <input type="text" class="form-control" id="clearinghouse_name" name="clearinghouse_name" value="{{ empty(old('clearinghouse_name')) ? @$clearinghouse->name : old('clearinghouse_name') }}">
                                 </div>
                               </div>
                               <div class="col-md-2">
                                 <div class="mb-3">
                                   <label for="clearinghouse_url" class="form-label">URL</label>
-                                  <input type="text" class="form-control" value="" id="clearinghouse_url" name="clearinghouse_url" />
+                                  <input type="text" class="form-control" id="clearinghouse_url" name="clearinghouse_url" value="{{ empty(old('clearinghouse_url')) ? @$clearinghouse->url : old('clearinghouse_url') }}">
                                 </div>
                               </div>
                               <div class="col-md-2">
                                 <div class="mb-3">
                                   <label for="clearinghouse_username" class="form-label">User Name</label>
-                                  <input type="text" class="form-control" value="" id="clearinghouse_username" name="clearinghouse_username" />
+                                  <input type="text" class="form-control" id="clearinghouse_username" name="clearinghouse_username" value="{{ empty(old('clearinghouse_username')) ? @$clearinghouse->username : old('clearinghouse_username') }}">
                                 </div>
                               </div>
                               <div class="col-md-2">
                                 <div class="mb-3">
                                   <label for="clearinghouse_password" class="form-label">Password</label>
-                                  <input type="text" class="form-control" value="" id="clearinghouse_password" name="clearinghouse_password" />
+                                  <input type="text" class="form-control" id="clearinghouse_password" name="clearinghouse_password" value="{{ empty(old('clearinghouse_password')) ? @$clearinghouse->password : old('clearinghouse_password') }}">
                                 </div>
                               </div>
                               <div class="col-md-2">
                                 <div class="mb-3">
                                   <label for="caqh_name" class="form-label">CAQH</label>
-                                  <input type="text" class="form-control" value="" id="caqh_name" name="caqh_name" />
+                                  <input type="text" class="form-control" id="caqh_name" name="caqh_name" value="{{ empty(old('caqh_name')) ? @$caqh->name : old('caqh_name') }}">
                                 </div>
                               </div>
                               <div class="col-md-2">
                                 <div class="mb-3">
                                   <label for="caqh_url" class="form-label">URL</label>
-                                  <input type="text" class="form-control" value="" id="caqh_url" name="caqh_url" />
+                                  <input type="text" class="form-control" id="caqh_url" name="caqh_url" value="{{ empty(old('caqh_url')) ? @$caqh->url : old('caqh_url') }}">
                                 </div>
                               </div>
                               <div class="col-md-2">
                                 <div class="mb-3">
                                   <label for="caqh_username" class="form-label">User Name</label>
-                                  <input type="text" class="form-control" value="" id="caqh_username" name="caqh_username" />
+                                  <input type="text" class="form-control" id="caqh_username" name="caqh_username" value="{{ empty(old('caqh_username')) ? @$caqh->username : old('caqh_username') }}">
                                 </div>
                               </div>
                               <div class="col-md-2">
                                 <div class="mb-3">
                                   <label for="caqh_password" class="form-label">Password</label>
-                                  <input type="text" class="form-control" value="" id="caqh_password" name="caqh_password" />
+                                  <input type="text" class="form-control" id="caqh_password" name="caqh_password" value="{{ empty(old('caqh_password')) ? @$caqh->password : old('caqh_password') }}">
                                 </div>
                               </div>
                             </div>
@@ -605,56 +889,106 @@
                           <a href="#" class="btn btn-header-link collapsed" data-toggle="collapse" data-target="#faq7" aria-expanded="true" aria-controls="faq7">Payers Enrollment Information</a>
                         </div>
                         <div id="faq7" class="collapse" aria-labelledby="accordion7" data-parent="#faq">
-                          <div class="card-body" id="payers_enrollment">
-                            <div class="row">
-                              <div class="col-md-2 e-dynamic_add-">
-                                <div class="mb-3">
-                                  <label for="payer_name-" class="form-label">Payer Name</label>
-                                  <input type="text" class="form-control" value="" id="payer_name-" name="payer_name[]" />
-                                </div>
-                              </div>
-                              <div class="col-md-2 e-dynamic_add-">
-                                <div class="mb-3">
-                                  <label for="payer_provider_name-" class="form-label">Provider Name</label>
-                                  <input type="text" class="form-control payer_provider_name" value="" id="payer_provider_name-" name="payer_provider_name[]" />
-                                </div>
-                              </div>
-                              <div class="col-md-1 e-dynamic_add-">
-                                <div class="mb-3">
-                                  <label for="payer_npi-" class="form-label">NPI</label>
-                                  <input type="text" class="form-control payer_npi" value="" id="payer_npi-" name="payer_npi[]" />
-                                </div>
-                              </div>
-                              <div class="col-md-2 e-dynamic_add-">
-                                <div class="mb-3">
-                                  <label for="payer_enroll_type-" class="form-label">Enroll Type</label>
-                                  <select name="payer_enroll_type[]" onchange="change_npi()" ref="" class="form-control payer_enroll_type" id="payer_enroll_type-">
-                                    <option value="individual">Individual</option>
-                                    <option value="group">Group</option>
-                                  </select>
-                                </div>
-                              </div>
-                              <div class="col-md-2 e-dynamic_add-">
-                                <div class="mb-3">
-                                  <label for="payer_enroll_with-" class="form-label">Enroll With</label>
-                                  <select name="payer_enroll_with[]" class="form-control" id="payer_enroll_with-">
-                                    <option value="tax_id">Tax Id</option>
-                                    <option value="ssn">SSN</option>
-                                  </select>
-                                </div>
-                              </div>
-                              <div class="col-md-2 e-dynamic_add-">
-                                <div class="mb-3">
-                                  <label for="payer_effective_date-" class="form-label">Enroll Effective</label>
-                                  <input type="date" class="form-control" value="" id="payer_effective_date-" name="payer_effective_date[]" />
-                                </div>
-                              </div>
-                              <div class="col-md-1 d-flex justify-content-center align-items-center e-dynamic_add-">
-                                <div class="mb-3 pt-4">
-                                  <i style="cursor: pointer" id="add-payers_enrollment" class="fa fa-plus-circle fs-2"></i>
-                                </div>
+                          <div class="card-body row" id="payers_enrollment">
+                            <div class="col-md-2 e-dynamic_add">
+                              <div class="mb-3">
+                                <label for="payer_name" class="form-label">Payer Name</label>
+                                <input type="text" class="form-control" value="" id="payer_name" name="payer_name[]" />
                               </div>
                             </div>
+                            <div class="col-md-2 e-dynamic_add">
+                              <div class="mb-3">
+                                <label for="payer_provider_name" class="form-label">Provider Name</label>
+                                <input type="text" class="form-control payer_provider_name" value="" id="payer_provider_name" name="payer_provider_name[]" />
+                              </div>
+                            </div>
+                            <div class="col-md-1 e-dynamic_add">
+                              <div class="mb-3">
+                                <label for="payer_npi" class="form-label">NPI</label>
+                                <input type="text" class="form-control payer_npi" value="" id="payer_npi" name="payer_npi[]" />
+                              </div>
+                            </div>
+                            <div class="col-md-2 e-dynamic_add">
+                              <div class="mb-3">
+                                <label for="payer_enroll_type" class="form-label">Enroll Type</label>
+                                <select name="payer_enroll_type[]" onchange="change_npi()" ref="" class="form-control payer_enroll_type" id="payer_enroll_type">
+                                  <option value="individual">Individual</option>
+                                  <option value="group">Group</option>
+                                </select>
+                              </div>
+                            </div>
+                            <div class="col-md-2 e-dynamic_add">
+                              <div class="mb-3">
+                                <label for="payer_enroll_with" class="form-label">Enroll With</label>
+                                <select name="payer_enroll_with[]" class="form-control" id="payer_enroll_with">
+                                  <option value="tax_id">Tax Id</option>
+                                  <option value="ssn">SSN</option>
+                                </select>
+                              </div>
+                            </div>
+                            <div class="col-md-2 e-dynamic_add">
+                              <div class="mb-3">
+                                <label for="payer_effective_date" class="form-label">Enroll Effective</label>
+                                <input type="date" class="form-control" value="" id="payer_effective_date" name="payer_effective_date[]" />
+                              </div>
+                            </div>
+                            <div class="col-md-1 d-flex justify-content-center align-items-center e-dynamic_add">
+                              <div class="mb-3 pt-4">
+                                <i style="cursor: pointer" id="add-payers_enrollment" class="fa fa-plus-circle fs-2"></i>
+                              </div>
+                            </div>
+                            @foreach(json_decode(@$practice->payers_info) as $key => $value)
+                            @if(empty($value->payer_name) && empty($value->payer_provider_name) && empty($value->npi) && empty($value->enroll_type) && empty($value->enroll_with) && empty($value->effective_date))
+                            @continue
+                            @endif
+                            <div class="col-md-2 e-dynamic_add-{{$key}}">
+                              <div class="mb-3">
+                                <label for="payer_name-{{$key}}" class="form-label">Payer Name</label>
+                                <input type="text" class="form-control" id="payer_name-{{$key}}" name="payer_name[]" value="{{ empty(old('payer_name')) ? @$value->payer_name : old('payer_name') }}">
+                              </div>
+                            </div>
+                            <div class="col-md-2 e-dynamic_add-{{$key}}">
+                              <div class="mb-3">
+                                <label for="payer_provider_name-{{$key}}" class="form-label">Provider Name</label>
+                                <input type="text" class="form-control payer_provider_name" id="payer_provider_name-{{$key}}" name="payer_provider_name[]" value="{{ empty(old('payer_provider_name')) ? @$value->payer_provider_name : old('payer_provider_name') }}">
+                              </div>
+                            </div>
+                            <div class="col-md-1 e-dynamic_add-{{$key}}">
+                              <div class="mb-3">
+                                <label for="payer_npi-{{$key}}" class="form-label">NPI</label>
+                                <input type="text" class="form-control payer_npi" id="payer_npi-{{$key}}" name="payer_npi[]" value="{{ empty(old('payer_npi')) ? @$value->npi : old('payer_npi') }}">
+                              </div>
+                            </div>
+                            <div class="col-md-2 e-dynamic_add-{{$key}}">
+                              <div class="mb-3">
+                                <label for="payer_enroll_type-{{$key}}" class="form-label">Enroll Type</label>
+                                <select name="payer_enroll_type[]" onchange="change_npi()" class="form-control payer_enroll_type" id="payer_enroll_type-{{$key}}" value="{{ empty(old('payer_enroll_type')) ? @$value->enroll_type : old('payer_enroll_type') }}">
+                                  <option value="individual">Individual</option>
+                                  <option value="group">Group</option>
+                                </select>
+                              </div>
+                            </div>
+                            <div class="col-md-2 e-dynamic_add-{{$key}}">
+                              <div class="mb-3">
+                                <label for="payer_enroll_with-{{$key}}" class="form-label">Enroll With</label>
+                                <select name="payer_enroll_with[]" class="form-control" id="payer_enroll_with-{{$key}}" value="{{ empty(old('payer_enroll_with')) ? @$value->enroll_with : old('payer_enroll_with') }}">
+                                  <option value="tax_id">Tax Id</option>
+                                  <option value="ssn">SSN</option>
+                                </select>
+                              </div>
+                            </div>
+                            <div class="col-md-2 e-dynamic_add-{{$key}}">
+                              <div class="mb-3">
+                                <label for="payer_effective_date-{{$key}}" class="form-label">Enroll Effective</label>
+                                <input type="date" class="form-control" id="payer_effective_date-{{$key}}" name="payer_effective_date[]" value="{{ empty(old('payer_effective_date')) ? @$value->effective_date : old('payer_effective_date') }}">
+                              </div>
+                            </div>
+                            <div class="col-md-1 d-flex justify-content-center align-items-center p-dynamic_add-{{$key}}">
+                              <div class="mb-3 pt-4">
+                                <i style="cursor: pointer" onclick="remove_pms({{$key}})" id="add-address" class="fa fa-minus-circle fs-2"></i>
+                              </div>
+                            </div>
+                            @endforeach
                           </div>
                         </div>
                       </div>
@@ -709,6 +1043,7 @@
                       </div>
                       @endcan
                       @can('update business services')
+                      <?php $bellmedex_services = json_decode(@$practice->bellmedex_services); ?>
                       <div class="card">
                         <div class="card-header" id="accordion10">
                           <a href="#" class="btn btn-header-link collapsed" data-toggle="collapse" data-target="#faq10" aria-expanded="true" aria-controls="faq10">BellMedEx Services</a>
@@ -718,7 +1053,7 @@
                             <div class="row">
                               <div class="col-md-3">
                                 <div class="form-check">
-                                  <input class="form-check-input" type="checkbox" value="1" id="credentialing" name="credentialing">
+                                  <input class="form-check-input" type="checkbox" value="1" id="credentialing" name="credentialing" {{ !empty(old('credentialing')) ? (old('credentialing') ==1 ? 'checked' : '') : ($bellmedex_services->credentialing == 1 ? 'checked' : '') }}>
                                   <label class="form-check-label" for="credentialing">
                                     Credentialing
                                   </label>
@@ -726,7 +1061,7 @@
                               </div>
                               <div class="col-md-3">
                                 <div class="form-check">
-                                  <input class="form-check-input" type="checkbox" value="1" id="coding" name="coding">
+                                  <input class="form-check-input" type="checkbox" value="1" id="coding" name="coding" {{ !empty(old('coding')) ? (old('coding') ==1 ? 'checked' : '') : ($bellmedex_services->coding == 1 ? 'checked' : '') }}>
                                   <label class="form-check-label" for="coding">
                                     Coding
                                   </label>
@@ -734,7 +1069,7 @@
                               </div>
                               <div class="col-md-3">
                                 <div class="form-check">
-                                  <input class="form-check-input" type="checkbox" value="1" id="patient_help_desk" name="phd">
+                                  <input class="form-check-input" type="checkbox" value="1" id="patient_help_desk" name="phd" {{ !empty(old('phd')) ? (old('phd') ==1 ? 'checked' : '') : ($bellmedex_services->phd == 1 ? 'checked' : '') }}>
                                   <label class="form-check-label" for="patient_help_desk">
                                     Patient Help Desk
                                   </label>
@@ -742,7 +1077,7 @@
                               </div>
                               <div class="col-md-3">
                                 <div class="form-check">
-                                  <input class="form-check-input" type="checkbox" value="1" id="billing" name="billing">
+                                  <input class="form-check-input" type="checkbox" value="1" id="billing" name="billing" {{ !empty(old('billing')) ? (old('billing') ==1 ? 'checked' : '') : ($bellmedex_services->billing == 1 ? 'checked' : '') }}>
                                   <label class="form-check-label" for="billing">
                                     Billing
                                   </label>
@@ -753,7 +1088,7 @@
                               <hr />
                               <div class="col-sm-6 col-md-3 mb-2">
                                 <div class="form-check">
-                                  <input class="form-check-input" type="checkbox" value="1" id="eligibility_check" name="eligibility_check">
+                                  <input class="form-check-input" type="checkbox" value="1" id="eligibility_check" name="eligibility_check" {{ !empty(old('eligibility_check')) ? (old('eligibility_check') ==1 ? 'checked' : '') : ($bellmedex_services->eligibility_check == 1 ? 'checked' : '') }}>
                                   <label class="form-check-label" for="eligibility_check">
                                     Eligibility / Benefits Verification
                                   </label>
@@ -761,7 +1096,7 @@
                               </div>
                               <div class="col-sm-6 col-md-3 mb-2">
                                 <div class="form-check">
-                                  <input class="form-check-input" type="checkbox" value="1" id="authorization" name="authorization">
+                                  <input class="form-check-input" type="checkbox" value="1" id="authorization" name="authorization" {{ !empty(old('authorization')) ? (old('authorization') ==1 ? 'checked' : '') : ($bellmedex_services->authorization == 1 ? 'checked' : '') }}>
                                   <label class="form-check-label" for="authorization">
                                     Authorization
                                   </label>
@@ -769,7 +1104,7 @@
                               </div>
                               <div class="col-sm-6 col-md-3 mb-2">
                                 <div class="form-check">
-                                  <input class="form-check-input" type="checkbox" value="1" id="patient_statement" name="patient_statement">
+                                  <input class="form-check-input" type="checkbox" value="1" id="patient_statement" name="patient_statement" {{ !empty(old('patient_statement')) ? (old('patient_statement') ==1 ? 'checked' : '') : ($bellmedex_services->patient_statement == 1 ? 'checked' : '') }}>
                                   <label class="form-check-label" for="patient_statement">
                                     Patient Statement
                                   </label>
@@ -777,7 +1112,7 @@
                               </div>
                               <div class="col-sm-6 col-md-3 mb-2">
                                 <div class="form-check">
-                                  <input class="form-check-input" type="checkbox" value="1" id="account_receivable" name="ar">
+                                  <input class="form-check-input" type="checkbox" value="1" id="account_receivable" name="ar" {{ !empty(old('ar')) ? (old('ar') ==1 ? 'checked' : '') : ($bellmedex_services->ar == 1 ? 'checked' : '') }}>
                                   <label class="form-check-label" for="account_receivable">
                                     Account Receivable
                                   </label>
@@ -1062,6 +1397,8 @@
 @push('scripts')
 <script>
   $(document).ready(function() {
+    account_receivable();
+    billing();
     credentialing();
     coding();
     docuhub_orientation();
@@ -1083,6 +1420,28 @@
     else
       $('.col-md-4.coding').hide();
   }
+
+  function billing() {
+    if ($('#billing').is(':checked')) {
+      $('#billing-sub').removeClass('d-none');
+    } else {
+      $('#billing-sub').addClass('d-none');
+    }
+  }
+  $(document).on("click", "#billing", function() {
+    billing();
+  });
+
+  function account_receivable() {
+    if ($('#account_receivable').is(':checked')) {
+      $('#ar_date').removeClass('d-none');
+    } else {
+      $('#ar_date').addClass('d-none');
+    }
+  }
+  $(document).on("click", "#account_receivable", function() {
+    account_receivable();
+  });
 
   function docuhub_orientation() {
     if ($('#docuhub_orientation').val() == "1")
@@ -1141,20 +1500,8 @@
     }
     $('#payer_npi-' + key).val(npi);
   }
-  $(document).on("click", "#billing", function() {
-    if ($('#billing').is(':checked')) {
-      $('#billing-sub').removeClass('d-none');
-    } else {
-      $('#billing-sub').addClass('d-none');
-    }
-  });
-  $(document).on("click", "#account_receivable", function() {
-    if ($('#account_receivable').is(':checked')) {
-      $('#ar_date').removeClass('d-none');
-    } else {
-      $('#ar_date').addClass('d-none');
-    }
-  });
+
+
   $(document).on("change", "#claim-freq", function() {
     var value = $('#claim-freq option:selected').val();
     if (value == 'daily') {

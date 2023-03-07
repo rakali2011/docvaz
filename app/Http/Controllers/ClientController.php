@@ -85,6 +85,7 @@ class ClientController extends Controller
             $user->password = Hash::make($req->password);
             $user->type = 3;
             $user->timezone = $req->timezone;
+            $user->status = $req->status;
             $user->save();
             $user->assignRole($req->input('roles'));
             $user->teams()->sync([$req->team], TRUE);
@@ -116,6 +117,7 @@ class ClientController extends Controller
             $user->email = $req->email;
             $user->company_id = $company_id;
             $user->timezone = $req->timezone;
+            $user->status = $req->status;
             $user->assignRole($req->input('roles'));
             $user->teams()->sync([$req->team], TRUE);
             $user->save();

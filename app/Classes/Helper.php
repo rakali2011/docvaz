@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Auth;
 use App\Models\Company;
 use App\Models\Practice;
+use App\Models\Status;
 use App\Models\User;
 
 if (!function_exists('companies')) {
@@ -12,17 +13,21 @@ if (!function_exists('companies')) {
         return $companies;
     }
 }
-if (!function_exists('ticket_statuses')) {
-    function ticket_statuses()
+if (!function_exists('statuses')) {
+    function statuses($type)
     {
-        return ["Open", "Inprocess", "Closed", "Reopen", "Onhold", "Waiting Approval", "Rejected"];
+        return Status::where('company_id', Auth::user()->company->id)->where('type', $type)->orderBy('name', 'ASC')->get();
     }
 }
-if (!function_exists('get_ticket_status')) {
-    function get_ticket_status($status = 0)
+if (!function_exists('get_status')) {
+    function get_status($type, $status_id)
     {
-        $statuses = ["Open", "Inprocess", "Closed", "Reopen", "Onhold", "Waiting Approval", "Rejected"];
-        return $statuses[$status];
+        $statuses = Status::where('company_id', Auth::user()->company->id)->where('type', $type)->orderBy('name', 'ASC')->get();
+        foreach ($statuses as $key => $status) {
+            if ($status->id == $status_id)
+                return $status->name;
+        }
+        return "";
     }
 }
 if (!function_exists('ticket_types')) {

@@ -100,6 +100,7 @@ Route::post('/update_user_practices', [UserController::class, 'update_user_pract
 Route::post('/update_user_teams', [UserController::class, 'update_user_teams'])->middleware('permission:assign team user')->name('update_user_teams');
 // Statuses
 Route::resource('statuses', StatusController::class);
+Route::post('/default-status', [StatusController::class, 'default_status'])->middleware('permission:update status')->name('default_status');
 // Document Types
 Route::resource('document_types', DocumentTypeController::class);
 // Tickets

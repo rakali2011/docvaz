@@ -31,8 +31,8 @@ class PracticeController extends Controller
     {
         $data['menu'] = "client-management";
         $data['sub_menu'] = "practices";
-        $statuses = Status::where('company_id', Auth::user()->company->id)->where('type', 'practice')->orderBy('name', 'ASC')->get();
-        return view('practice_management.add_practice', compact('data', 'statuses'));
+        $practice = [];
+        return view('practice_management.add_practice', compact('data', 'practice'));
     }
     public function edit_practice($id)
     {
@@ -40,9 +40,8 @@ class PracticeController extends Controller
         $data = array();
         $data['menu'] = "client-management";
         $data['sub_menu'] = "practices";
-        $statuses = Status::where('company_id', Auth::user()->company->id)->where('type', 'practice')->orderBy('name', 'ASC')->get();
         $practice = Practice::findorfail($id);
-        return view('practice_management.add_practice', compact('data', 'statuses', 'practice'));
+        return view('practice_management.edit_practice', compact('data', 'practice'));
     }
     public function post_practice(Request $req)
     {

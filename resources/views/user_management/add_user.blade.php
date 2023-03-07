@@ -102,6 +102,22 @@
                   @enderror
                 </div>
               </div>
+              <div class="col-md-6">
+                <div class="form-group mb-3">
+                  <label for="status">Status</label>
+                  <select class="form-control @error('practice') is-invalid @enderror" name="status" id="status">
+                    <option value="">--Please Select--</option>
+                    @foreach (statuses('user') as $status)
+                    <option value="{{ $status->id }}" {{(@$user) ? (@$user->status==$status->id ? 'selected' : '') : '' }}>{{ $status->name }}</option>
+                    @endforeach
+                  </select>
+                  @error('status')
+                  <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                  </span>
+                  @enderror
+                </div>
+              </div>
               @if(!@$user)
               <div class="col-md-4">
                 <div class="form-group mb-3">

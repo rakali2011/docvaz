@@ -104,11 +104,11 @@
           <div class="w3-animate-opacity">
             <div class="tab">
               @foreach($types as $key => $type)
-              <button class="tablinks" onclick="openCity(event, '{{ $type->type }}')">{{ ucwords($type->type) }}</button>
+              <button class="tablinks {{ $key==0 ? 'active' : '' }}" onclick="openCity(event, '{{ $type->type }}')">{{ ucwords($type->type) }}</button>
               @endforeach
             </div>
             @foreach($types as $key => $type)
-            <div id="{{ $type->type }}" class="tabcontent">
+            <div id="{{ $type->type }}" class="tabcontent" {{ $key==0 ? 'style=display:block!important' : '' }}>
               <table class="w3-animate-opacity">
                 <tr>
                   <th>Name</th>
@@ -120,7 +120,7 @@
                 <tr>
                   <td>{{ $status->name }}</td>
                   <td>
-                    <input type="radio" name="{{ $type->type }}" onchange="defaultStatus('{{ $status->id }}','{{ $type->type }}')" style="vertical-align: middle;">
+                    <input type="radio" name="{{ $type->type }}" onchange="defaultStatus('{{ $status->id }}','{{ $type->type }}')" style="vertical-align: middle;" {{ $status->default==1 ? 'checked': '' }}>
                   </td>
                   <td>
                     @can('update status')
@@ -138,51 +138,6 @@
               </table>
             </div>
             @endforeach
-          </div>
-        </div>
-        <div class="col-md-12">
-          <div class="card shadow">
-            <div class="card-body">
-              <!-- table -->
-              <table class="table datatables" id="dataTable-1">
-                <thead>
-                  <tr>
-                    <th>Name</th>
-                    <th>Type</th>
-                    @role('dev')
-                    <th>Company</th>
-                    @endrole
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  @foreach ($statuses as $item)
-                  <tr>
-                    <td>{{ $item->name }}</td>
-                    <td>{{ ucwords($item->type) }}</td>
-                    @role('dev')
-                    <td>{{ @$item->company->name }}</td>
-                    @endrole
-                    <td>
-                      <button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <span class="text-muted sr-only">Action</span>
-                      </button>
-                      <div class="dropdown-menu dropdown-menu-right">
-                        @can('update status')
-                        <a class="dropdown-item" href="{{ route('statuses.edit',$item->id) }}">Edit</a>
-                        @endcan
-                        @can('delete status')
-                        {!! Form::open(['method' => 'DELETE','route' => ['statuses.destroy', $item->id],'style'=>'display:inline']) !!}
-                        {!! Form::submit('Delete', ['class' => 'dropdown-item']) !!}
-                        {!! Form::close() !!}
-                        @endcan
-                      </div>
-                    </td>
-                  </tr>
-                  @endforeach
-                </tbody>
-              </table>
-            </div>
           </div>
         </div>
       </div>
@@ -205,6 +160,23 @@
 
     document.getElementById(cityName).style.display = "block";
     evt.currentTarget.className += " active";
+  }
+
+  function defaultStatus(id, type) {
+    console.log(id + type);
+    $.ajax({
+      type: "POST",
+      url: "{{ route('default_status') }}",
+      data: {
+        id,
+        type,
+        _token: '{{ csrf_token() }}'
+      },
+      dataType: "JSON",
+      success: function(response) {
+        console.log(response);
+      }
+    });
   }
 </script>
 @endpush

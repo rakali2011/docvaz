@@ -26,10 +26,10 @@ class StatusController extends Controller
         $data['menu'] = "general-management";
         $data['sub_menu'] = "statues";
         if (auth()->user()->hasRole('dev')) {
-            $statuses = Status::where('company_id', '!=', 0)->orderBy('id', 'DESC')->get();
+            $statuses = Status::where('company_id', '!=', 0)->orderBy('name', 'ASC')->get();
             $types = Status::distinct()->select('type')->where('company_id', '!=', 0)->groupBy('type')->get();
         } else {
-            $statuses = Status::where('company_id', Auth::user()->company->id)->orderBy('id', 'DESC')->get();
+            $statuses = Status::where('company_id', Auth::user()->company->id)->orderBy('name', 'ASC')->get();
             $types = Status::distinct()->select('type')->where('company_id', Auth::user()->company->id)->groupBy('type')->get();
         }
         return view('statuses_management.index', compact('data', 'statuses', 'types'));
@@ -119,5 +119,29 @@ class StatusController extends Controller
     {
         $status->delete();
         return redirect()->route('statuses.index')->with('success', 'Status Deleted Successfully');
+    }
+
+    public function default_status(Request $request)
+    {
+        $response = array();
+        DB::beginTransaction();
+        try {
+
+            $id = $request->id;
+            $type = $request->type;
+            $date = date('m-Y');
+            Status::where("type", $type)->update(["default" => 0]);
+            $status = Status::findorfail($id);
+            $status->default = 1;
+            $status->save();
+            DB::commit();
+            $response['success'] = 1;
+            $response['message'] = "Default Status Set Successfully";
+        } catch (\Throwable $th) {
+            DB::rollback();
+            $response['success'] = 0;
+            $response['message'] = $th->getMessage();
+        }
+        return response()->json($response);
     }
 }

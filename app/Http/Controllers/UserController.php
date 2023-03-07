@@ -89,6 +89,7 @@ class UserController extends Controller
             $user->password = Hash::make($req->password);
             $user->type = 2;
             $user->timezone = $req->timezone;
+            $user->status = $req->status;
             $user->save();
             $user->assignRole($req->input('roles'));
             $user->teams()->sync($req->teams, TRUE);
@@ -120,6 +121,7 @@ class UserController extends Controller
             $user->email = $req->email;
             $user->company_id = $company_id;
             $user->timezone = $req->timezone;
+            $user->status = $req->status;
             $user->save();
             DB::table('model_has_roles')->where('model_id', $id)->delete();
             $user->assignRole($req->input('roles'));

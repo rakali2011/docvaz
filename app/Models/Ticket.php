@@ -21,7 +21,7 @@ class Ticket extends Model
     }
     public function getStatusAttribute($value)
     {
-        return get_ticket_status($value);
+        return get_status('practice', $value);
     }
     public function attachments()
     {
