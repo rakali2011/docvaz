@@ -750,49 +750,31 @@
                                 </div>
                               </div>
                               @foreach(json_decode(@$practice->payers_info) as $key => $value)
-                              @if(empty($value->payer_name) && empty($value->payer_provider_name) && empty($value->npi) && empty($value->enroll_type) && empty($value->enroll_with) && empty($value->effective_date))
+                              @if(empty($value->name) && empty($value->url) && empty($value->username) && empty($value->password))
                               @continue
                               @endif
-                              <div class="col-md-2 e-dynamic_add-{{$key}}">
+                              <div class="col-md-3 p-dynamic_add-{{$key}}">
                                 <div class="mb-3">
-                                  <label for="payer_name-{{$key}}" class="form-label">Payer Name</label>
-                                  <input type="text" class="form-control" id="payer_name-{{$key}}" name="payer_name[]" value="{{ is_array(old('physical_city')) ? old('physical_city')[$key] : $value->payer_name }}">
+                                  <label for="pms_name-{{$key}}" class="form-label">Practice Management Software</label>
+                                  <input type="text" class="form-control" id="pms_name-{{$key}}" name="pms_name[]" value="{{ empty(old('pms_name')) ? @$ehr->name : old('pms_name') }}">
                                 </div>
                               </div>
-                              <div class="col-md-2 e-dynamic_add-{{$key}}">
+                              <div class="col-md-3 p-dynamic_add-{{$key}}">
                                 <div class="mb-3">
-                                  <label for="payer_provider_name-{{$key}}" class="form-label">Provider Name</label>
-                                  <input type="text" class="form-control payer_provider_name" id="payer_provider_name-{{$key}}" name="payer_provider_name[]" value="{{ is_array(old('payer_provider_name')) ? old('payer_provider_name')[$key] : $value->provider_name }}">
+                                  <label for="pms_url-{{$key}}" class="form-label">URL</label>
+                                  <input type="text" class="form-control" id="pms_url-{{$key}}" name="pms_url[]" value="{{ empty(old('pms_url')) ? @$ehr->url : old('pms_url') }}">
                                 </div>
                               </div>
-                              <div class="col-md-1 e-dynamic_add-{{$key}}">
+                              <div class="col-md-3 p-dynamic_add-{{$key}}">
                                 <div class="mb-3">
-                                  <label for="payer_npi-{{$key}}" class="form-label">NPI</label>
-                                  <input type="text" class="form-control payer_npi" id="payer_npi-{{$key}}" name="payer_npi[]" value="{{ is_array(old('payer_npi')) ? old('payer_npi')[$key] : $value->npi }}">
+                                  <label for="pms_username-{{$key}}" class="form-label">User Name</label>
+                                  <input type="text" class="form-control" id="pms_username-{{$key}}" name="pms_username[]" value="{{ empty(old('pms_username')) ? @$ehr->username : old('pms_username') }}">
                                 </div>
                               </div>
-                              <div class="col-md-2 e-dynamic_add-{{$key}}">
+                              <div class="col-md-2 p-dynamic_add-{{$key}}">
                                 <div class="mb-3">
-                                  <label for="payer_enroll_type-{{$key}}" class="form-label">Enroll Type</label>
-                                  <select name="payer_enroll_type[]" onchange="change_npi()" class="form-control payer_enroll_type" id="payer_enroll_type-{{$key}}" value="{{ is_array(old('payer_enroll_type')) ? old('payer_enroll_type')[$key] : $value->enroll_type }}">
-                                    <option value="individual">Individual</option>
-                                    <option value="group">Group</option>
-                                  </select>
-                                </div>
-                              </div>
-                              <div class="col-md-2 e-dynamic_add-{{$key}}">
-                                <div class="mb-3">
-                                  <label for="payer_enroll_with-{{$key}}" class="form-label">Enroll With</label>
-                                  <select name="payer_enroll_with[]" class="form-control" id="payer_enroll_with-{{$key}}" value="{{ is_array(old('payer_enroll_with')) ? old('payer_enroll_with')[$key] : $value->enroll_with }}">
-                                    <option value="tax_id">Tax Id</option>
-                                    <option value="ssn">SSN</option>
-                                  </select>
-                                </div>
-                              </div>
-                              <div class="col-md-2 e-dynamic_add-{{$key}}">
-                                <div class="mb-3">
-                                  <label for="payer_effective_date-{{$key}}" class="form-label">Enroll Effective</label>
-                                  <input type="date" class="form-control" id="payer_effective_date-{{$key}}" name="payer_effective_date[]" value="{{ is_array(old('payer_effective_date')) ? old('payer_effective_date')[$key] : $value->effective_date }}">
+                                  <label for="pms_password-{{$key}}" class="form-label">Password</label>
+                                  <input type="text" class="form-control" id="pms_password-{{$key}}" name="pms_password[]" value="{{ empty(old('pms_password')) ? @$ehr->password : old('pms_password') }}">
                                 </div>
                               </div>
                               <div class="col-md-1 d-flex justify-content-center align-items-center p-dynamic_add-{{$key}}">
@@ -912,6 +894,7 @@
                               <div class="mb-3">
                                 <label for="payer_enroll_type" class="form-label">Enroll Type</label>
                                 <select name="payer_enroll_type[]" onchange="change_npi()" ref="" class="form-control payer_enroll_type" id="payer_enroll_type">
+                                  <option value="">--Please Select--</option>
                                   <option value="individual">Individual</option>
                                   <option value="group">Group</option>
                                 </select>
@@ -921,6 +904,7 @@
                               <div class="mb-3">
                                 <label for="payer_enroll_with" class="form-label">Enroll With</label>
                                 <select name="payer_enroll_with[]" class="form-control" id="payer_enroll_with">
+                                  <option value="">--Please Select--</option>
                                   <option value="tax_id">Tax Id</option>
                                   <option value="ssn">SSN</option>
                                 </select>
@@ -983,9 +967,9 @@
                                 <input type="date" class="form-control" id="payer_effective_date-{{$key}}" name="payer_effective_date[]" value="{{ empty(old('payer_effective_date')) ? @$value->effective_date : old('payer_effective_date') }}">
                               </div>
                             </div>
-                            <div class="col-md-1 d-flex justify-content-center align-items-center p-dynamic_add-{{$key}}">
+                            <div class="col-md-1 d-flex justify-content-center align-items-center e-dynamic_add-{{$key}}">
                               <div class="mb-3 pt-4">
-                                <i style="cursor: pointer" onclick="remove_pms({{$key}})" id="add-address" class="fa fa-minus-circle fs-2"></i>
+                                <i style="cursor: pointer" onclick="remove_payers_enrollment({{$key}})" id="add-address" class="fa fa-minus-circle fs-2"></i>
                               </div>
                             </div>
                             @endforeach
@@ -1121,7 +1105,7 @@
                               <div class="col-md-6 d-none" id="ar_date">
                                 <div class="mb-3">
                                   <label for="ar_starting_period" class="form-label"> AR Starting Period</label>
-                                  <input type="date" class="form-control" value="" id="ar_starting_period" name="ar_start" />
+                                  <input type="date" class="form-control" id="ar_starting_period" name="ar_start" value="{{ empty(old('ar_start')) ? @$bellmedex_services->ar_start : old('ar_start') }}">
                                 </div>
                               </div>
                             </div>
@@ -1129,19 +1113,19 @@
                               <div class="col-md-5">
                                 <div class="mb-3">
                                   <label for="key_billing_issues" class="form-label">Key Billing Issues Faced by Practice(if any)</label>
-                                  <input type="text" class="form-control" name="key_billing_issues" id="key_billing_issues" value="" />
+                                  <input type="text" class="form-control" name="key_billing_issues" id="key_billing_issues" value="{{ empty(old('key_billing_issues')) ? @$bellmedex_services->key_billing_issues : old('key_billing_issues') }}">
                                 </div>
                               </div>
                               <div class="col-md-5">
                                 <div class="mb-3">
                                   <label for="complementary_services" class="form-label">Complementary Services/Special Commitment (If Any)</label>
-                                  <input type="text" class="form-control" name="complementary_services" id="complementary_services" value="" />
+                                  <input type="text" class="form-control" name="complementary_services" id="complementary_services" value="{{ empty(old('complementary_services')) ? @$bellmedex_services->complementary_services : old('complementary_services') }}">
                                 </div>
                               </div>
                               <div class="col-md-5">
                                 <div class="mb-3">
                                   <label for="special_instructions" class="form-label">Special Instructions</label>
-                                  <input type="text" class="form-control" name="special_instructions" id="special_instructions" value="" />
+                                  <input type="text" class="form-control" name="special_instructions" id="special_instructions" value="{{ empty(old('special_instructions')) ? @$bellmedex_services->special_instructions : old('special_instructions') }}">
                                 </div>
                               </div>
                             </div>
@@ -1150,6 +1134,7 @@
                       </div>
                       @endcan
                       @can('update business crm')
+                      <?php $crm = json_decode(@$practice->crm); ?>
                       <div class="card">
                         <div class="card-header" id="accordion12">
                           <a href="#" class="btn btn-header-link collapsed" data-toggle="collapse" data-target="#faq12" aria-expanded="true" aria-controls="faq12">CRM</a>
@@ -1160,19 +1145,19 @@
                               <div class="col-md-4">
                                 <div class="mb-3">
                                   <label for="welcome_email" class="form-label">Welcome Email</label>
-                                  <input type="datetime-local" name="welcome_email" id="welcome_email" class="form-control" value="">
+                                  <input type="datetime-local" name="welcome_email" id="welcome_email" class="form-control" value="{{ empty(old('welcome_email')) ? @$crm->welcome_email : old('welcome_email') }}">
                                 </div>
                               </div>
                               <div class="col-md-4">
                                 <div class="mb-3">
                                   <label for="onboarding_metting_date" class="form-label">Onboarding Metting Date</label>
-                                  <input type="datetime-local" name="onboarding_metting_date" id="onboarding_metting_date" class="form-control" value="">
+                                  <input type="datetime-local" name="onboarding_metting_date" id="onboarding_metting_date" class="form-control" value="{{ empty(old('onboarding_metting_date')) ? @$crm->onboarding_metting_date : old('onboarding_metting_date') }}">
                                 </div>
                               </div>
                               <div class="col-md-4">
                                 <div class="mb-3">
                                   <label for="attended_by_crm_team" class="form-label">Attended By CRM Team</label>
-                                  <input type="text" name="attended_by_crm_team" id="attended_by_crm_team" data-role="tagsinput" class="form-control" value="" />
+                                  <input type="text" name="attended_by_crm_team" id="attended_by_crm_team" data-role="tagsinput" class="form-control" value="{{ empty(old('attended_by_crm_team')) ? @$crm->attended_by_crm_team : old('attended_by_crm_team') }}">
                                 </div>
                               </div>
                               <div class="col-md-4">
@@ -1180,27 +1165,27 @@
                                   <label for="docuhub_orientation" class="form-label">DocuHub Orientation</label>
                                   <select name="docuhub_orientation" id="docuhub_orientation" class="form-control">
                                     <option value="">--Please Select--</option>
-                                    <option value="1">Yes</option>
-                                    <option value="0">No</option>
+                                    <option value="1" @if(old('docuhub_orientation')==1 || 1==@$crm->docuhub_orientation) selected @endif>Yes</option>
+                                    <option value="0" @if(old('docuhub_orientation')==0 || 0==@$crm->docuhub_orientation) selected @endif>No</option>
                                   </select>
                                 </div>
                               </div>
                               <div class="col-md-4">
                                 <div class="mb-3">
                                   <label for="orientation_datetime" class="form-label">Orientation Datetime</label>
-                                  <input type="datetime-local" name="orientation_datetime" id="orientation_datetime" class="form-control" value="">
+                                  <input type="datetime-local" name="orientation_datetime" id="orientation_datetime" class="form-control" value="{{ empty(old('orientation_datetime')) ? @$crm->orientation_datetime : old('orientation_datetime') }}">
                                 </div>
                               </div>
                               <div class="col-md-4">
                                 <div class="mb-3">
                                   <label for="orientation_by" class="form-label">By</label>
-                                  <input type="text" name="orientation_by" id="orientation_by" data-role="tagsinput" class="form-control" value="" />
+                                  <input type="text" name="orientation_by" id="orientation_by" data-role="tagsinput" class="form-control" value="{{ empty(old('orientation_by')) ? @$crm->orientation_by : old('orientation_by') }}">
                                 </div>
                               </div>
                               <div class="col-md-4">
                                 <div class="mb-3">
                                   <label for="mom_sharing_date" class="form-label">MOM Sharing Date</label>
-                                  <input type="datetime-local" name="mom_sharing_date" id="mom_sharing_date" class="form-control" value="">
+                                  <input type="datetime-local" name="mom_sharing_date" id="mom_sharing_date" class="form-control" value="{{ empty(old('mom_sharing_date')) ? @$crm->mom_sharing_date : old('mom_sharing_date') }}">
                                 </div>
                               </div>
                             </div>
@@ -1209,6 +1194,7 @@
                       </div>
                       @endcan
                       @can('update business operations')
+                      <?php $operations = json_decode(@$practice->operations); ?>
                       <div class="card">
                         <div class="card-header" id="accordion13">
                           <a href="#" class="btn btn-header-link collapsed" data-toggle="collapse" data-target="#faq13" aria-expanded="true" aria-controls="faq13">Operations</a>
@@ -1221,15 +1207,15 @@
                                   <label for="logins_receipt" class="form-label">Logins Receipt</label>
                                   <select name="logins_receipt" id="logins_receipt" class="form-control">
                                     <option value="">--Please Select--</option>
-                                    <option value="1">Yes</option>
-                                    <option value="0">No</option>
+                                    <option value="1" {{ !empty(old('logins_receipt')) ? (old('logins_receipt') == 1 ? 'selected' : '') : (@$operations->logins_receipt == 1 ? 'selected' : '') }}>Yes</option>
+                                    <option value="0" {{ !empty(old('logins_receipt')) ? (old('logins_receipt') == 0 ? 'selected' : '') : (@$operations->logins_receipt == 0 ? 'selected' : '') }}>No</option>
                                   </select>
                                 </div>
                               </div>
                               <div class="col-md-4">
                                 <div class="mb-3">
                                   <label for="login_date" class="form-label">Date</label>
-                                  <input type="date" name="login_date" id="login_date" class="form-control" value="">
+                                  <input type="date" name="login_date" id="login_date" class="form-control" value="{{ empty(old('login_date')) ? @$operations->login_date : old('login_date') }}">
                                 </div>
                               </div>
                               <div class="col-md-4">
@@ -1237,27 +1223,27 @@
                                   <label for="sop_preparation" class="form-label">SOP Preparation</label>
                                   <select name="sop_preparation" id="sop_preparation" class="form-control">
                                     <option value="">--Please Select--</option>
-                                    <option value="1">Yes</option>
-                                    <option value="0">No</option>
+                                    <option value="1" @if(old('sop_preparation')==1 || 1==@$operations->sop_preparation) selected @endif>Yes</option>
+                                    <option value="0" @if(old('sop_preparation')==0 || 0==@$operations->sop_preparation) selected @endif>No</option>
                                   </select>
                                 </div>
                               </div>
                               <div class="col-md-4">
                                 <div class="mb-3">
                                   <label for="first_service_provided_name" class="form-label">First Service Provided Name</label>
-                                  <input type="text" name="first_service_provided_name" id="first_service_provided_name" class="form-control" value="">
+                                  <input type="text" name="first_service_provided_name" id="first_service_provided_name" class="form-control" value="{{ empty(old('first_service_provided_name')) ? @$operations->first_service_provided_name : old('first_service_provided_name') }}">
                                 </div>
                               </div>
                               <div class="col-md-4">
                                 <div class="mb-3">
                                   <label for="preparation_date" class="form-label">Date</label>
-                                  <input type="date" name="preparation_date" id="preparation_date" class="form-control" value="">
+                                  <input type="date" name="preparation_date" id="preparation_date" class="form-control" value="{{ empty(old('preparation_date')) ? @$operations->preparation_date : old('preparation_date') }}">
                                 </div>
                               </div>
                               <div class="col-md-4">
                                 <div class="mb-3">
                                   <label for="first_billing_received" class="form-label">First Billing Received</label>
-                                  <input type="date" name="first_billing_received" id="first_billing_received" class="form-control" value="">
+                                  <input type="date" name="first_billing_received" id="first_billing_received" class="form-control" value="{{ empty(old('first_billing_received')) ? @$operations->first_billing_received : old('first_billing_received') }}">
                                 </div>
                               </div>
                               <div class="col-md-4 coding">
@@ -1265,15 +1251,15 @@
                                   <label for="first_coding_service_status" class="form-label">First Coding Service Status</label>
                                   <select name="first_coding_service_status" id="first_coding_service_status" class="form-control">
                                     <option value="">--Please Select--</option>
-                                    <option value="1">Yes</option>
-                                    <option value="0">No</option>
+                                    <option value="1" @if(old('first_coding_service_status')==1 || 1==@$operations->first_coding_service_status) selected @endif>Yes</option>
+                                    <option value="0" @if(old('first_coding_service_status')==0 || 0==@$operations->first_coding_service_status) selected @endif>No</option>
                                   </select>
                                 </div>
                               </div>
                               <div class="col-md-4 coding">
                                 <div class="mb-3">
                                   <label for="coding_date" class="form-label">Date</label>
-                                  <input type="date" name="coding_date" id="coding_date" class="form-control" value="">
+                                  <input type="date" name="coding_date" id="coding_date" class="form-control" value="{{ empty(old('coding_date')) ? @$operations->coding_date : old('coding_date') }}">
                                 </div>
                               </div>
                               <div class="col-md-4 credentialing">
@@ -1281,15 +1267,15 @@
                                   <label for="first_credentialing_service_status" class="form-label">First Credentialing Service Status</label>
                                   <select name="first_credentialing_service_status" id="first_credentialing_service_status" class="form-control">
                                     <option value="">--Please Select--</option>
-                                    <option value="1">Yes</option>
-                                    <option value="0">No</option>
+                                    <option value="1" @if(old('first_credentialing_service_status')==1 || 1==@$operations->first_credentialing_service_status) selected @endif>Yes</option>
+                                    <option value="0" @if(old('first_credentialing_service_status')==0 || 0==@$operations->first_credentialing_service_status) selected @endif>No</option>
                                   </select>
                                 </div>
                               </div>
                               <div class="col-md-4 credentialing">
                                 <div class="mb-3">
                                   <label for="credentialing_date" class="form-label">Date</label>
-                                  <input type="date" name="credentialing_date" id="credentialing_date" class="form-control" value="">
+                                  <input type="date" name="credentialing_date" id="credentialing_date" class="form-control" value="{{ empty(old('credentialing_date')) ? @$operations->credentialing_date : old('credentialing_date') }}">
                                 </div>
                               </div>
                             </div>
@@ -1298,6 +1284,7 @@
                       </div>
                       @endcan
                       @can('update business threshold per hour')
+                      <?php $practice_threshold_per_hour = json_decode(@$practice->practice_threshold_per_hour) ?>
                       <div class="card">
                         <div class="card-header" id="accordion14">
                           <a href="#" class="btn btn-header-link collapsed" data-toggle="collapse" data-target="#faq14" aria-expanded="true" aria-controls="faq14">Practice Threshold Per Hour</a>
@@ -1308,69 +1295,89 @@
                               <div class="col-md-3">
                                 <div class="mb-3">
                                   <label for="thresh_eligibility" class="form-label">N.o of Eligibility / Benefits Checks</label> <br>
-                                  <input type="checkbox" value="1" name="thresh_eligibility_cal_checkbox"> <b>Call</b>
-                                  <input type="number" value="" class="form-control" id="thresh_eligibility" name="thresh_eligibility" />
+                                  <input type="checkbox" value="1" name="thresh_eligibility_cal_checkbox" {{ !empty(old('thresh_eligibility_cal_checkbox')) ? (old('thresh_eligibility_cal_checkbox') ==1 ? 'checked' : '') : ($practice_threshold_per_hour->thresh_eligibility_cal_checkbox == 1 ? 'checked' : '') }}> <b>Call</b>
+                                  <input type="number" class="form-control" id="thresh_eligibility" name="thresh_eligibility" value="{{ empty(old('thresh_eligibility')) ? @$practice_threshold_per_hour->thresh_eligibility : old('thresh_eligibility') }}">
                                   <br>
-                                  <input type="checkbox" value="1" name="thresh_eligibility_portal_checkbox">
+                                  <input type="checkbox" value="1" name="thresh_eligibility_portal_checkbox" {{ !empty(old('thresh_eligibility_portal_checkbox')) ? (old('thresh_eligibility_portal_checkbox') ==1 ? 'checked' : '') : ($practice_threshold_per_hour->thresh_eligibility_portal_checkbox == 1 ? 'checked' : '') }}>
                                   <label for="thresh_portal" class="form-label">Portal</label> <br>
-                                  <input type="number" value="" class="form-control" id="thresh_portal" name="thresh_portal" />
+                                  <input type="number" class="form-control" id="thresh_portal" name="thresh_portal" value="{{ empty(old('thresh_portal')) ? @$practice_threshold_per_hour->thresh_portal : old('thresh_portal') }}">
                                   <br>
                                   <label for="thresh_auth" class="form-label">No. Of Pre Authorization</label> <br>
-                                  <input type="number" value="" class="form-control" id="thresh_auth" name="thresh_auth" />
+                                  <input type="number" class="form-control" id="thresh_auth" name="thresh_auth" value="{{ empty(old('thresh_auth')) ? @$practice_threshold_per_hour->thresh_auth : old('thresh_auth') }}">
                                 </div>
                               </div>
                               <div class="col-md-3">
                                 <div class="mb-3">
                                   <label for="thresh_charge_entry" class="form-label">No. of Claims Created</label> <br>
-                                  <input type="checkbox" value="1" name="thresh_charge_manual_checkbox"> <b>Manual</b>
-                                  <input type="checkbox" value="1" name="thresh_charge_with_demo_graphics_checkbox"> <b>With Demo Graphics</b>
-                                  <input type="number" value="" class="form-control" id="thresh_charge_entry" name="thresh_charge_entry" />
+                                  <input type="checkbox" value="1" name="thresh_charge_manual_checkbox" {{ !empty(old('thresh_charge_manual_checkbox')) ? (old('thresh_charge_manual_checkbox') ==1 ? 'checked' : '') : ($practice_threshold_per_hour->thresh_charge_manual_checkbox == 1 ? 'checked' : '') }}> <b>Manual</b>
+                                  <input type="checkbox" value="1" name="thresh_charge_with_demo_graphics_checkbox" {{ !empty(old('thresh_charge_with_demo_graphics_checkbox')) ? (old('thresh_charge_with_demo_graphics_checkbox') ==1 ? 'checked' : '') : ($practice_threshold_per_hour->thresh_charge_with_demo_graphics_checkbox == 1 ? 'checked' : '') }}> <b>With Demo Graphics</b>
+                                  <input type="number" class="form-control" id="thresh_charge_entry" name="thresh_charge_entry" value="{{ empty(old('thresh_charge_entry')) ? @$practice_threshold_per_hour->thresh_charge_entry : old('thresh_charge_entry') }}">
                                   <br>
-                                  <input type="checkbox" value="1" name="thresh_charge_elect_checkbox">
+                                  <input type="checkbox" value="1" name="thresh_charge_elect_checkbox" {{ !empty(old('thresh_charge_elect_checkbox')) ? (old('thresh_charge_elect_checkbox') ==1 ? 'checked' : '') : ($practice_threshold_per_hour->thresh_charge_elect_checkbox == 1 ? 'checked' : '') }}>
                                   <label for="thresh_elect" class="form-label">Electronically</label> <br>
-                                  <input type="number" value="" class="form-control" id="thresh_elect" name="thresh_elect" />
+                                  <input type="number" class="form-control" id="thresh_elect" name="thresh_elect" value="{{ empty(old('thresh_elect')) ? @$practice_threshold_per_hour->thresh_elect : old('thresh_elect') }}">
                                   <br>
                                   <label for="thresh_rejections" class="form-label">No. of Rejections</label> <br>
-                                  <input type="number" value="" class="form-control" id="thresh_rejections" name="thresh_rejections" />
+                                  <input type="number" class="form-control" id="thresh_rejections" name="thresh_rejections" value="{{ empty(old('thresh_rejections')) ? @$practice_threshold_per_hour->thresh_rejections : old('thresh_rejections') }}">
                                 </div>
                               </div>
-
                               <div class="col-md-3">
                                 <div class="mb-3">
                                   <label for="thresh_posting" class="form-label">No. of Claims Payment Posting (Ins/Pat)</label> <br>
-                                  <input type="checkbox" value="1" name="thresh_posting_manual_checkbox"> <b>Manual</b>
-                                  <input type="number" value="" class="form-control" id="thresh_posting" name="thresh_posting" />
+                                  <input type="checkbox" value="1" name="thresh_posting_manual_checkbox" {{ !empty(old('thresh_posting_manual_checkbox')) ? (old('thresh_posting_manual_checkbox') ==1 ? 'checked' : '') : ($practice_threshold_per_hour->thresh_posting_manual_checkbox == 1 ? 'checked' : '') }}> <b>Manual</b>
+                                  <input type="number" class="form-control" id="thresh_posting" name="thresh_posting" value="{{ empty(old('thresh_posting')) ? @$practice_threshold_per_hour->thresh_posting : old('thresh_posting') }}">
                                   <br>
-                                  <input type="checkbox" value="1" name="thresh_posting_elect_checkbox">
+                                  <input type="checkbox" value="1" name="thresh_posting_elect_checkbox" {{ !empty(old('thresh_posting_elect_checkbox')) ? (old('thresh_posting_elect_checkbox') ==1 ? 'checked' : '') : ($practice_threshold_per_hour->thresh_posting_elect_checkbox == 1 ? 'checked' : '') }}>
                                   <label for="thresh_posting_elect" class="form-label">Electronically</label> <br>
-                                  <input type="number" value="" class="form-control" id="thresh_posting_elect" name="thresh_posting_elect" />
+                                  <input type="number" class="form-control" id="thresh_posting_elect" name="thresh_posting_elect" value="{{ empty(old('thresh_posting_elect')) ? @$practice_threshold_per_hour->thresh_posting_elect : old('thresh_posting_elect') }}">
                                   <br>
                                   <label for="thresh_denials" class="form-label">No. of Denials</label> <br>
-                                  <input type="number" value="" class="form-control" id="thresh_denials" name="thresh_denials" />
+                                  <input type="number" class="form-control" id="thresh_denials" name="thresh_denials" value="{{ empty(old('thresh_denials')) ? @$practice_threshold_per_hour->thresh_denials : old('thresh_denials') }}">
                                   <br>
                                 </div>
                               </div>
                               <div class="col-md-3" id="thresh_payer">
                                 <div class="row">
                                   <label class="form-label">No. of Claims Follow up Payer wise</label> <br>
-
-                                  <div class="col-md-12 t-dynamic_add-">
+                                  <div class="col-md-12 t-dynamic_add">
                                     <div class="mb-3">
-                                      <label for="thresh_payer_name-" class="form-label">Payer Name</label>
-                                      <input type="text" class="form-control" value="" id="thresh_payer_name-" name="thresh_payer_name[]" />
+                                      <label for="thresh_payer_name" class="form-label">Payer Name</label>
+                                      <input type="text" class="form-control" value="" id="thresh_payer_name" name="thresh_payer_name[]" />
                                     </div>
                                   </div>
-                                  <div class="col-md-12 t-dynamic_add-">
+                                  <div class="col-md-12 t-dynamic_add">
                                     <div class="mb-3">
-                                      <label for="thresh_payer_claims-" class="form-label">No of claims per hour(number)</label>
-                                      <input type="number" min="0" class="form-control" value="" id="thresh_payer_claims-" name="thresh_payer_claims[]" />
+                                      <label for="thresh_payer_claims" class="form-label">No of claims per hour(number)</label>
+                                      <input type="number" min="0" class="form-control" value="" id="thresh_payer_claims" name="thresh_payer_claims[]" />
                                     </div>
                                   </div>
-                                  <div class="col-md-12 d-flex justify-content-center align-items-center t-dynamic_add-">
+                                  <div class="col-md-12 d-flex justify-content-center align-items-center t-dynamic_add">
                                     <div class="mb-3 pt-4">
                                       <i style="cursor: pointer" id="add-thresh_payer" class="fa fa-plus-circle fs-2"></i>
                                     </div>
                                   </div>
+                                  @foreach(json_decode(@$practice->thresh_payer) as $key => $value)
+                                  @if(empty($value->name) && empty($value->claims) && empty($value->npi))
+                                  @continue
+                                  @endif
+                                  <div class="col-md-12 t-dynamic_add-{{$key}}">
+                                    <div class="mb-3">
+                                      <label for="thresh_payer_name-{{$key}}" class="form-label">Payer Name</label>
+                                      <input type="text" class="form-control" id="thresh_payer_name-{{$key}}" name="thresh_payer_name[]" value="{{ empty(old('thresh_payer_name')) ? @$value->name : old('thresh_payer_name') }}">
+                                    </div>
+                                  </div>
+                                  <div class="col-md-12 t-dynamic_add-{{$key}}">
+                                    <div class="mb-3">
+                                      <label for="thresh_payer_claims-{{$key}}" class="form-label">No of claims per hour(number)</label>
+                                      <input type="number" min="0" class="form-control" id="thresh_payer_claims-{{$key}}" name="thresh_payer_claims[]" value="{{ empty(old('thresh_payer_claims')) ? @$value->claims : old('thresh_payer_claims') }}">
+                                    </div>
+                                  </div>
+                                  <div class="col-md-12 d-flex justify-content-center align-items-center t-dynamic_add-{{$key}}">
+                                    <div class="mb-3 pt-4">
+                                      <i style="cursor: pointer" onclick="remove_thresh_payer({{$key}})" id="add-address" class="fa fa-minus-circle fs-2"></i>
+                                    </div>
+                                  </div>
+                                  @endforeach
                                 </div>
                               </div>
                             </div>
