@@ -947,8 +947,8 @@
                               <div class="mb-3">
                                 <label for="payer_enroll_type-{{$key}}" class="form-label">Enroll Type</label>
                                 <select name="payer_enroll_type[]" onchange="change_npi()" class="form-control payer_enroll_type" id="payer_enroll_type-{{$key}}" value="{{ empty(old('payer_enroll_type')) ? @$value->enroll_type : old('payer_enroll_type') }}">
-                                  <option value="individual">Individual</option>
-                                  <option value="group">Group</option>
+                                  <option value="individual" {{ !empty(old('payer_enroll_type')) ? (old('payer_enroll_type')[$key] == 'individual' ? 'selected' : '') : (@$value->enroll_type == 'individual' ? 'selected' : '') }}>Individual</option>
+                                  <option value="group" {{ !empty(old('payer_enroll_type')) ? (old('payer_enroll_type')[$key] == 'group' ? 'selected' : '') : (@$value->enroll_type == 'group' ? 'selected' : '') }}>Group</option>
                                 </select>
                               </div>
                             </div>
@@ -956,8 +956,8 @@
                               <div class="mb-3">
                                 <label for="payer_enroll_with-{{$key}}" class="form-label">Enroll With</label>
                                 <select name="payer_enroll_with[]" class="form-control" id="payer_enroll_with-{{$key}}" value="{{ empty(old('payer_enroll_with')) ? @$value->enroll_with : old('payer_enroll_with') }}">
-                                  <option value="tax_id">Tax Id</option>
-                                  <option value="ssn">SSN</option>
+                                  <option value="tax_id" {{ !empty(old('payer_enroll_with')) ? (old('payer_enroll_with')[$key] == 'tax_id' ? 'selected' : '') : (@$value->enroll_with == 'tax_id' ? 'selected' : '') }}>Tax Id</option>
+                                  <option value="ssn" {{ !empty(old('payer_enroll_with')) ? (old('payer_enroll_with')[$key] == 'ssn' ? 'selected' : '') : (@$value->enroll_with == 'ssn' ? 'selected' : '') }}>SSN</option>
                                 </select>
                               </div>
                             </div>
@@ -1165,8 +1165,8 @@
                                   <label for="docuhub_orientation" class="form-label">DocuHub Orientation</label>
                                   <select name="docuhub_orientation" id="docuhub_orientation" class="form-control">
                                     <option value="">--Please Select--</option>
-                                    <option value="1" @if(old('docuhub_orientation')==1 || 1==@$crm->docuhub_orientation) selected @endif>Yes</option>
-                                    <option value="0" @if(old('docuhub_orientation')==0 || 0==@$crm->docuhub_orientation) selected @endif>No</option>
+                                    <option value="1" {{ !empty(old('docuhub_orientation')) ? (old('docuhub_orientation') == 1 ? 'selected' : '') : (@$crm->docuhub_orientation == 1 ? 'selected' : '') }}>Yes</option>
+                                    <option value="0" {{ !empty(old('docuhub_orientation')) ? (old('docuhub_orientation') == 0 ? 'selected' : '') : (@$crm->docuhub_orientation == 0 ? 'selected' : '') }}>No</option>
                                   </select>
                                 </div>
                               </div>
@@ -1223,8 +1223,8 @@
                                   <label for="sop_preparation" class="form-label">SOP Preparation</label>
                                   <select name="sop_preparation" id="sop_preparation" class="form-control">
                                     <option value="">--Please Select--</option>
-                                    <option value="1" @if(old('sop_preparation')==1 || 1==@$operations->sop_preparation) selected @endif>Yes</option>
-                                    <option value="0" @if(old('sop_preparation')==0 || 0==@$operations->sop_preparation) selected @endif>No</option>
+                                    <option value="1" {{ !empty(old('sop_preparation')) ? (old('sop_preparation') == 1 ? 'selected' : '') : (@$operations->sop_preparation == 1 ? 'selected' : '') }}>Yes</option>
+                                    <option value="0" {{ !empty(old('sop_preparation')) ? (old('sop_preparation') == 0 ? 'selected' : '') : (@$operations->sop_preparation == 0 ? 'selected' : '') }}>No</option>
                                   </select>
                                 </div>
                               </div>
@@ -1251,8 +1251,8 @@
                                   <label for="first_coding_service_status" class="form-label">First Coding Service Status</label>
                                   <select name="first_coding_service_status" id="first_coding_service_status" class="form-control">
                                     <option value="">--Please Select--</option>
-                                    <option value="1" @if(old('first_coding_service_status')==1 || 1==@$operations->first_coding_service_status) selected @endif>Yes</option>
-                                    <option value="0" @if(old('first_coding_service_status')==0 || 0==@$operations->first_coding_service_status) selected @endif>No</option>
+                                    <option value="1" {{ !empty(old('first_coding_service_status')) ? (old('first_coding_service_status') == 1 ? 'selected' : '') : (@$operations->first_coding_service_status == 1 ? 'selected' : '') }}>Yes</option>
+                                    <option value="0" {{ !empty(old('first_coding_service_status')) ? (old('first_coding_service_status') == 0 ? 'selected' : '') : (@$operations->first_coding_service_status == 0 ? 'selected' : '') }}>No</option>
                                   </select>
                                 </div>
                               </div>
@@ -1267,8 +1267,8 @@
                                   <label for="first_credentialing_service_status" class="form-label">First Credentialing Service Status</label>
                                   <select name="first_credentialing_service_status" id="first_credentialing_service_status" class="form-control">
                                     <option value="">--Please Select--</option>
-                                    <option value="1" @if(old('first_credentialing_service_status')==1 || 1==@$operations->first_credentialing_service_status) selected @endif>Yes</option>
-                                    <option value="0" @if(old('first_credentialing_service_status')==0 || 0==@$operations->first_credentialing_service_status) selected @endif>No</option>
+                                    <option value="1" {{ !empty(old('first_credentialing_service_status')) ? (old('first_credentialing_service_status') == 1 ? 'selected' : '') : (@$operations->first_credentialing_service_status == 1 ? 'selected' : '') }}>Yes</option>
+                                    <option value="0" {{ !empty(old('first_credentialing_service_status')) ? (old('first_credentialing_service_status') == 0 ? 'selected' : '') : (@$operations->first_credentialing_service_status == 0 ? 'selected' : '') }}>No</option>
                                   </select>
                                 </div>
                               </div>
