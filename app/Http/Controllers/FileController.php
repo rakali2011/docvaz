@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Practice;
 use App\Models\File;
-use App\Models\FilePractice;
 use App\Models\Status;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
@@ -35,16 +34,16 @@ class FileController extends Controller
         $data = array();
         $data['menu'] = "files-management";
         $data['sub_menu'] = "files";
-        $practices = Auth::user()->assinged_practices()->load("file");
-        // $files = new Collection();
-        // foreach ($practices as $key => $value) {
-        //     $pro = $value->file->all();
-        //     foreach ($pro as $key1 => $value1) {
-        //         $value1->pname = $value->name;
-        //         $files->push($value1);
-        //     }
-        // }
-        return view('files_management.files', compact('data', 'practices'));
+        $practices = Auth::user()->assinged_practices();
+        $files = new Collection();
+        foreach ($practices as $key => $value) {
+            $pro = $value->file->all();
+            foreach ($pro as $key1 => $value1) {
+                $value1->pname = $value->name;
+                $files->push($value1);
+            }
+        }
+        return view('files_management.files', compact('data', 'files'));
     }
     public function import()
     {
@@ -68,21 +67,24 @@ class FileController extends Controller
         } else {
             $practices = Auth::user()->assinged_practices();
         }
-        $status = json_decode(json_encode(Status::where('company_id', Auth::user()->company->id)->where('type', 'document')->orderBy('name', 'ASC')->pluck("name")), true);
-        return view('files_management.update', compact('data', 'practices', 'file', 'status'));
+        return view('files_management.update', compact('data', 'practices', 'file'));
     }
     public function post_file(Request $req)
     {
         $response = array();
         DB::beginTransaction();
         try {
-            $req->validate(['status' => 'required']);
+            $req->validate([
+                'status' => 'required'
+            ]);
+            $practice = $this->clean_id($req->practice);
             if ($req->hasfile('files')) {
                 $files = $req->file('files');
                 foreach ($files as $key => $value) {
                     $date = date('m-Y');
                     $file_info = $this->upload($value, 'files/' . $date);
                     $file = new File;
+                    $file->practice_id = $practice;
                     $file->user_id = Auth::user()->id;
                     $file->status = $req->status;
                     $file->name = $file_info['file_name'];
@@ -90,16 +92,7 @@ class FileController extends Controller
                     $file->path = $file_info['path'];
                     $file->ext = $file_info['ext'];
                     $file->size = $file_info['size'];
-                    $file->date = $req->date;
-                    $file->doc_type = $req->doc_type;
                     $file->save();
-                    $file_id = $file->id;
-                    foreach ($req->practice as $index => $practice_id) {
-                        $file_practice = new FilePractice;
-                        $file_practice->file_id = $file_id;
-                        $file_practice->practice_id = $this->clean_id($practice_id);
-                        $file_practice->save();
-                    }
                 }
                 DB::commit();
                 $response['success'] = 1;
@@ -138,7 +131,65 @@ class FileController extends Controller
         }
         return response()->json($response);
     }
-    public function all_files()
+    public function allFiles(Request $request)
     {
+        $columns = ['practice_id', 'name', 'status', 'doc_type', 'ext', 'date', 'created_at'];
+        $date_range = [
+            "from_date" => $request->input('from_date') != "" ? $request->input('from_date') . ' 00:00:00' : $request->input('from_date'),
+            "to_date" => $request->input('to_date') != "" ? $request->input('to_date') . ' 23:59:59' : $request->input('to_date')
+        ];
+        $filter = array(
+            "practice_id" => $request->input('practice_id'),
+            "status" => $request->input('status'),
+            "pro_speciality" => $request->input('pro_speciality'),
+            "pro_state" => $request->input('pro_state'),
+        );
+        $limit = $request->input('length');
+        $start = $request->input('start');
+        $order = !empty($request->input('order.0.column')) ? $request->input('order.0.column') : 0;
+        $order = $columns[$order];
+        $dir = !empty($request->input('order.0.dir')) ? strtoupper($request->input('order.0.dir')) : "DESC";
+        $search = $request->input('search.value');
+        $ticket = new File();
+        $totalData = $ticket->countTotalTickets();
+        $totalFiltered = $ticket->countFilteredTickets($date_range, $filter, $search, $start, $limit, $order, $dir);
+        $tickets = $ticket->allTickets($date_range, $filter, $search, $start, $limit, $order, $dir);
+        $data = array();
+        if (!empty($tickets)) {
+            foreach ($tickets as $ticket) {
+                $ticket = $ticket->load("replies");
+                $to_time = strtotime(date("Y-m-d H:is"));
+                $from_time = strtotime($ticket->created_at);
+                $difference = round(abs($to_time - $from_time) / 60, 2);
+                $edit = '';
+                $delete = '';
+                if (auth()->user()->can('update ticket') && count($ticket->replies) == 0)
+                    $edit = '<a class="dropdown-item" href="' . route('tickets.edit', $ticket->id) . '">Edit</a>';
+                if (auth()->user()->can('delete ticket')) {
+                    $delete = '<form method="POST" action="' . route('tickets.destroy', $ticket->id) . '" accept-charset="UTF-8" style="display:inline"><input name="_method" type="hidden" value="DELETE"><input name="_token" type="hidden" value="' . csrf_token() . '"><input class="dropdown-item" type="submit" value="Delete"></form>';
+                }
+                $nestedData['id'] = '<a class="ticket-replies" ref="' . $ticket->id . '" href="javascript:void(0)">' . $ticket->id . '</a>';
+                $nestedData['response_at'] = !empty($ticket->response_at) ? date("M j, y, h:i A", strtotime($ticket->response_at)) : "";
+                $nestedData['created_at'] = $ticket->created_at;
+                $nestedData['creator'] = $ticket->creator;
+                $nestedData['creator_name'] = $ticket->creator_name;
+                $nestedData['practice_name'] = $ticket->practice_name;
+                $nestedData['department_name'] = $ticket->department_name;
+                $nestedData['team_name'] = $ticket->team_name;
+                $nestedData['subject'] = $ticket->subject;
+                $nestedData['priority'] = '<span class="' . strtolower($ticket->priority) . '">' . $ticket->priority . '</span>';
+                $nestedData['status'] = $ticket->status;
+                $nestedData['remarks'] = $ticket->remarks;
+                $nestedData['action'] = '<button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="text-muted sr-only">Action</span></button><div class="dropdown-menu dropdown-menu-right">' . $edit . $delete . '</div>';
+                $data[] = $nestedData;
+            }
+        }
+        $json_data = array(
+            "draw" => intval($request->input('draw')),
+            "recordsTotal" => intval($totalData),
+            "recordsFiltered" => intval($totalFiltered),
+            "data" => $data
+        );
+        echo json_encode($json_data);
     }
 }

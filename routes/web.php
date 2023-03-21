@@ -64,7 +64,7 @@ Route::get('/file/{id}', [FileController::class, 'show'])->middleware('permissio
 Route::post('/post-file', [FileController::class, 'post_file'])->middleware('permission:import file')->name('post_file');
 Route::get('/edit-file/{id}', [FileController::class, 'edit_file'])->middleware('permission:update file')->name('edit_file');
 Route::post('/update-file/{id}', [FileController::class, 'update_file'])->middleware('permission:update file')->name('update_file');
-Route::post('/all-files', [FileController::class, 'all_files'])->middleware('permission:view file')->name('all_files');
+Route::post('/all-files', [FileController::class, 'allFiles'])->middleware('permission:view file')->name('all_files');
 // Practice
 Route::get('/practices', [PracticeController::class, 'practices'])->middleware('permission:view practice')->name('practices');
 Route::get('/add-practice', [PracticeController::class, 'add_practice'])->middleware('permission:add practice')->name('add_practice');

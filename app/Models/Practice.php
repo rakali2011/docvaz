@@ -15,8 +15,7 @@ class Practice extends Model
     }
     public function file()
     {
-        // return $this->hasMany(FilePractice::class);
-        return $this->belongsToMany(File::class, 'file_practices', 'practice_id', 'file_id');
+        return $this->hasMany(File::class);
     }
     public function users()
     {

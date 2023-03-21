@@ -26,11 +26,10 @@
                   </tr>
                 </thead>
                 <tbody>
-                  @foreach ($practices as $key=> $practice)
-                  @foreach($practice->file as $index=>$file)
+                  @foreach ($files as $key=> $file)
                   <tr>
                     <td><a href="{{ route('file', ['id' => Crypt::encrypt($file->id)]) }}" target="_blank" rel="noopener noreferrer">{{ $file->org_name }}</a></td>
-                    <td>{{ $practice->name }}</td>
+                    <td>{{ $file->pname }}</td>
                     @role('dev')
                     <td>{{ @$item->company->name }}</td>
                     @endrole
@@ -45,7 +44,6 @@
                       </div>
                     </td>
                   </tr>
-                  @endforeach
                   @endforeach
                 </tbody>
               </table>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Mar 21, 2023 at 07:25 PM
+-- Generation Time: Mar 21, 2023 at 09:59 PM
 -- Server version: 5.7.36
 -- PHP Version: 7.4.26
 
@@ -225,6 +225,7 @@ CREATE TABLE IF NOT EXISTS `failed_jobs` (
 DROP TABLE IF EXISTS `files`;
 CREATE TABLE IF NOT EXISTS `files` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `practice_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `status` int(11) NOT NULL,
   `name` mediumtext NOT NULL,
@@ -243,48 +244,21 @@ CREATE TABLE IF NOT EXISTS `files` (
 -- Dumping data for table `files`
 --
 
-INSERT INTO `files` (`id`, `user_id`, `status`, `name`, `org_name`, `path`, `ext`, `size`, `date`, `doc_type`, `created_at`, `updated_at`) VALUES
-(1, 10, 0, 'qjbT8BZTaBs80aDtRk1FLxHKXOGmdXnQKVA6R2gD.png', 'secretm.me-verticle-share.png', 'uploads/files/02-2023/qjbT8BZTaBs80aDtRk1FLxHKXOGmdXnQKVA6R2gD.png', 'png', '385.82 KB', NULL, 0, '2023-02-06 20:16:08', '2023-02-06 20:16:08'),
-(2, 10, 0, 'McPTd5iZYNSVvNXHxXoiMS1H0gPrugq2lfXz1qQK.png', 'screencapture-secretm-me-inbox-php-2022-09-08-21_15_52.png', 'uploads/files/02-2023/McPTd5iZYNSVvNXHxXoiMS1H0gPrugq2lfXz1qQK.png', 'png', '2.56 MB', NULL, 0, '2023-02-06 20:16:08', '2023-02-06 20:16:08'),
-(3, 10, 0, 'K2S7gNAjlvGAWZhqFq2brsnY2hZ90hd0CoM884Oh.png', 'screencapture-publishers-adsterra-stats-2022-10-06-12_35_35.png', 'uploads/files/02-2023/K2S7gNAjlvGAWZhqFq2brsnY2hZ90hd0CoM884Oh.png', 'png', '191.23 KB', NULL, 0, '2023-02-06 20:16:08', '2023-02-06 20:16:08'),
-(4, 10, 0, 'UmPHvRQg1nFiSUy8QSQIKaPZ5qGyBLwvyBUVr3De.png', 'secretm.me-verticle-share.png', 'uploads/files/02-2023/UmPHvRQg1nFiSUy8QSQIKaPZ5qGyBLwvyBUVr3De.png', 'png', '385.82 KB', NULL, 0, '2023-02-06 20:16:18', '2023-02-06 20:16:18'),
-(5, 10, 0, '8DiR6bU392EtXfnlR2iuxS5ZRw7wOSTNK0P0zZsM.png', 'screencapture-secretm-me-inbox-php-2022-09-08-21_15_52.png', 'uploads/files/02-2023/8DiR6bU392EtXfnlR2iuxS5ZRw7wOSTNK0P0zZsM.png', 'png', '2.56 MB', NULL, 0, '2023-02-06 20:16:18', '2023-02-06 20:16:18'),
-(6, 10, 0, 'VSfKIATTISBcvvDvY326lC1PIf9oVKqt0upd9MYi.png', 'screencapture-publishers-adsterra-stats-2022-10-06-12_35_35.png', 'uploads/files/02-2023/VSfKIATTISBcvvDvY326lC1PIf9oVKqt0upd9MYi.png', 'png', '191.23 KB', NULL, 0, '2023-02-06 20:16:18', '2023-02-06 20:16:18'),
-(7, 10, 0, '7iO2YMMujOSB7GwIsBOCgruGBs0TVzF309q24SGu.png', 'Web Developer Php Laravel.png', 'uploads/files/02-2023/7iO2YMMujOSB7GwIsBOCgruGBs0TVzF309q24SGu.png', 'png', '52.81 KB', NULL, 0, '2023-02-06 20:17:47', '2023-02-06 20:17:47'),
-(8, 15, 0, 'cqDk3feTSHL8ARw3xVExMCZMNVOFYHR0jZyaUAMk.jpg', 'image004.jpg', 'uploads/files/02-2023/cqDk3feTSHL8ARw3xVExMCZMNVOFYHR0jZyaUAMk.jpg', 'jpg', '97.22 KB', NULL, 0, '2023-02-16 21:13:24', '2023-02-23 16:51:02'),
-(9, 15, 0, 'e892BTm1RqGla3X7RsDNoajOAi9G6za5WteoYtT8.jpg', '1933136_188282907860672_4388842_o.jpg', 'uploads/files/02-2023/e892BTm1RqGla3X7RsDNoajOAi9G6za5WteoYtT8.jpg', 'jpg', '408.74 KB', NULL, 0, '2023-02-16 22:41:32', '2023-02-16 22:41:32'),
-(10, 15, 0, 'SbQPg6d3akY0Kv0bprp2H3rmMQXcnlu5nlYb6xwy.jpg', 'image004.jpg', 'uploads/files/02-2023/SbQPg6d3akY0Kv0bprp2H3rmMQXcnlu5nlYb6xwy.jpg', 'jpg', '97.22 KB', NULL, 0, '2023-02-21 22:32:24', '2023-02-21 22:32:24'),
-(11, 15, 0, 'WPBx6rp0eCQCltRmF5kAAhOFIwNZ1Dw91ncjbz61.pdf', 'Document.pdf', 'uploads/files/02-2023/WPBx6rp0eCQCltRmF5kAAhOFIwNZ1Dw91ncjbz61.pdf', 'pdf', '13.62 KB', NULL, 0, '2023-02-22 17:10:45', '2023-02-22 20:00:45'),
-(12, 15, 0, 'GDVa4jNRLK581Sr5yXfeeMqI32ltZ1MlcM50UGdA.xlsx', 'AttendanceList123.xlsx', 'uploads/files/02-2023/GDVa4jNRLK581Sr5yXfeeMqI32ltZ1MlcM50UGdA.xlsx', 'xlsx', '22.46 KB', NULL, 0, '2023-02-22 17:53:13', '2023-03-21 19:33:16'),
-(13, 15, 14, '5f5TDxQLrmDtjt1CUToQYDPerLUMakXWku3HTFbp.xlsx', 'AttendanceList (1).xlsx', 'uploads/files/03-2023/5f5TDxQLrmDtjt1CUToQYDPerLUMakXWku3HTFbp.xlsx', 'xlsx', '22.49 KB', '2023-03-09', 6, '2023-03-21 14:24:07', '2023-03-21 17:10:15'),
-(14, 15, 14, '2RiQeo0dhS2M9d45LxRbNsA1bIYRg89L8gAx8ZcH.xlsx', 'AttendanceList.xlsx', 'uploads/files/03-2023/2RiQeo0dhS2M9d45LxRbNsA1bIYRg89L8gAx8ZcH.xlsx', 'xlsx', '22.46 KB', '2023-03-09', 4, '2023-03-21 14:24:07', '2023-03-21 14:24:07');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `file_practices`
---
-
-DROP TABLE IF EXISTS `file_practices`;
-CREATE TABLE IF NOT EXISTS `file_practices` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `file_id` int(11) NOT NULL,
-  `practice_id` int(11) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `deleted_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NOT NULL ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `file_practices`
---
-
-INSERT INTO `file_practices` (`id`, `file_id`, `practice_id`, `created_at`, `deleted_at`, `updated_at`) VALUES
-(1, 13, 4, '2023-03-21 09:24:07', NULL, '2023-03-21 09:24:07'),
-(2, 13, 5, '2023-03-21 09:24:07', NULL, '2023-03-21 09:24:07'),
-(3, 14, 4, '2023-03-21 09:24:07', NULL, '2023-03-21 09:24:07'),
-(4, 14, 5, '2023-03-21 09:24:07', NULL, '2023-03-21 09:24:07');
+INSERT INTO `files` (`id`, `practice_id`, `user_id`, `status`, `name`, `org_name`, `path`, `ext`, `size`, `date`, `doc_type`, `created_at`, `updated_at`) VALUES
+(1, 4, 10, 14, 'qjbT8BZTaBs80aDtRk1FLxHKXOGmdXnQKVA6R2gD.png', 'secretm.me-verticle-share.png', 'uploads/files/02-2023/qjbT8BZTaBs80aDtRk1FLxHKXOGmdXnQKVA6R2gD.png', 'png', '385.82 KB', NULL, 4, '2023-02-06 20:16:08', '2023-03-21 20:55:29'),
+(2, 4, 10, 14, 'McPTd5iZYNSVvNXHxXoiMS1H0gPrugq2lfXz1qQK.png', 'screencapture-secretm-me-inbox-php-2022-09-08-21_15_52.png', 'uploads/files/02-2023/McPTd5iZYNSVvNXHxXoiMS1H0gPrugq2lfXz1qQK.png', 'png', '2.56 MB', NULL, 4, '2023-02-06 20:16:08', '2023-03-22 01:55:55'),
+(3, 4, 10, 14, 'K2S7gNAjlvGAWZhqFq2brsnY2hZ90hd0CoM884Oh.png', 'screencapture-publishers-adsterra-stats-2022-10-06-12_35_35.png', 'uploads/files/02-2023/K2S7gNAjlvGAWZhqFq2brsnY2hZ90hd0CoM884Oh.png', 'png', '191.23 KB', NULL, 4, '2023-02-06 20:16:08', '2023-03-22 01:55:55'),
+(4, 4, 10, 14, 'UmPHvRQg1nFiSUy8QSQIKaPZ5qGyBLwvyBUVr3De.png', 'secretm.me-verticle-share.png', 'uploads/files/02-2023/UmPHvRQg1nFiSUy8QSQIKaPZ5qGyBLwvyBUVr3De.png', 'png', '385.82 KB', NULL, 4, '2023-02-06 20:16:18', '2023-03-22 01:55:55'),
+(5, 4, 10, 14, '8DiR6bU392EtXfnlR2iuxS5ZRw7wOSTNK0P0zZsM.png', 'screencapture-secretm-me-inbox-php-2022-09-08-21_15_52.png', 'uploads/files/02-2023/8DiR6bU392EtXfnlR2iuxS5ZRw7wOSTNK0P0zZsM.png', 'png', '2.56 MB', NULL, 4, '2023-02-06 20:16:18', '2023-03-22 01:55:55'),
+(6, 4, 10, 14, 'VSfKIATTISBcvvDvY326lC1PIf9oVKqt0upd9MYi.png', 'screencapture-publishers-adsterra-stats-2022-10-06-12_35_35.png', 'uploads/files/02-2023/VSfKIATTISBcvvDvY326lC1PIf9oVKqt0upd9MYi.png', 'png', '191.23 KB', NULL, 4, '2023-02-06 20:16:18', '2023-03-22 01:55:55'),
+(7, 4, 10, 14, '7iO2YMMujOSB7GwIsBOCgruGBs0TVzF309q24SGu.png', 'Web Developer Php Laravel.png', 'uploads/files/02-2023/7iO2YMMujOSB7GwIsBOCgruGBs0TVzF309q24SGu.png', 'png', '52.81 KB', NULL, 4, '2023-02-06 20:17:47', '2023-03-22 01:55:55'),
+(8, 4, 15, 14, 'cqDk3feTSHL8ARw3xVExMCZMNVOFYHR0jZyaUAMk.jpg', 'image004.jpg', 'uploads/files/02-2023/cqDk3feTSHL8ARw3xVExMCZMNVOFYHR0jZyaUAMk.jpg', 'jpg', '97.22 KB', NULL, 4, '2023-02-16 21:13:24', '2023-03-22 01:55:55'),
+(9, 4, 15, 14, 'e892BTm1RqGla3X7RsDNoajOAi9G6za5WteoYtT8.jpg', '1933136_188282907860672_4388842_o.jpg', 'uploads/files/02-2023/e892BTm1RqGla3X7RsDNoajOAi9G6za5WteoYtT8.jpg', 'jpg', '408.74 KB', NULL, 4, '2023-02-16 22:41:32', '2023-03-22 01:55:55'),
+(10, 4, 15, 14, 'SbQPg6d3akY0Kv0bprp2H3rmMQXcnlu5nlYb6xwy.jpg', 'image004.jpg', 'uploads/files/02-2023/SbQPg6d3akY0Kv0bprp2H3rmMQXcnlu5nlYb6xwy.jpg', 'jpg', '97.22 KB', NULL, 4, '2023-02-21 22:32:24', '2023-03-22 01:55:55'),
+(11, 4, 15, 14, 'WPBx6rp0eCQCltRmF5kAAhOFIwNZ1Dw91ncjbz61.pdf', 'Document.pdf', 'uploads/files/02-2023/WPBx6rp0eCQCltRmF5kAAhOFIwNZ1Dw91ncjbz61.pdf', 'pdf', '13.62 KB', NULL, 4, '2023-02-22 17:10:45', '2023-03-22 01:55:55'),
+(12, 4, 15, 14, 'GDVa4jNRLK581Sr5yXfeeMqI32ltZ1MlcM50UGdA.xlsx', 'AttendanceList123.xlsx', 'uploads/files/02-2023/GDVa4jNRLK581Sr5yXfeeMqI32ltZ1MlcM50UGdA.xlsx', 'xlsx', '22.46 KB', NULL, 4, '2023-02-22 17:53:13', '2023-03-22 01:55:55'),
+(13, 4, 15, 14, '5f5TDxQLrmDtjt1CUToQYDPerLUMakXWku3HTFbp.xlsx', 'AttendanceList (1).xlsx', 'uploads/files/03-2023/5f5TDxQLrmDtjt1CUToQYDPerLUMakXWku3HTFbp.xlsx', 'xlsx', '22.49 KB', '2023-03-09', 4, '2023-03-21 14:24:07', '2023-03-22 01:54:45'),
+(14, 4, 15, 14, '2RiQeo0dhS2M9d45LxRbNsA1bIYRg89L8gAx8ZcH.xlsx', 'AttendanceList.xlsx', 'uploads/files/03-2023/2RiQeo0dhS2M9d45LxRbNsA1bIYRg89L8gAx8ZcH.xlsx', 'xlsx', '22.46 KB', '2023-03-09', 4, '2023-03-21 14:24:07', '2023-03-22 01:44:28');
 
 -- --------------------------------------------------------
 
@@ -1152,7 +1126,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 
 INSERT INTO `users` (`id`, `company_id`, `employee_id`, `designation_id`, `type`, `status`, `firstname`, `lastname`, `psudo_name`, `email`, `username`, `email_verified_at`, `password`, `remember_token`, `last_activity`, `timezone`, `created_at`, `updated_at`) VALUES
-(10, 0, 0, 2, 0, 1, 'Junaid', 'Khan', NULL, 'junaid@mail.com', '', NULL, '$2a$12$TWJEfJ3kvFfnS49Yn5lvMe4qqxJUy/Oy1Gy5fvHgkzpshsC3WlApi', 'Yu3nC3wtLAcvmGeLzckQYwpRm98x5Y2dXablIKTaDDrZ5cXg5vjG6InCRTUZ', NULL, 0, '2023-01-04 04:24:33', '2023-02-24 09:42:42'),
+(10, 0, 0, 2, 0, 1, 'Junaid', 'Khan', NULL, 'junaid@mail.com', '', NULL, '$2a$12$TWJEfJ3kvFfnS49Yn5lvMe4qqxJUy/Oy1Gy5fvHgkzpshsC3WlApi', 'KtWFy3D6RihiQYwg2xlCZ0NtoNlDrsDkfJsuOaNF4jC2Ckq7hUQmaemU8nbh', NULL, 0, '2023-01-04 04:24:33', '2023-02-24 09:42:42'),
 (11, 4, 0, 2, 2, 1, 'Super', 'Admin', NULL, 'superadmin4@bmb.com', '', NULL, '$2a$12$DAeA/CC/k2xUF8g1hN6toeW6cnwZFtWKDaBcEEW5Y4Fptw1OaVWAC', NULL, NULL, 0, '2023-01-19 13:39:09', '2023-01-19 13:39:09'),
 (12, 5, 0, 2, 2, 1, 'Super', 'Admin', NULL, 'superadmin5@test.com', '', NULL, '$2a$12$DAeA/CC/k2xUF8g1hN6toeW6cnwZFtWKDaBcEEW5Y4Fptw1OaVWAC', NULL, NULL, 0, '2023-01-22 12:33:56', '2023-01-22 12:33:56'),
 (13, 1, 0, 2, 2, 1, 'John D.', 'John D.', NULL, 'JohnDMurray@teleworm.us', '', NULL, '$2a$12$DAeA/CC/k2xUF8g1hN6toeW6cnwZFtWKDaBcEEW5Y4Fptw1OaVWAC', NULL, NULL, 0, '2023-01-25 10:36:08', '2023-01-25 10:36:08'),

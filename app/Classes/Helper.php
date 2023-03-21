@@ -18,7 +18,7 @@ if (!function_exists('companies')) {
 if (!function_exists('designations')) {
     function designations()
     {
-        return Designation::where('company_id', Auth::user()->company->id)->orderBy('name', 'ASC')->get();
+        return Designation::where('company_id', Auth::user()->company_id)->orderBy('name', 'ASC')->get();
     }
 }
 if (!function_exists('get_designation')) {
@@ -31,7 +31,7 @@ if (!function_exists('get_designation')) {
 if (!function_exists('document_types')) {
     function document_types()
     {
-        return DocumentType::where('company_id', Auth::user()->company->id)->orderBy('name', 'ASC')->get();
+        return DocumentType::where('company_id', Auth::user()->company_id)->orderBy('name', 'ASC')->get();
     }
 }
 if (!function_exists('get_document_type')) {
@@ -44,13 +44,14 @@ if (!function_exists('get_document_type')) {
 if (!function_exists('statuses')) {
     function statuses($type)
     {
-        return Status::where('company_id', Auth::user()->company->id)->where('type', $type)->orderBy('name', 'ASC')->get();
+
+        return Status::where('company_id', Auth::user()->company_id)->where('type', $type)->orderBy('name', 'ASC')->get();
     }
 }
 if (!function_exists('get_status')) {
     function get_status($type, $status_id)
     {
-        $statuses = Status::where('company_id', Auth::user()->company->id)->where('type', $type)->orderBy('name', 'ASC')->get();
+        $statuses = Status::where('company_id', Auth::user()->company_id)->where('type', $type)->orderBy('name', 'ASC')->get();
         foreach ($statuses as $key => $status) {
             if ($status->id == $status_id)
                 return $status->name;

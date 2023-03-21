@@ -200,10 +200,10 @@ class TicketController extends Controller
     public function allTickets(Request $request)
     {
         $columns = ['id', 'response_at', 'created_at', 'creator', 'creator_name', 'practice_name', 'department_name', 'team_name', 'subject', 'priority', 'status', 'remarks'];
-        $date_range = array(
+        $date_range = [
             "from_date" => $request->input('from_date') != "" ? $request->input('from_date') . ' 00:00:00' : $request->input('from_date'),
             "to_date" => $request->input('to_date') != "" ? $request->input('to_date') . ' 23:59:59' : $request->input('to_date')
-        );
+        ];
         $filter = array(
             "practice_id" => $request->input('practice_id'),
             "status" => $request->input('status'),
