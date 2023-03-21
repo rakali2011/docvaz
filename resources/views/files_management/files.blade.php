@@ -26,10 +26,11 @@
                   </tr>
                 </thead>
                 <tbody>
-                  @foreach ($files as $item)
+                  @foreach ($practices as $key=> $practice)
+                  @foreach($practice->file as $index=>$file)
                   <tr>
-                    <td><a href="{{ route('file', ['id' => Crypt::encrypt($item->id)]) }}" target="_blank" rel="noopener noreferrer">{{ $item->org_name }}</a></td>
-                    <td>{{ $item->pname }}</td>
+                    <td><a href="{{ route('file', ['id' => Crypt::encrypt($file->id)]) }}" target="_blank" rel="noopener noreferrer">{{ $file->org_name }}</a></td>
+                    <td>{{ $practice->name }}</td>
                     @role('dev')
                     <td>{{ @$item->company->name }}</td>
                     @endrole
@@ -39,20 +40,116 @@
                       </button>
                       <div class="dropdown-menu dropdown-menu-right">
                         @can('update file')
-                        <a class="dropdown-item" href="{{ route('edit_file', ['id' => Crypt::encrypt($item->id)]) }}">Edit</a>
+                        <a class="dropdown-item" href="{{ route('edit_file', ['id' => Crypt::encrypt($file->id)]) }}">Edit</a>
                         @endcan
                       </div>
                     </td>
                   </tr>
                   @endforeach
+                  @endforeach
                 </tbody>
+              </table>
+              <table id="files-table" class="display" style="width:100%">
+                <thead>
+                  <tr>
+                    <th>Practice</th>
+                    <th>File Name</th>
+                    <th>Status</th>
+                    <th>Doc Type</th>
+                    <th>Type</th>
+                    <th>Date</th>
+                    <th>Upload Date</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tfoot>
+                  <tr>
+                    <th>Practice</th>
+                    <th>File Name</th>
+                    <th>Status</th>
+                    <th>Doc Type</th>
+                    <th>Type</th>
+                    <th>Date</th>
+                    <th>Upload Date</th>
+                    <th>Action</th>
+                  </tr>
+                </tfoot>
               </table>
             </div>
           </div>
-        </div> <!-- simple table -->
-      </div> <!-- end section -->
-    </div> <!-- .col-12 -->
-  </div> <!-- .row -->
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
-
+@push('scripts')
+<script>
+  $(document).ready(function() {
+    $('#files-table').DataTable({
+      "processing": true,
+      "serverSide": true,
+      "ajax": {
+        "url": "{{ route('all_files') }}",
+        "dataType": "json",
+        "type": "POST",
+        "data": {
+          _token: "{{csrf_token()}}"
+        }
+      },
+      "columns": [{
+          "data": "id",
+          "orderable": true
+        },
+        {
+          "data": "response_at",
+          "orderable": true
+        },
+        {
+          "data": "created_at",
+          "orderable": true
+        },
+        {
+          "data": "creator",
+          "orderable": true
+        },
+        {
+          "data": "creator_name",
+          "orderable": true
+        },
+        {
+          "data": "practice_name",
+          "orderable": true
+        },
+        {
+          "data": "department_name",
+          "orderable": true
+        },
+        {
+          "data": "action",
+          "orderable": false
+        }
+      ],
+      dom: 'Bfrtip',
+      lengthMenu: [
+        [10, 50, 500, 1000],
+        ['10 Rows', '50 Rows', '500 Rows', '1000 Rows']
+      ],
+      buttons: [
+        //{ extend: 'pdf', text: '<i class="fas fa-file-pdf fa-1x" aria-hidden="true"> Export in PDF</i>' },
+        //{ extend: 'csv', text: '<i class="fas fa-file-csv fa-1x"> Export in CSV</i>'},
+        {
+          extend: 'excel',
+          text: '<i class="fas fa-file-excel" aria-hidden="true"> Export in EXCEL</i>'
+        },
+        'pageLength'
+      ],
+      // "drawCallback": function(settings) {
+      //   provider_detail_event();
+      //   provider_history_event();
+      //   provider_activate_event();
+      // }
+    });
+  });
+</script>
+@endpush
 @endsection

@@ -18,7 +18,7 @@
               <div class="col-md-6">
                 <div class="form-group mb-3">
                   <label for="practice">Practice</label>
-                  <select class="form-control @error('practice') is-invalid @enderror" name="practice" id="practice">
+                  <select class="form-control select2-multi @error('practice') is-invalid @enderror" name="practice[]" multiple="practice" id="practice">
                     @foreach ($practices as $item)
                     <option value="{{ Crypt::encrypt($item->id) }}" {{(@@$file) ? (@@$file->practice_id==$item->id ? 'selected' : '') : '' }}>{{ $item->name }}</option>
                     @endforeach
@@ -31,7 +31,18 @@
                 </div>
               </div>
               @endif
-              <div class="col-md-6">
+              <div class="col-md-3">
+                <div class="form-group mb-3">
+                  <label for="date">Date</label>
+                  <input name="date" type="date" id="date" class="form-control @error('date') is-invalid @enderror" value="{{ (@$file)?@$file->date:old('date') }}">
+                  @error('date')
+                  <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                  </span>
+                  @enderror
+                </div>
+              </div>
+              <div class="col-md-3">
                 <div class="form-group mb-3">
                   <label for="status">Status</label>
                   <select class="form-control @error('practice') is-invalid @enderror" name="status" id="status">
@@ -41,6 +52,22 @@
                     @endforeach
                   </select>
                   @error('status')
+                  <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                  </span>
+                  @enderror
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group mb-3">
+                  <label for="doc_type">Doc Type</label>
+                  <select class="form-control @error('practice') is-invalid @enderror" name="doc_type" id="doc_type">
+                    <option value="">--Please Select--</option>
+                    @foreach (document_types() as $document_type)
+                    <option value="{{ $document_type->id }}" {{(@$file) ? (@$file->document_type==$document_type->id ? 'selected' : '') : '' }}>{{ $document_type->name }}</option>
+                    @endforeach
+                  </select>
+                  @error('doc_type')
                   <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
                   </span>

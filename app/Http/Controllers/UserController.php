@@ -78,18 +78,24 @@ class UserController extends Controller
                 $company_id = Auth::user()->company->id;
             }
             $this->validate($req, [
+                'employee_id' => ['required', 'unique:users'],
                 'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+                'username' => ['required', 'string', 'email', 'max:128', 'unique:users'],
                 'password' => ['required', 'string', 'min:8', 'confirmed'],
             ]);
             $user = new User;
+            $user->company_id = $company_id;
             $user->firstname = $req->firstname;
             $user->lastname = $req->lastname;
+            $user->psudo_name = $req->psudo_name;
+            $user->employee_id = $req->employee_id;
             $user->email = $req->email;
-            $user->company_id = $company_id;
+            $user->username = $req->username;
             $user->password = Hash::make($req->password);
             $user->type = 2;
             $user->timezone = $req->timezone;
             $user->status = $req->status;
+            $user->designation_id = $req->designation;
             $user->save();
             $user->assignRole($req->input('roles'));
             $user->teams()->sync($req->teams, TRUE);
@@ -113,15 +119,21 @@ class UserController extends Controller
                 $company_id = Auth::user()->company->id;
             }
             $this->validate($req, [
+                'employee_id' => 'required|unique:users,employee_id,' . $id,
                 'email' => 'required|email|unique:users,email,' . $id,
+                'username' => 'required|unique:users,username,' . $id,
             ]);
             $user = User::findorfail($id);
+            $user->company_id = $company_id;
             $user->firstname = $req->firstname;
             $user->lastname = $req->lastname;
+            $user->psudo_name = $req->psudo_name;
+            $user->employee_id = $req->employee_id;
             $user->email = $req->email;
-            $user->company_id = $company_id;
+            $user->username = $req->username;
             $user->timezone = $req->timezone;
             $user->status = $req->status;
+            $user->designation_id = $req->designation;
             $user->save();
             DB::table('model_has_roles')->where('model_id', $id)->delete();
             $user->assignRole($req->input('roles'));

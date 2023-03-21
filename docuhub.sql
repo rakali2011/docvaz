@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Mar 08, 2023 at 05:07 PM
+-- Generation Time: Mar 21, 2023 at 07:25 PM
 -- Server version: 5.7.36
 -- PHP Version: 7.4.26
 
@@ -141,6 +141,35 @@ INSERT INTO `department_user` (`id`, `user_id`, `department_id`, `created_at`, `
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `designations`
+--
+
+DROP TABLE IF EXISTS `designations`;
+CREATE TABLE IF NOT EXISTS `designations` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `company_id` int(11) NOT NULL,
+  `name` varchar(128) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NOT NULL ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `designations`
+--
+
+INSERT INTO `designations` (`id`, `company_id`, `name`, `created_at`, `deleted_at`, `updated_at`) VALUES
+(1, 6, 'General Manager (GM)', '2023-03-20 13:07:51', NULL, '2023-03-20 18:18:01'),
+(2, 6, 'Director', '2023-03-20 13:15:33', NULL, '2023-03-20 13:15:33'),
+(3, 6, 'Vice President', '2023-03-20 13:15:51', NULL, '2023-03-20 13:15:51'),
+(4, 6, 'Manager Operations', '2023-03-20 13:16:37', NULL, '2023-03-20 13:16:37'),
+(5, 6, 'Assistant Manager Operations', '2023-03-20 13:16:46', NULL, '2023-03-20 13:16:46'),
+(6, 6, 'Senior Manager Operations', '2023-03-20 13:16:55', NULL, '2023-03-20 13:16:55');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `document_types`
 --
 
@@ -152,7 +181,21 @@ CREATE TABLE IF NOT EXISTS `document_types` (
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `document_types`
+--
+
+INSERT INTO `document_types` (`id`, `company_id`, `name`, `created_at`, `updated_at`) VALUES
+(2, 6, 'Registration Form', '2023-03-20 13:08:51', '2023-03-20 16:38:45'),
+(3, 6, 'Day Sheet', '2023-03-20 16:38:55', '2023-03-20 16:38:55'),
+(4, 6, 'EOBs', '2023-03-20 16:39:05', '2023-03-20 16:39:05'),
+(5, 6, 'Super Bill', '2023-03-20 16:39:17', '2023-03-20 16:39:17'),
+(6, 6, 'Insurance letters', '2023-03-20 16:39:30', '2023-03-20 16:39:30'),
+(7, 6, 'Medical Notes', '2023-03-20 16:39:49', '2023-03-20 16:39:49'),
+(8, 6, 'Call Charges', '2023-03-20 16:42:25', '2023-03-20 16:42:25'),
+(9, 6, 'Others', '2023-03-20 16:44:14', '2023-03-20 16:44:14');
 
 -- --------------------------------------------------------
 
@@ -182,7 +225,6 @@ CREATE TABLE IF NOT EXISTS `failed_jobs` (
 DROP TABLE IF EXISTS `files`;
 CREATE TABLE IF NOT EXISTS `files` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `practice_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `status` int(11) NOT NULL,
   `name` mediumtext NOT NULL,
@@ -190,28 +232,59 @@ CREATE TABLE IF NOT EXISTS `files` (
   `path` mediumtext NOT NULL,
   `ext` varchar(50) NOT NULL,
   `size` varchar(100) NOT NULL,
+  `date` date DEFAULT NULL,
+  `doc_type` int(11) NOT NULL,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `files`
 --
 
-INSERT INTO `files` (`id`, `practice_id`, `user_id`, `status`, `name`, `org_name`, `path`, `ext`, `size`, `created_at`, `updated_at`) VALUES
-(1, 3, 10, 0, 'qjbT8BZTaBs80aDtRk1FLxHKXOGmdXnQKVA6R2gD.png', 'secretm.me-verticle-share.png', 'uploads/files/02-2023/qjbT8BZTaBs80aDtRk1FLxHKXOGmdXnQKVA6R2gD.png', 'png', '385.82 KB', '2023-02-06 20:16:08', '2023-02-06 20:16:08'),
-(2, 3, 10, 0, 'McPTd5iZYNSVvNXHxXoiMS1H0gPrugq2lfXz1qQK.png', 'screencapture-secretm-me-inbox-php-2022-09-08-21_15_52.png', 'uploads/files/02-2023/McPTd5iZYNSVvNXHxXoiMS1H0gPrugq2lfXz1qQK.png', 'png', '2.56 MB', '2023-02-06 20:16:08', '2023-02-06 20:16:08'),
-(3, 3, 10, 0, 'K2S7gNAjlvGAWZhqFq2brsnY2hZ90hd0CoM884Oh.png', 'screencapture-publishers-adsterra-stats-2022-10-06-12_35_35.png', 'uploads/files/02-2023/K2S7gNAjlvGAWZhqFq2brsnY2hZ90hd0CoM884Oh.png', 'png', '191.23 KB', '2023-02-06 20:16:08', '2023-02-06 20:16:08'),
-(4, 3, 10, 0, 'UmPHvRQg1nFiSUy8QSQIKaPZ5qGyBLwvyBUVr3De.png', 'secretm.me-verticle-share.png', 'uploads/files/02-2023/UmPHvRQg1nFiSUy8QSQIKaPZ5qGyBLwvyBUVr3De.png', 'png', '385.82 KB', '2023-02-06 20:16:18', '2023-02-06 20:16:18'),
-(5, 3, 10, 0, '8DiR6bU392EtXfnlR2iuxS5ZRw7wOSTNK0P0zZsM.png', 'screencapture-secretm-me-inbox-php-2022-09-08-21_15_52.png', 'uploads/files/02-2023/8DiR6bU392EtXfnlR2iuxS5ZRw7wOSTNK0P0zZsM.png', 'png', '2.56 MB', '2023-02-06 20:16:18', '2023-02-06 20:16:18'),
-(6, 3, 10, 0, 'VSfKIATTISBcvvDvY326lC1PIf9oVKqt0upd9MYi.png', 'screencapture-publishers-adsterra-stats-2022-10-06-12_35_35.png', 'uploads/files/02-2023/VSfKIATTISBcvvDvY326lC1PIf9oVKqt0upd9MYi.png', 'png', '191.23 KB', '2023-02-06 20:16:18', '2023-02-06 20:16:18'),
-(7, 1, 10, 0, '7iO2YMMujOSB7GwIsBOCgruGBs0TVzF309q24SGu.png', 'Web Developer Php Laravel.png', 'uploads/files/02-2023/7iO2YMMujOSB7GwIsBOCgruGBs0TVzF309q24SGu.png', 'png', '52.81 KB', '2023-02-06 20:17:47', '2023-02-06 20:17:47'),
-(8, 4, 15, 0, 'cqDk3feTSHL8ARw3xVExMCZMNVOFYHR0jZyaUAMk.jpg', 'image004.jpg', 'uploads/files/02-2023/cqDk3feTSHL8ARw3xVExMCZMNVOFYHR0jZyaUAMk.jpg', 'jpg', '97.22 KB', '2023-02-16 21:13:24', '2023-02-23 16:51:02'),
-(9, 4, 15, 0, 'e892BTm1RqGla3X7RsDNoajOAi9G6za5WteoYtT8.jpg', '1933136_188282907860672_4388842_o.jpg', 'uploads/files/02-2023/e892BTm1RqGla3X7RsDNoajOAi9G6za5WteoYtT8.jpg', 'jpg', '408.74 KB', '2023-02-16 22:41:32', '2023-02-16 22:41:32'),
-(10, 4, 15, 0, 'SbQPg6d3akY0Kv0bprp2H3rmMQXcnlu5nlYb6xwy.jpg', 'image004.jpg', 'uploads/files/02-2023/SbQPg6d3akY0Kv0bprp2H3rmMQXcnlu5nlYb6xwy.jpg', 'jpg', '97.22 KB', '2023-02-21 22:32:24', '2023-02-21 22:32:24'),
-(11, 4, 15, 0, 'WPBx6rp0eCQCltRmF5kAAhOFIwNZ1Dw91ncjbz61.pdf', 'Document.pdf', 'uploads/files/02-2023/WPBx6rp0eCQCltRmF5kAAhOFIwNZ1Dw91ncjbz61.pdf', 'pdf', '13.62 KB', '2023-02-22 17:10:45', '2023-02-22 20:00:45'),
-(12, 4, 15, 0, 'GDVa4jNRLK581Sr5yXfeeMqI32ltZ1MlcM50UGdA.xlsx', 'AttendanceList.xlsx', 'uploads/files/02-2023/GDVa4jNRLK581Sr5yXfeeMqI32ltZ1MlcM50UGdA.xlsx', 'xlsx', '22.46 KB', '2023-02-22 17:53:13', '2023-02-22 18:26:32');
+INSERT INTO `files` (`id`, `user_id`, `status`, `name`, `org_name`, `path`, `ext`, `size`, `date`, `doc_type`, `created_at`, `updated_at`) VALUES
+(1, 10, 0, 'qjbT8BZTaBs80aDtRk1FLxHKXOGmdXnQKVA6R2gD.png', 'secretm.me-verticle-share.png', 'uploads/files/02-2023/qjbT8BZTaBs80aDtRk1FLxHKXOGmdXnQKVA6R2gD.png', 'png', '385.82 KB', NULL, 0, '2023-02-06 20:16:08', '2023-02-06 20:16:08'),
+(2, 10, 0, 'McPTd5iZYNSVvNXHxXoiMS1H0gPrugq2lfXz1qQK.png', 'screencapture-secretm-me-inbox-php-2022-09-08-21_15_52.png', 'uploads/files/02-2023/McPTd5iZYNSVvNXHxXoiMS1H0gPrugq2lfXz1qQK.png', 'png', '2.56 MB', NULL, 0, '2023-02-06 20:16:08', '2023-02-06 20:16:08'),
+(3, 10, 0, 'K2S7gNAjlvGAWZhqFq2brsnY2hZ90hd0CoM884Oh.png', 'screencapture-publishers-adsterra-stats-2022-10-06-12_35_35.png', 'uploads/files/02-2023/K2S7gNAjlvGAWZhqFq2brsnY2hZ90hd0CoM884Oh.png', 'png', '191.23 KB', NULL, 0, '2023-02-06 20:16:08', '2023-02-06 20:16:08'),
+(4, 10, 0, 'UmPHvRQg1nFiSUy8QSQIKaPZ5qGyBLwvyBUVr3De.png', 'secretm.me-verticle-share.png', 'uploads/files/02-2023/UmPHvRQg1nFiSUy8QSQIKaPZ5qGyBLwvyBUVr3De.png', 'png', '385.82 KB', NULL, 0, '2023-02-06 20:16:18', '2023-02-06 20:16:18'),
+(5, 10, 0, '8DiR6bU392EtXfnlR2iuxS5ZRw7wOSTNK0P0zZsM.png', 'screencapture-secretm-me-inbox-php-2022-09-08-21_15_52.png', 'uploads/files/02-2023/8DiR6bU392EtXfnlR2iuxS5ZRw7wOSTNK0P0zZsM.png', 'png', '2.56 MB', NULL, 0, '2023-02-06 20:16:18', '2023-02-06 20:16:18'),
+(6, 10, 0, 'VSfKIATTISBcvvDvY326lC1PIf9oVKqt0upd9MYi.png', 'screencapture-publishers-adsterra-stats-2022-10-06-12_35_35.png', 'uploads/files/02-2023/VSfKIATTISBcvvDvY326lC1PIf9oVKqt0upd9MYi.png', 'png', '191.23 KB', NULL, 0, '2023-02-06 20:16:18', '2023-02-06 20:16:18'),
+(7, 10, 0, '7iO2YMMujOSB7GwIsBOCgruGBs0TVzF309q24SGu.png', 'Web Developer Php Laravel.png', 'uploads/files/02-2023/7iO2YMMujOSB7GwIsBOCgruGBs0TVzF309q24SGu.png', 'png', '52.81 KB', NULL, 0, '2023-02-06 20:17:47', '2023-02-06 20:17:47'),
+(8, 15, 0, 'cqDk3feTSHL8ARw3xVExMCZMNVOFYHR0jZyaUAMk.jpg', 'image004.jpg', 'uploads/files/02-2023/cqDk3feTSHL8ARw3xVExMCZMNVOFYHR0jZyaUAMk.jpg', 'jpg', '97.22 KB', NULL, 0, '2023-02-16 21:13:24', '2023-02-23 16:51:02'),
+(9, 15, 0, 'e892BTm1RqGla3X7RsDNoajOAi9G6za5WteoYtT8.jpg', '1933136_188282907860672_4388842_o.jpg', 'uploads/files/02-2023/e892BTm1RqGla3X7RsDNoajOAi9G6za5WteoYtT8.jpg', 'jpg', '408.74 KB', NULL, 0, '2023-02-16 22:41:32', '2023-02-16 22:41:32'),
+(10, 15, 0, 'SbQPg6d3akY0Kv0bprp2H3rmMQXcnlu5nlYb6xwy.jpg', 'image004.jpg', 'uploads/files/02-2023/SbQPg6d3akY0Kv0bprp2H3rmMQXcnlu5nlYb6xwy.jpg', 'jpg', '97.22 KB', NULL, 0, '2023-02-21 22:32:24', '2023-02-21 22:32:24'),
+(11, 15, 0, 'WPBx6rp0eCQCltRmF5kAAhOFIwNZ1Dw91ncjbz61.pdf', 'Document.pdf', 'uploads/files/02-2023/WPBx6rp0eCQCltRmF5kAAhOFIwNZ1Dw91ncjbz61.pdf', 'pdf', '13.62 KB', NULL, 0, '2023-02-22 17:10:45', '2023-02-22 20:00:45'),
+(12, 15, 0, 'GDVa4jNRLK581Sr5yXfeeMqI32ltZ1MlcM50UGdA.xlsx', 'AttendanceList123.xlsx', 'uploads/files/02-2023/GDVa4jNRLK581Sr5yXfeeMqI32ltZ1MlcM50UGdA.xlsx', 'xlsx', '22.46 KB', NULL, 0, '2023-02-22 17:53:13', '2023-03-21 19:33:16'),
+(13, 15, 14, '5f5TDxQLrmDtjt1CUToQYDPerLUMakXWku3HTFbp.xlsx', 'AttendanceList (1).xlsx', 'uploads/files/03-2023/5f5TDxQLrmDtjt1CUToQYDPerLUMakXWku3HTFbp.xlsx', 'xlsx', '22.49 KB', '2023-03-09', 6, '2023-03-21 14:24:07', '2023-03-21 17:10:15'),
+(14, 15, 14, '2RiQeo0dhS2M9d45LxRbNsA1bIYRg89L8gAx8ZcH.xlsx', 'AttendanceList.xlsx', 'uploads/files/03-2023/2RiQeo0dhS2M9d45LxRbNsA1bIYRg89L8gAx8ZcH.xlsx', 'xlsx', '22.46 KB', '2023-03-09', 4, '2023-03-21 14:24:07', '2023-03-21 14:24:07');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `file_practices`
+--
+
+DROP TABLE IF EXISTS `file_practices`;
+CREATE TABLE IF NOT EXISTS `file_practices` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `file_id` int(11) NOT NULL,
+  `practice_id` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NOT NULL ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `file_practices`
+--
+
+INSERT INTO `file_practices` (`id`, `file_id`, `practice_id`, `created_at`, `deleted_at`, `updated_at`) VALUES
+(1, 13, 4, '2023-03-21 09:24:07', NULL, '2023-03-21 09:24:07'),
+(2, 13, 5, '2023-03-21 09:24:07', NULL, '2023-03-21 09:24:07'),
+(3, 14, 4, '2023-03-21 09:24:07', NULL, '2023-03-21 09:24:07'),
+(4, 14, 5, '2023-03-21 09:24:07', NULL, '2023-03-21 09:24:07');
 
 -- --------------------------------------------------------
 
@@ -302,7 +375,7 @@ CREATE TABLE IF NOT EXISTS `permissions` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `permissions_name_guard_name_unique` (`name`,`guard_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=96 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=100 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `permissions`
@@ -388,7 +461,11 @@ INSERT INTO `permissions` (`id`, `name`, `display_name`, `type`, `guard_name`, `
 (92, 'update business assigned team', 'Can Update Assigned Team', 'business', 'web', '2023-01-25 10:07:00', '2023-01-25 10:07:00'),
 (93, 'update business crm', 'Can Update CRM', 'business', 'web', '2023-01-25 10:07:00', '2023-01-25 10:07:00'),
 (94, 'update business operations', 'Can Update Operations', 'business', 'web', '2023-01-25 10:07:00', '2023-01-25 10:07:00'),
-(95, 'update business threshold per hour', 'Can Update Threshold Per Hour', 'business', 'web', '2023-01-25 10:07:00', '2023-01-25 10:07:00');
+(95, 'update business threshold per hour', 'Can Update Threshold Per Hour', 'business', 'web', '2023-01-25 10:07:00', '2023-01-25 10:07:00'),
+(96, 'add designation', 'can create', 'designation', 'web', '2023-01-25 10:07:00', '2023-01-25 10:07:00'),
+(97, 'delete designation', 'can delete', 'designation', 'web', '2023-01-25 10:07:00', '2023-01-25 10:07:00'),
+(98, 'update designation', 'can update', 'designation', 'web', '2023-01-25 10:07:00', '2023-01-25 10:07:00'),
+(99, 'view designation', 'can view', 'designation', 'web', '2023-01-19 11:21:41', '2023-01-19 11:21:41');
 
 -- --------------------------------------------------------
 
@@ -463,9 +540,9 @@ INSERT INTO `practices` (`id`, `company_id`, `name`, `status`, `reason`, `date`,
 (1, 1, 'test practice', 1, '', NULL, '', 0, '', '', '', '[{\"zip\": null, \"city\": null, \"state\": null, \"address\": null}, {\"zip\": \"3213\", \"city\": \"1232133\", \"state\": \"123213\", \"address\": \"asdsad\"}]', '[{\"zip\": null, \"city\": null, \"state\": null, \"address\": null}, {\"zip\": \"123213\", \"city\": \"3213213\", \"state\": \"asdsad\", \"address\": \"123213\"}]', '[{\"zip\": null, \"city\": null, \"state\": null, \"address\": null}, {\"zip\": \"123\", \"city\": null, \"state\": null, \"address\": null}]', '0', '[{\"fax\": null, \"name\": null, \"email\": null, \"phone\": null, \"designation\": null}, {\"fax\": \"12345\", \"name\": null, \"email\": null, \"phone\": null, \"designation\": null}]', '[{\"fax\": null, \"name\": null, \"email\": null, \"phone\": null, \"title\": null}, {\"fax\": \"1234\", \"name\": null, \"email\": null, \"phone\": null, \"title\": null}]', '[{\"dob\": null, \"ssn\": null, \"name\": null, \"tax_id\": null, \"individual_npi\": null, \"individual_ptan\": null}, {\"dob\": \"1997-04-02\", \"ssn\": null, \"name\": null, \"tax_id\": null, \"individual_npi\": null, \"individual_ptan\": null}]', '{\"url\": null, \"name\": \"dsadsad\", \"password\": null, \"username\": null}', '{\"url\": null, \"name\": null, \"password\": null, \"username\": null}', '{\"url\": null, \"name\": null, \"password\": null, \"username\": null}', '[{\"url\": null, \"name\": null, \"password\": null, \"username\": null}]', '[{\"npi\": null, \"payer_name\": null, \"enroll_type\": \"individual\", \"enroll_with\": \"tax_id\", \"provider_name\": null, \"effective_date\": null}]', '{\"value\": null, \"option\": null}', '{\"ar\": \"1\", \"phd\": \"1\", \"coding\": \"1\", \"billing\": \"1\", \"ar_start\": \"2022-04-03\", \"authorization\": \"1\", \"credentialing\": \"1\", \"eligibility_check\": \"1\", \"patient_statement\": \"1\", \"key_billing_issues\": \"issue\", \"special_instructions\": \"ins\", \"complementary_services\": \"ser\"}', '{\"welcome_email\": null, \"orientation_by\": null, \"mom_sharing_date\": null, \"docuhub_orientation\": \"0\", \"attended_by_crm_team\": null, \"orientation_datetime\": null, \"onboarding_metting_date\": null}', '{\"logins_receipt\": null, \"sop_preparation\": \"0\", \"preparation_date\": null, \"first_billing_received\": null, \"first_service_provided_name\": null}', '{\"thresh_auth\": null, \"thresh_elect\": null, \"thresh_portal\": null, \"thresh_denials\": null, \"thresh_posting\": null, \"thresh_rejections\": null, \"thresh_eligibility\": null, \"thresh_charge_entry\": null, \"thresh_posting_elect\": null, \"thresh_charge_elect_checkbox\": \"1\", \"thresh_charge_manual_checkbox\": \"1\", \"thresh_posting_elect_checkbox\": \"1\", \"thresh_posting_manual_checkbox\": \"1\", \"thresh_eligibility_cal_checkbox\": \"1\", \"thresh_eligibility_portal_checkbox\": \"1\", \"thresh_charge_with_demo_graphics_checkbox\": \"1\"}', '[{\"name\": null, \"claims\": null}, {\"name\": \"sadasdsad\", \"claims\": null}]', '2023-02-05 16:57:06', '2023-02-05 16:57:06', NULL),
 (2, 1, 'bme pract', 1, '', NULL, '', 0, '', '', '', '[{\"zip\": null, \"city\": null, \"state\": null, \"address\": null}, {\"zip\": \"3213\", \"city\": \"1232133\", \"state\": \"123213\", \"address\": \"asdsad\"}]', '[{\"zip\": null, \"city\": null, \"state\": null, \"address\": null}, {\"zip\": \"123213\", \"city\": \"3213213\", \"state\": \"asdsad\", \"address\": \"123213\"}]', '[{\"zip\": null, \"city\": null, \"state\": null, \"address\": null}, {\"zip\": \"123\", \"city\": null, \"state\": null, \"address\": null}]', '0', '[{\"fax\": null, \"name\": null, \"email\": null, \"phone\": null, \"designation\": null}, {\"fax\": \"12345\", \"name\": null, \"email\": null, \"phone\": null, \"designation\": null}]', '[{\"fax\": null, \"name\": null, \"email\": null, \"phone\": null, \"title\": null}, {\"fax\": \"1234\", \"name\": null, \"email\": null, \"phone\": null, \"title\": null}]', '[{\"dob\": null, \"ssn\": null, \"name\": null, \"tax_id\": null, \"individual_npi\": null, \"individual_ptan\": null}, {\"dob\": \"1997-04-02\", \"ssn\": null, \"name\": null, \"tax_id\": null, \"individual_npi\": null, \"individual_ptan\": null}]', '{\"url\": null, \"name\": \"dsadsad\", \"password\": null, \"username\": null}', '{\"url\": null, \"name\": null, \"password\": null, \"username\": null}', '{\"url\": null, \"name\": null, \"password\": null, \"username\": null}', '[{\"url\": null, \"name\": null, \"password\": null, \"username\": null}]', '[{\"npi\": null, \"payer_name\": null, \"enroll_type\": \"individual\", \"enroll_with\": \"tax_id\", \"provider_name\": null, \"effective_date\": null}]', '{\"value\": null, \"option\": null}', '{\"ar\": \"1\", \"phd\": \"1\", \"coding\": \"1\", \"billing\": \"1\", \"ar_start\": \"2022-04-03\", \"authorization\": \"1\", \"credentialing\": \"1\", \"eligibility_check\": \"1\", \"patient_statement\": \"1\", \"key_billing_issues\": \"issue\", \"special_instructions\": \"ins\", \"complementary_services\": \"ser\"}', '{\"welcome_email\": null, \"orientation_by\": null, \"mom_sharing_date\": null, \"docuhub_orientation\": \"0\", \"attended_by_crm_team\": null, \"orientation_datetime\": null, \"onboarding_metting_date\": null}', '{\"logins_receipt\": null, \"sop_preparation\": \"0\", \"preparation_date\": null, \"first_billing_received\": null, \"first_service_provided_name\": null}', '{\"thresh_auth\": null, \"thresh_elect\": null, \"thresh_portal\": null, \"thresh_denials\": null, \"thresh_posting\": null, \"thresh_rejections\": null, \"thresh_eligibility\": null, \"thresh_charge_entry\": null, \"thresh_posting_elect\": null, \"thresh_charge_elect_checkbox\": \"1\", \"thresh_charge_manual_checkbox\": \"1\", \"thresh_posting_elect_checkbox\": \"1\", \"thresh_posting_manual_checkbox\": \"1\", \"thresh_eligibility_cal_checkbox\": \"1\", \"thresh_eligibility_portal_checkbox\": \"1\", \"thresh_charge_with_demo_graphics_checkbox\": \"1\"}', '[{\"name\": null, \"claims\": null}, {\"name\": \"sadasdsad\", \"claims\": null}]', '2023-02-05 17:37:33', '2023-02-05 17:37:33', NULL),
 (3, 1, 'bme test p', 1, '', NULL, '', 0, '', '', '', '[{\"zip\": null, \"city\": null, \"state\": null, \"address\": null}, {\"zip\": \"3213\", \"city\": \"1232133\", \"state\": \"123213\", \"address\": \"asdsad\"}]', '[{\"zip\": null, \"city\": null, \"state\": null, \"address\": null}, {\"zip\": \"123213\", \"city\": \"3213213\", \"state\": \"asdsad\", \"address\": \"123213\"}]', '[{\"zip\": null, \"city\": null, \"state\": null, \"address\": null}, {\"zip\": \"123\", \"city\": null, \"state\": null, \"address\": null}]', '0', '[{\"fax\": null, \"name\": null, \"email\": null, \"phone\": null, \"designation\": null}, {\"fax\": \"12345\", \"name\": null, \"email\": null, \"phone\": null, \"designation\": null}]', '[{\"fax\": null, \"name\": null, \"email\": null, \"phone\": null, \"title\": null}, {\"fax\": \"1234\", \"name\": null, \"email\": null, \"phone\": null, \"title\": null}]', '[{\"dob\": null, \"ssn\": null, \"name\": null, \"tax_id\": null, \"individual_npi\": null, \"individual_ptan\": null}, {\"dob\": \"1997-04-02\", \"ssn\": null, \"name\": null, \"tax_id\": null, \"individual_npi\": null, \"individual_ptan\": null}]', '{\"url\": null, \"name\": \"dsadsad\", \"password\": null, \"username\": null}', '{\"url\": null, \"name\": null, \"password\": null, \"username\": null}', '{\"url\": null, \"name\": null, \"password\": null, \"username\": null}', '[{\"url\": null, \"name\": null, \"password\": null, \"username\": null}]', '[{\"npi\": null, \"payer_name\": null, \"enroll_type\": \"individual\", \"enroll_with\": \"tax_id\", \"provider_name\": null, \"effective_date\": null}]', '{\"value\": null, \"option\": null}', '{\"ar\": \"1\", \"phd\": \"1\", \"coding\": \"1\", \"billing\": \"1\", \"ar_start\": \"2022-04-03\", \"authorization\": \"1\", \"credentialing\": \"1\", \"eligibility_check\": \"1\", \"patient_statement\": \"1\", \"key_billing_issues\": \"issue\", \"special_instructions\": \"ins\", \"complementary_services\": \"ser\"}', '{\"welcome_email\": null, \"orientation_by\": null, \"mom_sharing_date\": null, \"docuhub_orientation\": \"0\", \"attended_by_crm_team\": null, \"orientation_datetime\": null, \"onboarding_metting_date\": null}', '{\"logins_receipt\": null, \"sop_preparation\": \"0\", \"preparation_date\": null, \"first_billing_received\": null, \"first_service_provided_name\": null}', '{\"thresh_auth\": null, \"thresh_elect\": null, \"thresh_portal\": null, \"thresh_denials\": null, \"thresh_posting\": null, \"thresh_rejections\": null, \"thresh_eligibility\": null, \"thresh_charge_entry\": null, \"thresh_posting_elect\": null, \"thresh_charge_elect_checkbox\": \"1\", \"thresh_charge_manual_checkbox\": \"1\", \"thresh_posting_elect_checkbox\": \"1\", \"thresh_posting_manual_checkbox\": \"1\", \"thresh_eligibility_cal_checkbox\": \"1\", \"thresh_eligibility_portal_checkbox\": \"1\", \"thresh_charge_with_demo_graphics_checkbox\": \"1\"}', '[{\"name\": null, \"claims\": null}, {\"name\": \"sadasdsad\", \"claims\": null}]', '2023-02-05 17:38:27', '2023-02-05 17:38:27', NULL),
-(4, 6, 'New Practice 123', 0, NULL, NULL, NULL, 0, NULL, NULL, NULL, '[{\"zip\": null, \"city\": null, \"state\": null, \"address\": null}, {\"zip\": \"3213\", \"city\": \"1232133\", \"state\": \"123213\", \"address\": \"asdsad\"}]', '[{\"zip\": null, \"city\": null, \"state\": null, \"address\": null}, {\"zip\": \"123213\", \"city\": \"3213213\", \"state\": \"asdsad\", \"address\": \"123213\"}]', '[{\"zip\": null, \"city\": null, \"state\": null, \"address\": null}, {\"zip\": \"123\", \"city\": null, \"state\": null, \"address\": null}]', '0', '[{\"fax\": null, \"name\": null, \"email\": null, \"phone\": null, \"designation\": null}, {\"fax\": \"12345\", \"name\": null, \"email\": null, \"phone\": null, \"designation\": null}]', '[{\"fax\": null, \"name\": null, \"email\": null, \"phone\": null, \"title\": null}, {\"fax\": \"1234\", \"name\": null, \"email\": null, \"phone\": null, \"title\": null}]', '[{\"dob\": null, \"ssn\": null, \"name\": null, \"tax_id\": null, \"individual_npi\": null, \"individual_ptan\": null}, {\"dob\": \"1997-04-02\", \"ssn\": null, \"name\": null, \"tax_id\": null, \"individual_npi\": null, \"individual_ptan\": null}]', '{\"url\": null, \"name\": \"dsadsad\", \"password\": null, \"username\": null}', '{\"url\": null, \"name\": null, \"password\": null, \"username\": null}', '{\"url\": null, \"name\": null, \"password\": null, \"username\": null}', '[{\"url\": null, \"name\": null, \"password\": null, \"username\": null}]', '[{\"npi\": null, \"payer_name\": null, \"enroll_type\": null, \"enroll_with\": null, \"provider_name\": null, \"effective_date\": null}]', '{\"value\": null, \"option\": null}', '{\"ar\": \"1\", \"phd\": \"1\", \"coding\": \"1\", \"billing\": \"1\", \"ar_start\": \"2022-04-03\", \"authorization\": \"1\", \"credentialing\": \"1\", \"eligibility_check\": \"1\", \"patient_statement\": \"1\", \"key_billing_issues\": \"issue\", \"special_instructions\": \"ins\", \"complementary_services\": \"ser\"}', '{\"welcome_email\": null, \"orientation_by\": null, \"mom_sharing_date\": null, \"docuhub_orientation\": \"0\", \"attended_by_crm_team\": null, \"orientation_datetime\": null, \"onboarding_metting_date\": null}', '{\"login_date\": null, \"logins_receipt\": \"0\", \"sop_preparation\": \"0\", \"preparation_date\": null, \"first_billing_received\": null, \"first_service_provided_name\": null}', '{\"thresh_auth\": null, \"thresh_elect\": null, \"thresh_portal\": null, \"thresh_denials\": null, \"thresh_posting\": null, \"thresh_rejections\": null, \"thresh_eligibility\": null, \"thresh_charge_entry\": null, \"thresh_posting_elect\": null, \"thresh_charge_elect_checkbox\": \"1\", \"thresh_charge_manual_checkbox\": \"1\", \"thresh_posting_elect_checkbox\": \"1\", \"thresh_posting_manual_checkbox\": \"1\", \"thresh_eligibility_cal_checkbox\": \"1\", \"thresh_eligibility_portal_checkbox\": \"1\", \"thresh_charge_with_demo_graphics_checkbox\": \"1\"}', '[{\"name\": null, \"claims\": null}, {\"name\": \"sadasdsad\", \"claims\": null}]', '2023-02-16 21:12:26', '2023-03-08 16:58:02', NULL),
+(4, 6, 'New Practice 123', 3, NULL, NULL, NULL, 0, NULL, NULL, NULL, '[{\"zip\": null, \"city\": null, \"state\": null, \"address\": null}, {\"zip\": \"3213\", \"city\": \"1232133\", \"state\": \"123213\", \"address\": \"asdsad\"}]', '[{\"zip\": null, \"city\": null, \"state\": null, \"address\": null}, {\"zip\": \"123213\", \"city\": \"3213213\", \"state\": \"asdsad\", \"address\": \"123213\"}]', '[{\"zip\": null, \"city\": null, \"state\": null, \"address\": null}, {\"zip\": \"123\", \"city\": null, \"state\": null, \"address\": null}]', '0', '[{\"fax\": null, \"name\": null, \"email\": null, \"phone\": null, \"designation\": null}, {\"fax\": \"12345\", \"name\": null, \"email\": null, \"phone\": null, \"designation\": null}]', '[{\"fax\": null, \"name\": null, \"email\": null, \"phone\": null, \"title\": null}, {\"fax\": \"1234\", \"name\": null, \"email\": null, \"phone\": null, \"title\": null}]', '[{\"dob\": null, \"ssn\": null, \"name\": null, \"tax_id\": null, \"individual_npi\": null, \"individual_ptan\": null}, {\"dob\": \"1997-04-02\", \"ssn\": null, \"name\": null, \"tax_id\": null, \"individual_npi\": null, \"individual_ptan\": null}]', '{\"url\": null, \"name\": \"dsadsad\", \"password\": null, \"username\": null}', '{\"url\": null, \"name\": null, \"password\": null, \"username\": null}', '{\"url\": null, \"name\": null, \"password\": null, \"username\": null}', '[{\"url\": null, \"name\": null, \"password\": null, \"username\": null}]', '[{\"npi\": null, \"payer_name\": null, \"enroll_type\": null, \"enroll_with\": null, \"provider_name\": null, \"effective_date\": null}]', '{\"value\": null, \"option\": null}', '{\"ar\": \"1\", \"phd\": \"1\", \"coding\": \"1\", \"billing\": \"1\", \"ar_start\": \"2022-04-03\", \"authorization\": \"1\", \"credentialing\": \"1\", \"eligibility_check\": \"1\", \"patient_statement\": \"1\", \"key_billing_issues\": \"issue\", \"special_instructions\": \"ins\", \"complementary_services\": \"ser\"}', '{\"welcome_email\": null, \"orientation_by\": null, \"mom_sharing_date\": null, \"docuhub_orientation\": \"0\", \"attended_by_crm_team\": null, \"orientation_datetime\": null, \"onboarding_metting_date\": null}', '{\"login_date\": null, \"logins_receipt\": \"0\", \"sop_preparation\": \"0\", \"preparation_date\": null, \"first_billing_received\": null, \"first_service_provided_name\": null}', '{\"thresh_auth\": null, \"thresh_elect\": null, \"thresh_portal\": null, \"thresh_denials\": null, \"thresh_posting\": null, \"thresh_rejections\": null, \"thresh_eligibility\": null, \"thresh_charge_entry\": null, \"thresh_posting_elect\": null, \"thresh_charge_elect_checkbox\": \"1\", \"thresh_charge_manual_checkbox\": \"1\", \"thresh_posting_elect_checkbox\": \"1\", \"thresh_posting_manual_checkbox\": \"1\", \"thresh_eligibility_cal_checkbox\": \"1\", \"thresh_eligibility_portal_checkbox\": \"1\", \"thresh_charge_with_demo_graphics_checkbox\": \"1\"}', '[{\"name\": null, \"claims\": null}, {\"name\": \"sadasdsad\", \"claims\": null}]', '2023-02-16 21:12:26', '2023-03-08 16:58:02', NULL),
 (5, 6, 'Practice ABC', 3, NULL, NULL, NULL, 0, NULL, NULL, NULL, '[{\"zip\": null, \"city\": null, \"state\": null, \"address\": null}, {\"zip\": \"3213\", \"city\": \"1232133\", \"state\": \"123213\", \"address\": \"asdsad\"}]', '[{\"zip\": null, \"city\": null, \"state\": null, \"address\": null}, {\"zip\": \"123213\", \"city\": \"3213213\", \"state\": \"asdsad\", \"address\": \"123213\"}]', '[{\"zip\": null, \"city\": null, \"state\": null, \"address\": null}, {\"zip\": \"123\", \"city\": null, \"state\": null, \"address\": null}]', '0', '[{\"fax\": null, \"name\": null, \"email\": null, \"phone\": null, \"designation\": null}, {\"fax\": \"12345\", \"name\": null, \"email\": null, \"phone\": null, \"designation\": null}]', '[{\"fax\": null, \"name\": null, \"email\": null, \"phone\": null, \"title\": null}, {\"fax\": \"1234\", \"name\": null, \"email\": null, \"phone\": null, \"title\": null}]', '[{\"dob\": null, \"ssn\": null, \"name\": null, \"tax_id\": null, \"individual_npi\": null, \"individual_ptan\": null}, {\"dob\": \"1997-04-02\", \"ssn\": null, \"name\": null, \"tax_id\": null, \"individual_npi\": null, \"individual_ptan\": null}]', '{\"url\": null, \"name\": \"dsadsad\", \"password\": null, \"username\": null}', '{\"url\": null, \"name\": null, \"password\": null, \"username\": null}', '{\"url\": null, \"name\": null, \"password\": null, \"username\": null}', '[{\"url\": null, \"name\": null, \"password\": null, \"username\": null}]', '[{\"npi\": null, \"payer_name\": null, \"enroll_type\": null, \"enroll_with\": null, \"provider_name\": null, \"effective_date\": null}]', '{\"value\": null, \"option\": null}', '{\"ar\": \"1\", \"phd\": \"1\", \"coding\": \"1\", \"billing\": \"1\", \"ar_start\": \"2022-04-03\", \"authorization\": \"1\", \"credentialing\": \"1\", \"eligibility_check\": \"1\", \"patient_statement\": \"1\", \"key_billing_issues\": \"issue\", \"special_instructions\": \"ins\", \"complementary_services\": \"ser\"}', '{\"welcome_email\": null, \"orientation_by\": null, \"mom_sharing_date\": null, \"docuhub_orientation\": \"0\", \"attended_by_crm_team\": null, \"orientation_datetime\": null, \"onboarding_metting_date\": null}', '{\"login_date\": \"2023-03-08\", \"logins_receipt\": \"1\", \"sop_preparation\": \"0\", \"preparation_date\": null, \"first_billing_received\": null, \"first_service_provided_name\": null}', '{\"thresh_auth\": null, \"thresh_elect\": null, \"thresh_portal\": null, \"thresh_denials\": null, \"thresh_posting\": null, \"thresh_rejections\": null, \"thresh_eligibility\": null, \"thresh_charge_entry\": null, \"thresh_posting_elect\": null, \"thresh_charge_elect_checkbox\": \"1\", \"thresh_charge_manual_checkbox\": \"1\", \"thresh_posting_elect_checkbox\": \"1\", \"thresh_posting_manual_checkbox\": \"1\", \"thresh_eligibility_cal_checkbox\": \"1\", \"thresh_eligibility_portal_checkbox\": \"1\", \"thresh_charge_with_demo_graphics_checkbox\": \"1\"}', '[{\"name\": null, \"claims\": null}]', '2023-02-24 17:34:02', '2023-03-08 16:57:03', NULL),
-(6, 6, 'Test ABC 123', 3, 'asdsadsad', NULL, NULL, NULL, NULL, NULL, NULL, '[{\"zip\": null, \"city\": null, \"state\": null, \"address\": null}, {\"zip\": \"3213\", \"city\": \"1232133\", \"state\": \"123213\", \"address\": \"asdsad\"}]', '[{\"zip\": null, \"city\": null, \"state\": null, \"address\": null}, {\"zip\": \"123213\", \"city\": \"3213213\", \"state\": \"asdsad\", \"address\": \"123213\"}]', '[{\"zip\": null, \"city\": null, \"state\": null, \"address\": null}, {\"zip\": \"123\", \"city\": null, \"state\": null, \"address\": null}]', NULL, '[{\"fax\": null, \"name\": null, \"email\": null, \"phone\": null, \"designation\": null}, {\"fax\": \"12345\", \"name\": null, \"email\": null, \"phone\": null, \"designation\": null}]', '[{\"fax\": null, \"name\": null, \"email\": null, \"phone\": null, \"title\": null}, {\"fax\": \"1234\", \"name\": null, \"email\": null, \"phone\": null, \"title\": null}]', '[{\"dob\": null, \"ssn\": null, \"name\": null, \"tax_id\": null, \"individual_npi\": null, \"individual_ptan\": null}, {\"dob\": \"1997-04-02\", \"ssn\": null, \"name\": null, \"tax_id\": null, \"individual_npi\": null, \"individual_ptan\": null}]', '{\"url\": null, \"name\": \"dsadsad\", \"password\": null, \"username\": null}', '{\"url\": null, \"name\": null, \"password\": null, \"username\": null}', '{\"url\": null, \"name\": null, \"password\": null, \"username\": null}', '[{\"url\": null, \"name\": null, \"password\": null, \"username\": null}]', '[{\"npi\": null, \"payer_name\": null, \"enroll_type\": \"individual\", \"enroll_with\": null, \"provider_name\": null, \"effective_date\": null}]', '{\"value\": null, \"option\": null}', '{\"ar\": \"1\", \"phd\": \"1\", \"coding\": \"1\", \"billing\": \"1\", \"ar_start\": \"2022-04-03\", \"authorization\": \"1\", \"credentialing\": \"1\", \"eligibility_check\": \"1\", \"patient_statement\": \"1\", \"key_billing_issues\": \"issue\", \"special_instructions\": \"ins\", \"complementary_services\": \"ser\"}', '{\"welcome_email\": null, \"orientation_by\": null, \"mom_sharing_date\": null, \"docuhub_orientation\": \"0\", \"attended_by_crm_team\": null, \"orientation_datetime\": null, \"onboarding_metting_date\": null}', '{\"login_date\": null, \"logins_receipt\": \"0\", \"sop_preparation\": \"0\", \"preparation_date\": null, \"first_billing_received\": null, \"first_service_provided_name\": null}', '{\"thresh_auth\": null, \"thresh_elect\": null, \"thresh_portal\": null, \"thresh_denials\": null, \"thresh_posting\": null, \"thresh_rejections\": null, \"thresh_eligibility\": null, \"thresh_charge_entry\": null, \"thresh_posting_elect\": null, \"thresh_charge_elect_checkbox\": \"1\", \"thresh_charge_manual_checkbox\": \"1\", \"thresh_posting_elect_checkbox\": \"1\", \"thresh_posting_manual_checkbox\": \"1\", \"thresh_eligibility_cal_checkbox\": \"1\", \"thresh_eligibility_portal_checkbox\": \"1\", \"thresh_charge_with_demo_graphics_checkbox\": \"1\"}', '[{\"name\": null, \"claims\": null}, {\"name\": \"sadasdsad\", \"claims\": null}]', '2023-03-06 21:27:31', '2023-03-08 16:59:35', NULL);
+(6, 6, 'Test ABC 123', 3, 'asdsadsad', NULL, NULL, NULL, NULL, NULL, NULL, '[{\"zip\": null, \"city\": null, \"state\": null, \"address\": null}, {\"zip\": \"3213\", \"city\": \"1232133\", \"state\": \"123213\", \"address\": \"asdsad\"}]', '[{\"zip\": null, \"city\": null, \"state\": null, \"address\": null}, {\"zip\": \"123213\", \"city\": \"3213213\", \"state\": \"asdsad\", \"address\": \"123213\"}]', '[{\"zip\": null, \"city\": null, \"state\": null, \"address\": null}, {\"zip\": \"123\", \"city\": null, \"state\": null, \"address\": null}]', NULL, '[{\"fax\": null, \"name\": null, \"email\": null, \"phone\": null, \"designation\": null}, {\"fax\": \"12345\", \"name\": null, \"email\": null, \"phone\": null, \"designation\": null}]', '[{\"fax\": null, \"name\": null, \"email\": null, \"phone\": null, \"title\": null}, {\"fax\": \"1234\", \"name\": null, \"email\": null, \"phone\": null, \"title\": null}]', '[{\"dob\": null, \"ssn\": null, \"name\": null, \"tax_id\": null, \"individual_npi\": null, \"individual_ptan\": null}, {\"dob\": \"1997-04-02\", \"ssn\": null, \"name\": null, \"tax_id\": null, \"individual_npi\": null, \"individual_ptan\": null}]', '{\"url\": null, \"name\": \"dsadsad\", \"password\": null, \"username\": null}', '{\"url\": null, \"name\": null, \"password\": null, \"username\": null}', '{\"url\": null, \"name\": null, \"password\": null, \"username\": null}', '[{\"url\": null, \"name\": null, \"password\": null, \"username\": null}]', '[{\"npi\": null, \"payer_name\": null, \"enroll_type\": null, \"enroll_with\": null, \"provider_name\": null, \"effective_date\": null}, {\"npi\": null, \"payer_name\": null, \"enroll_type\": \"group\", \"enroll_with\": \"tax_id\", \"provider_name\": null, \"effective_date\": null}]', '{\"value\": null, \"option\": null}', '{\"ar\": \"1\", \"phd\": \"1\", \"coding\": \"1\", \"billing\": \"1\", \"ar_start\": \"2022-04-03\", \"authorization\": \"1\", \"credentialing\": \"1\", \"eligibility_check\": \"1\", \"patient_statement\": \"1\", \"key_billing_issues\": \"issue\", \"special_instructions\": \"ins\", \"complementary_services\": \"ser\"}', '{\"welcome_email\": null, \"orientation_by\": null, \"mom_sharing_date\": null, \"docuhub_orientation\": \"0\", \"attended_by_crm_team\": null, \"orientation_datetime\": null, \"onboarding_metting_date\": null}', '{\"login_date\": null, \"logins_receipt\": \"0\", \"sop_preparation\": \"0\", \"preparation_date\": null, \"first_billing_received\": null, \"first_service_provided_name\": null}', '{\"thresh_auth\": null, \"thresh_elect\": null, \"thresh_portal\": null, \"thresh_denials\": null, \"thresh_posting\": null, \"thresh_rejections\": null, \"thresh_eligibility\": null, \"thresh_charge_entry\": null, \"thresh_posting_elect\": null, \"thresh_charge_elect_checkbox\": \"1\", \"thresh_charge_manual_checkbox\": \"1\", \"thresh_posting_elect_checkbox\": \"1\", \"thresh_posting_manual_checkbox\": \"1\", \"thresh_eligibility_cal_checkbox\": \"1\", \"thresh_eligibility_portal_checkbox\": \"1\", \"thresh_charge_with_demo_graphics_checkbox\": \"1\"}', '[{\"name\": null, \"claims\": null}, {\"name\": \"sadasdsad\", \"claims\": null}]', '2023-03-06 21:27:31', '2023-03-08 17:39:28', NULL);
 
 -- --------------------------------------------------------
 
@@ -484,7 +561,7 @@ CREATE TABLE IF NOT EXISTS `practice_user` (
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `practice_user`
@@ -492,12 +569,13 @@ CREATE TABLE IF NOT EXISTS `practice_user` (
 
 INSERT INTO `practice_user` (`id`, `user_id`, `practice_id`, `type`, `user_type`, `is_parent`, `created_at`, `updated_at`) VALUES
 (2, 17, 5, 2, 1, NULL, '2023-02-24 03:08:43', '2023-02-27 20:00:55'),
-(4, 15, 4, 1, 1, NULL, '2023-02-27 23:16:30', '2023-02-27 23:16:30'),
-(5, 15, 5, 1, 1, NULL, '2023-02-27 23:16:30', '2023-02-27 23:16:30'),
 (6, 19, 4, 1, 1, NULL, '2023-03-03 01:50:31', '2023-03-03 01:50:31'),
 (7, 16, 4, 1, 1, NULL, '2023-03-03 01:50:40', '2023-03-03 01:50:40'),
 (8, 20, 4, 1, 1, NULL, '2023-03-03 02:12:52', '2023-03-03 02:12:52'),
-(9, 20, 5, 1, 1, NULL, '2023-03-03 02:12:52', '2023-03-03 02:12:52');
+(9, 20, 5, 1, 1, NULL, '2023-03-03 02:12:52', '2023-03-03 02:12:52'),
+(10, 15, 4, 1, 1, NULL, '2023-03-21 19:32:10', '2023-03-21 19:32:10'),
+(11, 15, 5, 1, 1, NULL, '2023-03-21 19:32:10', '2023-03-21 19:32:10'),
+(12, 15, 6, 1, 1, NULL, '2023-03-21 19:32:10', '2023-03-21 19:32:10');
 
 -- --------------------------------------------------------
 
@@ -672,6 +750,10 @@ INSERT INTO `role_has_permissions` (`permission_id`, `role_id`) VALUES
 (93, 18),
 (94, 18),
 (95, 18),
+(96, 18),
+(97, 18),
+(98, 18),
+(99, 18),
 (15, 19),
 (16, 19),
 (19, 19),
@@ -775,12 +857,12 @@ INSERT INTO `statuses` (`id`, `company_id`, `name`, `type`, `default`, `created_
 (19, 6, 'Coded', 'document', 0, '2023-03-07 09:16:04', '2023-03-07 09:45:16'),
 (20, 6, 'Active', 'team', 1, '2023-03-07 09:17:06', '2023-03-07 09:45:23'),
 (21, 6, 'Inactive', 'team', 0, '2023-03-07 09:17:21', '2023-03-07 09:45:23'),
-(22, 6, 'Open', 'ticket', 0, '2023-03-07 10:07:48', '2023-03-07 10:07:48'),
-(23, 6, 'In-Process', 'ticket', 0, '2023-03-07 10:08:09', '2023-03-07 10:08:09'),
-(24, 6, 'Reopen', 'ticket', 0, '2023-03-07 10:08:46', '2023-03-07 10:08:46'),
-(25, 6, 'On-Hold', 'ticket', 0, '2023-03-07 10:09:00', '2023-03-07 10:09:21'),
-(26, 6, 'Waiting Approval', 'ticket', 0, '2023-03-07 10:09:38', '2023-03-07 10:09:38'),
-(27, 6, 'Rejected', 'ticket', 0, '2023-03-07 10:09:48', '2023-03-07 10:09:48');
+(22, 6, 'Open', 'ticket', 1, '2023-03-07 10:07:48', '2023-03-20 15:35:33'),
+(23, 6, 'In-Process', 'ticket', 0, '2023-03-07 10:08:09', '2023-03-20 15:35:33'),
+(24, 6, 'Reopen', 'ticket', 0, '2023-03-07 10:08:46', '2023-03-20 15:35:33'),
+(25, 6, 'On-Hold', 'ticket', 0, '2023-03-07 10:09:00', '2023-03-20 15:35:33'),
+(26, 6, 'Waiting Approval', 'ticket', 0, '2023-03-07 10:09:38', '2023-03-20 15:35:33'),
+(27, 6, 'Rejected', 'ticket', 0, '2023-03-07 10:09:48', '2023-03-20 15:35:33');
 
 -- --------------------------------------------------------
 
@@ -1045,11 +1127,15 @@ DROP TABLE IF EXISTS `users`;
 CREATE TABLE IF NOT EXISTS `users` (
   `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
   `company_id` int(11) NOT NULL,
+  `employee_id` int(11) NOT NULL,
+  `designation_id` int(11) NOT NULL,
   `type` int(11) NOT NULL DEFAULT '2' COMMENT '0:dev,1:superadmin, 2:user, 3:doctor',
   `status` int(11) NOT NULL DEFAULT '1',
   `firstname` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `lastname` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `psudo_name` varchar(256) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `username` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
   `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -1065,18 +1151,18 @@ CREATE TABLE IF NOT EXISTS `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `company_id`, `type`, `status`, `firstname`, `lastname`, `email`, `email_verified_at`, `password`, `remember_token`, `last_activity`, `timezone`, `created_at`, `updated_at`) VALUES
-(10, 0, 0, 1, 'Junaid', 'Khan', 'junaid@mail.com', NULL, '$2a$12$TWJEfJ3kvFfnS49Yn5lvMe4qqxJUy/Oy1Gy5fvHgkzpshsC3WlApi', 'Yu3nC3wtLAcvmGeLzckQYwpRm98x5Y2dXablIKTaDDrZ5cXg5vjG6InCRTUZ', NULL, 0, '2023-01-04 04:24:33', '2023-02-24 09:42:42'),
-(11, 4, 2, 1, 'Super', 'Admin', 'superadmin4@bmb.com', NULL, '$2a$12$DAeA/CC/k2xUF8g1hN6toeW6cnwZFtWKDaBcEEW5Y4Fptw1OaVWAC', NULL, NULL, 0, '2023-01-19 13:39:09', '2023-01-19 13:39:09'),
-(12, 5, 2, 1, 'Super', 'Admin', 'superadmin5@test.com', NULL, '$2a$12$DAeA/CC/k2xUF8g1hN6toeW6cnwZFtWKDaBcEEW5Y4Fptw1OaVWAC', NULL, NULL, 0, '2023-01-22 12:33:56', '2023-01-22 12:33:56'),
-(13, 1, 2, 1, 'John D.', 'John D.', 'JohnDMurray@teleworm.us', NULL, '$2a$12$DAeA/CC/k2xUF8g1hN6toeW6cnwZFtWKDaBcEEW5Y4Fptw1OaVWAC', NULL, NULL, 0, '2023-01-25 10:36:08', '2023-01-25 10:36:08'),
-(14, 1, 3, 1, 'test', 'client', 'client@gmail.com', NULL, '$2a$12$DAeA/CC/k2xUF8g1hN6toeW6cnwZFtWKDaBcEEW5Y4Fptw1OaVWAC', NULL, NULL, 0, '2023-02-05 10:19:42', '2023-02-05 10:19:42'),
-(15, 6, 2, 2, 'Asad', 'Nazir', 'superadmin6@new.com', NULL, '$2y$10$T9jRrchuuBhVQfaaYMdlLubDgSlSz/x9UR0V8J0XZkE4zLYKM6U4W', NULL, NULL, 7, '2023-02-16 16:08:10', '2023-03-07 12:22:13'),
-(16, 6, 3, 10, 'New', 'Client 1', 'newclient@gmail.com', NULL, '$2y$10$T9jRrchuuBhVQfaaYMdlLubDgSlSz/x9UR0V8J0XZkE4zLYKM6U4W', NULL, NULL, 4, '2023-02-16 16:10:37', '2023-03-07 12:25:33'),
-(17, 6, 2, 2, 'Test', 'Test', 'test@gmail.com', NULL, '$2y$10$KA8vHn1FJekCLjBDir/Lhupag4peomZl1wjv46CfjoePjiO3s1UfS', NULL, NULL, 0, '2023-02-21 12:54:37', '2023-03-07 12:22:27'),
-(18, 6, 2, 12, 'Test', 'User', 'testuser@gmail.com', NULL, '$2y$10$ZQuRQ6iuGSvo7nmORZGVy.lMWvW02ow3pYCkJltN5U/f4JLmKO.wi', NULL, NULL, 0, '2023-02-27 12:43:41', '2023-03-07 12:23:13'),
-(19, 6, 3, 1, 'New', 'Client 2', 'newclient2@gmail.com', NULL, '$2y$10$Ovd3DnCDg5o2iAv0YELZnuBf8fqNsUFxZBiLClLDaxIyWiRDKYKi.', NULL, NULL, 0, '2023-03-02 15:49:40', '2023-03-02 15:49:40'),
-(20, 6, 3, 1, 'New', 'Client 3', 'newclient3@gmail.com', NULL, '$2y$10$iqKPkotw5IJ5sgn9cA48cuQz6zJy/fTJo.ut/PV6iIfL1HNWHF2pe', NULL, NULL, 0, '2023-03-02 16:12:25', '2023-03-02 16:12:25');
+INSERT INTO `users` (`id`, `company_id`, `employee_id`, `designation_id`, `type`, `status`, `firstname`, `lastname`, `psudo_name`, `email`, `username`, `email_verified_at`, `password`, `remember_token`, `last_activity`, `timezone`, `created_at`, `updated_at`) VALUES
+(10, 0, 0, 2, 0, 1, 'Junaid', 'Khan', NULL, 'junaid@mail.com', '', NULL, '$2a$12$TWJEfJ3kvFfnS49Yn5lvMe4qqxJUy/Oy1Gy5fvHgkzpshsC3WlApi', 'Yu3nC3wtLAcvmGeLzckQYwpRm98x5Y2dXablIKTaDDrZ5cXg5vjG6InCRTUZ', NULL, 0, '2023-01-04 04:24:33', '2023-02-24 09:42:42'),
+(11, 4, 0, 2, 2, 1, 'Super', 'Admin', NULL, 'superadmin4@bmb.com', '', NULL, '$2a$12$DAeA/CC/k2xUF8g1hN6toeW6cnwZFtWKDaBcEEW5Y4Fptw1OaVWAC', NULL, NULL, 0, '2023-01-19 13:39:09', '2023-01-19 13:39:09'),
+(12, 5, 0, 2, 2, 1, 'Super', 'Admin', NULL, 'superadmin5@test.com', '', NULL, '$2a$12$DAeA/CC/k2xUF8g1hN6toeW6cnwZFtWKDaBcEEW5Y4Fptw1OaVWAC', NULL, NULL, 0, '2023-01-22 12:33:56', '2023-01-22 12:33:56'),
+(13, 1, 0, 2, 2, 1, 'John D.', 'John D.', NULL, 'JohnDMurray@teleworm.us', '', NULL, '$2a$12$DAeA/CC/k2xUF8g1hN6toeW6cnwZFtWKDaBcEEW5Y4Fptw1OaVWAC', NULL, NULL, 0, '2023-01-25 10:36:08', '2023-01-25 10:36:08'),
+(14, 1, 0, 2, 3, 1, 'test', 'client', NULL, 'client@gmail.com', '', NULL, '$2a$12$DAeA/CC/k2xUF8g1hN6toeW6cnwZFtWKDaBcEEW5Y4Fptw1OaVWAC', NULL, NULL, 0, '2023-02-05 10:19:42', '2023-02-05 10:19:42'),
+(15, 6, 2703, 6, 2, 2, 'Asad', 'Nazir', 'Asad Nazir Awan', 'superadmin6@new.com', 'superadmin6', NULL, '$2y$10$T9jRrchuuBhVQfaaYMdlLubDgSlSz/x9UR0V8J0XZkE4zLYKM6U4W', NULL, NULL, 7, '2023-02-16 16:08:10', '2023-03-20 15:18:50'),
+(16, 6, 0, 2, 3, 10, 'New', 'Client 1', NULL, 'newclient@gmail.com', 'newclient', NULL, '$2y$10$T9jRrchuuBhVQfaaYMdlLubDgSlSz/x9UR0V8J0XZkE4zLYKM6U4W', NULL, NULL, 4, '2023-02-16 16:10:37', '2023-03-20 15:27:50'),
+(17, 6, 0, 2, 2, 2, 'Test', 'Test', NULL, 'test@gmail.com', '', NULL, '$2y$10$KA8vHn1FJekCLjBDir/Lhupag4peomZl1wjv46CfjoePjiO3s1UfS', NULL, NULL, 0, '2023-02-21 12:54:37', '2023-03-07 12:22:27'),
+(18, 6, 0, 2, 2, 12, 'Test', 'User', NULL, 'testuser@gmail.com', '', NULL, '$2y$10$ZQuRQ6iuGSvo7nmORZGVy.lMWvW02ow3pYCkJltN5U/f4JLmKO.wi', NULL, NULL, 0, '2023-02-27 12:43:41', '2023-03-07 12:23:13'),
+(19, 6, 0, 2, 3, 1, 'New', 'Client 2', NULL, 'newclient2@gmail.com', '', NULL, '$2y$10$Ovd3DnCDg5o2iAv0YELZnuBf8fqNsUFxZBiLClLDaxIyWiRDKYKi.', NULL, NULL, 0, '2023-03-02 15:49:40', '2023-03-02 15:49:40'),
+(20, 6, 0, 2, 3, 1, 'New', 'Client 3', NULL, 'newclient3@gmail.com', '', NULL, '$2y$10$iqKPkotw5IJ5sgn9cA48cuQz6zJy/fTJo.ut/PV6iIfL1HNWHF2pe', NULL, NULL, 0, '2023-03-02 16:12:25', '2023-03-02 16:12:25');
 
 --
 -- Constraints for dumped tables

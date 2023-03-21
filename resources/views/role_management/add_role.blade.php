@@ -110,6 +110,19 @@
                 </div>
               </div>
               <div class="col-xs-6 col-sm-6 col-md-3">
+                <strong class="btn-success"><label for="designation">Designation</label><input type="checkbox" name="check-all" id="designation" {{ @$check_all["designation"] }}></strong>
+                <div class="form-group">
+                  @foreach($permissions as $value)
+                  @if($value->type=="designation")
+                  <div class="form-check form-check-inline">
+                    {{ Form::checkbox('permission[]', $value->id, in_array($value->id, @$assign_permissions) ? true : false, array('class' => 'form-check-input designation','id'=>$value->name)) }}
+                    <label for="{{ $value->name }}" class="form-check-label">{{ ucwords(str_replace("-"," ",$value->display_name)) }}</label>
+                  </div>
+                  @endif
+                  @endforeach
+                </div>
+              </div>
+              <div class="col-xs-6 col-sm-6 col-md-3">
                 <strong class="btn-success"><label for="document_type">Document Type</label><input type="checkbox" name="check-all" id="document_type" {{ @$check_all["document_type"] }}></strong>
                 <div class="form-group">
                   @foreach($permissions as $value)

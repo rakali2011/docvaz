@@ -140,6 +140,12 @@
             </a>
           </li>
           @endcan
+          @can('view designation')
+          <li class="nav-item">
+            <a class="nav-link pl-3 sub-menu" id="designations" href="{{ route('designations.index') }}"><span class="ml-1 item-text">Designations</span>
+            </a>
+          </li>
+          @endcan
           @can('view status')
           <li class="nav-item">
             <a class="nav-link pl-3 sub-menu" id="statues" href="{{ route('statuses.index') }}"><span class="ml-1 item-text">Statues</span>

@@ -414,6 +414,10 @@ class PracticeController extends Controller
                 $addresses_section["physical_address"] = json_encode($physical_address);
                 $addresses_section["mailing_address"] = json_encode($mailing_address);
                 $addresses_section["location_address"] = json_encode($location_address);
+            } else {
+                $addresses_section["physical_address"] = '[{"zip": null,"city": null,"state": null,"address": null}]';
+                $addresses_section["mailing_address"] = '[{"zip": null,"city": null,"state": null,"address": null}]';
+                $addresses_section["location_address"] = '[{"zip": null,"city": null,"state": null,"address": null}]';
             }
             // Contact Information Section
             $contact_information_section = [];
@@ -456,6 +460,9 @@ class PracticeController extends Controller
                 $contact_information_section["dmail_emails"] = $req->dmail_emails;
                 $contact_information_section["focal_info"] = json_encode($focal_info);
                 $contact_information_section["owner_info"] = json_encode($owner_info);
+            } else {
+                $contact_information_section["focal_info"] = '[{"fax": null,"name": null,"email": null,"phone": null,"designation": null}]';
+                $contact_information_section["focal_info"] = '[{"fax": null,"name": null,"email": null,"phone": null,"title": null}]';
             }
             // Provider Information Section
             $provider_information_section = [];
@@ -479,7 +486,8 @@ class PracticeController extends Controller
                     $provider_information[] = $row;
                 }
                 $provider_information_section["provider_information"] = json_encode($provider_information);
-            }
+            } else
+                $provider_information_section["provider_information"] = '[{"dob": null,"ssn": null,"name": null,"tax_id": null,"individual_npi": null,"individual_ptan": null}]';
             // System Details Section
             $system_details_section = [];
             if (auth()->user()->can('update business system detail')) {
@@ -513,6 +521,11 @@ class PracticeController extends Controller
                 $system_details_section["clearinghouse"] = json_encode($clearinghouse);
                 $system_details_section["ehr"] = json_encode($ehr);
                 $system_details_section["management_software"] = json_encode($management_software);
+            } else {
+                $system_details_section["caqh"] = '{"url": null,"name": "dsadsad","password": null,"username": null}';
+                $system_details_section["clearinghouse"] = '{"url": null,"name": null,"password": null,"username": null}';
+                $system_details_section["ehr"] = '{"url": null,"name": null,"password": null,"username": null}';
+                $system_details_section["management_software"] = '[{"url": null,"name": null,"password": null,"username": null}]';
             }
             // Payers Enrollment Information Section
             $payers_enrollment_information_section = [];
@@ -535,7 +548,8 @@ class PracticeController extends Controller
                     $payers_info[] = $row;
                 }
                 $payers_enrollment_information_section["payers_info"] = json_encode($payers_info);
-            }
+            } else
+                $payers_enrollment_information_section["payers_info"] = '[{"npi": null,"payer_name": null,"enroll_type": "individual","enroll_with": "tax_id","provider_name": null,"effective_date": null}]';
             // Claim Creation Frequency Section
             $claim_creation_frequency_section = [];
             if (auth()->user()->can('update business claim frequency')) {
@@ -634,7 +648,7 @@ class PracticeController extends Controller
             $user_id = $this->clean_id($req->ref);
             $user = User::find($user_id);
             if (auth()->user()->can('assign practice user')) {
-                $practices = Practice::where('status', 1)->where('company_id', $user->company_id)->orderBy('name', 'ASC')->get();
+                $practices = Practice::where('status', ">", 1)->where('company_id', $user->company_id)->orderBy('name', 'ASC')->get(['id', 'name']);
             } else {
                 $practices = Auth::user()->assinged_practices();
             }

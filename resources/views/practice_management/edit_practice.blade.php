@@ -895,8 +895,8 @@
                                 <label for="payer_enroll_type" class="form-label">Enroll Type</label>
                                 <select name="payer_enroll_type[]" onchange="change_npi()" ref="" class="form-control payer_enroll_type" id="payer_enroll_type">
                                   <option value="">--Please Select--</option>
-                                  <option value="individual">Individual</option>
-                                  <option value="group">Group</option>
+                                  <option value="individual" {{ !empty(old('payer_enroll_type')) ? old('payer_enroll_type')[0] == 'individual' ? 'selected' : '' }}>Individual</option>
+                                  <option value="group" {{ !empty(old('payer_enroll_type')) ? old('payer_enroll_type')[0] == 'group' ? 'selected' : '' }}>Group</option>
                                 </select>
                               </div>
                             </div>
@@ -905,8 +905,8 @@
                                 <label for="payer_enroll_with" class="form-label">Enroll With</label>
                                 <select name="payer_enroll_with[]" class="form-control" id="payer_enroll_with">
                                   <option value="">--Please Select--</option>
-                                  <option value="tax_id">Tax Id</option>
-                                  <option value="ssn">SSN</option>
+                                  <option value="tax_id" {{ !empty(old('payer_enroll_with')) ? old('payer_enroll_with')[0] == 'tax_id' ? 'selected' : '' }}>Tax Id</option>
+                                  <option value="ssn" {{ !empty(old('payer_enroll_with')) ? old('payer_enroll_with')[0] == 'ssn' ? 'selected' : '' }}>SSN</option>
                                 </select>
                               </div>
                             </div>

@@ -21,6 +21,7 @@
                     <th>First Name</th>
                     <th>Last Name</th>
                     <th>Email</th>
+                    <th>Username</th>
                     @role('dev')
                     <th>Company</th>
                     @endrole
@@ -33,6 +34,7 @@
                     <td>{{ $item->firstname }}</td>
                     <td>{{ $item->lastname }}</td>
                     <td>{{ $item->email }}</td>
+                    <td>{{ $item->username }}</td>
                     @role('dev')
                     <td>{{ @$item->company->name }}</td>
                     @endrole

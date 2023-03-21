@@ -61,6 +61,10 @@ class User extends Authenticatable
     {
         return get_timezone($value);
     }
+    public function getDesignationIdAttribute($value)
+    {
+        return get_designation($value);
+    }
     // public function getFullnameAttribute($value)
     // {
     //     return ucfirst($this->firstname) . " " . ucfirst($this->lastname);

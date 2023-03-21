@@ -629,6 +629,7 @@
                                 <div class="mb-3">
                                   <label for="payer_enroll_type-" class="form-label">Enroll Type</label>
                                   <select name="payer_enroll_type[]" onchange="change_npi()" ref="" class="form-control payer_enroll_type" id="payer_enroll_type-">
+                                    <option value="">--Please Select--</option>
                                     <option value="individual">Individual</option>
                                     <option value="group">Group</option>
                                   </select>
@@ -638,6 +639,7 @@
                                 <div class="mb-3">
                                   <label for="payer_enroll_with-" class="form-label">Enroll With</label>
                                   <select name="payer_enroll_with[]" class="form-control" id="payer_enroll_with-">
+                                    <option value="">--Please Select--</option>
                                     <option value="tax_id">Tax Id</option>
                                     <option value="ssn">SSN</option>
                                   </select>

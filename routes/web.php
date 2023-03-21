@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\DesignationController;
 use App\Http\Controllers\DocumentTypeController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\HomeController;
@@ -63,6 +64,7 @@ Route::get('/file/{id}', [FileController::class, 'show'])->middleware('permissio
 Route::post('/post-file', [FileController::class, 'post_file'])->middleware('permission:import file')->name('post_file');
 Route::get('/edit-file/{id}', [FileController::class, 'edit_file'])->middleware('permission:update file')->name('edit_file');
 Route::post('/update-file/{id}', [FileController::class, 'update_file'])->middleware('permission:update file')->name('update_file');
+Route::post('/all-files', [FileController::class, 'all_files'])->middleware('permission:view file')->name('all_files');
 // Practice
 Route::get('/practices', [PracticeController::class, 'practices'])->middleware('permission:view practice')->name('practices');
 Route::get('/add-practice', [PracticeController::class, 'add_practice'])->middleware('permission:add practice')->name('add_practice');
@@ -109,3 +111,5 @@ Route::post('/all-tickets', [TicketController::class, 'allTickets'])->middleware
 Route::post('/get-ticket', [TicketController::class, 'getTicket'])->middleware('permission:view ticket')->name('get_ticket');
 // Ticket Replies
 Route::resource('ticket_replies', TicketReplyController::class);
+// Designations
+Route::resource('designations', DesignationController::class);

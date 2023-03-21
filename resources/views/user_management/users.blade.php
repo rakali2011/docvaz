@@ -6,7 +6,6 @@
             <span class="mb-2 page-title menu-head">Users</span>
             @can('add user')
             <a class="btn btn-primary float-right" href="{{ route('add_user') }}">Create User</a>
-
             @endcan
             <p class="card-text"></p>
             <div class="row my-4">
@@ -20,7 +19,9 @@
                                     <tr>
                                         <th>First Name</th>
                                         <th>Last Name</th>
+                                        <th>Designation</th>
                                         <th>Email</th>
+                                        <th>Username</th>
                                         @role('dev')
                                         <th>Company</th>
                                         @endrole
@@ -32,7 +33,9 @@
                                     <tr>
                                         <td>{{ $item->firstname }}</td>
                                         <td>{{ $item->lastname }}</td>
+                                        <td>{{ $item->designation_id }}</td>
                                         <td>{{ $item->email }}</td>
+                                        <td>{{ $item->username }}</td>
                                         @role('dev')
                                         <td>{{ @$item->company->name }}</td>
                                         @endrole

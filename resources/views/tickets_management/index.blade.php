@@ -160,8 +160,8 @@
                 <label for="status">Status</label>
                 <select name="status" id="status" class="form-control">
                   <option value="">--Please Select--</option>
-                  @foreach (ticket_statuses() as $key => $item)
-                  <option value="{{ $key }}">{{ $item }}</option>
+                  @foreach (statuses('ticket') as $key => $item)
+                  <option value="{{ $item->id }}">{{ $item->name }}</option>
                   @endforeach
                 </select>
               </div>

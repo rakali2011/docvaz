@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Auth;
 use App\Models\Company;
+use App\Models\Designation;
+use App\Models\DocumentType;
 use App\Models\Practice;
 use App\Models\Status;
 use App\Models\User;
@@ -11,6 +13,32 @@ if (!function_exists('companies')) {
     {
         $companies = Company::where('status', 1)->get();
         return $companies;
+    }
+}
+if (!function_exists('designations')) {
+    function designations()
+    {
+        return Designation::where('company_id', Auth::user()->company->id)->orderBy('name', 'ASC')->get();
+    }
+}
+if (!function_exists('get_designation')) {
+    function get_designation($designation_id)
+    {
+        $designation = Designation::findorfail($designation_id);
+        return $designation->name;
+    }
+}
+if (!function_exists('document_types')) {
+    function document_types()
+    {
+        return DocumentType::where('company_id', Auth::user()->company->id)->orderBy('name', 'ASC')->get();
+    }
+}
+if (!function_exists('get_document_type')) {
+    function get_document_type($type_id)
+    {
+        $document_type = DocumentType::findorfail($type_id);
+        return $document_type->name;
     }
 }
 if (!function_exists('statuses')) {

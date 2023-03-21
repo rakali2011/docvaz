@@ -36,11 +36,27 @@
                   <label for="status">Status</label>
                   <select class="form-control @error('practice') is-invalid @enderror" name="status" id="status">
                     <option value="">--Please Select--</option>
-                    @foreach ($status as $item)
-                    <option value="{{ $item }}" {{(@@$file) ? (@@$file->status==$item ? 'selected' : '') : '' }}>{{ $item }}</option>
+                    @foreach (statuses('document') as $status)
+                    <option value="{{ $status->id }}" {{(@$file) ? (@$file->status==$status->name ? 'selected' : '') : '' }}>{{ $status->name }}</option>
                     @endforeach
                   </select>
                   @error('status')
+                  <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                  </span>
+                  @enderror
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group mb-3">
+                  <label for="doc_type">Doc Type</label>
+                  <select class="form-control @error('practice') is-invalid @enderror" name="doc_type" id="doc_type">
+                    <option value="">--Please Select--</option>
+                    @foreach (document_types() as $document_type)
+                    <option value="{{ $document_type->id }}" {{(@$file) ? (@$file->doc_type==$document_type->name ? 'selected' : '') : '' }}>{{ $document_type->name }}</option>
+                    @endforeach
+                  </select>
+                  @error('doc_type')
                   <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
                   </span>

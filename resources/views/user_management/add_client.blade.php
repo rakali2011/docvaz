@@ -59,6 +59,17 @@
                                     @enderror
                                 </div>
                             </div>
+                            <div class="col-md-4">
+                                <div class="form-group mb-3">
+                                    <label for="username">Username</label>
+                                    <input name="username" type="username" id="username" class="form-control @error('username') is-invalid @enderror" value="{{ (@$user)?@$user->username:old('username') }}">
+                                    @error('username')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                            </div>
                             @can('assign role')
                             <div class="col-md-4">
                                 <div class="form-group mb-3">

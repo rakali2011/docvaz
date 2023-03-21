@@ -28,6 +28,7 @@ class PostClient extends FormRequest
             'firstname' => ['required', 'string', 'max:30'],
             'lastname' => ['required', 'string', 'max:30'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'username' => ['required', 'string', 'email', 'max:128', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ];
     }

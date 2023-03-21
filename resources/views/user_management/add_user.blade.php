@@ -36,7 +36,7 @@
                   </span>
                   @enderror
                 </div>
-              </div> <!-- /.col -->
+              </div>
               <div class="col-md-4">
                 <div class="form-group mb-3">
                   <label for="lastname">Last Name</label>
@@ -50,9 +50,42 @@
               </div>
               <div class="col-md-4">
                 <div class="form-group mb-3">
+                  <label for="psudo_name">Psudo Name</label>
+                  <input name="psudo_name" type="text" id="psudo_name" class="form-control @error('psudo_name') is-invalid @enderror" value="{{ (@$user)?@$user->psudo_name:old('psudo_name') }}">
+                  @error('psudo_name')
+                  <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                  </span>
+                  @enderror
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group mb-3">
+                  <label for="employee_id">Employee ID</label>
+                  <input name="employee_id" required type="number" id="employee_id" class="form-control @error('employee_id') is-invalid @enderror" value="{{ (@$user)?@$user->employee_id:old('employee_id') }}">
+                  @error('employee_id')
+                  <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                  </span>
+                  @enderror
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group mb-3">
                   <label for="email">Email</label>
                   <input name="email" required type="email" id="email" class="form-control @error('email') is-invalid @enderror" value="{{ (@$user)?@$user->email:old('email') }}">
                   @error('email')
+                  <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                  </span>
+                  @enderror
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group mb-3">
+                  <label for="username">Username</label>
+                  <input name="username" type="text" id="username" class="form-control @error('username') is-invalid @enderror" value="{{ (@$user)?@$user->username:old('username') }}">
+                  @error('username')
                   <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
                   </span>
@@ -102,13 +135,29 @@
                   @enderror
                 </div>
               </div>
-              <div class="col-md-6">
+              <div class="col-md-4">
                 <div class="form-group mb-3">
                   <label for="status">Status</label>
                   <select class="form-control @error('practice') is-invalid @enderror" name="status" id="status">
                     <option value="">--Please Select--</option>
                     @foreach (statuses('user') as $status)
                     <option value="{{ $status->id }}" {{(@$user) ? (@$user->status==$status->id ? 'selected' : '') : '' }}>{{ $status->name }}</option>
+                    @endforeach
+                  </select>
+                  @error('status')
+                  <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                  </span>
+                  @enderror
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group mb-3">
+                  <label for="designation">Designation</label>
+                  <select class="form-control @error('practice') is-invalid @enderror" name="designation" id="designation">
+                    <option value="">--Please Select--</option>
+                    @foreach (designations() as $designation)
+                    <option value="{{ $designation->id }}" {{(@$user) ? (@$user->designation_id==$designation->name ? 'selected' : '') : '' }}>{{ $designation->name }}</option>
                     @endforeach
                   </select>
                   @error('status')

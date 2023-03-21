@@ -81,6 +81,7 @@ class ClientController extends Controller
             $user->firstname = $req->firstname;
             $user->lastname = $req->lastname;
             $user->email = $req->email;
+            $user->username = $req->username;
             $user->company_id = $company_id;
             $user->password = Hash::make($req->password);
             $user->type = 3;
@@ -110,11 +111,13 @@ class ClientController extends Controller
             }
             $this->validate($req, [
                 'email' => 'required|email|unique:users,email,' . $id,
+                'username' => 'required|unique:users,username,' . $id,
             ]);
             $user = User::findorfail($id);
             $user->firstname = $req->firstname;
             $user->lastname = $req->lastname;
             $user->email = $req->email;
+            $user->username = $req->username;
             $user->company_id = $company_id;
             $user->timezone = $req->timezone;
             $user->status = $req->status;
