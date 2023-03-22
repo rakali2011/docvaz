@@ -5,7 +5,7 @@
     <div class="col-12">
       <span class="mb-2 page-title menu-head">Files</span>
       @can('import file')
-      <a class="btn btn-primary float-right" href="{{ route('import') }}">Create File</a>
+      <a class="btn btn-sm btn-primary float-right" href="{{ route('import') }}">Import File</a>
       @endcan
       <p class="card-text"></p>
       <div class="row my-4">
@@ -13,45 +13,65 @@
         <div class="col-md-12">
           <div class="card shadow">
             <div class="card-body">
-              <!-- table -->
-              <table class="table datatables" id="dataTable-1">
-                <thead>
-                  <tr>
-                    <th>Name</th>
-                    <th>Practice Name</th>
-                    @role('dev')
-                    <th>Company</th>
-                    @endrole
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  @foreach ($files as $key=> $file)
-                  <tr>
-                    <td><a href="{{ route('file', ['id' => Crypt::encrypt($file->id)]) }}" target="_blank" rel="noopener noreferrer">{{ $file->org_name }}</a></td>
-                    <td>{{ $file->pname }}</td>
-                    @role('dev')
-                    <td>{{ @$item->company->name }}</td>
-                    @endrole
-                    <td>
-                      <button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <span class="text-muted sr-only">Action</span>
-                      </button>
-                      <div class="dropdown-menu dropdown-menu-right">
-                        @can('update file')
-                        <a class="dropdown-item" href="{{ route('edit_file', ['id' => Crypt::encrypt($file->id)]) }}">Edit</a>
-                        @endcan
-                      </div>
-                    </td>
-                  </tr>
-                  @endforeach
-                </tbody>
-              </table>
+              <div class="card mb-3">
+                <div class="card-body">
+                  <form action="" id="filter-form" class="row">
+                    <div class="form-group col-md-2">
+                      <label for="team"></label>
+                      <select name="team" id="team" class="form-control">
+                        <option value="">Select Team</option>
+                        @foreach ($teams as $key=> $team)
+                        <option value="{{ $team->id }}">{{ $team->name }}</option>
+                        @endforeach
+                      </select>
+                    </div>
+                    <div class="form-group col-md-2">
+                      <label for="practice"></label>
+                      <select name="practice" id="practice" class="form-control">
+                        <option value="">Select Practice</option>
+                        @foreach ($practices as $key=> $practice)
+                        <option value="{{ $practice->id }}">{{ $practice->name }}</option>
+                        @endforeach
+                      </select>
+                    </div>
+                    <div class="form-group col-md-2">
+                      <label for="status"></label>
+                      <select name="status" id="status" class="form-control">
+                        <option value="">Select Status</option>
+                        @foreach (statuses('document') as $status)
+                        <option value="{{ $status->id }}">{{ $status->name }}</option>
+                        @endforeach
+                      </select>
+                    </div>
+                    <div class="form-group col-md-2">
+                      <label for="doc_type"></label>
+                      <select name="doc_type" id="doc_type" class="form-control">
+                        <option value="">Select Doc Type</option>
+                        @foreach (document_types() as $document_type)
+                        <option value="{{ $document_type->id }}">{{ $document_type->name }}</option>
+                        @endforeach
+                      </select>
+                    </div>
+                    <div class="form-group col-md-2">
+                      <label for="date_from"></label>
+                      <input type="text" name="date_from" id="date_from" class="form-control" placeholder="Date From" onfocus="(this.type='date')" onfocusout="(this.type='text')">
+                    </div>
+                    <div class="form-group col-md-2">
+                      <label for="date_to"></label>
+                      <input type="text" name="date_to" id="date_to" class="form-control" placeholder="Date To" onfocus="(this.type='date')" onfocusout="(this.type='text')">
+                    </div>
+                    <div class="col-md-12 text-right">
+                      <button type="submit" class="btn btn-sm btn-primary">Filter</button>
+                      <button type="button" class="btn btn-sm btn-primary" id="c_filter">Clear Filter</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
               <table id="files-table" class="display" style="width:100%">
                 <thead>
                   <tr>
-                    <th>Practice</th>
                     <th>File Name</th>
+                    <th>Practice</th>
                     <th>Status</th>
                     <th>Doc Type</th>
                     <th>Type</th>
@@ -62,8 +82,8 @@
                 </thead>
                 <tfoot>
                   <tr>
-                    <th>Practice</th>
                     <th>File Name</th>
+                    <th>Practice</th>
                     <th>Status</th>
                     <th>Doc Type</th>
                     <th>Type</th>
@@ -91,35 +111,53 @@
         "dataType": "json",
         "type": "POST",
         "data": {
-          _token: "{{csrf_token()}}"
+          _token: "{{csrf_token()}}",
+          'team_filter': function() {
+            return $("#team").val();
+          },
+          'practice_filter': function() {
+            return $("#practice").val();
+          },
+          'status_filter': function() {
+            return $("#status").val();
+          },
+          'doc_type_filter': function() {
+            return $("#doc_type").val();
+          },
+          'date_from_filter': function() {
+            return $("#date_from").val();
+          },
+          'date_to_filter': function() {
+            return $("#date_to").val();
+          },
         }
       },
       "columns": [{
-          "data": "id",
+          "data": "org_name",
           "orderable": true
         },
         {
-          "data": "response_at",
+          "data": "practice_id",
+          "orderable": false
+        },
+        {
+          "data": "status",
+          "orderable": false
+        },
+        {
+          "data": "doc_type",
+          "orderable": false
+        },
+        {
+          "data": "ext",
+          "orderable": true
+        },
+        {
+          "data": "date",
           "orderable": true
         },
         {
           "data": "created_at",
-          "orderable": true
-        },
-        {
-          "data": "creator",
-          "orderable": true
-        },
-        {
-          "data": "creator_name",
-          "orderable": true
-        },
-        {
-          "data": "practice_name",
-          "orderable": true
-        },
-        {
-          "data": "department_name",
           "orderable": true
         },
         {
@@ -147,6 +185,16 @@
       //   provider_activate_event();
       // }
     });
+  });
+
+
+  $('#filter-form [type="submit"]').on('click', function(e) {
+    e.preventDefault();
+    $('#files-table').DataTable().ajax.reload(null, true);
+  });
+  $('#c_filter').click(function() {
+    $('select').val('');
+    $('#files-table').DataTable().ajax.reload(null, true);
   });
 </script>
 @endpush

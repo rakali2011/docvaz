@@ -35,6 +35,7 @@ class FileController extends Controller
         $data['menu'] = "files-management";
         $data['sub_menu'] = "files";
         $practices = Auth::user()->assinged_practices();
+        $teams = Auth::user()->assinged_teams();
         $files = new Collection();
         foreach ($practices as $key => $value) {
             $pro = $value->file->all();
@@ -43,7 +44,7 @@ class FileController extends Controller
                 $files->push($value1);
             }
         }
-        return view('files_management.files', compact('data', 'files'));
+        return view('files_management.files', compact('data', 'files', 'practices', 'teams'));
     }
     public function import()
     {
@@ -58,7 +59,7 @@ class FileController extends Controller
     }
     function edit_file($id)
     {
-        $id = $this->clean_id($id);
+        // $id = $this->clean_id($id);
         $file = File::findOrFail($id);
         $data['menu'] = "files-management";
         $data['sub_menu'] = "import";
@@ -133,16 +134,16 @@ class FileController extends Controller
     }
     public function allFiles(Request $request)
     {
-        $columns = ['practice_id', 'name', 'status', 'doc_type', 'ext', 'date', 'created_at'];
+        $columns = ['org_name', 'practice_id', 'status', 'doc_type', 'ext', 'date', 'created_at'];
         $date_range = [
-            "from_date" => $request->input('from_date') != "" ? $request->input('from_date') . ' 00:00:00' : $request->input('from_date'),
-            "to_date" => $request->input('to_date') != "" ? $request->input('to_date') . ' 23:59:59' : $request->input('to_date')
+            "date_from" => $request->input('date_from_filter') != "" ? $request->input('date_from_filter') . ' 00:00:00' : $request->input('date_from_filter'),
+            "date_to" => $request->input('date_to_filter') != "" ? $request->input('date_to_filter') . ' 23:59:59' : date("Y-m-d H:i:s")
         ];
         $filter = array(
-            "practice_id" => $request->input('practice_id'),
-            "status" => $request->input('status'),
-            "pro_speciality" => $request->input('pro_speciality'),
-            "pro_state" => $request->input('pro_state'),
+            "team" => $request->input('team_filter'),
+            "practice_id" => $request->input('practice_filter'),
+            "status" => $request->input('status_filter'),
+            "doc_type" => $request->input('doc_type_filter')
         );
         $limit = $request->input('length');
         $start = $request->input('start');
@@ -150,36 +151,28 @@ class FileController extends Controller
         $order = $columns[$order];
         $dir = !empty($request->input('order.0.dir')) ? strtoupper($request->input('order.0.dir')) : "DESC";
         $search = $request->input('search.value');
-        $ticket = new File();
-        $totalData = $ticket->countTotalTickets();
-        $totalFiltered = $ticket->countFilteredTickets($date_range, $filter, $search, $start, $limit, $order, $dir);
-        $tickets = $ticket->allTickets($date_range, $filter, $search, $start, $limit, $order, $dir);
+        $file = new File();
+        $totalData = $file->countTotal();
+        $totalFiltered = $file->countFiltered($date_range, $filter, $search, $start, $limit, $order, $dir);
+        $files = $file->getData($date_range, $filter, $search, $start, $limit, $order, $dir);
         $data = array();
-        if (!empty($tickets)) {
-            foreach ($tickets as $ticket) {
-                $ticket = $ticket->load("replies");
-                $to_time = strtotime(date("Y-m-d H:is"));
-                $from_time = strtotime($ticket->created_at);
-                $difference = round(abs($to_time - $from_time) / 60, 2);
+        if (!empty($files)) {
+            foreach ($files as $file) {
                 $edit = '';
                 $delete = '';
-                if (auth()->user()->can('update ticket') && count($ticket->replies) == 0)
-                    $edit = '<a class="dropdown-item" href="' . route('tickets.edit', $ticket->id) . '">Edit</a>';
-                if (auth()->user()->can('delete ticket')) {
-                    $delete = '<form method="POST" action="' . route('tickets.destroy', $ticket->id) . '" accept-charset="UTF-8" style="display:inline"><input name="_method" type="hidden" value="DELETE"><input name="_token" type="hidden" value="' . csrf_token() . '"><input class="dropdown-item" type="submit" value="Delete"></form>';
+                if (auth()->user()->can('update file'))
+                    $edit = '<a class="dropdown-item" href="' . route('edit_file', ['id' => $file->id]) . '">Edit</a>';
+                if (auth()->user()->can('delete file')) {
+                    $delete = '<form method="POST" action="' . route('delete_file', $file->id) . '" accept-charset="UTF-8" style="display:inline"><input name="_method" type="hidden" value="DELETE"><input name="_token" type="hidden" value="' . csrf_token() . '"><input class="dropdown-item" type="submit" value="Delete"></form>';
                 }
-                $nestedData['id'] = '<a class="ticket-replies" ref="' . $ticket->id . '" href="javascript:void(0)">' . $ticket->id . '</a>';
-                $nestedData['response_at'] = !empty($ticket->response_at) ? date("M j, y, h:i A", strtotime($ticket->response_at)) : "";
-                $nestedData['created_at'] = $ticket->created_at;
-                $nestedData['creator'] = $ticket->creator;
-                $nestedData['creator_name'] = $ticket->creator_name;
-                $nestedData['practice_name'] = $ticket->practice_name;
-                $nestedData['department_name'] = $ticket->department_name;
-                $nestedData['team_name'] = $ticket->team_name;
-                $nestedData['subject'] = $ticket->subject;
-                $nestedData['priority'] = '<span class="' . strtolower($ticket->priority) . '">' . $ticket->priority . '</span>';
-                $nestedData['status'] = $ticket->status;
-                $nestedData['remarks'] = $ticket->remarks;
+                $practice = Practice::findorfail($file->practice_id);
+                $nestedData['practice_id'] = $practice->name;
+                $nestedData['org_name'] = $file->org_name;
+                $nestedData['status'] = $file->status;
+                $nestedData['doc_type'] = $file->doc_type;
+                $nestedData['ext'] = $file->ext;
+                $nestedData['date'] = $file->date;
+                $nestedData['created_at'] = $file->created_at;
                 $nestedData['action'] = '<button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="text-muted sr-only">Action</span></button><div class="dropdown-menu dropdown-menu-right">' . $edit . $delete . '</div>';
                 $data[] = $nestedData;
             }

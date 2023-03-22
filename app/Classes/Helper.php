@@ -123,3 +123,22 @@ function share_to()
     }
     return ["practices" => $practices, "share_to" => $share_to];
 }
+function get_assinged_practices()
+{
+    $practices = Auth::user()->assinged_practices()->pluck("id");
+    return $practices;
+}
+function get_assigned_teams_user_ids($team_id = NULL)
+{
+    $user_ids = [];
+    $assinged_teams = auth()->user()->assinged_teams();
+    foreach ($assinged_teams as $key => $team) {
+        if ($team->id != $team_id && $team_id != NULL)
+            continue;
+        $assinged_users = json_decode(json_encode($team->assinged_users()->pluck("id")), true);
+        $user_ids = array_merge($user_ids, $assinged_users);
+    }
+    $user_ids = array_unique($user_ids);
+    sort($user_ids);
+    return $user_ids;
+}

@@ -1,4 +1,23 @@
-<aside class="sidebar-left border-right bg-white shadow" id="leftSidebar" data-simplebar>
+<style>
+  span {
+    color: #FFFFFF;
+    font-family: "Overpass", sans-serif;
+  }
+
+  i {
+    color: #FFFFFF;
+  }
+
+  .nav-active {
+    background-color: #0e3685;
+  }
+
+  .navbar-nav:hover {
+    background-color: #052970;
+    color: #FFFFFF !important;
+  }
+</style>
+<aside class="sidebar-left border-right bg-white shadow" style="background: linear-gradient(to bottom right, #052346 20%, #400240 100%); color: #ffecb5;" id="leftSidebar" data-simplebar>
   <a href="#" class="btn collapseSidebar toggle-btn d-lg-none text-muted ml-2 mt-3" data-toggle="toggle">
     <i class="fe fe-x"><span class="sr-only"></span></i>
   </a>
