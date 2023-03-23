@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="40" height="41" viewBox="0 0 40 41">
+  <g id="Group_282" data-name="Group 282" transform="translate(-21.576 -24)">
+    <g id="denials-icons" transform="translate(21.576 24)" fill="none" stroke="#f96969" stroke-width="1">
+      <ellipse cx="20" cy="20.5" rx="20" ry="20.5" stroke="none"/>
+      <ellipse cx="20" cy="20.5" rx="19.5" ry="20" fill="none"/>
+    </g>
+    <path id="denied-svgrepo-com" d="M9.618,0a9.614,9.614,0,1,0,9.614,9.614A9.625,9.625,0,0,0,9.618,0Zm0,1.752a7.823,7.823,0,0,1,4.9,1.721L3.476,14.517A7.858,7.858,0,0,1,9.618,1.752Zm0,15.725a7.824,7.824,0,0,1-4.9-1.721L15.759,4.711A7.858,7.858,0,0,1,9.618,17.476Z" transform="translate(31.757 35.474)" fill="#f96969"/>
+  </g>
+</svg>

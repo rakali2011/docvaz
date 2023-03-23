@@ -11,7 +11,7 @@ class File extends Model
     use HasFactory;
     public function getStatusAttribute($value)
     {
-        return get_status('document', $value);
+        return get_status($value);
     }
     public function getDocTypeAttribute($value)
     {
@@ -87,9 +87,6 @@ class File extends Model
             $query = $query->where('practice_id', $filter['practice_id']);
         } else {
             $query = $query->whereIn('practice_id', get_assinged_practices());
-        }
-        if (!empty($filter["status"])) {
-            $query = $query->where('status', $filter['status']);
         }
         if (!empty($filter["status"])) {
             $query = $query->where('status', $filter['status']);

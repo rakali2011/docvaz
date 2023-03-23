@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Mar 22, 2023 at 09:29 PM
+-- Generation Time: Mar 23, 2023 at 09:10 PM
 -- Server version: 5.7.36
 -- PHP Version: 7.4.26
 
@@ -960,8 +960,9 @@ CREATE TABLE IF NOT EXISTS `tickets` (
   `message` text NOT NULL,
   `creator` varchar(32) NOT NULL,
   `response_at` timestamp NULL DEFAULT NULL,
-  `status` int(11) NOT NULL DEFAULT '0' COMMENT '0=Open,1=Inprocess,2=Closed,3=Reopen,4=Onhold,5=Waiting Approval,6=Rejected',
+  `status` int(11) NOT NULL DEFAULT '0',
   `remarks` varchar(256) DEFAULT NULL,
+  `flag` int(11) NOT NULL DEFAULT '0',
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `deleted_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NOT NULL,
@@ -972,26 +973,26 @@ CREATE TABLE IF NOT EXISTS `tickets` (
 -- Dumping data for table `tickets`
 --
 
-INSERT INTO `tickets` (`id`, `company_id`, `user_id`, `user_type`, `creator_name`, `department_id`, `department_name`, `practice_id`, `practice_name`, `team_id`, `team_name`, `type`, `priority`, `subject`, `message`, `creator`, `response_at`, `status`, `remarks`, `created_at`, `deleted_at`, `updated_at`) VALUES
-(1, 6, 15, 2, 'Asad Nazir', 3, 'Sales', 4, 'New Practice 123', 0, '', 'Info/Other', 'High', 'Test subject', 'test message', 'New Test Company', NULL, 0, NULL, '2023-02-24 16:17:37', NULL, '2023-02-28 15:58:46'),
-(2, 6, 15, 2, 'Asad Nazir', 3, 'Sales', 5, 'practice ABC', 0, '', 'Info/Other', 'Concerning', 'Test subject', 'test message', 'New Test Company', NULL, 0, NULL, '2023-02-24 16:17:37', NULL, '2023-02-24 16:17:37'),
-(3, 6, 15, 2, 'Asad Nazir', 3, 'Sales', 5, 'test practice', 0, 'Team B', 'Info/Other', 'Low', 'Test', 'message', 'New Test Company', NULL, 0, NULL, '2023-02-27 11:23:47', NULL, '2023-02-27 11:23:47'),
-(4, 6, 15, 2, 'Asad Nazir', 3, 'Sales', 5, 'test practice', 4, 'Team B', 'Info/Other', 'Concerning', 'Test', 'dsadsad', 'New Test Company', NULL, 0, NULL, '2023-02-27 11:51:23', NULL, '2023-02-27 11:51:23'),
-(5, 6, 15, 2, 'Asad Nazir', 3, 'Sales', 5, 'Practice ABC', 4, 'Team B', 'Info/Other', 'Concerning', 'dsf', 'dsfdsfsd', 'New Test Company', NULL, 0, NULL, '2023-02-27 11:56:17', NULL, '2023-02-27 11:56:17'),
-(6, 6, 15, 2, 'Asad Nazir', 3, 'Sales', 5, 'Practice ABC', 4, 'Team B', 'Info/Other', 'Medium', 'Testdsadsa', 'asdsadsadsad', 'New Test Company', NULL, 0, NULL, '2023-02-27 11:57:24', NULL, '2023-02-27 11:57:24'),
-(7, 6, 15, 2, 'Asad Nazir', 3, 'Sales', 5, 'Practice ABC', 5, 'Team C', 'Info/Other', 'Concerning', 'Test', 'sadsadsad', 'New Test Company', NULL, 0, NULL, '2023-02-27 14:34:36', NULL, '2023-02-27 14:34:36'),
-(8, 6, 15, 2, 'Asad Nazir', 3, 'Sales', 4, 'New Practice 123', 0, '', 'Info/Other', 'Concerning', 'Testsadsa', 'asdsadsadsad', 'New Test Company', NULL, 0, NULL, '2023-02-27 14:41:23', NULL, '2023-02-27 14:41:23'),
-(9, 6, 15, 2, 'Asad Nazir', 3, 'Sales', 5, 'Practice ABC', 5, 'Team C', 'Info/Other', 'Concerning', 'Test', 'sadsad', 'New Test Company', NULL, 0, NULL, '2023-02-27 15:27:16', NULL, '2023-02-27 15:27:16'),
-(10, 6, 15, 2, 'Asad Nazir', 3, 'Sales', 5, 'Practice ABC', 5, 'Team C', 'Info/Other', 'Concerning', 'Test', 'sadsad', 'New Test Company', NULL, 0, NULL, '2023-02-27 15:29:38', NULL, '2023-02-27 15:29:38'),
-(11, 6, 15, 2, 'Asad Nazir', 6, 'CRM', 5, 'Practice ABC', 5, 'Team C', 'Info/Other', 'Concerning', 'Testfg', 'fdgfdgfdg', 'New Test Company', NULL, 0, NULL, '2023-02-27 15:30:53', NULL, '2023-03-02 13:18:34'),
-(12, 6, 15, 2, 'Asad Nazir', 3, 'Sales', 5, 'Practice ABC', 5, 'Team C', 'Info/Other', 'Concerning', 'Test', 'sadsadsad', 'New Test Company', NULL, 0, NULL, '2023-02-27 15:34:19', NULL, '2023-02-27 15:34:19'),
-(13, 6, 15, 2, 'Asad Nazir', 3, 'Sales', 5, 'Practice ABC', 5, 'Team C', 'Info/Other', 'Concerning', 'sdsad', 'adsad', 'New Test Company', NULL, 0, NULL, '2023-02-27 15:37:34', NULL, '2023-02-27 15:37:34'),
-(14, 6, 15, 2, 'Asad Nazir', 6, 'CRM', 4, 'New Practice 123', 0, '', 'Info/Other', 'Concerning', 'Test', 'Asad Nazir\r\nsadsadsa\r\nasdsad', 'New Test Company', NULL, 0, NULL, '2023-02-28 16:34:53', NULL, '2023-02-28 16:34:53'),
-(15, 6, 15, 2, 'Asad Nazir', 4, 'Audit', 4, 'New Practice 123', 0, '', 'Info/Other', 'Low', 'Test', '<p><strong>Hi Ewa and Team,</strong><br />\n<br />\nAfter reviewing the patient account in detail. We have found that all the services are getting paid by both insurances except the lab services.<br />\nAs we already discussed his lab services amount is on the patient end because of the denials we had received from his both insurance. Now we send all his lab services balance on the patient end. There is a $6744.80 patient balance left as of now.&nbsp;<br />\n<br />\nWarm Regards,<br />\n<strong>Peter Alex!</strong></p>', 'New Test Company', NULL, 0, NULL, '2023-03-01 11:35:16', NULL, '2023-03-01 11:35:16'),
-(16, 6, 16, 3, 'New Client 1', 6, 'CRM', 4, 'New Practice 123', 3, 'Team A', 'Info/Other', 'Concerning', 'Client ticket', '<p>Client ticket message</p>', 'Provider', NULL, 0, NULL, '2023-03-02 16:40:14', NULL, '2023-03-02 16:40:14'),
-(17, 6, 16, 3, 'New Client 1', 6, 'CRM', 4, 'New Practice 123', 3, 'Team A', 'Info/Other', 'Concerning', 'Client ticket', '<p>Client ticket message</p>', 'Provider', NULL, 0, NULL, '2023-03-02 16:40:53', NULL, '2023-03-02 16:40:53'),
-(18, 6, 16, 3, 'New Client 1', 6, 'CRM', 4, 'New Practice 123', 3, 'Team A', 'Info/Other', 'Concerning', 'Client ticket', '<p>Client ticket message</p>', 'Provider', NULL, 0, NULL, '2023-03-02 16:42:38', NULL, '2023-03-02 16:42:38'),
-(19, 6, 15, 2, 'Asad Nazir', 6, 'CRM', 5, 'Practice ABC', 3, 'Team A', 'Info/Other', 'Concerning', 'Testing notification', '<h2>What is Lorem Ipsum?</h2>\r\n\r\n<p><strong>Lorem Ipsum</strong>&nbsp;is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry&#39;s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>', 'New Test Company', NULL, 0, NULL, '2023-03-03 12:13:55', NULL, '2023-03-03 12:24:51');
+INSERT INTO `tickets` (`id`, `company_id`, `user_id`, `user_type`, `creator_name`, `department_id`, `department_name`, `practice_id`, `practice_name`, `team_id`, `team_name`, `type`, `priority`, `subject`, `message`, `creator`, `response_at`, `status`, `remarks`, `flag`, `created_at`, `deleted_at`, `updated_at`) VALUES
+(1, 6, 15, 2, 'Asad Nazir', 3, 'Sales', 4, 'New Practice 123', 0, '', 'Info/Other', 'High', 'Test subject', 'test message', 'New Test Company', NULL, 26, NULL, 0, '2023-02-24 16:17:37', NULL, '2023-02-28 15:58:46'),
+(2, 6, 15, 2, 'Asad Nazir', 3, 'Sales', 5, 'practice ABC', 0, '', 'Info/Other', 'Concerning', 'Test subject', 'test message', 'New Test Company', NULL, 26, NULL, 0, '2023-02-24 16:17:37', NULL, '2023-02-24 16:17:37'),
+(3, 6, 15, 2, 'Asad Nazir', 3, 'Sales', 5, 'test practice', 0, 'Team B', 'Info/Other', 'Low', 'Test', 'message', 'New Test Company', NULL, 26, NULL, 0, '2023-02-27 11:23:47', NULL, '2023-02-27 11:23:47'),
+(4, 6, 15, 2, 'Asad Nazir', 3, 'Sales', 5, 'test practice', 4, 'Team B', 'Info/Other', 'Concerning', 'Test', 'dsadsad', 'New Test Company', NULL, 26, NULL, 0, '2023-02-27 11:51:23', NULL, '2023-02-27 11:51:23'),
+(5, 6, 15, 2, 'Asad Nazir', 3, 'Sales', 5, 'Practice ABC', 4, 'Team B', 'Info/Other', 'Concerning', 'dsf', 'dsfdsfsd', 'New Test Company', NULL, 26, NULL, 0, '2023-02-27 11:56:17', NULL, '2023-02-27 11:56:17'),
+(6, 6, 15, 2, 'Asad Nazir', 3, 'Sales', 5, 'Practice ABC', 4, 'Team B', 'Info/Other', 'High', 'Testdsadsa', 'asdsadsadsad', 'New Test Company', NULL, 26, NULL, 0, '2023-02-27 11:57:24', NULL, '2023-03-23 09:42:54'),
+(7, 6, 15, 2, 'Asad Nazir', 3, 'Sales', 5, 'Practice ABC', 5, 'Team C', 'Info/Other', 'Concerning', 'Test', 'sadsadsad', 'New Test Company', NULL, 26, NULL, 0, '2023-02-27 14:34:36', NULL, '2023-02-27 14:34:36'),
+(8, 6, 15, 2, 'Asad Nazir', 3, 'Sales', 4, 'New Practice 123', 0, '', 'Info/Other', 'Concerning', 'Testsadsa', 'asdsadsadsad', 'New Test Company', NULL, 26, NULL, 0, '2023-02-27 14:41:23', NULL, '2023-02-27 14:41:23'),
+(9, 6, 15, 2, 'Asad Nazir', 3, 'Sales', 5, 'Practice ABC', 5, 'Team C', 'Info/Other', 'Concerning', 'Test', 'sadsad', 'New Test Company', NULL, 26, NULL, 0, '2023-02-27 15:27:16', NULL, '2023-02-27 15:27:16'),
+(10, 6, 15, 2, 'Asad Nazir', 3, 'Sales', 5, 'Practice ABC', 5, 'Team C', 'Info/Other', 'Concerning', 'Test', 'sadsad', 'New Test Company', NULL, 26, NULL, 0, '2023-02-27 15:29:38', NULL, '2023-02-27 15:29:38'),
+(11, 6, 15, 2, 'Asad Nazir', 6, 'CRM', 5, 'Practice ABC', 5, 'Team C', 'Info/Other', 'Concerning', 'Testfg', 'fdgfdgfdg', 'New Test Company', NULL, 26, NULL, 1, '2023-02-27 15:30:53', NULL, '2023-03-23 10:15:53'),
+(12, 6, 15, 2, 'Asad Nazir', 3, 'Sales', 5, 'Practice ABC', 5, 'Team C', 'Info/Other', 'Concerning', 'Test', 'sadsadsad', 'New Test Company', NULL, 26, NULL, 0, '2023-02-27 15:34:19', NULL, '2023-02-27 15:34:19'),
+(13, 6, 15, 2, 'Asad Nazir', 3, 'Sales', 5, 'Practice ABC', 5, 'Team C', 'Info/Other', 'Concerning', 'sdsad', 'adsad', 'New Test Company', NULL, 26, NULL, 0, '2023-02-27 15:37:34', NULL, '2023-02-27 15:37:34'),
+(14, 6, 15, 2, 'Asad Nazir', 6, 'CRM', 4, 'New Practice 123', 0, '', 'Info/Other', 'Concerning', 'Test', 'Asad Nazir\r\nsadsadsa\r\nasdsad', 'New Test Company', NULL, 26, NULL, 1, '2023-02-28 16:34:53', NULL, '2023-03-23 10:23:12'),
+(15, 6, 15, 2, 'Asad Nazir', 4, 'Audit', 4, 'New Practice 123', 0, '', 'Info/Other', 'High', 'Test', '<p><strong>Hi Ewa and Team,</strong><br />\n<br />\nAfter reviewing the patient account in detail. We have found that all the services are getting paid by both insurances except the lab services.<br />\nAs we already discussed his lab services amount is on the patient end because of the denials we had received from his both insurance. Now we send all his lab services balance on the patient end. There is a $6744.80 patient balance left as of now.&nbsp;<br />\n<br />\nWarm Regards,<br />\n<strong>Peter Alex!</strong></p>', 'New Test Company', NULL, 26, NULL, 0, '2023-03-01 11:35:16', NULL, '2023-03-23 13:08:49'),
+(16, 6, 16, 3, 'New Client 1', 6, 'CRM', 4, 'New Practice 123', 3, 'Team A', 'Info/Other', 'Concerning', 'Client ticket', '<p>Client ticket message</p>', 'Provider', NULL, 26, NULL, 0, '2023-03-02 16:40:14', NULL, '2023-03-02 16:40:14'),
+(17, 6, 16, 3, 'New Client 1', 6, 'CRM', 4, 'New Practice 123', 3, 'Team A', 'Info/Other', 'Concerning', 'Client ticket', '<p>Client ticket message</p>', 'Provider', NULL, 26, NULL, 0, '2023-03-02 16:40:53', NULL, '2023-03-02 16:40:53'),
+(18, 6, 16, 3, 'New Client 1', 6, 'CRM', 4, 'New Practice 123', 3, 'Team A', 'Info/Other', 'Concerning', 'Client ticket', '<p>Client ticket message</p>', 'Provider', NULL, 26, NULL, 0, '2023-03-02 16:42:38', NULL, '2023-03-02 16:42:38'),
+(19, 6, 15, 2, 'Asad Nazir', 4, 'Audit', 5, 'Practice ABC', 3, 'Team A', 'Info/Other', 'High', 'Testing notification', '<h2>What is Lorem Ipsum?</h2>\r\n\r\n<p><strong>Lorem Ipsum</strong>&nbsp;is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry&#39;s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>', 'New Test Company', NULL, 26, 'Ticket Forward Remarks', 1, '2023-03-03 12:13:55', NULL, '2023-03-23 12:27:00');
 
 -- --------------------------------------------------------
 
@@ -1066,6 +1067,31 @@ INSERT INTO `ticket_ccs` (`id`, `ticket_id`, `resource_id`, `resource_type`, `cr
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `ticket_logs`
+--
+
+DROP TABLE IF EXISTS `ticket_logs`;
+CREATE TABLE IF NOT EXISTS `ticket_logs` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `ticket_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `seen` tinyint(1) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `ticket_logs`
+--
+
+INSERT INTO `ticket_logs` (`id`, `ticket_id`, `user_id`, `seen`, `created_at`, `updated_at`) VALUES
+(1, 19, 17, 0, '2023-03-23 12:45:20', '2023-03-23 17:45:20'),
+(2, 19, 20, 0, '2023-03-23 12:45:20', '2023-03-23 17:45:20');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `ticket_replies`
 --
 
@@ -1081,7 +1107,7 @@ CREATE TABLE IF NOT EXISTS `ticket_replies` (
   `deleted_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `ticket_replies`
@@ -1092,7 +1118,19 @@ INSERT INTO `ticket_replies` (`id`, `ticket_id`, `user_id`, `creator_name`, `mes
 (2, 11, 15, 'Asad Nazir', '<p><strong>Hi Ewa and Team,</strong><br />\r\n<br />\r\nAfter reviewing the patient account in detail. We have found that all the services are getting paid by both insurances except the lab services.<br />\r\nAs we already discussed his lab services amount is on the patient end because of the denials we had received from his both insurance. Now we send all his lab services balance on the patient end. There is a $6744.80 patient balance left as of now.&nbsp;<br />\r\n<br />\r\nWarm Regards,<br />\r\n<strong>Peter Alex!</strong></p>', 0, '2023-03-01 19:42:24', NULL, '2023-03-01 20:49:54'),
 (3, 11, 15, 'Asad Nazir', '<h2>What is Lorem Ipsum?</h2>\r\n\r\n<p><strong>Lorem Ipsum</strong>&nbsp;is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry&#39;s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>', 0, '2023-03-02 12:55:52', NULL, '2023-03-02 12:55:52'),
 (4, 11, 15, 'Asad Nazir', '<p>Refered.</p>', 0, '2023-03-02 13:18:34', NULL, '2023-03-02 13:18:34'),
-(5, 11, 15, 'Asad Nazir', '<p class=\"text-center text-danger mb-0 font-weight-bold\">This ticket is forwarded from Sales to CRM</p>', 1, '2023-03-02 13:18:34', NULL, '2023-03-02 22:16:25');
+(5, 11, 15, 'Asad Nazir', '<p class=\"text-center text-danger mb-0 font-weight-bold\">This ticket is forwarded from Sales to CRM</p>', 1, '2023-03-02 13:18:34', NULL, '2023-03-02 22:16:25'),
+(6, 19, 15, 'Asad Nazir', '<p>dsadsadsad</p>', 0, '2023-03-23 12:27:00', NULL, '2023-03-23 12:27:00'),
+(7, 19, 15, 'Asad Nazir', '<p class=\"text-center text-danger mb-0 font-weight-bold\">This ticket is forwarded from CRM to Audit</p>', 1, '2023-03-23 12:27:00', NULL, '2023-03-23 12:27:00'),
+(8, 19, 15, 'Asad Nazir', '<p>dsadsadsad</p>', 0, '2023-03-23 12:27:06', NULL, '2023-03-23 12:27:06'),
+(9, 19, 15, 'Asad Nazir', '<p class=\"text-center text-danger mb-0 font-weight-bold\">This ticket is forwarded from Audit to Audit</p>', 1, '2023-03-23 12:27:06', NULL, '2023-03-23 12:27:06'),
+(10, 19, 15, 'Asad Nazir', '<p>dsadsadsad</p>', 0, '2023-03-23 12:27:56', NULL, '2023-03-23 12:27:56'),
+(11, 19, 15, 'Asad Nazir', '<p class=\"text-center text-danger mb-0 font-weight-bold\">This ticket is forwarded from Audit to Audit</p>', 1, '2023-03-23 12:27:56', NULL, '2023-03-23 12:27:56'),
+(12, 19, 15, 'Asad Nazir', '<p>asdsadsadsadsad</p>', 0, '2023-03-23 12:43:28', NULL, '2023-03-23 12:43:28'),
+(13, 19, 15, 'Asad Nazir', '<p class=\"text-center text-danger mb-0 font-weight-bold\">This ticket is forwarded from Audit to Audit</p>', 1, '2023-03-23 12:43:28', NULL, '2023-03-23 12:43:28'),
+(14, 19, 15, 'Asad Nazir', '<p>asdsadsadsadsad</p>', 0, '2023-03-23 12:44:19', NULL, '2023-03-23 12:44:19'),
+(15, 19, 15, 'Asad Nazir', '<p class=\"text-center text-danger mb-0 font-weight-bold\">This ticket is forwarded from Audit to Audit</p>', 1, '2023-03-23 12:44:19', NULL, '2023-03-23 12:44:19'),
+(16, 19, 15, 'Asad Nazir', '<p>asdsadsadsadsad</p>', 0, '2023-03-23 12:45:20', NULL, '2023-03-23 12:45:20'),
+(17, 19, 15, 'Asad Nazir', '<p class=\"text-center text-danger mb-0 font-weight-bold\">This ticket is forwarded from Audit to Audit</p>', 1, '2023-03-23 12:45:20', NULL, '2023-03-23 12:45:20');
 
 -- --------------------------------------------------------
 

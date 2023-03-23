@@ -110,6 +110,7 @@ Route::resource('document_types', DocumentTypeController::class);
 Route::resource('tickets', TicketController::class);
 Route::post('/all-tickets', [TicketController::class, 'allTickets'])->middleware('permission:view ticket')->name('all_tickets');
 Route::post('/get-ticket', [TicketController::class, 'getTicket'])->middleware('permission:view ticket')->name('get_ticket');
+Route::post('/get-flag', [TicketController::class, 'ticketFlag'])->middleware('permission:view ticket')->name('ticket_flag');
 // Ticket Replies
 Route::resource('ticket_replies', TicketReplyController::class);
 // Designations

@@ -49,14 +49,10 @@ if (!function_exists('statuses')) {
     }
 }
 if (!function_exists('get_status')) {
-    function get_status($type, $status_id)
+    function get_status($status_id)
     {
-        $statuses = Status::where('company_id', Auth::user()->company_id)->where('type', $type)->orderBy('name', 'ASC')->get();
-        foreach ($statuses as $key => $status) {
-            if ($status->id == $status_id)
-                return $status->name;
-        }
-        return "";
+        $status = Status::findorfail($status_id);
+        return $status->name;
     }
 }
 if (!function_exists('ticket_types')) {
@@ -141,4 +137,21 @@ function get_assigned_teams_user_ids($team_id = NULL)
     $user_ids = array_unique($user_ids);
     sort($user_ids);
     return $user_ids;
+}
+function get_department_practice_users($practice_id, $department_id)
+{
+    $response = [];
+    $department_users = [];
+    $practice = Practice::findorfail($practice_id);
+    $assinged_users = $practice->assinged_users();
+    $assinged_user_ids = $assinged_users->pluck("id");
+    foreach ($assinged_users as $key => $user) {
+        $departments = $user->departments()->get()->pluck("id");
+        foreach ($departments as $index => $department)
+            if ($department == $department_id)
+                array_push($department_users, $user->id);
+    }
+    $response["department_users"] = json_decode(json_encode($department_users), true);
+    $response["practice_users"] = json_decode(json_encode($assinged_user_ids), true);
+    return $response;
 }

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="41" height="41" viewBox="0 0 41 41">
+  <g id="Group_283" data-name="Group 283" transform="translate(-20.829 -24)">
+    <g id="authorization-icons" transform="translate(20.829 24)" fill="#fff" stroke="#4ad991" stroke-width="1">
+      <circle cx="20.5" cy="20.5" r="20.5" stroke="none"/>
+      <circle cx="20.5" cy="20.5" r="20" fill="none"/>
+    </g>
+    <path id="tick-svgrepo-com" d="M17.7,6.266a2.121,2.121,0,0,0-2.886.824L10.876,14.18,8.622,11.925a2.121,2.121,0,0,0-3,3l4.244,4.244a2.119,2.119,0,0,0,1.5.623l.294-.021A2.122,2.122,0,0,0,13.22,18.7l5.3-9.548A2.122,2.122,0,0,0,17.7,6.266Z" transform="translate(29.479 31.131)" fill="#4ad991"/>
+  </g>
+</svg>

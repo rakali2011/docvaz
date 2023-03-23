@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+  <g id="closed-tickets" transform="translate(0 4)">
+    <g id="Group_248" data-name="Group 248" transform="translate(0 -4)">
+      <path id="Path_429" data-name="Path 429" d="M12,0A12,12,0,1,0,24,12,12.014,12.014,0,0,0,12,0Zm0,22.033A10.033,10.033,0,1,1,22.033,12,10.044,10.044,0,0,1,12,22.034Z" transform="translate(0 -0.001)" fill="#68a5cd"/>
+      <path id="Path_430" data-name="Path 430" d="M75.725,90.646,69.5,98.979l-2.845-3.81a.716.716,0,0,0-1.215,0,1.441,1.441,0,0,0,0,1.627l3.453,4.623a.716.716,0,0,0,1.215,0l6.83-9.146a1.441,1.441,0,0,0,0-1.627A.716.716,0,0,0,75.725,90.646Z" transform="translate(-59.191 -84.033)" fill="#68a5cd"/>
+    </g>
+  </g>
+</svg>

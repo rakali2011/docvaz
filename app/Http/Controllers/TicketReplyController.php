@@ -6,6 +6,7 @@ use App\Models\Department;
 use App\Models\Ticket;
 use App\Models\TicketAttachment;
 use App\Models\TicketCC;
+use App\Models\TicketLog;
 use App\Models\TicketReply;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -41,19 +42,18 @@ class TicketReplyController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request);
         DB::beginTransaction();
         try {
             $ticket_id = $request->ticket_id;
             $ticket = Ticket::findorfail($ticket_id);
             $department_old = $ticket->department_name;
             $department_new = "";
-            if (!empty($request->refer_to))
-                $this->validate($request, ['message' => 'required']);
-            if (!empty($request->status) && $request->status == $ticket->status)
-                $this->validate($request, ['message' => 'required']);
-            if (!empty($request->priority) && $request->priority == $ticket->priority)
-                $this->validate($request, ['message' => 'required']);
+            // if (!empty($request->refer_to))
+            //     $this->validate($request, ['message' => 'required']);
+            // if (!empty($request->status) && $request->status == $ticket->status)
+            //     $this->validate($request, ['message' => 'required']);
+            // if (!empty($request->priority) && $request->priority == $ticket->priority)
+            //     $this->validate($request, ['message' => 'required']);
 
             if (!empty($request->refer_to)) {
                 $ticket->department_id = $request->refer_to;
@@ -64,6 +64,8 @@ class TicketReplyController extends Controller
                 $ticket->status = $request->status;
             if (!empty($request->priority))
                 $ticket->priority = $request->priority;
+            if (!empty($request->remarks))
+                $ticket->remarks = $request->remarks;
             $ticket->save();
             if (!empty($request->message)) {
                 $ticket_reply = new TicketReply();
@@ -99,6 +101,15 @@ class TicketReplyController extends Controller
                 $ticket_reply->message = '<p class="text-center text-danger mb-0 font-weight-bold">This ticket is forwarded from ' . $department_old . ' to ' . $department_new . '</p>';
                 $ticket_reply->is_refered = 1;
                 $ticket_reply->save();
+                $user_ids = get_department_practice_users($ticket->practice_id, $request->refer_to);
+                foreach ($user_ids["department_users"] as $user_id) {
+                    TicketLog::where("ticket_id", $ticket->id)->where("user_id", $user_id)->where("seen", 1)->delete();
+                    $ticket_log = new TicketLog();
+                    $ticket_log->ticket_id = $ticket->id;
+                    $ticket_log->user_id = $user_id;
+                    $ticket_log->seen = 0;
+                    $ticket_log->save();
+                }
             }
             $share_to = isset($request->share_to) ? $request->share_to : [];
             foreach ($share_to as $value) {
@@ -113,7 +124,7 @@ class TicketReplyController extends Controller
         } catch (\Throwable $th) {
             DB::rollback();
             $response['success'] = 0;
-            $response['message'] = "Message field is required.";
+            $response['message'] = $th->getMessage();
         }
         return response()->json($response);
     }

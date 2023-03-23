@@ -21,7 +21,7 @@ class Ticket extends Model
     }
     public function getStatusAttribute($value)
     {
-        return get_status('practice', $value);
+        return get_status($value);
     }
     public function attachments()
     {
@@ -62,31 +62,22 @@ class Ticket extends Model
     {
         $query = $this;
         $query = $this->where('user_id', '=', auth()->user()->id);
-        if (!empty($filter["practice_id"])) {
+        if (!empty($filter["team_id"]))
+            $query = $query->where('team_id', $filter['team_id']);
+        if (!empty($filter["practice_id"]))
             $query = $query->where('practice_id', $filter['practice_id']);
-        }
-        if (!empty($filter["status"])) {
+        if (!empty($filter["department_id"]))
+            $query = $query->where('department_id', $filter['department_id']);
+        if (!empty($filter["status"]))
             $query = $query->where('status', $filter['status']);
-        }
-        if (!empty($filter["pro_speciality"])) {
-            $pro_speciality = $filter["pro_speciality"];
-            $query = $query->where(function ($query) use ($pro_speciality) {
-                $query->where('taxonomy', $pro_speciality);
-                $query->orWhere('speciality', $pro_speciality);
-                $query->orWhere('taxonomy2', $pro_speciality);
-            });
-        }
-        if (!empty($filter["pro_state"])) {
-            $pro_state = $filter["pro_state"];
-            $query = $query->where(function ($query) use ($pro_state) {
-                $query->where('home_state', $pro_state);
-                $query->orWhere('mailing_state', $pro_state);
-            });
-        }
-
-        if (!empty($date_range["from_date"])) {
-            $query = $query->whereBetween('created_at', [$date_range["from_date"], $date_range["to_date"]]);
-        }
+        if (!empty($filter["priority"]))
+            $query = $query->where('priority', $filter['priority']);
+        if (!empty($filter["creator"]))
+            $query = $query->where('creator', $filter['creator']);
+        if (!empty($filter["flag"]))
+            $query = $query->where('flag', $filter['flag']);
+        if (!empty($date_range["date_from"]))
+            $query = $query->whereBetween('created_at', [$date_range["date_from"], $date_range["date_to"]]);
         if (!empty($search)) {
             $query = $query->where(function ($query) use ($search) {
                 $query->where('creator', 'LIKE', "%{$search}%");
@@ -107,30 +98,22 @@ class Ticket extends Model
     {
         $query = $this;
         $query = $this->where('user_id', '=', auth()->user()->id);
-        if (!empty($filter["practice_id"])) {
-            $query = $query->where('practice_id', $filter["practice_id"]);
-        }
-        if (!empty($filter["status"])) {
-            $query = $query->where('status', $filter["status"]);
-        }
-        if (!empty($filter["pro_speciality"])) {
-            $pro_speciality = $filter["pro_speciality"];
-            $query = $query->where(function ($query) use ($pro_speciality) {
-                $query->where('taxonomy', $pro_speciality);
-                $query->orWhere('speciality', $pro_speciality);
-                $query->orWhere('taxonomy2', $pro_speciality);
-            });
-        }
-        if (!empty($filter["pro_state"])) {
-            $pro_state = $filter["pro_state"];
-            $query = $query->where(function ($query) use ($pro_state) {
-                $query->where('home_state', $pro_state);
-                $query->orWhere('mailing_state', $pro_state);
-            });
-        }
-        if (!empty($date_range["from_date"])) {
-            $query = $query->whereBetween('created_at', [$date_range["from_date"], $date_range["to_date"]]);
-        }
+        if (!empty($filter["team_id"]))
+            $query = $query->where('team_id', $filter['team_id']);
+        if (!empty($filter["practice_id"]))
+            $query = $query->where('practice_id', $filter['practice_id']);
+        if (!empty($filter["department_id"]))
+            $query = $query->where('department_id', $filter['department_id']);
+        if (!empty($filter["status"]))
+            $query = $query->where('status', $filter['status']);
+        if (!empty($filter["priority"]))
+            $query = $query->where('priority', $filter['priority']);
+        if (!empty($filter["creator"]))
+            $query = $query->where('creator', $filter['creator']);
+        if (!empty($filter["flag"]))
+            $query = $query->where('flag', $filter['flag']);
+        if (!empty($date_range["date_from"]))
+            $query = $query->whereBetween('created_at', [$date_range["date_from"], $date_range["date_to"]]);
         if (!empty($search)) {
             $query = $query->where(function ($query) use ($search) {
                 $query->where('creator', 'LIKE', "%{$search}%");

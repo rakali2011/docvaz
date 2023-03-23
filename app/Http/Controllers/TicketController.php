@@ -8,6 +8,7 @@ use App\Models\Practice;
 use App\Models\Ticket;
 use App\Models\TicketAttachment;
 use App\Models\TicketCC;
+use App\Models\TicketLog;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -40,7 +41,10 @@ class TicketController extends Controller
             $departments = Department::where('company_id', auth()->user()->company_id)->orderBy('name', 'ASC')->get();
         else
             $departments = Auth::user()->assinged_departments();
-        return view('tickets_management.index', compact('data', 'tickets', 'departments'));
+        $practices = Auth::user()->assinged_practices();
+        $teams = Auth::user()->assinged_teams();
+        $company_name = Company::where('id', Auth::user()->company_id)->pluck("name")[0];
+        return view('tickets_management.index', compact('data', 'tickets', 'departments', 'practices', 'teams', 'company_name'));
     }
 
     /**
@@ -74,7 +78,7 @@ class TicketController extends Controller
         DB::beginTransaction();
         try {
             $user = Auth::user();
-            $creator = $user->type == 3 ? "Provider" : Company::where('id', $user->company_id)->pluck("name")[0];
+            $creator = $user->type == 3 ? "Client" : Company::where('id', $user->company_id)->pluck("name")[0];
             $creator_name = $user->firstname . " " . $user->lastname;
             if (auth()->user()->hasRole('dev'))
                 $company_id = $request->company;
@@ -133,6 +137,15 @@ class TicketController extends Controller
                         $attachment->size = $attachment_info['size'];
                         $attachment->save();
                     }
+                }
+                $user_ids = get_department_practice_users($value, $request->from);
+                foreach ($user_ids["department_users"] as $user_id) {
+                    TicketLog::where("ticket_id", $id->id)->where("user_id", $user_id)->where("seen", 1)->delete();
+                    $ticket_log = new TicketLog();
+                    $ticket_log->ticket_id = $id->id;
+                    $ticket_log->user_id = $user_id;
+                    $ticket_log->seen = 0;
+                    $ticket_log->save();
                 }
             }
             DB::commit();
@@ -201,14 +214,17 @@ class TicketController extends Controller
     {
         $columns = ['id', 'response_at', 'created_at', 'creator', 'creator_name', 'practice_name', 'department_name', 'team_name', 'subject', 'priority', 'status', 'remarks'];
         $date_range = [
-            "from_date" => $request->input('from_date') != "" ? $request->input('from_date') . ' 00:00:00' : $request->input('from_date'),
-            "to_date" => $request->input('to_date') != "" ? $request->input('to_date') . ' 23:59:59' : $request->input('to_date')
+            "date_from" => $request->input('date_from_filter') != "" ? $request->input('date_from_filter') . ' 00:00:00' : $request->input('date_from_filter'),
+            "date_to" => $request->input('date_to_filter') != "" ? $request->input('date_to_filter') . ' 23:59:59' : date("Y-m-d H:i:s")
         ];
         $filter = array(
-            "practice_id" => $request->input('practice_id'),
-            "status" => $request->input('status'),
-            "pro_speciality" => $request->input('pro_speciality'),
-            "pro_state" => $request->input('pro_state'),
+            "team_id" => $request->input('team_filter'),
+            "practice_id" => $request->input('practice_filter'),
+            "department_id" => $request->input('department_filter'),
+            "status" => $request->input('status_filter'),
+            "priority" => $request->input('priority_filter'),
+            "creator" => $request->input('created_by_filter'),
+            "flag" => $request->input('flag_filter'),
         );
         $limit = $request->input('length');
         $start = $request->input('start');
@@ -267,6 +283,23 @@ class TicketController extends Controller
             $ticket = $ticket->load("attachments")->load("ccs")->load("replies");
             $response['success'] = 1;
             $response['content'] = $ticket;
+        } catch (\Throwable $th) {
+            $response['success'] = 0;
+            $response['message'] = "Something Went Wrong Try Again";
+        }
+        return response()->json($response);
+    }
+    public function ticketFlag(Request $request)
+    {
+        $response = array();
+        try {
+            $ticket = Ticket::find($request->id);
+            if ($ticket->flag)
+                $ticket->flag = 0;
+            else
+                $ticket->flag = 1;
+            $ticket->save();
+            $response['success'] = 1;
         } catch (\Throwable $th) {
             $response['success'] = 0;
             $response['message'] = "Something Went Wrong Try Again";

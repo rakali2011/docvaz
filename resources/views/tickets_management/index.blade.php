@@ -1,5 +1,6 @@
 @extends('includes.main')
 @section('content')
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <style>
   label {
     margin-bottom: 0 !important;
@@ -41,6 +42,14 @@
   input.low {
     background-color: #79af3a !important;
   }
+
+  i.fa.fa-flag.grey {
+    color: grey;
+  }
+
+  i.fa.fa-flag.orange {
+    color: orange;
+  }
 </style>
 <div class="container-fluid">
   <div class="row justify-content-center">
@@ -54,7 +63,81 @@
         <div class="col-md-12">
           <div class="card shadow">
             <div class="card-body">
-              <!-- table -->
+              <div class="card mb-3">
+                <div class="card-body">
+                  <form action="" id="filter-form" class="row">
+                    <div class="form-group col-md-2">
+                      <label for="team"></label>
+                      <select name="team" id="team" class="form-control">
+                        <option value="">Select Team</option>
+                        @foreach ($teams as $key=> $team)
+                        <option value="{{ $team->id }}">{{ $team->name }}</option>
+                        @endforeach
+                      </select>
+                    </div>
+                    <div class="form-group col-md-2">
+                      <label for="practice"></label>
+                      <select name="practice" id="practice" class="form-control">
+                        <option value="">Select Practice</option>
+                        @foreach ($practices as $key=> $practice)
+                        <option value="{{ $practice->id }}">{{ $practice->name }}</option>
+                        @endforeach
+                      </select>
+                    </div>
+                    <div class="form-group col-md-2">
+                      <label for="status"></label>
+                      <select name="status" id="status" class="form-control">
+                        <option value="">Select Status</option>
+                        @foreach (statuses('ticket') as $status)
+                        <option value="{{ $status->id }}">{{ $status->name }}</option>
+                        @endforeach
+                      </select>
+                    </div>
+                    <div class="form-group col-md-2">
+                      <label for="department"></label>
+                      <select name="department" id="department" class="form-control">
+                        <option value="">Select Department</option>
+                        @foreach ($departments as $department)
+                        <option value="{{ $department->id }}">{{ $department->name }}</option>
+                        @endforeach
+                      </select>
+                    </div>
+                    <div class="form-group col-md-2">
+                      <label for="priority_f"></label>
+                      <select name="priority_f" id="priority_f" class="form-control">
+                        <option value="">Select Priority</option>
+                        @foreach (ticket_priorities() as $priority)
+                        <option value="{{ $priority }}">{{ $priority }}</option>
+                        @endforeach
+                      </select>
+                    </div>
+                    <div class="form-group col-md-2">
+                      <label for="created_by"></label>
+                      <select name="created_by" id="created_by" class="form-control">
+                        <option value="">Select Created By</option>
+                        <option value="Client">Client</option>
+                        <option value="{{ $company_name }}">{{ $company_name }}</option>
+                      </select>
+                    </div>
+                    <div class="form-group col-md-2">
+                      <label for="date_from"></label>
+                      <input type="text" name="date_from" id="date_from" class="form-control" placeholder="Date From" onfocus="(this.type='date')" onfocusout="(this.type='text')">
+                    </div>
+                    <div class="form-group col-md-2">
+                      <label for="date_to"></label>
+                      <input type="text" name="date_to" id="date_to" class="form-control" placeholder="Date To" onfocus="(this.type='date')" onfocusout="(this.type='text')">
+                    </div>
+                    <div class="col-md-2 d-flex align-items-center">
+                      <label class="imp-lab" for="flaged">Flaged:</label>
+                      <input type="checkbox" name="flaged" id="flaged" value="1" class="ml-2">
+                    </div>
+                    <div class="col-md-6 text-right" style="margin:auto;">
+                      <button type="submit" class="btn btn-sm btn-primary">Filter</button>
+                      <button type="button" class="btn btn-sm btn-primary" id="c_filter">Clear Filter</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
               <table id="tickets-table" class="display" style="width:100%">
                 <thead>
                   <tr>
@@ -221,7 +304,12 @@
                 }
               </style>
               <div class="form-group col-md-12">
+                <label id="remarks">Ticket Forward Remarks</label>
+                <textarea name="remarks" id="remarks" class="form-control"></textarea>
+              </div>
+              <div class="form-group col-md-12">
                 <label>Message</label>
+                <i class="fa fa-flag grey" id="important" data-id="0" style="cursor:pointer;font-size:16px;margin-left:10px;" onclick="flag(this);"></i>
                 <div id="message-container">
                   <div id="ticket-message"></div>
                   <p id="ticket-date"></p>
@@ -259,7 +347,17 @@
 @push('scripts')
 <script src="{{ asset('assets/ckeditor/ckeditor.js') }}"></script>
 <script>
+  function refer_to() {
+    if ($('#refer_to').val() != "")
+      $('#remarks').parent('.form-group.col-md-12').show();
+    else
+      $('#remarks').parent('.form-group.col-md-12').hide();
+  }
+  $('#refer_to').change(function() {
+    refer_to();
+  });
   $(document).ready(function() {
+    refer_to();
     $('#tickets-table').DataTable({
       "processing": true,
       "serverSide": true,
@@ -268,7 +366,34 @@
         "dataType": "json",
         "type": "POST",
         "data": {
-          _token: "{{csrf_token()}}"
+          _token: "{{csrf_token()}}",
+          'team_filter': function() {
+            return $("#team").val();
+          },
+          'practice_filter': function() {
+            return $("#practice").val();
+          },
+          'status_filter': function() {
+            return $("#status").val();
+          },
+          'department_filter': function() {
+            return $("#department").val();
+          },
+          'priority_filter': function() {
+            return $("#priority_f").val();
+          },
+          'created_by_filter': function() {
+            return $("#created_by").val();
+          },
+          'date_from_filter': function() {
+            return $("#date_from").val();
+          },
+          'date_to_filter': function() {
+            return $("#date_to").val();
+          },
+          'flag_filter': function() {
+            return $("#flaged:checked").val();
+          }
         }
       },
       "columns": [{
@@ -360,6 +485,13 @@
         if (response.success == 1) {
           $('#ticket-replies-form')[0].reset();
           CKEDITOR.instances.message.setData('');
+          $('#important').removeClass('orange');
+          $('#important').removeClass('grey');
+          if (response.content.flag == 1)
+            $('#important').addClass('orange');
+          else
+            $('#important').addClass('grey');
+          $('#important').attr('data-id', response.content.id);
           $('#title').text(response.content.department_name);
           $('#ticket-number').text(response.content.id);
           $('#ticket-status').text(response.content.status);
@@ -455,6 +587,7 @@
             icon: 'success',
             text: data.message,
           });
+          $('#tickets-table').DataTable().ajax.reload(null, true);
         } else {
           Swal.fire({
             icon: 'error',
@@ -464,6 +597,38 @@
         }
       })
       .catch(error => console.error("There was a problem with the fetch operation:", error));
+  });
+
+  function flag(element) {
+    id = $(element).data('id');
+    if (id != "") {
+      $.ajax({
+        type: "POST",
+        url: "{{ route('ticket_flag') }}",
+        data: {
+          _token: "{{csrf_token()}}",
+          id: id,
+        },
+        cache: false,
+        dataType: "JSON",
+        success: function(response) {
+          console.log(response);
+          $('#important').toggleClass('grey');
+          $('#important').toggleClass('orange');
+          // $('#ticket_listing').DataTable().ajax.reload(null, true);
+        }
+      });
+    } else {
+      return false;
+    }
+  }
+  $('#filter-form [type="submit"]').on('click', function(e) {
+    e.preventDefault();
+    $('#tickets-table').DataTable().ajax.reload(null, true);
+  });
+  $('#c_filter').click(function() {
+    $('select').val('');
+    $('#tickets-table').DataTable().ajax.reload(null, true);
   });
 </script>
 @endpush
