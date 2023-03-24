@@ -43,12 +43,34 @@
             </div>
             <div class="col-md-4">
               <div class="form-group mb-3">
-                <label for="to_provider">To Provider</label>
-                <select name="to_provider[]" id="to_provider" class="form-control select2-multi @error('to_provider') is-invalid @enderror" multiple="multiple" required="required">
-                  @foreach ($practices as $item)
-                  <option value="{{ $item->id }}">{{ $item->name }}</option>
-                  @endforeach
-                </select>
+                <label for="to_provider">To</label>
+                <div class="form-check form-check-inline">
+                  <input type="radio" name="is_external" id="client" value="1" class="form-check-input" checked="checked">
+                  <label class="form-check-label" for="client">Client</label>
+                </div>
+                @can('external ticket')
+                <div class="form-check form-check-inline">
+                  <input type="radio" name="is_external" id="company" value="0" class="form-check-input">
+                  <label class="form-check-label" for="company">{{ $company_name }}</label>
+                </div>
+                @endcan
+                <div id="to_provider_div">
+                  <select name="to_provider" id="to_provider" class="form-control select2-multi @error('to_provider') is-invalid @enderror">
+                    @foreach ($practices as $item)
+                    <option value="{{ $item->id }}">{{ $item->name }}</option>
+                    @endforeach
+                  </select>
+                </div>
+                @can('external ticket')
+                <div id="to_department_div">
+                  <select name="to_department" id="to_department" class="form-control select2-multi @error('to_department') is-invalid @enderror">
+                    <option value="1">Dep 1</option>
+                    <option value="2">Dep 2</option>
+                    <option value="3">Dep 3</option>
+                    <option value="4">Dep 4</option>
+                  </select>
+                </div>
+                @endcan
                 @error('to_provider')
                 <span class="invalid-feedback" role="alert">
                   <strong>{{ $message }}</strong>
@@ -245,8 +267,22 @@
         }
       })
       .catch(error => console.error("There was a problem with the fetch operation:", error));
-
   });
+  $(document).ready(function() {
+    is_external();
+  });
+  $('[name="is_external"]').change(function() {
+    is_external();
+  });
+
+  function is_external() {
+    $('#to_department_div').hide();
+    $('#to_provider_div').hide();
+    if ($('[name="is_external"]:checked').val() == 1)
+      $('#to_provider_div').show();
+    else
+      $('#to_department_div').show();
+  }
 </script>
 @endpush
 @endsection

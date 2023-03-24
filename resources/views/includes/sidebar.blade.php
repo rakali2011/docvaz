@@ -3,7 +3,6 @@
     <i class="fe fe-x"><span class="sr-only"></span></i>
   </a>
   <nav class="vertnav navbar navbar-light">
-    <!-- nav bar -->
     <div class="w-100 mb-4 d-flex">
       <a class="navbar-brand mx-auto mt-2 flex-fill text-center" href="{{ route('home') }}">
         {{-- <img width= "217" src="{{ asset('assets/assets/images/LogoA3White.png') }}" alt="Archiwiz"> --}}
@@ -23,7 +22,6 @@
           <span class="ml-3 item-text">Dashboard</span>
         </a>
       </li>
-
     </ul>
     @role('dev')
     <p class="text-muted nav-heading mt-4 mb-1" style="text-align: center; width: 100%;">
@@ -43,19 +41,12 @@
             <a class="nav-link pl-3 sub-menu" id="permissions" href="{{ route('permissions') }}"><span class="ml-1 item-text">Permissions</span>
             </a>
           </li>
-
-
-
         </ul>
       </li>
-
     </ul>
     </p>
     @endrole
-
-    {{-- @canany(['view-role', 'view-user']) --}}
     @can('view role')
-
     <p class="text-muted nav-heading mt-4 mb-1" style="text-align: center; width: 100%;">
       <span>Administration</span>
     </p>
@@ -74,11 +65,8 @@
           @endcan
         </ul>
       </li>
-
     </ul>
-
     @endcan
-
     @can('view user')
     <ul class="navbar-nav flex-fill w-100 mb-2">
       <li class="nav-item dropdown">
@@ -95,11 +83,8 @@
           @endcan
         </ul>
       </li>
-
     </ul>
-
     @endcan
-
     @canany(['view client','view practice'])
     <ul class="navbar-nav flex-fill w-100 mb-2">
       <li class="nav-item dropdown">
@@ -122,9 +107,7 @@
           @endcan
         </ul>
       </li>
-
     </ul>
-
     @endcan
     @canany(['view team'])
     <ul class="navbar-nav flex-fill w-100 mb-2">
@@ -134,15 +117,21 @@
           <span class="ml-3 item-text">General Management</span>
         </a>
         <ul class="collapse list-unstyled pl-4 w-100" id="general-management-sub">
-          @can('view document type')
+          @can('view department')
           <li class="nav-item">
-            <a class="nav-link pl-3 sub-menu" id="document_types" href="{{ route('document_types.index') }}"><span class="ml-1 item-text">Document Types</span>
+            <a class="nav-link pl-3 sub-menu" id="departments" href="{{ route('departments') }}"><span class="ml-1 item-text">Departments</span>
             </a>
           </li>
           @endcan
           @can('view designation')
           <li class="nav-item">
             <a class="nav-link pl-3 sub-menu" id="designations" href="{{ route('designations.index') }}"><span class="ml-1 item-text">Designations</span>
+            </a>
+          </li>
+          @endcan
+          @can('view document type')
+          <li class="nav-item">
+            <a class="nav-link pl-3 sub-menu" id="document_types" href="{{ route('document_types.index') }}"><span class="ml-1 item-text">Document Types</span>
             </a>
           </li>
           @endcan
@@ -158,17 +147,9 @@
             </a>
           </li>
           @endcan
-          @can('view department')
-          <li class="nav-item">
-            <a class="nav-link pl-3 sub-menu" id="departments" href="{{ route('departments') }}"><span class="ml-1 item-text">Departments</span>
-            </a>
-          </li>
-          @endcan
         </ul>
       </li>
-
     </ul>
-
     @endcan
     @canany(['import file', 'view file'])
     <ul class="navbar-nav flex-fill w-100 mb-2">

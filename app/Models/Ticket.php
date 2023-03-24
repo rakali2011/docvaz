@@ -11,17 +11,43 @@ class Ticket extends Model
     use HasFactory, SoftDeletes;
     public function getCreatedAtAttribute($date)
     {
-        // return \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $date)->format('M j, Y h:i A');
+        return date("M j, Y h:i A", strtotime($date));
+    }
+    public function getResponseAtAttribute($date)
+    {
+        if (empty($date))
+            return "";
         return date("M j, Y h:i A", strtotime($date));
     }
     public function getUpdatedAtAttribute($date)
     {
-        // return Carbon::createFromFormat('Y-m-d H:i:s', $date)->format('M j, Y h:i A');
         return date("M j, Y h:i A", strtotime($date));
     }
     public function getStatusAttribute($value)
     {
         return get_status($value);
+    }
+    public function getUserIdAttribute($value)
+    {
+        $user = User::findorfail($value);
+        return $user->firstname . ' ' . $user->lastname;
+    }
+    public function getPracticeIdAttribute($value)
+    {
+        $practice = Practice::findorfail($value);
+        return isset($practice->name) ? $practice->name : "";
+    }
+    public function getDepartmentIdAttribute($value)
+    {
+        $department = Department::findorfail($value);
+        return isset($department->name) ? $department->name : "";
+    }
+    public function getTeamIdAttribute($value)
+    {
+        if (!$value)
+            return "";
+        $team = Team::findorfail($value);
+        return isset($team->name) ? $team->name : "";
     }
     public function attachments()
     {

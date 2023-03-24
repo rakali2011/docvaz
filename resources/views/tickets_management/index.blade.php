@@ -627,7 +627,8 @@
     $('#tickets-table').DataTable().ajax.reload(null, true);
   });
   $('#c_filter').click(function() {
-    $('select').val('');
+    $('#team,#practice,#status,#department,#priority_f,#created_by,#date_from,#date_to').val('');
+    $('#flaged').prop('checked', false);
     $('#tickets-table').DataTable().ajax.reload(null, true);
   });
 </script>

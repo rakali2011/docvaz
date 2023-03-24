@@ -48,13 +48,12 @@ class TicketReplyController extends Controller
             $ticket = Ticket::findorfail($ticket_id);
             $department_old = $ticket->department_name;
             $department_new = "";
-            // if (!empty($request->refer_to))
-            //     $this->validate($request, ['message' => 'required']);
-            // if (!empty($request->status) && $request->status == $ticket->status)
-            //     $this->validate($request, ['message' => 'required']);
-            // if (!empty($request->priority) && $request->priority == $ticket->priority)
-            //     $this->validate($request, ['message' => 'required']);
-
+            if (!empty($request->refer_to))
+                $this->validate($request, ['message' => 'required']);
+            if (!empty($request->status) && $request->status == $ticket->status)
+                $this->validate($request, ['message' => 'required']);
+            if (!empty($request->priority) && $request->priority == $ticket->priority)
+                $this->validate($request, ['message' => 'required']);
             if (!empty($request->refer_to)) {
                 $ticket->department_id = $request->refer_to;
                 $department_new = Department::where('id', $request->refer_to)->pluck("name")[0];
@@ -66,6 +65,7 @@ class TicketReplyController extends Controller
                 $ticket->priority = $request->priority;
             if (!empty($request->remarks))
                 $ticket->remarks = $request->remarks;
+            $ticket->response_at = gmdate("Y-m-d H:i:s");
             $ticket->save();
             if (!empty($request->message)) {
                 $ticket_reply = new TicketReply();

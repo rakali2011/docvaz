@@ -44,7 +44,6 @@ if (!function_exists('get_document_type')) {
 if (!function_exists('statuses')) {
     function statuses($type)
     {
-
         return Status::where('company_id', Auth::user()->company_id)->where('type', $type)->orderBy('name', 'ASC')->get();
     }
 }

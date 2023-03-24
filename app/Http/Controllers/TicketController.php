@@ -64,7 +64,8 @@ class TicketController extends Controller
         $share_to = share_to();
         $practices = $share_to["practices"];
         $share_to = $share_to["share_to"];
-        return view('tickets_management.create', compact('data', 'departments', 'practices', 'share_to'));
+        $company_name = Company::where('id', Auth::user()->company_id)->pluck("name")[0];
+        return view('tickets_management.create', compact('data', 'departments', 'practices', 'share_to', 'company_name'));
     }
 
     /**
@@ -75,38 +76,36 @@ class TicketController extends Controller
      */
     public function store(Request $request)
     {
+        dd($request);
         DB::beginTransaction();
         try {
             $user = Auth::user();
             $creator = $user->type == 3 ? "Client" : Company::where('id', $user->company_id)->pluck("name")[0];
-            $creator_name = $user->firstname . " " . $user->lastname;
             if (auth()->user()->hasRole('dev'))
                 $company_id = $request->company;
             else
                 $company_id = $user->company_id;
-            $to_provider = is_array($request->to_provider) ? $request->to_provider : explode(",", $request->to_provider);
+            if ($request->is_external)
+                $to_provider = is_array($request->to_provider) ? $request->to_provider : explode(",", $request->to_provider);
+            else
+                $to_provider = is_array($request->to_department) ? $request->to_department : explode(",", $request->to_department);
             foreach ($to_provider as $value) {
-                $department_name = Department::where('id', $request->from)->pluck("name")[0];
                 $practice = Practice::findorfail($value);
-                $practice_name = $practice->name;
                 $associated_client = $practice->associated_user(3);
                 $client_id = isset($associated_client->pluck("id")[0]) ? $associated_client->pluck("id")[0] : 0;
                 $team = $client_id > 0 ? User::findorfail($client_id)->assinged_teams() : "";
                 $ticket["company_id"] = $company_id;
                 $ticket["user_id"] = $user->id;
                 $ticket["user_type"] = $user->type;
-                $ticket["creator_name"] = $creator_name;
                 $ticket["department_id"] = $request->from;
-                $ticket["department_name"] = $department_name;
                 $ticket["practice_id"] = $value;
-                $ticket["practice_name"] = $practice_name;
                 $ticket["team_id"] = isset($team[0]->id) ? $team[0]->id : 0;
-                $ticket["team_name"] = isset($team[0]->name) ? $team[0]->name : "";
                 $ticket["type"] = $request->type;
                 $ticket["priority"] = $request->priority;
                 $ticket["subject"] = $request->subject;
                 $ticket["message"] = addslashes($request->message);
                 $ticket["creator"] = $creator;
+                $ticket["is_external"] = $request->is_external;
                 $id = Ticket::create($ticket);
                 $cc = isset($request->cc) ? $request->cc : [];
                 foreach ($cc as $value) {
@@ -251,13 +250,13 @@ class TicketController extends Controller
                     $delete = '<form method="POST" action="' . route('tickets.destroy', $ticket->id) . '" accept-charset="UTF-8" style="display:inline"><input name="_method" type="hidden" value="DELETE"><input name="_token" type="hidden" value="' . csrf_token() . '"><input class="dropdown-item" type="submit" value="Delete"></form>';
                 }
                 $nestedData['id'] = '<a class="ticket-replies" ref="' . $ticket->id . '" href="javascript:void(0)">' . $ticket->id . '</a>';
-                $nestedData['response_at'] = !empty($ticket->response_at) ? date("M j, y, h:i A", strtotime($ticket->response_at)) : "";
+                $nestedData['response_at'] = $ticket->response_at;
                 $nestedData['created_at'] = $ticket->created_at;
                 $nestedData['creator'] = $ticket->creator;
-                $nestedData['creator_name'] = $ticket->creator_name;
-                $nestedData['practice_name'] = $ticket->practice_name;
-                $nestedData['department_name'] = $ticket->department_name;
-                $nestedData['team_name'] = $ticket->team_name;
+                $nestedData['creator_name'] = $ticket->user_id;
+                $nestedData['practice_name'] = $ticket->practice_id;
+                $nestedData['department_name'] = $ticket->department_id;
+                $nestedData['team_name'] = $ticket->team_id;
                 $nestedData['subject'] = $ticket->subject;
                 $nestedData['priority'] = '<span class="' . strtolower($ticket->priority) . '">' . $ticket->priority . '</span>';
                 $nestedData['status'] = $ticket->status;
