@@ -32,11 +32,11 @@ class Ticket extends Model
         $user = User::findorfail($value);
         return $user->firstname . ' ' . $user->lastname;
     }
-    public function getPracticeIdAttribute($value)
-    {
-        $practice = Practice::findorfail($value);
-        return isset($practice->name) ? $practice->name : "";
-    }
+    // public function getPracticeIdAttribute($value)
+    // {
+    //     $practice = Practice::findorfail($value);
+    //     return isset($practice->name) ? $practice->name : "";
+    // }
     public function getDepartmentIdAttribute($value)
     {
         $department = Department::findorfail($value);
@@ -65,18 +65,15 @@ class Ticket extends Model
         'company_id',
         'user_id',
         'user_type',
-        'creator_name',
         'department_id',
-        'department_name',
-        'practice_id',
-        'practice_name',
+        'target_id',
         'team_id',
-        'team_name',
         'type',
         'priority',
         'subject',
         'message',
         'creator',
+        'is_external',
     ];
     public function countTotalTickets()
     {
@@ -90,8 +87,8 @@ class Ticket extends Model
         $query = $this->where('user_id', '=', auth()->user()->id);
         if (!empty($filter["team_id"]))
             $query = $query->where('team_id', $filter['team_id']);
-        if (!empty($filter["practice_id"]))
-            $query = $query->where('practice_id', $filter['practice_id']);
+        if (!empty($filter["target_id"]))
+            $query = $query->where('target_id', $filter['target_id']);
         if (!empty($filter["department_id"]))
             $query = $query->where('department_id', $filter['department_id']);
         if (!empty($filter["status"]))
@@ -126,8 +123,8 @@ class Ticket extends Model
         $query = $this->where('user_id', '=', auth()->user()->id);
         if (!empty($filter["team_id"]))
             $query = $query->where('team_id', $filter['team_id']);
-        if (!empty($filter["practice_id"]))
-            $query = $query->where('practice_id', $filter['practice_id']);
+        if (!empty($filter["target_id"]))
+            $query = $query->where('target_id', $filter['target_id']);
         if (!empty($filter["department_id"]))
             $query = $query->where('department_id', $filter['department_id']);
         if (!empty($filter["status"]))

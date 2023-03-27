@@ -61,6 +61,7 @@ class TicketController extends Controller
             $departments = Department::where('company_id', $user->company_id)->orderBy('name', 'ASC')->get();
         else
             $departments = Auth::user()->assinged_departments();
+
         $share_to = share_to();
         $practices = $share_to["practices"];
         $share_to = $share_to["share_to"];
@@ -98,7 +99,7 @@ class TicketController extends Controller
                 $ticket["user_id"] = $user->id;
                 $ticket["user_type"] = $user->type;
                 $ticket["department_id"] = $request->from;
-                $ticket["practice_id"] = $value;
+                $ticket["target_id"] = $value;
                 $ticket["team_id"] = isset($team[0]->id) ? $team[0]->id : 0;
                 $ticket["type"] = $request->type;
                 $ticket["priority"] = $request->priority;
@@ -218,7 +219,7 @@ class TicketController extends Controller
         ];
         $filter = array(
             "team_id" => $request->input('team_filter'),
-            "practice_id" => $request->input('practice_filter'),
+            "target_id" => $request->input('practice_filter'),
             "department_id" => $request->input('department_filter'),
             "status" => $request->input('status_filter'),
             "priority" => $request->input('priority_filter'),
@@ -249,12 +250,19 @@ class TicketController extends Controller
                 if (auth()->user()->can('delete ticket')) {
                     $delete = '<form method="POST" action="' . route('tickets.destroy', $ticket->id) . '" accept-charset="UTF-8" style="display:inline"><input name="_method" type="hidden" value="DELETE"><input name="_token" type="hidden" value="' . csrf_token() . '"><input class="dropdown-item" type="submit" value="Delete"></form>';
                 }
+                if ($ticket->is_external) {
+                    $practice = Practice::findorfail($ticket->target_id);
+                    $name = isset($practice->name) ? $practice->name : "";
+                } else {
+                    $department = Department::findorfail($ticket->target_id);
+                    $name = isset($department->name) ? $department->name : "";
+                }
                 $nestedData['id'] = '<a class="ticket-replies" ref="' . $ticket->id . '" href="javascript:void(0)">' . $ticket->id . '</a>';
                 $nestedData['response_at'] = $ticket->response_at;
                 $nestedData['created_at'] = $ticket->created_at;
                 $nestedData['creator'] = $ticket->creator;
                 $nestedData['creator_name'] = $ticket->user_id;
-                $nestedData['practice_name'] = $ticket->practice_id;
+                $nestedData['practice_name'] = $name;
                 $nestedData['department_name'] = $ticket->department_id;
                 $nestedData['team_name'] = $ticket->team_id;
                 $nestedData['subject'] = $ticket->subject;

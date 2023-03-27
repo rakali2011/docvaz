@@ -146,7 +146,7 @@
                     <th>Created</th>
                     <th>Creator</th>
                     <th>User Name</th>
-                    <th>Practice</th>
+                    <th>To</th>
                     <th>Department</th>
                     <th>Team</th>
                     <th>Subject</th>
@@ -163,7 +163,7 @@
                     <th>Created</th>
                     <th>Creator</th>
                     <th>User Name</th>
-                    <th>Practice</th>
+                    <th>To</th>
                     <th>Department</th>
                     <th>Team</th>
                     <th>Subject</th>

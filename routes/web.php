@@ -11,6 +11,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\PracticeController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\SettingController;
 use App\Http\Controllers\StatusController;
 use App\Http\Controllers\TeamController;
 use App\Http\Controllers\TicketController;
@@ -115,3 +116,6 @@ Route::post('/get-flag', [TicketController::class, 'ticketFlag'])->middleware('p
 Route::resource('ticket_replies', TicketReplyController::class);
 // Designations
 Route::resource('designations', DesignationController::class);
+// Settings
+Route::resource('settings', SettingController::class);
+Route::post('/get_setting', [SettingController::class, 'getSetting'])->middleware('permission:update company setting')->name('get_setting');

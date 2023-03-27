@@ -97,6 +97,19 @@
                 </div>
               </div>
               <div class="col-xs-6 col-sm-6 col-md-3">
+                <strong class="btn-success"><label for="company">Company Setting</label><input type="checkbox" name="check-all" id="company" {{ @$check_all["company"] }}></strong>
+                <div class="form-group">
+                  @foreach($permissions as $value)
+                  @if($value->type=="company")
+                  <div class="form-check form-check-inline">
+                    {{ Form::checkbox('permission[]', $value->id, in_array($value->id, @$assign_permissions) ? true : false, array('class' => 'form-check-input company','id'=>$value->name)) }}
+                    <label for="{{ $value->name }}" class="form-check-label">{{ ucwords(str_replace("-"," ",$value->display_name)) }}</label>
+                  </div>
+                  @endif
+                  @endforeach
+                </div>
+              </div>
+              <div class="col-xs-6 col-sm-6 col-md-3">
                 <strong class="btn-success"><label for="department">Department</label><input type="checkbox" name="check-all" id="department" {{ @$check_all["department"] }}></strong>
                 <div class="form-group">
                   @foreach($permissions as $value)

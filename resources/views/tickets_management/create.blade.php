@@ -30,8 +30,17 @@
               <div class="form-group mb-3">
                 <label for="from">From</label>
                 <select name="from" id="from" class="form-control select2-multi @error('from') is-invalid @enderror">
-                  @foreach ($departments as $item)
-                  <option value="{{ $item->id }}">{{ $item->name }}</option>
+                  @foreach ($departments as $department)
+                  @if($department->parent_id==0)
+                  <optgroup label="{{ $department->name }}">
+                    <option value="{{ $department->id }}">{{ $department->name }}</option>
+                    @foreach ($departments as $dep)
+                    @if($department->id==$dep->parent_id)
+                    <option value="{{ $dep->id }}">{{ $dep->name }}</option>
+                    @endif
+                    @endforeach
+                  </optgroup>
+                  @endif
                   @endforeach
                 </select>
                 @error('from')
@@ -64,10 +73,18 @@
                 @can('external ticket')
                 <div id="to_department_div">
                   <select name="to_department" id="to_department" class="form-control select2-multi @error('to_department') is-invalid @enderror">
-                    <option value="1">Dep 1</option>
-                    <option value="2">Dep 2</option>
-                    <option value="3">Dep 3</option>
-                    <option value="4">Dep 4</option>
+                    @foreach ($departments as $department)
+                    @if($department->parent_id==0)
+                    <optgroup label="{{ $department->name }}">
+                      <option value="{{ $department->id }}">{{ $department->name }}</option>
+                      @foreach ($departments as $dep)
+                      @if($department->id==$dep->parent_id)
+                      <option value="{{ $dep->id }}">{{ $dep->name }}</option>
+                      @endif
+                      @endforeach
+                    </optgroup>
+                    @endif
+                    @endforeach
                   </select>
                 </div>
                 @endcan
@@ -130,8 +147,17 @@
               <div class="form-group mb-3">
                 <label for="cc">CC</label>
                 <select name="cc[]" id="cc" class="form-control select2-multi @error('cc') is-invalid @enderror" multiple="multiple">
-                  @foreach ($departments as $item)
-                  <option value="{{ $item->id }}">{{ $item->name }}</option>
+                  @foreach ($departments as $department)
+                  @if($department->parent_id==0)
+                  <optgroup label="{{ $department->name }}">
+                    <option value="{{ $department->id }}">{{ $department->name }}</option>
+                    @foreach ($departments as $dep)
+                    @if($department->id==$dep->parent_id)
+                    <option value="{{ $dep->id }}">{{ $dep->name }}</option>
+                    @endif
+                    @endforeach
+                  </optgroup>
+                  @endif
                   @endforeach
                 </select>
                 @error('cc')

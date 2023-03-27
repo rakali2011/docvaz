@@ -53,9 +53,9 @@
                                                 @can('assign practice user')
                                                 <a class="dropdown-item assign-practice" ref="{{ Crypt::encrypt($item->id) }}" href="javascript:;">Assign Practice</a>
                                                 @endcan
-                                                @can('assign team user')
+                                                <!-- @can('assign team user')
                                                 <a class="dropdown-item assign-team" ref="{{ Crypt::encrypt($item->id) }}" href="javascript:;">Assign Team</a>
-                                                @endcan
+                                                @endcan -->
                                             </div>
                                         </td>
                                     </tr>

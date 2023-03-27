@@ -21,7 +21,7 @@ class FileController extends Controller
     public function show($id)
     {
         if (auth()->user()->can('view file')) {
-            $id = $this->clean_id($id);
+            // $id = $this->clean_id($id);
             $document = File::findOrFail($id);
             $file = storage_path() . "/app/" . $document->path;
             return Response::file($file);
@@ -159,11 +159,14 @@ class FileController extends Controller
         if (!empty($files)) {
             foreach ($files as $file) {
                 $edit = '';
+                $view = '';
                 $delete = '';
                 if (auth()->user()->can('update file'))
                     $edit = '<a class="dropdown-item" href="' . route('edit_file', ['id' => $file->id]) . '">Edit</a>';
+                if (auth()->user()->can('view file'))
+                    $view = '<a class="dropdown-item" href="' . route('file', ['id' => $file->id]) . '">View</a>';
                 if (auth()->user()->can('delete file')) {
-                    $delete = '<form method="POST" action="' . route('delete_file', $file->id) . '" accept-charset="UTF-8" style="display:inline"><input name="_method" type="hidden" value="DELETE"><input name="_token" type="hidden" value="' . csrf_token() . '"><input class="dropdown-item" type="submit" value="Delete"></form>';
+                    $delete = '<form method="POST" action="' . route('delete_file', $file->id) . '" accept-charset="UTF-8" style="display:inline"><input name="_token" type="hidden" value="' . csrf_token() . '"><input class="dropdown-item" type="submit" value="Delete"></form>';
                 }
                 $practice = Practice::findorfail($file->practice_id);
                 $nestedData['practice_id'] = $practice->name;
@@ -173,7 +176,7 @@ class FileController extends Controller
                 $nestedData['ext'] = $file->ext;
                 $nestedData['date'] = $file->date;
                 $nestedData['created_at'] = $file->created_at;
-                $nestedData['action'] = '<button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="text-muted sr-only">Action</span></button><div class="dropdown-menu dropdown-menu-right">' . $edit . $delete . '</div>';
+                $nestedData['action'] = '<button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="text-muted sr-only">Action</span></button><div class="dropdown-menu dropdown-menu-right">' . $view . $edit . $delete . '</div>';
                 $data[] = $nestedData;
             }
         }
@@ -184,5 +187,10 @@ class FileController extends Controller
             "data" => $data
         );
         echo json_encode($json_data);
+    }
+    public function delete_file($file_id)
+    {
+        File::where("id", $file_id)->delete();
+        return redirect()->route('files')->with('success', 'File Deleted Successfully');
     }
 }

@@ -142,10 +142,10 @@
           </li>
           @endcan
           @can('view team')
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <a class="nav-link pl-3 sub-menu" id="teams" href="{{ route('teams') }}"><span class="ml-1 item-text">Teams</span>
             </a>
-          </li>
+          </li> -->
           @endcan
         </ul>
       </li>
