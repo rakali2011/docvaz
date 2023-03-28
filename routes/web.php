@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuditController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\CompanyController;
@@ -119,3 +120,5 @@ Route::resource('designations', DesignationController::class);
 // Settings
 Route::resource('settings', SettingController::class);
 Route::post('/get_setting', [SettingController::class, 'getSetting'])->middleware('permission:update company setting')->name('get_setting');
+// Audits
+Route::post('/audits', [AuditController::class, 'audits'])->middleware('permission:view audit system log')->name('audits');
