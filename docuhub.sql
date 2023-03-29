@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Mar 29, 2023 at 04:25 PM
+-- Generation Time: Mar 29, 2023 at 04:28 PM
 -- Server version: 5.7.36
 -- PHP Version: 7.4.26
 
@@ -1257,17 +1257,17 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 
 INSERT INTO `users` (`id`, `company_id`, `employee_id`, `designation_id`, `type`, `status`, `firstname`, `lastname`, `psudo_name`, `email`, `username`, `email_verified_at`, `password`, `remember_token`, `last_activity`, `timezone`, `created_at`, `updated_at`) VALUES
-(10, 0, 0, 2, 0, 1, 'Junaid', 'Khan', NULL, 'junaid@mail.com', '', NULL, '$2a$12$TWJEfJ3kvFfnS49Yn5lvMe4qqxJUy/Oy1Gy5fvHgkzpshsC3WlApi', 'KtWFy3D6RihiQYwg2xlCZ0NtoNlDrsDkfJsuOaNF4jC2Ckq7hUQmaemU8nbh', NULL, 0, '2023-01-04 04:24:33', '2023-02-24 09:42:42'),
-(11, 4, 0, 2, 2, 1, 'Super', 'Admin', NULL, 'superadmin4@bmb.com', '', NULL, '$2a$12$DAeA/CC/k2xUF8g1hN6toeW6cnwZFtWKDaBcEEW5Y4Fptw1OaVWAC', NULL, NULL, 0, '2023-01-19 13:39:09', '2023-01-19 13:39:09'),
-(12, 5, 0, 2, 2, 1, 'Super', 'Admin', NULL, 'superadmin5@test.com', '', NULL, '$2a$12$DAeA/CC/k2xUF8g1hN6toeW6cnwZFtWKDaBcEEW5Y4Fptw1OaVWAC', NULL, NULL, 0, '2023-01-22 12:33:56', '2023-01-22 12:33:56'),
-(13, 1, 0, 2, 2, 1, 'John D.', 'John D.', NULL, 'JohnDMurray@teleworm.us', '', NULL, '$2a$12$DAeA/CC/k2xUF8g1hN6toeW6cnwZFtWKDaBcEEW5Y4Fptw1OaVWAC', NULL, NULL, 0, '2023-01-25 10:36:08', '2023-01-25 10:36:08'),
-(14, 1, 0, 2, 3, 1, 'test', 'client', NULL, 'client@gmail.com', '', NULL, '$2a$12$DAeA/CC/k2xUF8g1hN6toeW6cnwZFtWKDaBcEEW5Y4Fptw1OaVWAC', NULL, NULL, 0, '2023-02-05 10:19:42', '2023-02-05 10:19:42'),
-(15, 6, 2703, 6, 2, 2, 'Asad', 'Nazir', 'Asad Nazir Awan', 'superadmin6@new.com', 'superadmin6', NULL, '$2y$10$T9jRrchuuBhVQfaaYMdlLubDgSlSz/x9UR0V8J0XZkE4zLYKM6U4W', NULL, NULL, 7, '2023-02-16 16:08:10', '2023-03-20 15:18:50'),
-(16, 6, 0, 2, 3, 10, 'New', 'Client 1', NULL, 'newclient@gmail.com', 'newclient', NULL, '$2y$10$T9jRrchuuBhVQfaaYMdlLubDgSlSz/x9UR0V8J0XZkE4zLYKM6U4W', NULL, NULL, 4, '2023-02-16 16:10:37', '2023-03-20 15:27:50'),
-(17, 6, 23213, 2, 2, 2, 'Test', 'Test', 'Asad Nazir Awan', 'test@gmail.com', 'admin', NULL, '$2y$10$KA8vHn1FJekCLjBDir/Lhupag4peomZl1wjv46CfjoePjiO3s1UfS', NULL, NULL, 0, '2023-02-21 12:54:37', '2023-03-28 14:57:06'),
-(18, 6, 0, 2, 2, 12, 'Test', 'User', NULL, 'testuser@gmail.com', '', NULL, '$2y$10$ZQuRQ6iuGSvo7nmORZGVy.lMWvW02ow3pYCkJltN5U/f4JLmKO.wi', NULL, NULL, 0, '2023-02-27 12:43:41', '2023-03-07 12:23:13'),
-(19, 6, 0, 2, 3, 1, 'New', 'Client 2', NULL, 'newclient2@gmail.com', '', NULL, '$2y$10$Ovd3DnCDg5o2iAv0YELZnuBf8fqNsUFxZBiLClLDaxIyWiRDKYKi.', NULL, NULL, 0, '2023-03-02 15:49:40', '2023-03-02 15:49:40'),
-(20, 6, 0, 2, 3, 1, 'New', 'Client 3', NULL, 'newclient3@gmail.com', '', NULL, '$2y$10$iqKPkotw5IJ5sgn9cA48cuQz6zJy/fTJo.ut/PV6iIfL1HNWHF2pe', NULL, NULL, 0, '2023-03-02 16:12:25', '2023-03-02 16:12:25');
+(10, 0, 0, 2, 0, 1, 'Rahmat', 'Ali', NULL, 'admin@mail.com', '', NULL, '$2y$10$cEJsuBpta26C6aMp.MaCY.5apeaYbYNQ2pY1azhsk1cvfo4GhMaNy', 'KtWFy3D6RihiQYwg2xlCZ0NtoNlDrsDkfJsuOaNF4jC2Ckq7hUQmaemU8nbh', NULL, 0, '2023-01-04 04:24:33', '2023-02-24 09:42:42'),
+(11, 4, 0, 2, 2, 1, 'Super', 'Admin', NULL, 'superadmin4@bmb.com', '', NULL, '$2y$10$cEJsuBpta26C6aMp.MaCY.5apeaYbYNQ2pY1azhsk1cvfo4GhMaNy', NULL, NULL, 0, '2023-01-19 13:39:09', '2023-01-19 13:39:09'),
+(12, 5, 0, 2, 2, 1, 'Super', 'Admin', NULL, 'superadmin5@test.com', '', NULL, '$2y$10$cEJsuBpta26C6aMp.MaCY.5apeaYbYNQ2pY1azhsk1cvfo4GhMaNy', NULL, NULL, 0, '2023-01-22 12:33:56', '2023-01-22 12:33:56'),
+(13, 1, 0, 2, 2, 1, 'John D.', 'John D.', NULL, 'JohnDMurray@teleworm.us', '', NULL, '$2y$10$cEJsuBpta26C6aMp.MaCY.5apeaYbYNQ2pY1azhsk1cvfo4GhMaNy', NULL, NULL, 0, '2023-01-25 10:36:08', '2023-01-25 10:36:08'),
+(14, 1, 0, 2, 3, 1, 'test', 'client', NULL, 'client@gmail.com', '', NULL, '$2y$10$cEJsuBpta26C6aMp.MaCY.5apeaYbYNQ2pY1azhsk1cvfo4GhMaNy', NULL, NULL, 0, '2023-02-05 10:19:42', '2023-02-05 10:19:42'),
+(15, 6, 2703, 6, 2, 2, 'Asad', 'Nazir', 'Asad Nazir Awan', 'superadmin6@new.com', 'superadmin6', NULL, '$2y$10$cEJsuBpta26C6aMp.MaCY.5apeaYbYNQ2pY1azhsk1cvfo4GhMaNy', NULL, NULL, 7, '2023-02-16 16:08:10', '2023-03-20 15:18:50'),
+(16, 6, 0, 2, 3, 10, 'New', 'Client 1', NULL, 'newclient@gmail.com', 'newclient', NULL, '$2y$10$cEJsuBpta26C6aMp.MaCY.5apeaYbYNQ2pY1azhsk1cvfo4GhMaNy', NULL, NULL, 4, '2023-02-16 16:10:37', '2023-03-20 15:27:50'),
+(17, 6, 23213, 2, 2, 2, 'Test', 'Test', 'Asad Nazir Awan', 'test@gmail.com', 'admin', NULL, '$2y$10$cEJsuBpta26C6aMp.MaCY.5apeaYbYNQ2pY1azhsk1cvfo4GhMaNy', NULL, NULL, 0, '2023-02-21 12:54:37', '2023-03-28 14:57:06'),
+(18, 6, 0, 2, 2, 12, 'Test', 'User', NULL, 'testuser@gmail.com', '', NULL, '$2y$10$cEJsuBpta26C6aMp.MaCY.5apeaYbYNQ2pY1azhsk1cvfo4GhMaNy', NULL, NULL, 0, '2023-02-27 12:43:41', '2023-03-07 12:23:13'),
+(19, 6, 0, 2, 3, 1, 'New', 'Client 2', NULL, 'newclient2@gmail.com', '', NULL, '$2y$10$cEJsuBpta26C6aMp.MaCY.5apeaYbYNQ2pY1azhsk1cvfo4GhMaNy', NULL, NULL, 0, '2023-03-02 15:49:40', '2023-03-02 15:49:40'),
+(20, 6, 0, 2, 3, 1, 'New', 'Client 3', NULL, 'newclient3@gmail.com', '', NULL, '$2y$10$cEJsuBpta26C6aMp.MaCY.5apeaYbYNQ2pY1azhsk1cvfo4GhMaNy', NULL, NULL, 0, '2023-03-02 16:12:25', '2023-03-02 16:12:25');
 
 --
 -- Constraints for dumped tables
