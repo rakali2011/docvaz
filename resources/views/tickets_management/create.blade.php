@@ -13,7 +13,8 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-12">
-            <h2 class="page-title menu-head">Create New Ticket</h2>
+            <h2 class="page-title menu-head abc">Create New Ticket</h2>
+            <!-- sdsadsad -->
             <div class="card shadow mb-4">
                 {!! Form::open(array('route' => 'tickets.store','method'=>'POST','id'=>'create-ticket','enctype'=>'multipart/form-data')) !!}
                 <div class="card-body">

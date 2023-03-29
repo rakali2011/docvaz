@@ -85,6 +85,7 @@ class Ticket extends Model implements Auditable
     }
     public function countFilteredTickets($date_range, $filter, $search, $start, $limit, $order, $dir)
     {
+
         $query = $this;
         $query = $this->where('user_id', '=', auth()->user()->id);
         if (!empty($filter["team_id"]))
