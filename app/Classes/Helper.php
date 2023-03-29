@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Auth;
 use App\Models\Company;
+use App\Models\Department;
 use App\Models\Designation;
 use App\Models\DocumentType;
 use App\Models\Practice;
@@ -50,8 +51,10 @@ if (!function_exists('statuses')) {
 if (!function_exists('get_status')) {
     function get_status($status_id)
     {
+        if (!$status_id)
+            return "";
         $status = Status::findorfail($status_id);
-        return $status->name;
+        return isset($status->name) ? $status->name : "";
     }
 }
 if (!function_exists('ticket_types')) {
@@ -137,20 +140,26 @@ function get_assigned_teams_user_ids($team_id = NULL)
     sort($user_ids);
     return $user_ids;
 }
-function get_department_practice_users($practice_id, $department_id)
+function get_department_practice_users($to_id, $department_id, $is_external)
 {
     $response = [];
     $department_users = [];
-    $practice = Practice::findorfail($practice_id);
-    $assinged_users = $practice->assinged_users();
-    $assinged_user_ids = $assinged_users->pluck("id");
-    foreach ($assinged_users as $key => $user) {
-        $departments = $user->departments()->get()->pluck("id");
-        foreach ($departments as $index => $department)
-            if ($department == $department_id)
-                array_push($department_users, $user->id);
+    $practice_users = [];
+    if ($is_external) {
+        $practice = Practice::findorfail($to_id);
+        $assinged_users = $practice->assinged_users();
+        $practice_users = $assinged_users->pluck("id");
+        foreach ($assinged_users as $key => $user) {
+            $departments = $user->departments()->get()->pluck("id");
+            foreach ($departments as $index => $department)
+                if ($department == $department_id)
+                    array_push($department_users, $user->id);
+        }
+    } else {
+        $department = Department::findorfail($to_id);
+        $department_users = $department->assinged_users()->pluck("id");
     }
     $response["department_users"] = json_decode(json_encode($department_users), true);
-    $response["practice_users"] = json_decode(json_encode($assinged_user_ids), true);
+    $response["practice_users"] = json_decode(json_encode($practice_users), true);
     return $response;
 }

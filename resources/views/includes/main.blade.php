@@ -26,12 +26,16 @@
     .menu-head {
       color: #001a4e;
       font-weight: 700;
-      font-size: 1.75rem;
+      font-size: 1rem;
     }
 
     .nav-active {
       background: #f8f9fa;
       color: #1b68ff !important;
+    }
+
+    label {
+      font-weight: 700;
     }
   </style>
 </head>

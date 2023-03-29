@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Mar 29, 2023 at 04:28 PM
+-- Generation Time: Mar 29, 2023 at 08:58 PM
 -- Server version: 5.7.36
 -- PHP Version: 7.4.26
 
@@ -68,7 +68,7 @@ CREATE TABLE IF NOT EXISTS `audits` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=39 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `audits`
@@ -91,7 +91,28 @@ INSERT INTO `audits` (`id`, `user_type`, `user_id`, `event`, `auditable_type`, `
 (14, 'App\\Models\\User', 15, 'updated', 'App\\Models\\Practice', 7, '{\"avg_charges\":null,\"physical_address\":\"[{\\\"zip\\\": null, \\\"city\\\": null, \\\"state\\\": null, \\\"address\\\": null}]\",\"mailing_address\":\"[{\\\"zip\\\": null, \\\"city\\\": null, \\\"state\\\": null, \\\"address\\\": null}]\",\"location_address\":\"[{\\\"zip\\\": null, \\\"city\\\": null, \\\"state\\\": null, \\\"address\\\": null}]\",\"focal_info\":\"[{\\\"fax\\\": null, \\\"name\\\": null, \\\"email\\\": null, \\\"phone\\\": null, \\\"designation\\\": null}]\",\"owner_info\":\"[{\\\"fax\\\": null, \\\"name\\\": null, \\\"email\\\": null, \\\"phone\\\": null, \\\"title\\\": null}]\",\"provider_information\":\"[{\\\"dob\\\": null, \\\"ssn\\\": null, \\\"name\\\": null, \\\"tax_id\\\": null, \\\"individual_npi\\\": null, \\\"individual_ptan\\\": null}]\",\"caqh\":\"{\\\"url\\\": null, \\\"name\\\": null, \\\"password\\\": null, \\\"username\\\": null}\",\"clearinghouse\":\"{\\\"url\\\": null, \\\"name\\\": null, \\\"password\\\": null, \\\"username\\\": null}\",\"ehr\":\"{\\\"url\\\": null, \\\"name\\\": null, \\\"password\\\": null, \\\"username\\\": null}\",\"management_software\":\"[{\\\"url\\\": null, \\\"name\\\": null, \\\"password\\\": null, \\\"username\\\": null}]\",\"payers_info\":\"[{\\\"npi\\\": null, \\\"payer_name\\\": null, \\\"enroll_type\\\": null, \\\"enroll_with\\\": null, \\\"provider_name\\\": null, \\\"effective_date\\\": null}]\",\"claim_creation_frequency\":\"{\\\"value\\\": null, \\\"option\\\": null}\",\"bellmedex_services\":\"{\\\"ar\\\": 0, \\\"phd\\\": 0, \\\"coding\\\": 0, \\\"billing\\\": 0, \\\"ar_start\\\": null, \\\"authorization\\\": 0, \\\"credentialing\\\": 0, \\\"eligibility_check\\\": 0, \\\"patient_statement\\\": 0, \\\"key_billing_issues\\\": null, \\\"special_instructions\\\": null, \\\"complementary_services\\\": null}\",\"crm\":\"{\\\"welcome_email\\\": null, \\\"orientation_by\\\": null, \\\"mom_sharing_date\\\": null, \\\"docuhub_orientation\\\": \\\"0\\\", \\\"attended_by_crm_team\\\": null, \\\"orientation_datetime\\\": null, \\\"onboarding_metting_date\\\": null}\",\"operations\":\"{\\\"login_date\\\": null, \\\"logins_receipt\\\": \\\"0\\\", \\\"sop_preparation\\\": \\\"0\\\", \\\"preparation_date\\\": null, \\\"first_billing_received\\\": null, \\\"first_service_provided_name\\\": null}\",\"practice_threshold_per_hour\":\"{\\\"thresh_auth\\\": null, \\\"thresh_elect\\\": null, \\\"thresh_portal\\\": null, \\\"thresh_denials\\\": null, \\\"thresh_posting\\\": null, \\\"thresh_rejections\\\": null, \\\"thresh_eligibility\\\": null, \\\"thresh_charge_entry\\\": null, \\\"thresh_posting_elect\\\": null, \\\"thresh_charge_elect_checkbox\\\": 0, \\\"thresh_charge_manual_checkbox\\\": 0, \\\"thresh_posting_elect_checkbox\\\": 0, \\\"thresh_posting_manual_checkbox\\\": 0, \\\"thresh_eligibility_cal_checkbox\\\": 0, \\\"thresh_eligibility_portal_checkbox\\\": 0, \\\"thresh_charge_with_demo_graphics_checkbox\\\": 0}\",\"thresh_payer\":\"[{\\\"name\\\": null, \\\"claims\\\": null}]\"}', '{\"avg_charges\":\"1500\",\"physical_address\":\"[{\\\"address\\\":null,\\\"zip\\\":null,\\\"state\\\":null,\\\"city\\\":null}]\",\"mailing_address\":\"[{\\\"address\\\":null,\\\"zip\\\":null,\\\"state\\\":null,\\\"city\\\":null}]\",\"location_address\":\"[{\\\"address\\\":null,\\\"zip\\\":null,\\\"state\\\":null,\\\"city\\\":null}]\",\"focal_info\":\"[{\\\"designation\\\":null,\\\"email\\\":null,\\\"fax\\\":null,\\\"name\\\":null,\\\"phone\\\":null}]\",\"owner_info\":\"[{\\\"title\\\":null,\\\"name\\\":null,\\\"fax\\\":null,\\\"email\\\":null,\\\"phone\\\":null}]\",\"provider_information\":\"[{\\\"dob\\\":null,\\\"individual_npi\\\":null,\\\"individual_ptan\\\":null,\\\"name\\\":null,\\\"ssn\\\":null,\\\"tax_id\\\":null}]\",\"caqh\":\"{\\\"name\\\":null,\\\"url\\\":null,\\\"username\\\":null,\\\"password\\\":null}\",\"clearinghouse\":\"{\\\"name\\\":null,\\\"url\\\":null,\\\"username\\\":null,\\\"password\\\":null}\",\"ehr\":\"{\\\"name\\\":null,\\\"url\\\":null,\\\"username\\\":null,\\\"password\\\":null}\",\"management_software\":\"[{\\\"name\\\":null,\\\"url\\\":null,\\\"username\\\":null,\\\"password\\\":null}]\",\"payers_info\":\"[{\\\"payer_name\\\":null,\\\"provider_name\\\":null,\\\"npi\\\":null,\\\"enroll_type\\\":null,\\\"enroll_with\\\":null,\\\"effective_date\\\":null}]\",\"claim_creation_frequency\":\"{\\\"option\\\":null,\\\"value\\\":null}\",\"bellmedex_services\":\"{\\\"credentialing\\\":0,\\\"coding\\\":0,\\\"phd\\\":0,\\\"billing\\\":0,\\\"eligibility_check\\\":0,\\\"authorization\\\":0,\\\"patient_statement\\\":0,\\\"ar\\\":0,\\\"ar_start\\\":null,\\\"key_billing_issues\\\":null,\\\"complementary_services\\\":null,\\\"special_instructions\\\":null}\",\"crm\":\"{\\\"welcome_email\\\":null,\\\"onboarding_metting_date\\\":null,\\\"attended_by_crm_team\\\":null,\\\"docuhub_orientation\\\":\\\"0\\\",\\\"orientation_datetime\\\":null,\\\"orientation_by\\\":null,\\\"mom_sharing_date\\\":null}\",\"operations\":\"{\\\"logins_receipt\\\":\\\"0\\\",\\\"login_date\\\":null,\\\"sop_preparation\\\":\\\"0\\\",\\\"first_service_provided_name\\\":null,\\\"preparation_date\\\":null,\\\"first_billing_received\\\":null}\",\"practice_threshold_per_hour\":\"{\\\"thresh_eligibility_cal_checkbox\\\":0,\\\"thresh_eligibility\\\":null,\\\"thresh_charge_manual_checkbox\\\":0,\\\"thresh_charge_with_demo_graphics_checkbox\\\":0,\\\"thresh_charge_entry\\\":null,\\\"thresh_posting_manual_checkbox\\\":0,\\\"thresh_posting\\\":null,\\\"thresh_eligibility_portal_checkbox\\\":0,\\\"thresh_portal\\\":null,\\\"thresh_charge_elect_checkbox\\\":0,\\\"thresh_elect\\\":null,\\\"thresh_posting_elect_checkbox\\\":0,\\\"thresh_posting_elect\\\":null,\\\"thresh_auth\\\":null,\\\"thresh_rejections\\\":null,\\\"thresh_denials\\\":null}\",\"thresh_payer\":\"[{\\\"name\\\":null,\\\"claims\\\":null}]\"}', 'http://127.0.0.1:8000/update-practice/eyJpdiI6ImZ1ZHBwYm1ua1hmVHF1djE1dU8rNWc9PSIsInZhbHVlIjoiN01yNlM0bzFXU0x2V0lqVjJlTzZMQT09IiwibWFjIjoiOTA0ZTUyODRhNWE0YmI0MGU0ZmY2ZTRlNDdkZDI1MzBmMmMyNzcwZGM4MjhkODlhYjdmODZiMTk1NjQzNDQ5ZiIsInRhZyI6IiJ9', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36', NULL, '2023-03-28 15:13:23', '2023-03-28 15:13:23'),
 (15, 'App\\Models\\User', 15, 'updated', 'App\\Models\\Designation', 6, '{\"name\":\"Senior Manager Operations\"}', '{\"name\":\"Senior Manager Operations (SMO)\"}', 'http://127.0.0.1:8000/designations/6', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36', NULL, '2023-03-29 08:56:40', '2023-03-29 08:56:40'),
 (16, 'App\\Models\\User', 15, 'updated', 'App\\Models\\Designation', 4, '{\"name\":\"Manager Operations\"}', '{\"name\":\"Manager Operations (MO)\"}', 'http://127.0.0.1:8000/designations/4', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36', NULL, '2023-03-29 08:57:01', '2023-03-29 08:57:01'),
-(17, 'App\\Models\\User', 15, 'updated', 'App\\Models\\Designation', 3, '{\"name\":\"Vice President\"}', '{\"name\":\"Vice President (VP)\"}', 'http://127.0.0.1:8000/designations/3', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36', NULL, '2023-03-29 08:57:14', '2023-03-29 08:57:14');
+(17, 'App\\Models\\User', 15, 'updated', 'App\\Models\\Designation', 3, '{\"name\":\"Vice President\"}', '{\"name\":\"Vice President (VP)\"}', 'http://127.0.0.1:8000/designations/3', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36', NULL, '2023-03-29 08:57:14', '2023-03-29 08:57:14'),
+(18, 'App\\Models\\User', 15, 'created', 'App\\Models\\Ticket', 20, '[]', '{\"company_id\":6,\"user_id\":15,\"user_type\":2,\"department_id\":\"7\",\"target_id\":\"4\",\"team_id\":3,\"type\":\"Info\\/Other\",\"priority\":\"Concerning\",\"subject\":\"Test\",\"message\":\"<p>sdadsadsa<\\/p>\",\"creator\":\"New Test Company\",\"is_external\":\"1\",\"id\":20}', 'http://127.0.0.1:8000/tickets', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36', NULL, '2023-03-29 12:24:55', '2023-03-29 12:24:55'),
+(19, 'App\\Models\\User', 15, 'created', 'App\\Models\\TicketCC', 15, '[]', '{\"ticket_id\":20,\"resource_id\":\"4\",\"resource_type\":0,\"id\":15}', 'http://127.0.0.1:8000/tickets', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36', NULL, '2023-03-29 12:24:55', '2023-03-29 12:24:55'),
+(20, 'App\\Models\\User', 15, 'created', 'App\\Models\\TicketAttachment', 4, '[]', '{\"ticket_id\":20,\"reply_id\":0,\"type\":0,\"name\":\"fcpISL9YWBzG8PEFAbkNvytFSuLI6SwsHv3kyZox.xlsx\",\"org_name\":\"14.xlsx\",\"path\":\"uploads\\/ticket_attachments\\/fcpISL9YWBzG8PEFAbkNvytFSuLI6SwsHv3kyZox.xlsx\",\"ext\":\"xlsx\",\"size\":\"22.46 KB\",\"id\":4}', 'http://127.0.0.1:8000/tickets', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36', NULL, '2023-03-29 12:24:57', '2023-03-29 12:24:57'),
+(21, 'App\\Models\\User', 15, 'created', 'App\\Models\\Ticket', 21, '[]', '{\"company_id\":6,\"user_id\":15,\"user_type\":2,\"department_id\":\"4\",\"target_id\":\"7\",\"team_id\":0,\"type\":\"Info\\/Other\",\"priority\":\"Concerning\",\"subject\":\"Ticket 21\",\"message\":\"<p>message 21<\\/p>\",\"creator\":\"New Test Company\",\"is_external\":\"0\",\"id\":21}', 'http://127.0.0.1:8000/tickets', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36', NULL, '2023-03-29 12:42:25', '2023-03-29 12:42:25'),
+(22, 'App\\Models\\User', 15, 'created', 'App\\Models\\TicketCC', 16, '[]', '{\"ticket_id\":21,\"resource_id\":\"7\",\"resource_type\":0,\"id\":16}', 'http://127.0.0.1:8000/tickets', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36', NULL, '2023-03-29 12:42:25', '2023-03-29 12:42:25'),
+(23, 'App\\Models\\User', 15, 'created', 'App\\Models\\Ticket', 22, '[]', '{\"company_id\":6,\"user_id\":15,\"user_type\":2,\"department_id\":\"4\",\"target_id\":\"3\",\"team_id\":0,\"type\":\"Info\\/Other\",\"priority\":\"Concerning\",\"subject\":\"Ticket 22\",\"message\":\"<p>message 22<\\/p>\",\"creator\":\"New Test Company\",\"is_external\":\"0\",\"id\":22}', 'http://127.0.0.1:8000/tickets', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36', NULL, '2023-03-29 13:02:14', '2023-03-29 13:02:14'),
+(24, 'App\\Models\\User', 15, 'created', 'App\\Models\\TicketCC', 17, '[]', '{\"ticket_id\":22,\"resource_id\":\"7\",\"resource_type\":0,\"id\":17}', 'http://127.0.0.1:8000/tickets', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36', NULL, '2023-03-29 13:02:14', '2023-03-29 13:02:14'),
+(25, 'App\\Models\\User', 15, 'created', 'App\\Models\\TicketCC', 18, '[]', '{\"ticket_id\":22,\"resource_id\":\"9\",\"resource_type\":0,\"id\":18}', 'http://127.0.0.1:8000/tickets', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36', NULL, '2023-03-29 13:02:14', '2023-03-29 13:02:14'),
+(26, 'App\\Models\\User', 15, 'created', 'App\\Models\\Ticket', 23, '[]', '{\"company_id\":6,\"user_id\":15,\"user_type\":2,\"department_id\":\"4\",\"target_id\":\"3\",\"team_id\":0,\"type\":\"Info\\/Other\",\"priority\":\"Concerning\",\"subject\":\"Ticket 23\",\"message\":\"<p>message 23<\\/p>\",\"creator\":\"New Test Company\",\"is_external\":\"0\",\"id\":23}', 'http://127.0.0.1:8000/tickets', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36', NULL, '2023-03-29 13:03:42', '2023-03-29 13:03:42'),
+(27, 'App\\Models\\User', 15, 'created', 'App\\Models\\TicketCC', 19, '[]', '{\"ticket_id\":23,\"resource_id\":\"7\",\"resource_type\":0,\"id\":19}', 'http://127.0.0.1:8000/tickets', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36', NULL, '2023-03-29 13:03:42', '2023-03-29 13:03:42'),
+(28, 'App\\Models\\User', 15, 'created', 'App\\Models\\TicketCC', 20, '[]', '{\"ticket_id\":23,\"resource_id\":\"9\",\"resource_type\":0,\"id\":20}', 'http://127.0.0.1:8000/tickets', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36', NULL, '2023-03-29 13:03:42', '2023-03-29 13:03:42'),
+(29, 'App\\Models\\User', 15, 'created', 'App\\Models\\TicketLog', 3, '[]', '{\"ticket_id\":23,\"user_id\":15,\"seen\":0,\"id\":3}', 'http://127.0.0.1:8000/tickets', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36', NULL, '2023-03-29 13:03:42', '2023-03-29 13:03:42'),
+(30, 'App\\Models\\User', 15, 'created', 'App\\Models\\TicketLog', 4, '[]', '{\"ticket_id\":23,\"user_id\":16,\"seen\":0,\"id\":4}', 'http://127.0.0.1:8000/tickets', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36', NULL, '2023-03-29 13:03:42', '2023-03-29 13:03:42'),
+(31, 'App\\Models\\User', 15, 'created', 'App\\Models\\TicketLog', 5, '[]', '{\"ticket_id\":23,\"user_id\":19,\"seen\":0,\"id\":5}', 'http://127.0.0.1:8000/tickets', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36', NULL, '2023-03-29 13:03:42', '2023-03-29 13:03:42'),
+(32, 'App\\Models\\User', 15, 'created', 'App\\Models\\TicketLog', 6, '[]', '{\"ticket_id\":23,\"user_id\":20,\"seen\":0,\"id\":6}', 'http://127.0.0.1:8000/tickets', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36', NULL, '2023-03-29 13:03:42', '2023-03-29 13:03:42'),
+(33, 'App\\Models\\User', 15, 'created', 'App\\Models\\Ticket', 24, '[]', '{\"company_id\":6,\"user_id\":15,\"user_type\":2,\"department_id\":\"4\",\"target_id\":\"7\",\"team_id\":0,\"type\":\"Info\\/Other\",\"priority\":\"Concerning\",\"subject\":\"Ticket 24\",\"message\":\"<p>Message 24<\\/p>\",\"creator\":\"New Test Company\",\"is_external\":\"1\",\"id\":24}', 'http://127.0.0.1:8000/tickets', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36', NULL, '2023-03-29 13:06:45', '2023-03-29 13:06:45'),
+(34, 'App\\Models\\User', 15, 'created', 'App\\Models\\TicketCC', 21, '[]', '{\"ticket_id\":24,\"resource_id\":\"6\",\"resource_type\":0,\"id\":21}', 'http://127.0.0.1:8000/tickets', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36', NULL, '2023-03-29 13:06:45', '2023-03-29 13:06:45'),
+(35, 'App\\Models\\User', 15, 'created', 'App\\Models\\TicketCC', 22, '[]', '{\"ticket_id\":24,\"resource_id\":\"3\",\"resource_type\":0,\"id\":22}', 'http://127.0.0.1:8000/tickets', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36', NULL, '2023-03-29 13:06:45', '2023-03-29 13:06:45'),
+(36, 'App\\Models\\User', 15, 'created', 'App\\Models\\TicketAttachment', 5, '[]', '{\"ticket_id\":24,\"reply_id\":0,\"type\":0,\"name\":\"ukxQBLcBpKtvkIBuArVLZW8AA31D3u1JDQCl1jN1.xlsx\",\"org_name\":\"20220509093844_Practice Info Sheet.xlsx\",\"path\":\"uploads\\/ticket_attachments\\/ukxQBLcBpKtvkIBuArVLZW8AA31D3u1JDQCl1jN1.xlsx\",\"ext\":\"xlsx\",\"size\":\"12.57 KB\",\"id\":5}', 'http://127.0.0.1:8000/tickets', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36', NULL, '2023-03-29 13:06:46', '2023-03-29 13:06:46'),
+(37, 'App\\Models\\User', 15, 'created', 'App\\Models\\TicketAttachment', 6, '[]', '{\"ticket_id\":24,\"reply_id\":0,\"type\":0,\"name\":\"ci3Pal8Tujw4q6dCI2HdLrl1gFqgrZAxPwqitqam.xlsx\",\"org_name\":\"20220915010715_Practice Info Sheet.xlsx\",\"path\":\"uploads\\/ticket_attachments\\/ci3Pal8Tujw4q6dCI2HdLrl1gFqgrZAxPwqitqam.xlsx\",\"ext\":\"xlsx\",\"size\":\"12.59 KB\",\"id\":6}', 'http://127.0.0.1:8000/tickets', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36', NULL, '2023-03-29 13:06:47', '2023-03-29 13:06:47'),
+(38, 'App\\Models\\User', 15, 'updated', 'App\\Models\\User', 18, '{\"employee_id\":0,\"psudo_name\":null,\"username\":\"\"}', '{\"employee_id\":\"2312\",\"psudo_name\":\"abc\",\"username\":\"frank\"}', 'http://127.0.0.1:8000/update-user/eyJpdiI6InNlRXhrcitHem5uNDdTczlxNDhyYXc9PSIsInZhbHVlIjoiWlZNVWExaisrRnZlclVORWpQQ2RtQT09IiwibWFjIjoiY2UyOGEwYWQ1YjQ2OTE4MjgyM2RjM2ZlZGJkMDBlOGEwNWJlY2ViZDExODNkZTZjYmY2ODQzNGY5ZDYxNGE5YSIsInRhZyI6IiJ9', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36', NULL, '2023-03-29 14:34:23', '2023-03-29 14:34:23');
 
 -- --------------------------------------------------------
 
@@ -368,6 +389,7 @@ INSERT INTO `model_has_roles` (`role_id`, `model_type`, `model_id`) VALUES
 (18, 'App\\Models\\User', 15),
 (20, 'App\\Models\\User', 16),
 (20, 'App\\Models\\User', 17),
+(20, 'App\\Models\\User', 18),
 (20, 'App\\Models\\User', 19),
 (20, 'App\\Models\\User', 20);
 
@@ -1057,7 +1079,7 @@ CREATE TABLE IF NOT EXISTS `tickets` (
   `deleted_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=25 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tickets`
@@ -1082,7 +1104,12 @@ INSERT INTO `tickets` (`id`, `company_id`, `user_id`, `user_type`, `department_i
 (16, 6, 16, 3, 6, 4, 3, 'Info/Other', 'Concerning', 'Client ticket', '<p>Client ticket message</p>', 'Provider', NULL, 26, NULL, 0, 1, '2023-03-02 16:40:14', NULL, '2023-03-02 16:40:14'),
 (17, 6, 16, 3, 6, 4, 3, 'Info/Other', 'Concerning', 'Client ticket', '<p>Client ticket message</p>', 'Provider', NULL, 26, NULL, 0, 1, '2023-03-02 16:40:53', NULL, '2023-03-02 16:40:53'),
 (18, 6, 16, 3, 6, 4, 3, 'Info/Other', 'Concerning', 'Client ticket', '<p>Client ticket message</p>', 'Provider', NULL, 26, NULL, 0, 1, '2023-03-02 16:42:38', NULL, '2023-03-02 16:42:38'),
-(19, 6, 15, 2, 4, 5, 3, 'Info/Other', 'High', 'Testing notification', '<h2>What is Lorem Ipsum?</h2>\r\n\r\n<p><strong>Lorem Ipsum</strong>&nbsp;is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry&#39;s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>', 'New Test Company', NULL, 26, 'Ticket Forward Remarks', 1, 1, '2023-03-03 12:13:55', NULL, '2023-03-23 12:27:00');
+(19, 6, 15, 2, 4, 5, 3, 'Info/Other', 'High', 'Testing notification', '<h2>What is Lorem Ipsum?</h2>\r\n\r\n<p><strong>Lorem Ipsum</strong>&nbsp;is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry&#39;s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>', 'New Test Company', NULL, 26, 'Ticket Forward Remarks', 1, 1, '2023-03-03 12:13:55', NULL, '2023-03-23 12:27:00'),
+(20, 6, 15, 2, 7, 4, 3, 'Info/Other', 'Concerning', 'Test', '<p>sdadsadsa</p>', 'New Test Company', NULL, 0, NULL, 0, 1, '2023-03-29 12:24:55', NULL, '2023-03-29 12:24:55'),
+(21, 6, 15, 2, 4, 7, 0, 'Info/Other', 'Concerning', 'Ticket 21', '<p>message 21</p>', 'New Test Company', NULL, 0, NULL, 0, 0, '2023-03-29 12:42:25', NULL, '2023-03-29 12:42:25'),
+(22, 6, 15, 2, 4, 3, 0, 'Info/Other', 'Concerning', 'Ticket 22', '<p>message 22</p>', 'New Test Company', NULL, 0, NULL, 0, 0, '2023-03-29 13:02:14', NULL, '2023-03-29 13:02:14'),
+(23, 6, 15, 2, 4, 3, 0, 'Info/Other', 'Concerning', 'Ticket 23', '<p>message 23</p>', 'New Test Company', NULL, 0, NULL, 0, 0, '2023-03-29 13:03:42', NULL, '2023-03-29 13:03:42'),
+(24, 6, 15, 2, 4, 7, 0, 'Info/Other', 'Concerning', 'Ticket 24', '<p>Message 24</p>', 'New Test Company', NULL, 0, NULL, 0, 1, '2023-03-29 13:06:45', NULL, '2023-03-29 13:06:45');
 
 -- --------------------------------------------------------
 
@@ -1104,7 +1131,7 @@ CREATE TABLE IF NOT EXISTS `ticket_attachments` (
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `ticket_attachments`
@@ -1113,7 +1140,9 @@ CREATE TABLE IF NOT EXISTS `ticket_attachments` (
 INSERT INTO `ticket_attachments` (`id`, `ticket_id`, `reply_id`, `type`, `name`, `org_name`, `path`, `ext`, `size`, `created_at`, `updated_at`) VALUES
 (1, 11, 0, 0, 'UmU9JYLoqORaVoXIids3rHGHl7X51VI5ZGNl0t7I.xlsx', 'AttendanceList.xlsx', 'uploads/ticket_attachments/UmU9JYLoqORaVoXIids3rHGHl7X51VI5ZGNl0t7I.xlsx', 'xlsx', '22.46 KB', '2023-02-27 20:30:54', '2023-02-27 20:30:54'),
 (2, 12, 0, 0, 'UIRQAfyGBerJlnjksiN7awLYXb6qaicdy7i4OAAb.xlsx', 'AttendanceList.xlsx', 'uploads/ticket_attachments/UIRQAfyGBerJlnjksiN7awLYXb6qaicdy7i4OAAb.xlsx', 'xlsx', '22.46 KB', '2023-02-27 20:34:19', '2023-02-27 20:34:19'),
-(3, 13, 0, 0, 'fcyAw274dujqS6KP8l8xN2cg0ObhhigBoK2jS83d.xlsx', 'AttendanceList (1).xlsx', 'uploads/ticket_attachments/fcyAw274dujqS6KP8l8xN2cg0ObhhigBoK2jS83d.xlsx', 'xlsx', '22.49 KB', '2023-02-27 20:37:35', '2023-02-27 20:37:35');
+(3, 13, 0, 0, 'fcyAw274dujqS6KP8l8xN2cg0ObhhigBoK2jS83d.xlsx', 'AttendanceList (1).xlsx', 'uploads/ticket_attachments/fcyAw274dujqS6KP8l8xN2cg0ObhhigBoK2jS83d.xlsx', 'xlsx', '22.49 KB', '2023-02-27 20:37:35', '2023-02-27 20:37:35'),
+(5, 24, 0, 0, 'ukxQBLcBpKtvkIBuArVLZW8AA31D3u1JDQCl1jN1.xlsx', '20220509093844_Practice Info Sheet.xlsx', 'uploads/ticket_attachments/ukxQBLcBpKtvkIBuArVLZW8AA31D3u1JDQCl1jN1.xlsx', 'xlsx', '12.57 KB', '2023-03-29 18:06:46', '2023-03-29 18:06:46'),
+(6, 24, 0, 0, 'ci3Pal8Tujw4q6dCI2HdLrl1gFqgrZAxPwqitqam.xlsx', '20220915010715_Practice Info Sheet.xlsx', 'uploads/ticket_attachments/ci3Pal8Tujw4q6dCI2HdLrl1gFqgrZAxPwqitqam.xlsx', 'xlsx', '12.59 KB', '2023-03-29 18:06:47', '2023-03-29 18:06:47');
 
 -- --------------------------------------------------------
 
@@ -1132,7 +1161,7 @@ CREATE TABLE IF NOT EXISTS `ticket_ccs` (
   PRIMARY KEY (`id`),
   KEY `ticket_id` (`ticket_id`),
   KEY `department_id` (`resource_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=23 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `ticket_ccs`
@@ -1152,7 +1181,15 @@ INSERT INTO `ticket_ccs` (`id`, `ticket_id`, `resource_id`, `resource_type`, `cr
 (11, 18, 3, 0, '2023-03-02 16:42:38', '2023-03-02 16:42:38'),
 (12, 18, 19, 1, '2023-03-02 16:42:38', '2023-03-02 16:42:38'),
 (13, 18, 20, 1, '2023-03-02 16:42:38', '2023-03-02 16:42:38'),
-(14, 19, 3, 0, '2023-03-03 12:13:55', '2023-03-03 12:13:55');
+(14, 19, 3, 0, '2023-03-03 12:13:55', '2023-03-03 12:13:55'),
+(15, 20, 4, 0, '2023-03-29 12:24:55', '2023-03-29 12:24:55'),
+(16, 21, 7, 0, '2023-03-29 12:42:25', '2023-03-29 12:42:25'),
+(17, 22, 7, 0, '2023-03-29 13:02:14', '2023-03-29 13:02:14'),
+(18, 22, 9, 0, '2023-03-29 13:02:14', '2023-03-29 13:02:14'),
+(19, 23, 7, 0, '2023-03-29 13:03:42', '2023-03-29 13:03:42'),
+(20, 23, 9, 0, '2023-03-29 13:03:42', '2023-03-29 13:03:42'),
+(21, 24, 6, 0, '2023-03-29 13:06:45', '2023-03-29 13:06:45'),
+(22, 24, 3, 0, '2023-03-29 13:06:45', '2023-03-29 13:06:45');
 
 -- --------------------------------------------------------
 
@@ -1169,7 +1206,7 @@ CREATE TABLE IF NOT EXISTS `ticket_logs` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `ticket_logs`
@@ -1177,7 +1214,11 @@ CREATE TABLE IF NOT EXISTS `ticket_logs` (
 
 INSERT INTO `ticket_logs` (`id`, `ticket_id`, `user_id`, `seen`, `created_at`, `updated_at`) VALUES
 (1, 19, 17, 0, '2023-03-23 12:45:20', '2023-03-23 17:45:20'),
-(2, 19, 20, 0, '2023-03-23 12:45:20', '2023-03-23 17:45:20');
+(2, 19, 20, 0, '2023-03-23 12:45:20', '2023-03-23 17:45:20'),
+(3, 23, 15, 0, '2023-03-29 13:03:42', '2023-03-29 18:03:42'),
+(4, 23, 16, 0, '2023-03-29 13:03:42', '2023-03-29 18:03:42'),
+(5, 23, 19, 0, '2023-03-29 13:03:42', '2023-03-29 18:03:42'),
+(6, 23, 20, 0, '2023-03-29 13:03:42', '2023-03-29 18:03:42');
 
 -- --------------------------------------------------------
 
@@ -1265,7 +1306,7 @@ INSERT INTO `users` (`id`, `company_id`, `employee_id`, `designation_id`, `type`
 (15, 6, 2703, 6, 2, 2, 'Asad', 'Nazir', 'Asad Nazir Awan', 'superadmin6@new.com', 'superadmin6', NULL, '$2y$10$cEJsuBpta26C6aMp.MaCY.5apeaYbYNQ2pY1azhsk1cvfo4GhMaNy', NULL, NULL, 7, '2023-02-16 16:08:10', '2023-03-20 15:18:50'),
 (16, 6, 0, 2, 3, 10, 'New', 'Client 1', NULL, 'newclient@gmail.com', 'newclient', NULL, '$2y$10$cEJsuBpta26C6aMp.MaCY.5apeaYbYNQ2pY1azhsk1cvfo4GhMaNy', NULL, NULL, 4, '2023-02-16 16:10:37', '2023-03-20 15:27:50'),
 (17, 6, 23213, 2, 2, 2, 'Test', 'Test', 'Asad Nazir Awan', 'test@gmail.com', 'admin', NULL, '$2y$10$cEJsuBpta26C6aMp.MaCY.5apeaYbYNQ2pY1azhsk1cvfo4GhMaNy', NULL, NULL, 0, '2023-02-21 12:54:37', '2023-03-28 14:57:06'),
-(18, 6, 0, 2, 2, 12, 'Test', 'User', NULL, 'testuser@gmail.com', '', NULL, '$2y$10$cEJsuBpta26C6aMp.MaCY.5apeaYbYNQ2pY1azhsk1cvfo4GhMaNy', NULL, NULL, 0, '2023-02-27 12:43:41', '2023-03-07 12:23:13'),
+(18, 6, 2312, 2, 2, 12, 'Test', 'User', 'abc', 'testuser@gmail.com', 'frank', NULL, '$2y$10$cEJsuBpta26C6aMp.MaCY.5apeaYbYNQ2pY1azhsk1cvfo4GhMaNy', NULL, NULL, 0, '2023-02-27 12:43:41', '2023-03-29 14:34:23'),
 (19, 6, 0, 2, 3, 1, 'New', 'Client 2', NULL, 'newclient2@gmail.com', '', NULL, '$2y$10$cEJsuBpta26C6aMp.MaCY.5apeaYbYNQ2pY1azhsk1cvfo4GhMaNy', NULL, NULL, 0, '2023-03-02 15:49:40', '2023-03-02 15:49:40'),
 (20, 6, 0, 2, 3, 1, 'New', 'Client 3', NULL, 'newclient3@gmail.com', '', NULL, '$2y$10$cEJsuBpta26C6aMp.MaCY.5apeaYbYNQ2pY1azhsk1cvfo4GhMaNy', NULL, NULL, 0, '2023-03-02 16:12:25', '2023-03-02 16:12:25');
 

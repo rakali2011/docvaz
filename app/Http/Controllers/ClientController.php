@@ -30,6 +30,14 @@ class ClientController extends Controller
                 ->where('type', 3)
                 ->orderBy('firstname', 'ASC')->get();
         }
+        foreach ($clients as $client) {
+            $client->roles = $client->roles()->pluck('display_name');
+            $roles = "";
+            foreach ($client->roles as $role) {
+                $roles .= "<span class='role'>$role</span>";
+            }
+            $client->roles = $roles;
+        }
         return view('user_management.clients', compact('data', 'clients'));
     }
     public function add_client()

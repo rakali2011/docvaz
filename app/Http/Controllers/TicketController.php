@@ -89,8 +89,8 @@ class TicketController extends Controller
                 $to_provider = is_array($request->to_provider) ? $request->to_provider : explode(",", $request->to_provider);
             else
                 $to_provider = is_array($request->to_department) ? $request->to_department : explode(",", $request->to_department);
-            foreach ($to_provider as $value) {
-                $practice = Practice::findorfail($value);
+            foreach ($to_provider as $to_value) {
+                $practice = Practice::findorfail($to_value);
                 $associated_client = $practice->associated_user(3);
                 $client_id = isset($associated_client->pluck("id")[0]) ? $associated_client->pluck("id")[0] : 0;
                 $team = $client_id > 0 ? User::findorfail($client_id)->assinged_teams() : "";
@@ -98,7 +98,7 @@ class TicketController extends Controller
                 $ticket["user_id"] = $user->id;
                 $ticket["user_type"] = $user->type;
                 $ticket["department_id"] = $request->from;
-                $ticket["target_id"] = $value;
+                $ticket["target_id"] = $to_value;
                 $ticket["team_id"] = isset($team[0]->id) ? $team[0]->id : 0;
                 $ticket["type"] = $request->type;
                 $ticket["priority"] = $request->priority;
@@ -107,26 +107,27 @@ class TicketController extends Controller
                 $ticket["creator"] = $creator;
                 $ticket["is_external"] = $request->is_external;
                 $id = Ticket::create($ticket);
+                $ticket_id = $id->id;
                 $cc = isset($request->cc) ? $request->cc : [];
-                foreach ($cc as $value) {
-                    $ticket_cc["ticket_id"] = $id->id;
-                    $ticket_cc["resource_id"] = $value;
+                foreach ($cc as $cc_value) {
+                    $ticket_cc["ticket_id"] = $ticket_id;
+                    $ticket_cc["resource_id"] = $cc_value;
                     $ticket_cc["resource_type"] = 0;
                     TicketCC::create($ticket_cc);
                 }
                 $share_to = isset($request->share_to) ? $request->share_to : [];
-                foreach ($share_to as $value) {
-                    $ticket_cc["ticket_id"] = $id->id;
-                    $ticket_cc["resource_id"] = $value;
+                foreach ($share_to as $share_value) {
+                    $ticket_cc["ticket_id"] = $ticket_id;
+                    $ticket_cc["resource_id"] = $share_value;
                     $ticket_cc["resource_type"] = 1;
                     TicketCC::create($ticket_cc);
                 }
                 if ($request->hasfile('files')) {
                     $files = $request->file('files');
-                    foreach ($files as $key => $value) {
-                        $attachment_info = $this->upload($value, 'ticket_attachments');
+                    foreach ($files as $key => $file) {
+                        $attachment_info = $this->upload($file, 'ticket_attachments');
                         $attachment = new TicketAttachment;
-                        $attachment->ticket_id = $id->id;
+                        $attachment->ticket_id = $ticket_id;
                         $attachment->reply_id = 0;
                         $attachment->type = 0;
                         $attachment->name = $attachment_info['file_name'];
@@ -137,11 +138,11 @@ class TicketController extends Controller
                         $attachment->save();
                     }
                 }
-                $user_ids = get_department_practice_users($value, $request->from);
+                $user_ids = get_department_practice_users($to_value, $request->from, $request->is_external);
                 foreach ($user_ids["department_users"] as $user_id) {
-                    TicketLog::where("ticket_id", $id->id)->where("user_id", $user_id)->where("seen", 1)->delete();
+                    TicketLog::where("ticket_id", $ticket_id)->where("user_id", $user_id)->where("seen", 1)->delete();
                     $ticket_log = new TicketLog();
-                    $ticket_log->ticket_id = $id->id;
+                    $ticket_log->ticket_id = $ticket_id;
                     $ticket_log->user_id = $user_id;
                     $ticket_log->seen = 0;
                     $ticket_log->save();

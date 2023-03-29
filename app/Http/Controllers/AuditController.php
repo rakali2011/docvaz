@@ -16,8 +16,8 @@ class AuditController extends Controller
      */
     public function index()
     {
-        $data['menu'] = "dmail-management";
-        $data['sub_menu'] = "tickets";
+        $data['menu'] = "report-management";
+        $data['sub_menu'] = "audits";
         $practices = Auth::user()->assinged_practices();
         $teams = Auth::user()->assinged_teams();
         return view('reports_management.audits', compact('data', 'practices', 'teams'));

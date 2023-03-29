@@ -30,6 +30,14 @@ class UserController extends Controller
         } else {
             $users = User::where('company_id', '!=', 0)->where('company_id', Auth::user()->company->id)->where('type', 2)->orderBy('firstname', 'ASC')->get();
         }
+        foreach ($users as $user) {
+            $user->roles = $user->roles()->pluck('display_name');
+            $roles = "";
+            foreach ($user->roles as $role) {
+                $roles .= "<span class='role'>$role</span>";
+            }
+            $user->roles = $roles;
+        }
         return view('user_management.users', compact('data', 'users'));
     }
 

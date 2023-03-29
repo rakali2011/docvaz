@@ -1,5 +1,15 @@
 @extends('includes.main')
 @section('content')
+<style>
+    span.role {
+        background-color: #e3e8ee;
+        color: #333;
+        border-radius: 3px;
+        border: 1px solid #d0d7dd;
+        padding: 5px;
+        margin-right: 5px;
+    }
+</style>
 <div class="container-fluid">
     <div class="row justify-content-center">
         <div class="col-12">
@@ -22,6 +32,7 @@
                                         <th>Designation</th>
                                         <th>Email</th>
                                         <th>Username</th>
+                                        <th>Roles</th>
                                         @role('dev')
                                         <th>Company</th>
                                         @endrole
@@ -36,6 +47,7 @@
                                         <td>{{ $item->designation_id }}</td>
                                         <td>{{ $item->email }}</td>
                                         <td>{{ $item->username }}</td>
+                                        <td><?= $item->roles; ?></td>
                                         @role('dev')
                                         <td>{{ @$item->company->name }}</td>
                                         @endrole
