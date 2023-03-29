@@ -77,7 +77,6 @@ class TicketController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request);
         DB::beginTransaction();
         try {
             $user = Auth::user();
