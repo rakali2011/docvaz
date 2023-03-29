@@ -13,39 +13,22 @@
                 <div class="card-body">
                   <form action="" id="filter-form" class="row">
                     <div class="form-group col-md-2">
-                      <label for="team"></label>
-                      <select name="team" id="team" class="form-control">
-                        <option value="">Select Team</option>
-                        @foreach ($teams as $key=> $team)
-                        <option value="{{ $team->id }}">{{ $team->name }}</option>
+                      <label for="user"></label>
+                      <select name="user" id="user" class="form-control">
+                        <option value="">Select User</option>
+                        @foreach (users() as $key => $user)
+                        <option value="{{ $user->id }}">{{ $user->firstname.' '.$user->lastname }}</option>
                         @endforeach
                       </select>
                     </div>
                     <div class="form-group col-md-2">
-                      <label for="practice"></label>
-                      <select name="practice" id="practice" class="form-control">
-                        <option value="">Select Practice</option>
-                        @foreach ($practices as $key=> $practice)
-                        <option value="{{ $practice->id }}">{{ $practice->name }}</option>
-                        @endforeach
-                      </select>
-                    </div>
-                    <div class="form-group col-md-2">
-                      <label for="status"></label>
-                      <select name="status" id="status" class="form-control">
-                        <option value="">Select Status</option>
-                        @foreach (statuses('document') as $status)
-                        <option value="{{ $status->id }}">{{ $status->name }}</option>
-                        @endforeach
-                      </select>
-                    </div>
-                    <div class="form-group col-md-2">
-                      <label for="doc_type"></label>
-                      <select name="doc_type" id="doc_type" class="form-control">
-                        <option value="">Select Doc Type</option>
-                        @foreach (document_types() as $document_type)
-                        <option value="{{ $document_type->id }}">{{ $document_type->name }}</option>
-                        @endforeach
+                      <label for="event"></label>
+                      <select name="event" id="event" class="form-control">
+                        <option value="">Select Event</option>
+                        <option value="created">Created</option>
+                        <option value="deleted">Deleted</option>
+                        <option value="restored">Restored</option>
+                        <option value="updated">Updated</option>
                       </select>
                     </div>
                     <div class="form-group col-md-2">
@@ -63,36 +46,38 @@
                   </form>
                 </div>
               </div>
-              <table id="files-table" class="display" style="width:100%">
-                <thead>
-                  <tr>
-                    <th>User</th>
-                    <th>Event</th>
-                    <th>Auditable Type</th>
-                    <th>Auditable ID</th>
-                    <th>Old Values</th>
-                    <th>New Values</th>
-                    <th>IP Address</th>
-                    <th>User Agent</th>
-                    <th>Created At</th>
-                    <th>Updated At</th>
-                  </tr>
-                </thead>
-                <tfoot>
-                  <tr>
-                    <th>User</th>
-                    <th>Event</th>
-                    <th>Auditable Type</th>
-                    <th>Auditable ID</th>
-                    <th>Old Values</th>
-                    <th>New Values</th>
-                    <th>IP Address</th>
-                    <th>User Agent</th>
-                    <th>Created At</th>
-                    <th>Updated At</th>
-                  </tr>
-                </tfoot>
-              </table>
+              <div style="width:100% !important;overflow-x:auto;">
+                <table id="files-table" class="display" style="width:100%;">
+                  <thead>
+                    <tr>
+                      <th>User</th>
+                      <th>Event</th>
+                      <th>Auditable Type</th>
+                      <th>Auditable ID</th>
+                      <th>Old Values</th>
+                      <th>New Values</th>
+                      <th>IP Address</th>
+                      <th>User Agent</th>
+                      <th>Created At</th>
+                      <th>Updated At</th>
+                    </tr>
+                  </thead>
+                  <tfoot>
+                    <tr>
+                      <th>User</th>
+                      <th>Event</th>
+                      <th>Auditable Type</th>
+                      <th>Auditable ID</th>
+                      <th>Old Values</th>
+                      <th>New Values</th>
+                      <th>IP Address</th>
+                      <th>User Agent</th>
+                      <th>Created At</th>
+                      <th>Updated At</th>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
             </div>
           </div>
         </div>
@@ -107,22 +92,16 @@
       "processing": true,
       "serverSide": true,
       "ajax": {
-        "url": "{{ route('all_files') }}",
+        "url": "{{ route('get_audits') }}",
         "dataType": "json",
         "type": "POST",
         "data": {
           _token: "{{csrf_token()}}",
-          'team_filter': function() {
-            return $("#team").val();
+          'user_filter': function() {
+            return $("#user").val();
           },
-          'practice_filter': function() {
-            return $("#practice").val();
-          },
-          'status_filter': function() {
-            return $("#status").val();
-          },
-          'doc_type_filter': function() {
-            return $("#doc_type").val();
+          'event_filter': function() {
+            return $("#event").val();
           },
           'date_from_filter': function() {
             return $("#date_from").val();
@@ -202,6 +181,7 @@
   });
   $('#c_filter').click(function() {
     $('select').val('');
+    $('input').val('');
     $('#files-table').DataTable().ajax.reload(null, true);
   });
 </script>

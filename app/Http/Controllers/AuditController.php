@@ -9,13 +9,6 @@ use Illuminate\Support\Facades\DB;
 
 class AuditController extends Controller
 {
-    function __construct()
-    {
-        $this->middleware('permission:add status|delete status|update status|view status', ['only' => ['index', 'store']]);
-        $this->middleware('permission:add status', ['only' => ['create', 'store']]);
-        $this->middleware('permission:update status', ['only' => ['edit', 'update']]);
-        $this->middleware('permission:delete status', ['only' => ['destroy']]);
-    }
     /**
      * Display a listing of the resource.
      *
@@ -23,6 +16,11 @@ class AuditController extends Controller
      */
     public function index()
     {
+        $data['menu'] = "dmail-management";
+        $data['sub_menu'] = "tickets";
+        $practices = Auth::user()->assinged_practices();
+        $teams = Auth::user()->assinged_teams();
+        return view('reports_management.audits', compact('data', 'practices', 'teams'));
     }
 
     /**
@@ -91,15 +89,10 @@ class AuditController extends Controller
             "date_from" => $request->input('date_from_filter') != "" ? $request->input('date_from_filter') . ' 00:00:00' : $request->input('date_from_filter'),
             "date_to" => $request->input('date_to_filter') != "" ? $request->input('date_to_filter') . ' 23:59:59' : date("Y-m-d H:i:s")
         ];
-        $filter = array(
-            "team_id" => $request->input('team_filter'),
-            "target_id" => $request->input('practice_filter'),
-            "department_id" => $request->input('department_filter'),
-            "status" => $request->input('status_filter'),
-            "priority" => $request->input('priority_filter'),
-            "creator" => $request->input('created_by_filter'),
-            "flag" => $request->input('flag_filter'),
-        );
+        $filter = [
+            "user_id" => $request->input('user_filter'),
+            "event" => $request->input('event_filter')
+        ];
         $limit = $request->input('length');
         $start = $request->input('start');
         $order = !empty($request->input('order.0.column')) ? $request->input('order.0.column') : 0;
@@ -113,12 +106,29 @@ class AuditController extends Controller
         $data = array();
         if (!empty($audits)) {
             foreach ($audits as $audit) {
+                $count = 0;
+                $old_values = "";
+                foreach (json_decode($audit->old_values) as $key => $old_value) {
+                    $old_values .= ucwords($key) . ":<b>$old_value</b>&nbsp;";
+                    if ($count % 2 == 1) {
+                        $old_values .= "<br>";
+                    }
+                    $count++;
+                }
+                $new_values = "";
+                foreach (json_decode($audit->new_values) as $key => $new_value) {
+                    $new_values .= ucwords($key) . ":<b>$new_value</b>&nbsp;";
+                    if ($count % 2 == 1) {
+                        $new_values .= "<br>";
+                    }
+                    $count++;
+                }
                 $nestedData['user_id'] = $audit->user_id;
                 $nestedData['event'] = $audit->event;
                 $nestedData['auditable_type'] = $audit->auditable_type;
                 $nestedData['auditable_id'] = $audit->auditable_id;
-                $nestedData['old_values'] = $audit->old_values;
-                $nestedData['new_values'] = $audit->new_values;
+                $nestedData['old_values'] = $old_values;
+                $nestedData['new_values'] = $new_values;
                 $nestedData['ip_address'] = $audit->ip_address;
                 $nestedData['user_agent'] = $audit->user_agent;
                 $nestedData['created_at'] = $audit->created_at;

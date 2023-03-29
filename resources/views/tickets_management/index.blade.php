@@ -64,7 +64,7 @@
           <div class="card shadow">
             <div class="card-body">
               <div class="card mb-3">
-                <div class="card-body">
+                <div class="card-body shadow">
                   <form action="" id="filter-form" class="row">
                     <div class="form-group col-md-2">
                       <label for="team"></label>

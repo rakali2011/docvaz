@@ -36,7 +36,7 @@
   </style>
 </head>
 
-<body class="vertical  light">
+<body class="vertical ">
   <div class="wrapper">
     @include('includes.header')
     @include('includes.sidebar')

@@ -9,9 +9,12 @@
   .tab {
     overflow: hidden;
     border: 1px solid #ccc;
-    background-color: #f1f1f1;
+    background-color: #ff9336 ;
   }
 
+  .tablinks{
+        padding: 0.6rem !important;
+  }
   .tabcontent {
     display: none;
     padding: 6px 12px;
@@ -30,11 +33,11 @@
   }
 
   .tab button:hover {
-    background-color: #ddd;
+    background-color: #ff8000;
   }
 
   .tab .active {
-    background-color: #ccc;
+    background-color: #ff8000;
   }
 
   .tabcontent {
@@ -935,7 +938,7 @@
                         <div class="col-md-3">
                           <div class="mb-3">
                             <label for="thresh_charge_entry" class="form-label">No. of Claims Created</label> <br>
-                            <input type="checkbox" value="1" name="thresh_charge_manual_checkbox"> <b>Manual</b>
+                            <input type="checkbox" value="1" name="thresh_charge_manual_checkbox"> <b>Manual</b> <br>
                             <input type="checkbox" value="1" name="thresh_charge_with_demo_graphics_checkbox"> <b>With Demo Graphics</b>
                             <input type="number" value="" class="form-control" id="thresh_charge_entry" name="thresh_charge_entry" />
                             <br>

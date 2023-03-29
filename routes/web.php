@@ -121,4 +121,5 @@ Route::resource('designations', DesignationController::class);
 Route::resource('settings', SettingController::class);
 Route::post('/get_setting', [SettingController::class, 'getSetting'])->middleware('permission:update company setting')->name('get_setting');
 // Audits
-Route::post('/audits', [AuditController::class, 'audits'])->middleware('permission:view audit system log')->name('audits');
+Route::get('/audits', [AuditController::class, 'index'])->middleware('permission:view audit system log')->name('audits');
+Route::post('/get-audits', [AuditController::class, 'audits'])->middleware('permission:view audit system log')->name('get_audits');

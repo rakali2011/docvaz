@@ -11,25 +11,24 @@ var columnChart,
     columnChartoptions = {
         series: [
             {
-                name: "Orders",
+                name: "Total Files",
                 data: [
-                    32, 66, 44, 55, 41, 24, 67, 22, 43, 32, 66, 44, 55, 41, 24,
-                    67, 22, 43,
+                    32, 7, 30, 13
+                    //, 41, 24, 67, 22, 43, 32, 66, 44, 55, 41, 24, 67, 22, 43,
                 ],
             },
-            {
-                name: "Visitors",
-                data: [
-                    7, 30, 13, 23, 20, 12, 8, 13, 27, 7, 30, 13, 23, 20, 12, 8,
-                    13, 27,
-                ],
-            },
+            // {
+            //     name: "Visitors",
+            //     data: [
+            //         7, 30, 13, 23
+            //     ],
+            // },
         ],
         chart: {
             type: "bar",
-            height: 350,
+            height: 205,
             stacked: !1,
-            columnWidth: "70%",
+            columnWidth: "30%",
             zoom: { enabled: !0 },
             toolbar: { show: !1 },
             background: "transparent",
@@ -47,33 +46,33 @@ var columnChart,
         plotOptions: {
             bar: {
                 horizontal: !1,
-                columnWidth: "40%",
+                columnWidth: "20%",
                 radius: 30,
                 enableShades: !1,
                 endingShape: "rounded",
             },
         },
         xaxis: {
-            type: "datetime",
+            type: "text",
             categories: [
-                "01/01/2020 GMT",
-                "01/02/2020 GMT",
-                "01/03/2020 GMT",
-                "01/04/2020 GMT",
-                "01/05/2020 GMT",
-                "01/06/2020 GMT",
-                "01/07/2020 GMT",
-                "01/08/2020 GMT",
-                "01/09/2020 GMT",
-                "01/10/2020 GMT",
-                "01/11/2020 GMT",
-                "01/12/2020 GMT",
-                "01/13/2020 GMT",
-                "01/14/2020 GMT",
-                "01/15/2020 GMT",
-                "01/16/2020 GMT",
-                "01/17/2020 GMT",
-                "01/18/2020 GMT",
+                "To be Posted",
+                "Posted",
+                "Pending",
+                "Completed",
+                // "01/05/2020 GMT",
+                // "01/06/2020 GMT",
+                // "01/07/2020 GMT",
+                // "01/08/2020 GMT",
+                // "01/09/2020 GMT",
+                // "01/10/2020 GMT",
+                // "01/11/2020 GMT",
+                // "01/12/2020 GMT",
+                // "01/13/2020 GMT",
+                // "01/14/2020 GMT",
+                // "01/15/2020 GMT",
+                // "01/16/2020 GMT",
+                // "01/17/2020 GMT",
+                // "01/18/2020 GMT",
             ],
             labels: {
                 show: !0,
@@ -84,6 +83,7 @@ var columnChart,
                     colors: colors.mutedColor,
                     cssClass: "text-muted",
                     fontFamily: base.defaultFontFamily,
+                    fontSize:10,
                 },
             },
             axisBorder: { show: !1 },
@@ -119,7 +119,7 @@ var columnChart,
                 offsetX: 0,
                 offsetY: 0,
             },
-            itemMargin: { horizontal: 10, vertical: 0 },
+            itemMargin: { horizontal: 2, vertical: 0 },
             onItemClick: { toggleDataSeries: !0 },
             onItemHover: { highlightDataSeries: !0 },
         },
@@ -141,7 +141,7 @@ var columnChart,
     },
     columnChartCtn = document.querySelector("#columnChart");
 columnChartCtn &&
-    (columnChart = new ApexCharts(columnChartCtn, columnChartoptions)).render();
+(columnChart = new ApexCharts(columnChartCtn, columnChartoptions)).render();
 var barChart,
     barChartoptions = {
         series: [
@@ -234,7 +234,7 @@ var barChart,
     },
     barChartCtn = document.querySelector("#barChart");
 barChartCtn &&
-    (barChart = new ApexCharts(barChartCtn, barChartoptions)).render();
+(barChart = new ApexCharts(barChartCtn, barChartoptions)).render();
 var lineChart,
     lineChartoptions = {
         series: [
@@ -387,7 +387,35 @@ var lineChart,
     },
     lineChartCtn = document.querySelector("#lineChart");
 lineChartCtn &&
-    (lineChart = new ApexCharts(lineChartCtn, lineChartoptions)).render();
+(lineChart = new ApexCharts(lineChartCtn, lineChartoptions)).render();
+
+
+let xValues = [100,200,300,400,500,600,700,800,900,1000];
+
+new Chart("myChart", {
+    type: "line",
+    data: {
+        labels: xValues,
+        datasets: [{
+            data: [860,1140,1060,1060,1070,1110,1330,2210,7830,2478],
+            borderColor: "red",
+            fill: false
+        }, {
+            data: [1600,1700,1700,1900,2000,2700,4000,5000,6000,7000],
+            borderColor: "green",
+            fill: false
+        }, {
+            data: [300,700,2000,5000,6000,4000,2000,1000,200,100],
+            borderColor: "blue",
+            fill: false
+        }]
+    },
+    options: {
+        legend: {display: false}
+    }
+});
+
+
 var areachart,
     areaChartOptions = {
         series: [
@@ -527,7 +555,7 @@ var areachart,
     },
     areachartCtn = document.querySelector("#areaChart");
 areachartCtn &&
-    (areachart = new ApexCharts(areachartCtn, areaChartOptions)).render();
+(areachart = new ApexCharts(areachartCtn, areaChartOptions)).render();
 var lineChartWidget,
     lineChartWidgetoptions = {
         series: [
@@ -595,10 +623,10 @@ var lineChartWidget,
     },
     lineChartWidgetCtn = document.querySelector("#lineChartWidget");
 lineChartWidgetCtn &&
-    (lineChartWidget = new ApexCharts(
-        lineChartWidgetCtn,
-        lineChartWidgetoptions
-    )).render();
+(lineChartWidget = new ApexCharts(
+    lineChartWidgetCtn,
+    lineChartWidgetoptions
+)).render();
 var radialbarWidgetChart,
     radialbarWidgetOptions = {
         series: [86],
@@ -659,10 +687,10 @@ var radialbarWidgetChart,
     },
     radialbarWidget = document.querySelector("#radialbarWidget");
 radialbarWidget &&
-    (radialbarWidgetChart = new ApexCharts(
-        radialbarWidget,
-        radialbarWidgetOptions
-    )).render();
+(radialbarWidgetChart = new ApexCharts(
+    radialbarWidget,
+    radialbarWidgetOptions
+)).render();
 var radarChartWidget,
     radarChartWidgetOptions = {
         series: [
@@ -711,10 +739,10 @@ var radarChartWidget,
     },
     radarChartWidgetCtn = document.querySelector("#radarChartWidget");
 radarChartWidgetCtn &&
-    (radarChartWidget = new ApexCharts(
-        radarChartWidgetCtn,
-        radarChartWidgetOptions
-    )).render();
+(radarChartWidget = new ApexCharts(
+    radarChartWidgetCtn,
+    radarChartWidgetOptions
+)).render();
 
 
 
@@ -723,7 +751,7 @@ var donutChartWidget,
         series: [44, 55, 20, 41, 17],
         chart: {
             type: "donut",
-            height: 180,
+            height: 190,
             zoom: { enabled: !1 },
             toolbar: { show: !1 },
         },
@@ -734,7 +762,7 @@ var donutChartWidget,
                 expandOnClick: !1,
             },
         },
-        labels: ["Clothing", "Shoes", "Others", "Electronics", "Books"],
+        labels: ["Read", "Pending", "Preferred", "Deleted", "Review"],
         dataLabels: {
             enabled: !0,
             style: {
@@ -754,16 +782,16 @@ var donutChartWidget,
     },
     donutChartWidgetCtn = document.querySelector("#donutChartWidget");
 donutChartWidgetCtn &&
-    (donutChartWidget = new ApexCharts(
-        donutChartWidgetCtn,
-        donutChartWidgetOptions
-    )).render();
+(donutChartWidget = new ApexCharts(
+    donutChartWidgetCtn,
+    donutChartWidgetOptions
+)).render();
 var barChartWidget,
     barChartWidgetoptions = {
         series: [
-            { name: "Revenue", data: [44, 55, 41, 64, 22, 43, 36] },
-            { name: "Total", data: [53, 32, 33, 52, 13, 44, 26] },
-            { name: "Cost", data: [13, 12, 13, 32, 3, 24, 18] },
+            { name: "Revenue", data: [44, 55, 41, 64, 22] },
+            { name: "Total", data: [53, 32, 33, 52, 13] },
+            { name: "Cost", data: [13, 12, 13, 32, 3] },
         ],
         chart: {
             type: "bar",
@@ -784,8 +812,6 @@ var barChartWidget,
                 "Wednesday",
                 "Thusday",
                 "Friday",
-                "Saturday",
-                "Sunday",
             ],
             labels: { show: !1 },
             axisBorder: { show: !1 },
@@ -802,10 +828,10 @@ var barChartWidget,
     },
     barChartWidgetCtn = document.querySelector("#barChartWidget");
 barChartWidgetCtn &&
-    (barChartWidget = new ApexCharts(
-        barChartWidgetCtn,
-        barChartWidgetoptions
-    )).render();
+(barChartWidget = new ApexCharts(
+    barChartWidgetCtn,
+    barChartWidgetoptions
+)).render();
 var areaChartWidget,
     areaChartWidgetOptions = {
         series: [
@@ -880,10 +906,10 @@ var areaChartWidget,
     },
     areaChartWidgetCtn = document.querySelector("#areaChartWidget");
 areaChartWidgetCtn &&
-    (areaChartWidget = new ApexCharts(
-        areaChartWidgetCtn,
-        areaChartWidgetOptions
-    )).render();
+(areaChartWidget = new ApexCharts(
+    areaChartWidgetCtn,
+    areaChartWidgetOptions
+)).render();
 var columnChartWidget,
     columnChartWidgetoptions = {
         series: [
@@ -943,10 +969,10 @@ var columnChartWidget,
     },
     columnChartWidgetCtn = document.querySelector("#columnChartWidget");
 columnChartWidgetCtn &&
-    (columnChartWidget = new ApexCharts(
-        columnChartWidgetCtn,
-        columnChartWidgetoptions
-    )).render();
+(columnChartWidget = new ApexCharts(
+    columnChartWidgetCtn,
+    columnChartWidgetoptions
+)).render();
 var columnChartWidget2,
     columnChartWidget2options = {
         series: [
@@ -1033,10 +1059,10 @@ var columnChartWidget2,
     },
     columnChartWidget2Ctn = document.querySelector("#columnChartWidget2");
 columnChartWidget2Ctn &&
-    (columnChartWidget2 = new ApexCharts(
-        columnChartWidget2Ctn,
-        columnChartWidget2options
-    )).render();
+(columnChartWidget2 = new ApexCharts(
+    columnChartWidget2Ctn,
+    columnChartWidget2options
+)).render();
 var heatmapChartWidget,
     heatmapChartWidgetOptions = {
         series: [
@@ -1060,14 +1086,14 @@ var heatmapChartWidget,
                 name: "Fri",
                 data: [78, 98, 19, 74, 41, 59, 95, 99, 37, 17, 11, 60],
             },
-            {
-                name: "Sat",
-                data: [46, 95, 52, 36, 34, 65, 2, 3, 13, 77, 72, 71],
-            },
-            {
-                name: "Sun",
-                data: [2, 93, 68, 3, 53, 56, 79, 64, 46, 14, 22, 94],
-            },
+            // {
+            //     name: "Sat",
+            //     data: [46, 95, 52, 36, 34, 65, 2, 3, 13, 77, 72, 71],
+            // },
+            // {
+            //     name: "Sun",
+            //     data: [2, 93, 68, 3, 53, 56, 79, 64, 46, 14, 22, 94],
+            // },
         ],
         chart: { height: 190, type: "heatmap", toolbar: { show: !1 } },
         theme: { mode: colors.chartTheme },
@@ -1107,10 +1133,10 @@ var heatmapChartWidget,
     },
     heatmapChartWidgetCtn = document.querySelector("#heatmapChartWidget");
 heatmapChartWidgetCtn &&
-    (heatmapChartWidget = new ApexCharts(
-        heatmapChartWidgetCtn,
-        heatmapChartWidgetOptions
-    )).render();
+(heatmapChartWidget = new ApexCharts(
+    heatmapChartWidgetCtn,
+    heatmapChartWidgetOptions
+)).render();
 var heatmapchart,
     heatmapChartOptions = {
         series: [
@@ -1238,10 +1264,10 @@ var heatmapchart,
     },
     heatmapchartCtn = document.querySelector("#heatmapChart");
 heatmapchartCtn &&
-    (heatmapchart = new ApexCharts(
-        heatmapchartCtn,
-        heatmapChartOptions
-    )).render();
+(heatmapchart = new ApexCharts(
+    heatmapchartCtn,
+    heatmapChartOptions
+)).render();
 var bubblechart,
     bubbleChartOptions = {
         series: [
@@ -1336,14 +1362,14 @@ var bubblechart,
     },
     bubblechartCtn = document.querySelector("#bubbleChart");
 bubblechartCtn &&
-    (bubblechart = new ApexCharts(bubblechartCtn, bubbleChartOptions)).render();
+(bubblechart = new ApexCharts(bubblechartCtn, bubbleChartOptions)).render();
 var donutchart,
     donutChartOptions = {
-        series: [44, 55, 20, 41, 17],
-        chart: { type: "donut", height: 305, zoom: { enabled: !1 } },
+        series: [44, 70, 20, 14, 43],
+        chart: { type: "donut", height: 250, zoom: { enabled: !1 } },
         theme: { mode: colors.chartTheme },
         plotOptions: { pie: { donut: { size: "40%" }, expandOnClick: !1 } },
-        labels: ["Clothing", "Shoes", "Others", "Electronics", "Books"],
+        labels: ["Open", "Inprocess", "Closed", "Pending", "Completed"],
         legend: {
             position: "bottom",
             fontFamily: base.defaultFontFamily,
@@ -1358,7 +1384,7 @@ var donutchart,
                 strokeColor: "#fff",
                 radius: 6,
             },
-            itemMargin: { horizontal: 10, vertical: 2 },
+            itemMargin: { horizontal: 5, vertical: 2 },
             onItemClick: { toggleDataSeries: !0 },
             onItemHover: { highlightDataSeries: !0 },
         },
@@ -1367,7 +1393,7 @@ var donutchart,
     },
     donutchartCtn = document.querySelector("#donutChart");
 donutchartCtn &&
-    (donutchart = new ApexCharts(donutchartCtn, donutChartOptions)).render();
+(donutchart = new ApexCharts(donutchartCtn, donutChartOptions)).render();
 var radarchart,
     radarChartOptions = {
         series: [
@@ -1400,7 +1426,7 @@ var radarchart,
     },
     radarChartCtn = document.querySelector("#radarChart");
 radarChartCtn &&
-    (radarchart = new ApexCharts(radarChartCtn, radarChartOptions)).render();
+(radarchart = new ApexCharts(radarChartCtn, radarChartOptions)).render();
 var candlechart,
     candleChartOptions = {
         series: [
@@ -1688,7 +1714,7 @@ var candlechart,
     },
     candlechartCtn = document.querySelector("#candleChart");
 candlechartCtn &&
-    (candlechart = new ApexCharts(candlechartCtn, candleChartOptions)).render();
+(candlechart = new ApexCharts(candlechartCtn, candleChartOptions)).render();
 var radialbarChart,
     radialbarOptions = {
         series: [70],
@@ -1749,7 +1775,7 @@ var radialbarChart,
     },
     radialbar = document.querySelector("#radialbar");
 radialbar &&
-    (radialbarChart = new ApexCharts(radialbar, radialbarOptions)).render();
+(radialbarChart = new ApexCharts(radialbar, radialbarOptions)).render();
 var multiRadialbarChart,
     multiRadialbarOptions = {
         series: [44, 55, 67, 83],
@@ -1793,10 +1819,10 @@ var multiRadialbarChart,
     },
     multiRadialbar = document.querySelector("#multiRadialbar");
 multiRadialbar &&
-    (multiRadialbarChart = new ApexCharts(
-        multiRadialbar,
-        multiRadialbarOptions
-    )).render();
+(multiRadialbarChart = new ApexCharts(
+    multiRadialbar,
+    multiRadialbarOptions
+)).render();
 var customAngleChart,
     customAngleOptions = {
         series: [76, 67, 61, 90],
@@ -1832,10 +1858,10 @@ var customAngleChart,
     },
     customAngle = document.querySelector("#customAngle");
 customAngle &&
-    (customAngleChart = new ApexCharts(
-        customAngle,
-        customAngleOptions
-    )).render();
+(customAngleChart = new ApexCharts(
+    customAngle,
+    customAngleOptions
+)).render();
 var gradientRadialChart,
     gradientRadialOptions = {
         series: [75],
@@ -1908,10 +1934,10 @@ var gradientRadialChart,
     },
     gradientRadial = document.querySelector("#gradientRadial");
 gradientRadial &&
-    (gradientRadialChart = new ApexCharts(
-        gradientRadial,
-        gradientRadialOptions
-    )).render();
+(gradientRadialChart = new ApexCharts(
+    gradientRadial,
+    gradientRadialOptions
+)).render();
 var strokeRadialChart,
     strokeRadialOptions = {
         series: [67],
@@ -1958,10 +1984,10 @@ var strokeRadialChart,
     },
     strokeRadial = document.querySelector("#strokeRadial");
 strokeRadial &&
-    (strokeRadialChart = new ApexCharts(
-        strokeRadial,
-        strokeRadialOptions
-    )).render();
+(strokeRadialChart = new ApexCharts(
+    strokeRadial,
+    strokeRadialOptions
+)).render();
 var semiRadialChart,
     semiRadialOptions = {
         series: [76],
@@ -1994,4 +2020,159 @@ var semiRadialChart,
     },
     semiRadial = document.querySelector("#semiRadial");
 semiRadial &&
-    (semiRadialChart = new ApexCharts(semiRadial, semiRadialOptions)).render();
+(semiRadialChart = new ApexCharts(semiRadial, semiRadialOptions)).render();
+
+
+var donutchart,
+    donutChartOptions = {
+        series: [44, 70, 20, 4],
+        chart: { type: "donut", height: 250, zoom: { enabled: !1 } },
+        theme: { mode: colors.chartTheme },
+        plotOptions: { pie: { donut: { size: "45%" }, expandOnClick: !1 } },
+        labels: ["Open", "Inprocess", "Closed", "Overdue"],
+        legend: {
+            position: "bottom",
+            fontFamily: base.defaultFontFamily,
+            fontWeight: 400,
+            labels: { colors: colors.mutedColor, useSeriesColors: !1 },
+            horizontalAlign: "left",
+            fontFamily: base.defaultFontFamily,
+            markers: {
+                width: 10,
+                height: 10,
+                strokeWidth: 0,
+                strokeColor: "#fff",
+                radius: 6,
+            },
+            itemMargin: { horizontal: 2, vertical: 2 },
+            onItemClick: { toggleDataSeries: !0 },
+            onItemHover: { highlightDataSeries: !0 },
+        },
+        stroke: { colors: [colors.borderColor], width: 1 },
+        fill: { opacity: 1, colors: chartColors },
+    },
+    donutchartCtn = document.querySelector("#donutChart2");
+donutchartCtn &&
+(donutchart = new ApexCharts(donutchartCtn, donutChartOptions)).render();
+
+var columnChart,
+    columnChartoptions = {
+        series: [
+            {
+                name: "Total Files",
+                data: [
+                    32, 7, 30, 13
+                    //, 41, 24, 67, 22, 43, 32, 66, 44, 55, 41, 24, 67, 22, 43,
+                ],
+            },
+            // {
+            //     name: "Visitors",
+            //     data: [
+            //         7, 30, 13, 23
+            //     ],
+            // },
+        ],
+        chart: {
+            type: "bar",
+            height: 205,
+            stacked: !1,
+            columnWidth: "30%",
+            zoom: { enabled: !0 },
+            toolbar: { show: !1 },
+            background: "transparent",
+        },
+        dataLabels: { enabled: !1 },
+        theme: { mode: colors.chartTheme },
+        responsive: [
+            {
+                breakpoint: 480,
+                options: {
+                    legend: { position: "bottom", offsetX: -10, offsetY: 0 },
+                },
+            },
+        ],
+        plotOptions: {
+            bar: {
+                horizontal: !1,
+                columnWidth: "20%",
+                radius: 30,
+                enableShades: !1,
+                endingShape: "rounded",
+            },
+        },
+        xaxis: {
+            type: "text",
+            categories: [
+                "C",
+                "M",
+                "H",
+                "L",
+            ],
+            labels: {
+                show: !0,
+                trim: !0,
+                minHeight: void 0,
+                maxHeight: 120,
+                style: {
+                    colors: colors.mutedColor,
+                    cssClass: "text-muted",
+                    fontFamily: base.defaultFontFamily,
+                    fontSize:10,
+                },
+            },
+            axisBorder: { show: !1 },
+        },
+        yaxis: {
+            labels: {
+                show: !0,
+                trim: !1,
+                offsetX: -10,
+                minHeight: void 0,
+                maxHeight: 120,
+                style: {
+                    colors: colors.mutedColor,
+                    cssClass: "text-muted",
+                    fontFamily: base.defaultFontFamily,
+                },
+            },
+        },
+        legend: {
+            position: "top",
+            fontFamily: base.defaultFontFamily,
+            fontWeight: 400,
+            labels: { colors: colors.mutedColor, useSeriesColors: !1 },
+            markers: {
+                width: 10,
+                height: 10,
+                strokeWidth: 0,
+                strokeColor: "#fff",
+                fillColors: [extend.primaryColor, extend.primaryColorLighter],
+                radius: 6,
+                customHTML: void 0,
+                onClick: void 0,
+                offsetX: 0,
+                offsetY: 0,
+            },
+            itemMargin: { horizontal: 2, vertical: 0 },
+            onItemClick: { toggleDataSeries: !0 },
+            onItemHover: { highlightDataSeries: !0 },
+        },
+        fill: {
+            opacity: 1,
+            colors: [base.primaryColor, extend.primaryColorLighter],
+        },
+        grid: {
+            show: !0,
+            borderColor: colors.borderColor,
+            strokeDashArray: 0,
+            position: "back",
+            xaxis: { lines: { show: !1 } },
+            yaxis: { lines: { show: !0 } },
+            row: { colors: void 0, opacity: 0.5 },
+            column: { colors: void 0, opacity: 0.5 },
+            padding: { top: 0, right: 0, bottom: 0, left: 0 },
+        },
+    },
+    columnChartCtn = document.querySelector("#columnChart2");
+columnChartCtn &&
+(columnChart = new ApexCharts(columnChartCtn, columnChartoptions)).render();

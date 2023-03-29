@@ -8,30 +8,33 @@ use Illuminate\Database\Eloquent\Model;
 class Audit extends Model
 {
     use HasFactory;
+    public function getUserIdAttribute($value)
+    {
+        $user = User::findorfail($value);
+        return $user->firstname . ' ' . $user->lastname;
+    }
+    public function getCreatedAtAttribute($date)
+    {
+        return date("M j, Y h:i A", strtotime($date));
+    }
+    public function getUpdatedAtAttribute($date)
+    {
+        return date("M j, Y h:i A", strtotime($date));
+    }
     public function countTotal()
     {
         $query = $this;
-        $query = $this->where('user_id', '=', auth()->user()->id);
+        $query = $this->where('user_id', '!=', 0);
         return $query->count();
     }
     public function countFiltered($date_range, $filter, $search, $start, $limit, $order, $dir)
     {
         $query = $this;
-        $query = $this->where('user_id', '=', auth()->user()->id);
-        if (!empty($filter["team_id"]))
-            $query = $query->where('team_id', $filter['team_id']);
-        if (!empty($filter["target_id"]))
-            $query = $query->where('target_id', $filter['target_id']);
-        if (!empty($filter["department_id"]))
-            $query = $query->where('department_id', $filter['department_id']);
-        if (!empty($filter["status"]))
-            $query = $query->where('status', $filter['status']);
-        if (!empty($filter["priority"]))
-            $query = $query->where('priority', $filter['priority']);
-        if (!empty($filter["creator"]))
-            $query = $query->where('creator', $filter['creator']);
-        if (!empty($filter["flag"]))
-            $query = $query->where('flag', $filter['flag']);
+        $query = $this->where('user_id', '!=', 0);
+        if (!empty($filter["user_id"]))
+            $query = $query->where('user_id', $filter['user_id']);
+        if (!empty($filter["event"]))
+            $query = $query->where('event', $filter['event']);
         if (!empty($date_range["date_from"]))
             $query = $query->whereBetween('created_at', [$date_range["date_from"], $date_range["date_to"]]);
         if (!empty($search)) {
@@ -53,21 +56,11 @@ class Audit extends Model
     public function getData($date_range, $filter, $search, $start, $limit, $order, $dir)
     {
         $query = $this;
-        $query = $this->where('user_id', '=', auth()->user()->id);
-        if (!empty($filter["team_id"]))
-            $query = $query->where('team_id', $filter['team_id']);
-        if (!empty($filter["target_id"]))
-            $query = $query->where('target_id', $filter['target_id']);
-        if (!empty($filter["department_id"]))
-            $query = $query->where('department_id', $filter['department_id']);
-        if (!empty($filter["status"]))
-            $query = $query->where('status', $filter['status']);
-        if (!empty($filter["priority"]))
-            $query = $query->where('priority', $filter['priority']);
-        if (!empty($filter["creator"]))
-            $query = $query->where('creator', $filter['creator']);
-        if (!empty($filter["flag"]))
-            $query = $query->where('flag', $filter['flag']);
+        $query = $this->where('user_id', '!=', 0);
+        if (!empty($filter["user_id"]))
+            $query = $query->where('user_id', $filter['user_id']);
+        if (!empty($filter["event"]))
+            $query = $query->where('event', $filter['event']);
         if (!empty($date_range["date_from"]))
             $query = $query->whereBetween('created_at', [$date_range["date_from"], $date_range["date_to"]]);
         if (!empty($search)) {
