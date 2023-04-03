@@ -214,8 +214,8 @@ class TicketController extends Controller
     {
         $columns = ['id', 'response_at', 'created_at', 'creator', 'creator_name', 'practice_name', 'department_name', 'team_name', 'subject', 'priority', 'status', 'remarks'];
         $date_range = [
-            "date_from" => $request->input('date_from_filter') != "" ? $request->input('date_from_filter') . ' 00:00:00' : $request->input('date_from_filter'),
-            "date_to" => $request->input('date_to_filter') != "" ? $request->input('date_to_filter') . ' 23:59:59' : date("Y-m-d H:i:s")
+            "date_from" => $request->input('date_from_filter') != "" ? date("Y-m-d", strtotime($request->input('date_from_filter'))) . ' 00:00:00' : $request->input('date_from_filter'),
+            "date_to" => $request->input('date_to_filter') != "" ? date("Y-m-d", strtotime($request->input('date_to_filter'))) . ' 23:59:59' : date("Y-m-d H:i:s")
         ];
         $filter = array(
             "team_id" => $request->input('team_filter'),
@@ -234,7 +234,7 @@ class TicketController extends Controller
         $search = $request->input('search.value');
         $ticket = new Ticket();
         $totalData = $ticket->countTotalTickets();
-        $totalFiltered = $ticket->countFilteredTickets($date_range, $filter, $search, $start, $limit, $order, $dir);
+        $totalFiltered = $ticket->countFilteredTickets($date_range, $filter, $search);
         $tickets = $ticket->allTickets($date_range, $filter, $search, $start, $limit, $order, $dir);
         $data = array();
         if (!empty($tickets)) {

@@ -136,8 +136,8 @@ class FileController extends Controller
     {
         $columns = ['org_name', 'practice_id', 'status', 'doc_type', 'ext', 'date', 'created_at'];
         $date_range = [
-            "date_from" => $request->input('date_from_filter') != "" ? $request->input('date_from_filter') . ' 00:00:00' : $request->input('date_from_filter'),
-            "date_to" => $request->input('date_to_filter') != "" ? $request->input('date_to_filter') . ' 23:59:59' : date("Y-m-d H:i:s")
+            "date_from" => $request->input('date_from_filter') != "" ? date("Y-m-d", strtotime($request->input('date_from_filter'))) . ' 00:00:00' : $request->input('date_from_filter'),
+            "date_to" => $request->input('date_to_filter') != "" ? date("Y-m-d", strtotime($request->input('date_to_filter'))) . ' 23:59:59' : date("Y-m-d H:i:s")
         ];
         $filter = array(
             "team" => $request->input('team_filter'),
@@ -153,7 +153,7 @@ class FileController extends Controller
         $search = $request->input('search.value');
         $file = new File();
         $totalData = $file->countTotal();
-        $totalFiltered = $file->countFiltered($date_range, $filter, $search, $start, $limit, $order, $dir);
+        $totalFiltered = $file->countFiltered($date_range, $filter, $search);
         $files = $file->getData($date_range, $filter, $search, $start, $limit, $order, $dir);
         $data = array();
         if (!empty($files)) {

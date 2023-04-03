@@ -42,7 +42,7 @@ class File extends Model implements Auditable
         $query = $this->whereIn('user_id', $user_ids);
         return $query->count();
     }
-    public function countFiltered($date_range, $filter, $search, $start, $limit, $order, $dir)
+    public function countFiltered($date_range, $filter, $search)
     {
         $query = $this;
         if (empty($filter["team"])) {
@@ -73,7 +73,7 @@ class File extends Model implements Auditable
                 $query->orWhere('date', 'LIKE', "%{$search}%");
             });
         }
-        return $query->offset($start)->limit($limit)->orderBy($order, $dir)->count();
+        return $query->count();
     }
     public function getData($date_range, $filter, $search, $start, $limit, $order, $dir)
     {

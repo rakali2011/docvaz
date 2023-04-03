@@ -83,7 +83,7 @@ class Ticket extends Model implements Auditable
         $query = $this->where('user_id', '=', auth()->user()->id);
         return $query->count();
     }
-    public function countFilteredTickets($date_range, $filter, $search, $start, $limit, $order, $dir)
+    public function countFilteredTickets($date_range, $filter, $search)
     {
 
         $query = $this;
@@ -117,7 +117,7 @@ class Ticket extends Model implements Auditable
                 $query->orWhere('remarks', 'LIKE', "%{$search}%");
             });
         }
-        return $query->offset($start)->limit($limit)->orderBy($order, $dir)->count();
+        return $query->count();
     }
 
     public function allTickets($date_range, $filter, $search, $start, $limit, $order, $dir)

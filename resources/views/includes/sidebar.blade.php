@@ -1,20 +1,68 @@
-<aside class="sidebar-left border-right bg-white shadow" id="leftSidebar" data-simplebar style=" background: #80d0dd  !important;">
+<style>
+  .nav-active {
+    background: #000000;
+    color: #ffffff !important;
+  }
+
+  .nav-tabs .nav-link:active {
+    color: #fff;
+    background-color: #000 !important;
+  }
+
+  .nav-link {
+    color: #fff;
+  }
+
+  .vertnav>.navbar-nav .nav-item:hover,
+  .nav-link:hover,
+  .nav-link:focus {
+    color: #fff !important;
+    background-color: #000 !important;
+    border-color: #6c757d;
+  }
+
+  .navbar-brand>img {
+    height: 70px;
+    width: auto;
+  }
+</style>
+
+
+<aside class="sidebar-left border-right bg-white shadow" id="leftSidebar" data-simplebar style=" background: #b6c6d7  !important;">
   <a href="#" class="btn collapseSidebar toggle-btn d-lg-none text-muted ml-2 mt-3" data-toggle="toggle">
     <i class="fe fe-x"><span class="sr-only"></span></i>
   </a>
-  <nav class="vertnav navbar navbar-light">
+  <nav class="vertnav navbar navbar-dark" style="color: #444;">
     <div class="w-100 mb-4 d-flex">
       <a class="navbar-brand mx-auto mt-2 flex-fill text-center" href="{{ route('home') }}">
-        {{-- <img width= "217" src="{{ asset('assets/assets/images/LogoA3White.png') }}" alt="Archiwiz"> --}}
-        {{-- <svg version="1.1" id="logo" class="navbar-brand-img brand-sm" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 120 120" xml:space="preserve">--}}
-        {{-- <g>--}}
-        {{-- <polygon class="st0" points="78,105 15,105 24,87 87,87 	" />--}}
-        {{-- <polygon class="st0" points="96,69 33,69 42,51 105,51 	" />--}}
-        {{-- <polygon class="st0" points="78,33 15,33 24,15 87,15 	" />--}}
-        {{-- </g>--}}
-        {{-- </svg>--}}
+        {{-- <img width="auto" height="500" src="{{ asset('assets/assets/avatars/face-1.jpg') }}"class="avatar-img rounded-circle border">--}}
+        <h3>DocuHub</h3>
+        {{-- <img width="auto" height="500" src="{{ asset('assets/assets/avatars/face-1.jpg') }}"class="avatar-img rounded-circle border">--}}
+
       </a>
+
     </div>
+    <ul style="list-style-type: none;padding:0;" class="mx-auto text-center">
+      <li class="nav-item dropdown">
+        <a class="navbar-brand mr-0">
+          <img src="{{ asset('assets/assets/avatars/face-1.jpg') }}" class="avatar-img rounded-circle border">
+        </a>
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <span class="font-weight-bold text-black ">{{ auth()->user()->firstname ." ".auth()->user()->lastname  }}</span>
+        </a>
+        <div class="dropdown-menu text-white bg-white dropdown-menu-left" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" href="{{ route('profile') }}">Profile</a>
+          <a class="dropdown-item" href="{{ route('change_password') }}">Change Password</a>
+          @can('update company setting')
+          <a class="dropdown-item" href="{{ route('settings.create') }}">View Company</a>
+          @endcan
+          <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">Logout</a>
+          <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+            @csrf
+          </form>
+        </div>
+      </li>
+    </ul>
     <ul class="navbar-nav flex-fill w-100 mb-2">
       <li class="nav-item w-100">
         <a class="nav-link" id="dashboard" href="{{ route('home') }}">
@@ -47,13 +95,10 @@
     </p>
     @endrole
     @can('view role')
-    <p class="text-muted nav-heading mt-4 mb-1" style="text-align: center;width: 100%;">
-      <span>Administration</span>
-    </p>
     <ul class="navbar-nav flex-fill w-100 mb-2">
       <li class="nav-item dropdown">
         <a href="#role-management-sub" id="role-management" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link menu">
-          <i class="fe fe-box fe-16"></i>
+          <i class="fe fe-activity fe-16"></i>
           <span class="ml-3 item-text">Roles Management</span>
         </a>
         <ul class="collapse list-unstyled pl-4 w-100" id="role-management-sub">
@@ -71,7 +116,7 @@
     <ul class="navbar-nav flex-fill w-100 mb-2">
       <li class="nav-item dropdown">
         <a href="#user-management-sub" id="user-management" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link menu">
-          <i class="fe fe-box fe-16"></i>
+          <i class="fe fe-user fe-16"></i>
           <span class="ml-3 item-text">Users Management</span>
         </a>
         <ul class="collapse list-unstyled pl-4 w-100" id="user-management-sub">
@@ -89,7 +134,7 @@
     <ul class="navbar-nav flex-fill w-100 mb-2">
       <li class="nav-item dropdown">
         <a href="#client-management-sub" id="client-management" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link menu">
-          <i class="fe fe-box fe-16"></i>
+          <i class="fe fe-user-check fe-16"></i>
           <span class="ml-3 item-text">Client Management</span>
         </a>
         <ul class="collapse list-unstyled pl-4 w-100" id="client-management-sub">
@@ -113,7 +158,7 @@
     <ul class="navbar-nav flex-fill w-100 mb-2">
       <li class="nav-item dropdown">
         <a href="#general-management-sub" id="general-management" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link menu">
-          <i class="fe fe-box fe-16"></i>
+          <i class="fe fe-aperture fe-16"></i>
           <span class="ml-3 item-text">General Management</span>
         </a>
         <ul class="collapse list-unstyled pl-4 w-100" id="general-management-sub">
@@ -155,7 +200,7 @@
     <ul class="navbar-nav flex-fill w-100 mb-2">
       <li class="nav-item dropdown">
         <a href="#files-management-sub" id="files-management" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link menu">
-          <i class="fe fe-box fe-16"></i>
+          <i class="fe fe-file fe-16"></i>
           <span class="ml-3 item-text">Files</span>
         </a>
         <ul class="collapse list-unstyled pl-4 w-100" id="files-management-sub">
@@ -179,7 +224,7 @@
     <ul class="navbar-nav flex-fill w-100 mb-2">
       <li class="nav-item dropdown">
         <a href="#dmail-management-sub" id="dmail-management" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link menu">
-          <i class="fe fe-box fe-16"></i>
+          <i class="fe fe-mail fe-16"></i>
           <span class="ml-3 item-text">Dmail</span>
         </a>
         <ul class="collapse list-unstyled pl-4 w-100" id="dmail-management-sub">
@@ -196,7 +241,7 @@
     <ul class="navbar-nav flex-fill w-100 mb-2">
       <li class="nav-item dropdown">
         <a href="#report-management-sub" id="report-management" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link menu">
-          <i class="fe fe-box fe-16"></i>
+          <i class="fe fe-file-text fe-16"></i>
           <span class="ml-3 item-text">Reports</span>
         </a>
         <ul class="collapse list-unstyled pl-4 w-100" id="report-management-sub">

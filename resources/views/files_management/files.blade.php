@@ -54,11 +54,11 @@
                     </div>
                     <div class="form-group col-md-2">
                       <label for="date_from"></label>
-                      <input type="text" name="date_from" id="date_from" class="form-control" placeholder="Date From" onfocus="(this.type='date')" onfocusout="(this.type='text')">
+                      <input type="text" name="date_from" id="date_from" class="form-control datepicker" placeholder="Date From">
                     </div>
                     <div class="form-group col-md-2">
                       <label for="date_to"></label>
-                      <input type="text" name="date_to" id="date_to" class="form-control" placeholder="Date To" onfocus="(this.type='date')" onfocusout="(this.type='text')">
+                      <input type="text" name="date_to" id="date_to" class="form-control datepicker" placeholder="Date To">
                     </div>
                     <div class="col-md-12 text-right">
                       <button type="submit" class="btn btn-sm btn-primary">Filter</button>

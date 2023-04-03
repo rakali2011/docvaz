@@ -27,7 +27,7 @@ class Audit extends Model
         $query = $this->where('user_id', '!=', 0);
         return $query->count();
     }
-    public function countFiltered($date_range, $filter, $search, $start, $limit, $order, $dir)
+    public function countFiltered($date_range, $filter, $search)
     {
         $query = $this;
         $query = $this->where('user_id', '!=', 0);
@@ -51,7 +51,7 @@ class Audit extends Model
                 $query->orWhere('updated_at', 'LIKE', "%{$search}%");
             });
         }
-        return $query->offset($start)->limit($limit)->orderBy($order, $dir)->count();
+        return $query->count();
     }
     public function getData($date_range, $filter, $search, $start, $limit, $order, $dir)
     {

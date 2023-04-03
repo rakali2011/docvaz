@@ -38,3 +38,4 @@
 <script src="{{ asset('assets/DataTable-1.12.1/js/buttons.html5.min.js') }}"></script>
 <script src="{{ asset('assets/DataTable-1.12.1/js/buttons.print.min.js') }}"></script>
 <script src="{{ asset('assets/DataTable-1.12.1/js/buttons.colVis.min.js') }}"></script>
+<script src="{{ asset('assets/Datepicker/kendo.all.min.js') }}"></script>

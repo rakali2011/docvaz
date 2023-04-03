@@ -54,6 +54,7 @@
   @include('includes.footer_scripts')
   <script>
     $(document).ready(function() {
+      $(".datepicker").kendoDatePicker();
       $('.menu').addClass('collapsed');
       $('.menu').addClass('collapsed');
       $("#{{ @$data['menu'] }}").removeClass('collapsed');

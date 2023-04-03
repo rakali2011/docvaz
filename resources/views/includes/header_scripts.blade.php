@@ -18,3 +18,5 @@
  <!-- App CSS -->
  <link rel="stylesheet" href="{{ asset('assets/css/app-light.css') }}" id="lightTheme">
  <link rel="stylesheet" href="{{ asset('assets/css/app-dark.css') }}" id="darkTheme" disabled>
+ <!-- Datepicker -->
+ <link rel="stylesheet" href="{{ asset('assets/Datepicker/default-main.css') }}">

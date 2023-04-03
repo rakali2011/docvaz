@@ -2641,6 +2641,9 @@ html {
   .rtl.vertical .sidebar-left .navbar .nav-item,
   .rtl.vertical .sidebar-left .navbar-nav .nav-item, .rtl.vertical.hover .sidebar-left .navbar .nav-item,
   .rtl.vertical.hover .sidebar-left .navbar-nav .nav-item {
+      color: #000;
+      border-radius: 5px;
+      background-color: #000;
     width: 100%; }
   .rtl.vertical .topnav,
   .rtl.vertical .main-content, .rtl.vertical.hover .topnav,

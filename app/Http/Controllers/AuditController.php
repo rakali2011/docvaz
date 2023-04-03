@@ -86,8 +86,8 @@ class AuditController extends Controller
     {
         $columns = ['user_id', 'event', 'auditable_type', 'auditable_id', 'old_values', 'new_values', 'ip_address', 'user_agent', 'created_at', 'updated_at'];
         $date_range = [
-            "date_from" => $request->input('date_from_filter') != "" ? $request->input('date_from_filter') . ' 00:00:00' : $request->input('date_from_filter'),
-            "date_to" => $request->input('date_to_filter') != "" ? $request->input('date_to_filter') . ' 23:59:59' : date("Y-m-d H:i:s")
+            "date_from" => $request->input('date_from_filter') != "" ? date("Y-m-d", strtotime($request->input('date_from_filter'))) . ' 00:00:00' : $request->input('date_from_filter'),
+            "date_to" => $request->input('date_to_filter') != "" ? date("Y-m-d", strtotime($request->input('date_to_filter'))) . ' 23:59:59' : date("Y-m-d H:i:s")
         ];
         $filter = [
             "user_id" => $request->input('user_filter'),
@@ -101,7 +101,7 @@ class AuditController extends Controller
         $search = $request->input('search.value');
         $audit = new Audit();
         $totalData = $audit->countTotal();
-        $totalFiltered = $audit->countFiltered($date_range, $filter, $search, $start, $limit, $order, $dir);
+        $totalFiltered = $audit->countFiltered($date_range, $filter, $search);
         $audits = $audit->getData($date_range, $filter, $search, $start, $limit, $order, $dir);
         $data = array();
         if (!empty($audits)) {
