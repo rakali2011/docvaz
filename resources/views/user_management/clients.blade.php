@@ -33,6 +33,7 @@
                     <th>Email</th>
                     <th>Username</th>
                     <th>Roles</th>
+                    <th>Departments</th>
                     @role('dev')
                     <th>Company</th>
                     @endrole
@@ -47,6 +48,7 @@
                     <td>{{ $item->email }}</td>
                     <td>{{ $item->username }}</td>
                     <td><?= $item->roles; ?></td>
+                    <td><?= $item->departments; ?></td>
                     @role('dev')
                     <td>{{ @$item->company->name }}</td>
                     @endrole

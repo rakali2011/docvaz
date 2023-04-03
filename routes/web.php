@@ -117,6 +117,7 @@ Route::post('/get-flag', [TicketController::class, 'ticketFlag'])->middleware('p
 Route::resource('ticket_replies', TicketReplyController::class);
 // Designations
 Route::resource('designations', DesignationController::class);
+Route::post('/update-rank', [DesignationController::class, 'updateRank'])->middleware('permission:view designation')->name('update_rank');
 // Settings
 Route::resource('settings', SettingController::class);
 Route::post('/get_setting', [SettingController::class, 'getSetting'])->middleware('permission:update company setting')->name('get_setting');

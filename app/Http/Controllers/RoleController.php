@@ -43,7 +43,7 @@ class RoleController extends Controller
         $data['sub_menu'] = "roles";
         $role = SpatieRole::find($id);
         $role->name = $role->name;
-        $permissions = Permission::get();
+        $permissions = Permission::orderBy('type', 'ASC')->orderBy('name', 'ASC')->get();
         $permissions_count = array_count_values(json_decode(json_encode($permissions->pluck("type")), true));
         $rolePermissions = $role->permissions()->get();
         $assign_permissions = json_decode(json_encode($rolePermissions->pluck("id")), true);

@@ -32,11 +32,17 @@ class UserController extends Controller
         }
         foreach ($users as $user) {
             $user->roles = $user->roles()->pluck('display_name');
+            $user->departments = $user->assinged_departments()->pluck('name');
             $roles = "";
+            $departments = "";
             foreach ($user->roles as $role) {
                 $roles .= "<span class='role'>$role</span>";
             }
+            foreach ($user->departments as $department) {
+                $departments .= "<span class='role'>$department</span>";
+            }
             $user->roles = $roles;
+            $user->departments = $departments;
         }
         return view('user_management.users', compact('data', 'users'));
     }

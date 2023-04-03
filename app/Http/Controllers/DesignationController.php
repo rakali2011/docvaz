@@ -6,6 +6,7 @@ use App\Models\Designation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rule;
 
 class DesignationController extends Controller
 {
@@ -26,9 +27,9 @@ class DesignationController extends Controller
         $data['menu'] = "general-management";
         $data['sub_menu'] = "designations";
         if (auth()->user()->hasRole('dev')) {
-            $designations = Designation::where('company_id', '!=', 0)->orderBy('name', 'ASC')->get();
+            $designations = Designation::where('company_id', '!=', 0)->orderBy('rank', 'ASC')->get();
         } else {
-            $designations = Designation::where('company_id', Auth::user()->company->id)->orderBy('name', 'ASC')->get();
+            $designations = Designation::where('company_id', Auth::user()->company->id)->orderBy('rank', 'ASC')->get();
         }
         return view('designations_management.index', compact('data', 'designations'));
     }
@@ -53,7 +54,11 @@ class DesignationController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, ['name' => 'required']);
+        $this->validate($request, [
+            'name' => ['required', 'string', Rule::unique('designations')->where(function ($query) use ($request) {
+                return $query->where('company_id', Auth::user()->company->id);
+            })],
+        ]);
         $data["name"] = $request->name;
         if (auth()->user()->hasRole('dev'))
             $company_id = $request->company;
@@ -112,5 +117,16 @@ class DesignationController extends Controller
     {
         $designation->delete();
         return redirect()->route('designations.index')->with('success', 'Designation Deleted Successfully');
+    }
+    public function updateRank(Request $request)
+    {
+        $ids = $request->ids;
+        DB::beginTransaction();
+        // do all your updates here
+        foreach ($ids as $key => $id) {
+            DB::table('designations')->where('id', '=', $id)->update(['rank' => $key + 1]);
+        }
+        // when done commit
+        DB::commit();
     }
 }

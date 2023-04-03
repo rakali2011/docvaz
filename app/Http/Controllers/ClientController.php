@@ -32,11 +32,17 @@ class ClientController extends Controller
         }
         foreach ($clients as $client) {
             $client->roles = $client->roles()->pluck('display_name');
+            $client->departments = $client->assinged_departments()->pluck('name');
             $roles = "";
+            $departments = "";
             foreach ($client->roles as $role) {
                 $roles .= "<span class='role'>$role</span>";
             }
+            foreach ($client->departments as $department) {
+                $departments .= "<span class='role'>$department</span>";
+            }
             $client->roles = $roles;
+            $client->departments = $departments;
         }
         return view('user_management.clients', compact('data', 'clients'));
     }

@@ -25,6 +25,10 @@
     height: 70px;
     width: auto;
   }
+
+  .nav-item {
+    margin-top: 2px;
+  }
 </style>
 
 

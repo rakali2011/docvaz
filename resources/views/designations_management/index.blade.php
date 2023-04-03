@@ -24,11 +24,10 @@
                     <th>Action</th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody id="items-1">
                   @foreach ($designations as $item)
-                  <tr>
-                    <td>{{ $item->name }}</td>
-
+                  <tr id="item-{{ $item->id }}" data-id="{{ $item->id }}">
+                    <td><i class="fe fe-move mr-2"></i>{{ $item->name }}</td>
                     @role('dev')
                     <td>{{ @$item->company->name }}</td>
                     @endrole
@@ -58,5 +57,37 @@
     </div> <!-- .col-12 -->
   </div> <!-- .row -->
 </div>
-
+@push('scripts')
+<script src="{{ asset('assets/Sortable-1.10.2/Sortable.js') }}"></script>
+<script src="{{ asset('assets/Sortable-1.10.2/jquery-sortable.js') }}"></script>
+<script>
+  // List 1
+  $('#items-1').sortable({
+    group: 'list',
+    animation: 200,
+    ghostClass: 'ghost',
+    onSort: reportActivity,
+  });
+  // Report when the sort order has changed
+  function reportActivity() {
+    var sort1 = $('#items-1').sortable('toArray');
+    $.ajax({
+      type: "POST",
+      url: "{{ route('update_rank') }}",
+      data: {
+        _token: "{{csrf_token()}}",
+        ids: sort1,
+      },
+      cache: false,
+      dataType: "JSON",
+      success: function(response) {
+        console.log(response);
+        $('#important').toggleClass('grey');
+        $('#important').toggleClass('orange');
+        // $('#ticket_listing').DataTable().ajax.reload(null, true);
+      }
+    });
+  };
+</script>
+@endpush
 @endsection
