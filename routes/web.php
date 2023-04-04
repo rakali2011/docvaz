@@ -90,7 +90,7 @@ Route::post('/update-team/{id}', [TeamController::class, 'update_team'])->middle
 Route::post('/get_teams', [TeamController::class, 'get_teams'])->middleware('permission:assign department user')->name('get_teams');
 Route::post('/update_team_users', [TeamController::class, 'update_team_users'])->middleware('permission:assign team user')->name('update_team_users');
 // Users
-Route::get('/users', [UserController::class, 'users'])->middleware('permission:view user')->name('users');
+Route::get('/users', [UserController::class, 'users'])->name('users');
 Route::get('/add-user', [UserController::class, 'add_user'])->middleware('permission:add user')->name('add_user');
 Route::post('/post-user', [UserController::class, 'post_user'])->middleware('permission:add user')->name('post_user');
 Route::get('/edit-user/{id}', [UserController::class, 'edit_user'])->middleware('permission:update user')->name('edit_user');

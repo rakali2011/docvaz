@@ -88,6 +88,7 @@ class FileController extends Controller
                     $file->practice_id = $practice;
                     $file->user_id = Auth::user()->id;
                     $file->status = $req->status;
+                    $file->doc_type = $req->doc_type;
                     $file->name = $file_info['file_name'];
                     $file->org_name = $file_info['file_org_name'];
                     $file->path = $file_info['path'];
@@ -164,13 +165,13 @@ class FileController extends Controller
                 if (auth()->user()->can('update file'))
                     $edit = '<a class="dropdown-item" href="' . route('edit_file', ['id' => $file->id]) . '">Edit</a>';
                 if (auth()->user()->can('view file'))
-                    $view = '<a class="dropdown-item" href="' . route('file', ['id' => $file->id]) . '">View</a>';
+                    $view = '<a class="dropdown-item" href="' . route('file', ['id' => $file->id]) . '" target="_blank" rel="noopener noreferrer">View</a>';
                 if (auth()->user()->can('delete file')) {
                     $delete = '<form method="POST" action="' . route('delete_file', $file->id) . '" accept-charset="UTF-8" style="display:inline"><input name="_token" type="hidden" value="' . csrf_token() . '"><input class="dropdown-item" type="submit" value="Delete"></form>';
                 }
                 $practice = Practice::findorfail($file->practice_id);
                 $nestedData['practice_id'] = $practice->name;
-                $nestedData['org_name'] = $file->org_name;
+                $nestedData['org_name'] = '<a href="' . route('file', ['id' => $file->id]) . '" target="_blank" rel="noopener noreferrer">' . $file->org_name . '</a>';
                 $nestedData['status'] = $file->status;
                 $nestedData['doc_type'] = $file->doc_type;
                 $nestedData['ext'] = $file->ext;

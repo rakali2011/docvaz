@@ -18,7 +18,7 @@
               <div class="col-md-6">
                 <div class="form-group mb-3">
                   <label for="practice">Practice</label>
-                  <select class="form-control select2-multi @error('practice') is-invalid @enderror" name="practice[]" multiple="practice" id="practice">
+                  <select class="form-control select2-multi @error('practice') is-invalid @enderror" name="practice" id="practice">
                     @foreach ($practices as $item)
                     <option value="{{ Crypt::encrypt($item->id) }}" {{(@@$file) ? (@@$file->practice_id==$item->id ? 'selected' : '') : '' }}>{{ $item->name }}</option>
                     @endforeach

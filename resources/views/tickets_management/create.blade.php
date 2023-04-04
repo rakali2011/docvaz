@@ -260,6 +260,7 @@
 @push('scripts')
 <script src="{{ asset('assets/ckeditor/ckeditor.js') }}"></script>
 <script>
+    $(document).ready(function() {});
     CKEDITOR.replace('message');
     var uptarg = document.getElementById('uppy');
     const uppy = Uppy.Core({

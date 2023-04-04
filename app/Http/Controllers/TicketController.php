@@ -288,6 +288,10 @@ class TicketController extends Controller
             $id = $request->id;
             $ticket = Ticket::find($id);
             $ticket = $ticket->load("attachments")->load("ccs")->load("replies");
+            if ($ticket->is_external)
+                $ticket->target_name = Practice::findorfail($ticket->target_id)->name;
+            else
+                $ticket->target_name = Department::findorfail($ticket->target_id)->name;
             $response['success'] = 1;
             $response['content'] = $ticket;
         } catch (\Throwable $th) {

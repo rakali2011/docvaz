@@ -38,12 +38,11 @@ class HomeController extends Controller
         $data = array();
         $data['menu'] = 'dashboard';
         $data['sub_menu'] = 'dashboard';
-        // $user = User::find(Auth::user()->id);
-        // \DB::enableQueryLog();
-        // $p=$user->projects;
-        // dd(\DB::getQueryLog());
-        // dd(Auth::user()->type);
-        return view('welcome', compact('data'));
+        if (auth()->user()->hasRole('dev')) {
+            return view('welcome-dev', compact('data'));
+        } else {
+            return view('welcome', compact('data'));
+        }
     }
 
     public function files()

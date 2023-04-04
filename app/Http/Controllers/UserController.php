@@ -28,7 +28,7 @@ class UserController extends Controller
         if (auth()->user()->hasRole('dev')) {
             $users = User::where('company_id', '!=', 0)->where('type', 2)->orderBy('id', 'DESC')->get();
         } else {
-            $users = User::where('company_id', '!=', 0)->where('company_id', Auth::user()->company->id)->where('type', 2)->orderBy('firstname', 'ASC')->get();
+            $users = get_users();
         }
         foreach ($users as $user) {
             $user->roles = $user->roles()->pluck('display_name');

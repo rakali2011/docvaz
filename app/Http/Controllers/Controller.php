@@ -67,7 +67,6 @@ class Controller extends BaseController
 
     public function multiselect($items, $selected_item_array, $name, $label, $multiple = true)
     {
-
         $options = $multiple == false ? '<option value="">--Plesase Select--</option>' : '';
         foreach ($items as $key => $value) {
             $selected = '';
@@ -80,6 +79,37 @@ class Controller extends BaseController
             $select_html = '<label for="' . $name . '">' . $label . '</label><select class="form-control select2-multi" multiple name="' . $name . '" id="' . $name . '">' . $options . '</select>';
         else
             $select_html = '<label for="' . $name . '">' . $label . '</label><select class="form-control select2-multi" name="' . $name . '" id="' . $name . '">' . $options . '</select>';
+        return $select_html;
+    }
+    public function multiselect1($items, $selected_item_array, $name, $label, $multiple = true)
+    {
+
+        $options = $multiple == false ? '<option value="">--Plesase Select--</option>' : '';
+        foreach ($items as $key => $value) {
+            $selected = '';
+            if (in_array($value->id, $selected_item_array)) {
+                $selected = 'selected';
+            }
+            $options .= '<option value="' . Crypt::encrypt($value->id) . '" ' . $selected . ' >' . $value->name . '</option>';
+        }
+        if ($multiple)
+            $select_html = '<label for="' . $name . '">' . $label . '</label><select class="form-control" multiple="multiple" name="' . $name . '" id="' . $name . '">' . $options . '</select>';
+        else
+            $select_html = '<label for="' . $name . '">' . $label . '</label><select class="form-control" name="' . $name . '" id="' . $name . '">' . $options . '</select>';
+        return $select_html;
+    }
+    public function listSelection($items, $selected_item_array, $name1, $label1, $name2, $label2)
+    {
+        $options = '';
+        $selected_options = '';
+        foreach ($items as $key => $value) {
+            $selected = '';
+            if (in_array($value->id, $selected_item_array))
+                $selected_options .= '<option value="' . Crypt::encrypt($value->id) . '" ' . $selected . ' >' . $value->name . '</option>';
+            else
+                $options .= '<option value="' . Crypt::encrypt($value->id) . '" ' . $selected . ' >' . $value->name . '</option>';
+        }
+        $select_html = '<table style="width:370px;"><tr> <td style="width:160px;"><label for="lstBox1">' . $label1 . '</label><select name="' . $name1 . '" multiple="multiple" id="lstBox1" class="form-control">' . $options . '</select></td><td style="width:50px;text-align:center;vertical-align:middle;"><input type="button" id="btnRight" value=">"><br><input type="button" id="btnLeft" value="<"></td><td style="width:160px;"><label for="lstBox2">' . $label2 . '</label><select name="' . $name2 . '"  multiple="multiple" id="lstBox2" class="form-control">' . $selected_options . '</select></td></tr></table>';
         return $select_html;
     }
 }

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Mar 29, 2023 at 08:58 PM
+-- Generation Time: Apr 04, 2023 at 09:32 PM
 -- Server version: 5.7.36
 -- PHP Version: 7.4.26
 
@@ -68,7 +68,7 @@ CREATE TABLE IF NOT EXISTS `audits` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=39 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=51 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `audits`
@@ -112,7 +112,19 @@ INSERT INTO `audits` (`id`, `user_type`, `user_id`, `event`, `auditable_type`, `
 (35, 'App\\Models\\User', 15, 'created', 'App\\Models\\TicketCC', 22, '[]', '{\"ticket_id\":24,\"resource_id\":\"3\",\"resource_type\":0,\"id\":22}', 'http://127.0.0.1:8000/tickets', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36', NULL, '2023-03-29 13:06:45', '2023-03-29 13:06:45'),
 (36, 'App\\Models\\User', 15, 'created', 'App\\Models\\TicketAttachment', 5, '[]', '{\"ticket_id\":24,\"reply_id\":0,\"type\":0,\"name\":\"ukxQBLcBpKtvkIBuArVLZW8AA31D3u1JDQCl1jN1.xlsx\",\"org_name\":\"20220509093844_Practice Info Sheet.xlsx\",\"path\":\"uploads\\/ticket_attachments\\/ukxQBLcBpKtvkIBuArVLZW8AA31D3u1JDQCl1jN1.xlsx\",\"ext\":\"xlsx\",\"size\":\"12.57 KB\",\"id\":5}', 'http://127.0.0.1:8000/tickets', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36', NULL, '2023-03-29 13:06:46', '2023-03-29 13:06:46'),
 (37, 'App\\Models\\User', 15, 'created', 'App\\Models\\TicketAttachment', 6, '[]', '{\"ticket_id\":24,\"reply_id\":0,\"type\":0,\"name\":\"ci3Pal8Tujw4q6dCI2HdLrl1gFqgrZAxPwqitqam.xlsx\",\"org_name\":\"20220915010715_Practice Info Sheet.xlsx\",\"path\":\"uploads\\/ticket_attachments\\/ci3Pal8Tujw4q6dCI2HdLrl1gFqgrZAxPwqitqam.xlsx\",\"ext\":\"xlsx\",\"size\":\"12.59 KB\",\"id\":6}', 'http://127.0.0.1:8000/tickets', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36', NULL, '2023-03-29 13:06:47', '2023-03-29 13:06:47'),
-(38, 'App\\Models\\User', 15, 'updated', 'App\\Models\\User', 18, '{\"employee_id\":0,\"psudo_name\":null,\"username\":\"\"}', '{\"employee_id\":\"2312\",\"psudo_name\":\"abc\",\"username\":\"frank\"}', 'http://127.0.0.1:8000/update-user/eyJpdiI6InNlRXhrcitHem5uNDdTczlxNDhyYXc9PSIsInZhbHVlIjoiWlZNVWExaisrRnZlclVORWpQQ2RtQT09IiwibWFjIjoiY2UyOGEwYWQ1YjQ2OTE4MjgyM2RjM2ZlZGJkMDBlOGEwNWJlY2ViZDExODNkZTZjYmY2ODQzNGY5ZDYxNGE5YSIsInRhZyI6IiJ9', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36', NULL, '2023-03-29 14:34:23', '2023-03-29 14:34:23');
+(38, 'App\\Models\\User', 15, 'updated', 'App\\Models\\User', 18, '{\"employee_id\":0,\"psudo_name\":null,\"username\":\"\"}', '{\"employee_id\":\"2312\",\"psudo_name\":\"abc\",\"username\":\"frank\"}', 'http://127.0.0.1:8000/update-user/eyJpdiI6InNlRXhrcitHem5uNDdTczlxNDhyYXc9PSIsInZhbHVlIjoiWlZNVWExaisrRnZlclVORWpQQ2RtQT09IiwibWFjIjoiY2UyOGEwYWQ1YjQ2OTE4MjgyM2RjM2ZlZGJkMDBlOGEwNWJlY2ViZDExODNkZTZjYmY2ODQzNGY5ZDYxNGE5YSIsInRhZyI6IiJ9', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36', NULL, '2023-03-29 14:34:23', '2023-03-29 14:34:23'),
+(39, 'App\\Models\\User', 15, 'created', 'App\\Models\\Designation', 7, '[]', '{\"name\":\"Director\",\"company_id\":6,\"id\":7}', 'http://127.0.0.1:8000/designations', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36', NULL, '2023-04-03 14:00:35', '2023-04-03 14:00:35'),
+(40, 'App\\Models\\User', 10, 'updated', 'App\\Models\\User', 10, '{\"remember_token\":\"KtWFy3D6RihiQYwg2xlCZ0NtoNlDrsDkfJsuOaNF4jC2Ckq7hUQmaemU8nbh\"}', '{\"remember_token\":\"DOGMciFOE9hAZ2z8kbr1FdaDASBRhGKe8TtNEEGxdUnH5R3FEym6IRdzs4yo\"}', 'http://127.0.0.1:8000/logout', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36', NULL, '2023-04-04 08:28:56', '2023-04-04 08:28:56'),
+(41, 'App\\Models\\User', 15, 'updated', 'App\\Models\\User', 17, '{\"designation_id\":2}', '{\"designation_id\":\"5\"}', 'http://127.0.0.1:8000/update-user/eyJpdiI6InZQSk5ZT1RhOVdIS0EvOUJpK01VT3c9PSIsInZhbHVlIjoiVWFmQm1RaEFxZ2ladndkMjBkUmkrdz09IiwibWFjIjoiOTUyZGEwN2MxZmMyMDg4MDNlZjQ2N2JkMGMwZGE3NjJkZWJhMDEzOTY2YTAxYjFjZmRiYjdkNTNkZTA1NjNkNyIsInRhZyI6IiJ9', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36', NULL, '2023-04-04 11:12:23', '2023-04-04 11:12:23'),
+(42, 'App\\Models\\User', 15, 'updated', 'App\\Models\\User', 18, '{\"designation_id\":2}', '{\"designation_id\":\"4\"}', 'http://127.0.0.1:8000/update-user/eyJpdiI6IjVFZ3Y0RnhCZ0c0dy9aWWErSHp2a2c9PSIsInZhbHVlIjoiYVkyYldDb3FmYmtic1NVQjJZQ3NkZz09IiwibWFjIjoiNTMxYWM4MzcxMDJjNjZjOTVmODYxN2U3NjEyNGYxYzU3MTU4MTMzMGQ1NWUzNzNjMDE5YWQ0MjU3MTUxZjdlMCIsInRhZyI6IiJ9', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36', NULL, '2023-04-04 11:12:36', '2023-04-04 11:12:36'),
+(43, 'App\\Models\\User', 15, 'created', 'App\\Models\\File', 15, '[]', '{\"practice_id\":4,\"user_id\":15,\"status\":\"14\",\"doc_type\":\"8\",\"name\":\"vvwGLaPpkKuEUuGrdjcqJAW6QvZ0g9NNf3ul7ZZt.pdf\",\"org_name\":\"Document.pdf\",\"path\":\"uploads\\/files\\/04-2023\\/vvwGLaPpkKuEUuGrdjcqJAW6QvZ0g9NNf3ul7ZZt.pdf\",\"ext\":\"pdf\",\"size\":\"13.62 KB\",\"id\":15}', 'http://127.0.0.1:8000/post-file', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36', NULL, '2023-04-04 14:50:14', '2023-04-04 14:50:14'),
+(44, 'App\\Models\\User', 15, 'updated', 'App\\Models\\Ticket', 24, '{\"priority\":\"Concerning\",\"response_at\":null,\"status\":0}', '{\"priority\":\"High\",\"response_at\":\"2023-04-04 20:11:52\",\"status\":\"26\"}', 'http://127.0.0.1:8000/ticket_replies', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36', NULL, '2023-04-04 15:11:52', '2023-04-04 15:11:52'),
+(45, 'App\\Models\\User', 15, 'updated', 'App\\Models\\Ticket', 19, '{\"priority\":\"High\",\"response_at\":null,\"status\":26}', '{\"priority\":\"Concerning\",\"response_at\":\"2023-04-04 20:50:18\",\"status\":\"23\"}', 'http://127.0.0.1:8000/ticket_replies', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36', NULL, '2023-04-04 15:50:18', '2023-04-04 15:50:18'),
+(46, 'App\\Models\\User', 15, 'updated', 'App\\Models\\Ticket', 6, '{\"priority\":\"High\",\"response_at\":null}', '{\"priority\":\"Concerning\",\"response_at\":\"2023-04-04 20:51:10\"}', 'http://127.0.0.1:8000/ticket_replies', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36', NULL, '2023-04-04 15:51:10', '2023-04-04 15:51:10'),
+(47, 'App\\Models\\User', 15, 'updated', 'App\\Models\\Ticket', 19, '{\"priority\":\"Concerning\",\"response_at\":\"2023-04-04 20:50:18\"}', '{\"priority\":\"Low\",\"response_at\":\"2023-04-04 20:54:10\"}', 'http://127.0.0.1:8000/ticket_replies', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36', NULL, '2023-04-04 15:54:10', '2023-04-04 15:54:10'),
+(48, 'App\\Models\\User', 15, 'updated', 'App\\Models\\Ticket', 20, '{\"priority\":\"Concerning\",\"response_at\":null,\"status\":0}', '{\"priority\":\"Low\",\"response_at\":\"2023-04-04 20:54:41\",\"status\":\"26\"}', 'http://127.0.0.1:8000/ticket_replies', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36', NULL, '2023-04-04 15:54:41', '2023-04-04 15:54:41'),
+(49, 'App\\Models\\User', 15, 'updated', 'App\\Models\\Ticket', 21, '{\"priority\":\"Concerning\",\"response_at\":null,\"status\":0}', '{\"priority\":\"Low\",\"response_at\":\"2023-04-04 20:58:12\",\"status\":\"26\"}', 'http://127.0.0.1:8000/ticket_replies', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36', NULL, '2023-04-04 15:58:12', '2023-04-04 15:58:12'),
+(50, 'App\\Models\\User', 15, 'updated', 'App\\Models\\Ticket', 21, '{\"priority\":\"Low\",\"response_at\":\"2023-04-04 20:58:12\"}', '{\"priority\":\"Medium\",\"response_at\":\"2023-04-04 20:59:14\"}', 'http://127.0.0.1:8000/ticket_replies', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36', NULL, '2023-04-04 15:59:14', '2023-04-04 15:59:14');
 
 -- --------------------------------------------------------
 
@@ -192,7 +204,7 @@ CREATE TABLE IF NOT EXISTS `department_user` (
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `department_user`
@@ -208,7 +220,9 @@ INSERT INTO `department_user` (`id`, `user_id`, `department_id`, `created_at`, `
 (10, 19, 3, '2023-03-03 02:07:39', '2023-03-03 02:07:39'),
 (11, 20, 4, '2023-03-03 02:12:39', '2023-03-03 02:12:39'),
 (12, 20, 6, '2023-03-03 02:12:39', '2023-03-03 02:12:39'),
-(13, 20, 3, '2023-03-03 02:12:39', '2023-03-03 02:12:39');
+(13, 20, 3, '2023-03-03 02:12:39', '2023-03-03 02:12:39'),
+(14, 18, 3, '2023-04-04 21:08:58', '2023-04-04 21:08:58'),
+(15, 17, 3, '2023-04-04 21:19:50', '2023-04-04 21:19:50');
 
 -- --------------------------------------------------------
 
@@ -221,23 +235,25 @@ CREATE TABLE IF NOT EXISTS `designations` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `company_id` int(11) NOT NULL,
   `name` varchar(128) NOT NULL,
+  `rank` int(11) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `deleted_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NOT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `designations`
 --
 
-INSERT INTO `designations` (`id`, `company_id`, `name`, `created_at`, `deleted_at`, `updated_at`) VALUES
-(1, 6, 'General Manager (GM)', '2023-03-20 13:07:51', NULL, '2023-03-20 18:18:01'),
-(2, 6, 'Director', '2023-03-20 13:15:33', NULL, '2023-03-20 13:15:33'),
-(3, 6, 'Vice President (VP)', '2023-03-20 13:15:51', NULL, '2023-03-29 08:57:14'),
-(4, 6, 'Manager Operations (MO)', '2023-03-20 13:16:37', NULL, '2023-03-29 08:57:01'),
-(5, 6, 'Assistant Manager Operations (AMO)', '2023-03-20 13:16:46', NULL, '2023-03-28 15:06:20'),
-(6, 6, 'Senior Manager Operations (SMO)', '2023-03-20 13:16:55', NULL, '2023-03-29 08:56:40');
+INSERT INTO `designations` (`id`, `company_id`, `name`, `rank`, `created_at`, `deleted_at`, `updated_at`) VALUES
+(1, 6, 'General Manager (GM)', 2, '2023-03-20 13:07:51', NULL, '2023-04-03 19:35:07'),
+(2, 5, 'Director', NULL, '2023-03-20 13:15:33', NULL, '2023-04-03 18:51:25'),
+(3, 6, 'Vice President (VP)', 3, '2023-03-20 13:15:51', NULL, '2023-04-03 19:29:49'),
+(4, 6, 'Manager Operations (MO)', 6, '2023-03-20 13:16:37', NULL, '2023-04-03 19:24:22'),
+(5, 6, 'Assistant Manager Operations (AMO)', 5, '2023-03-20 13:16:46', NULL, '2023-04-04 16:42:11'),
+(6, 6, 'Senior Manager Operations (SMO)', 4, '2023-03-20 13:16:55', NULL, '2023-04-04 16:42:11'),
+(7, 6, 'Director', 1, '2023-04-03 14:00:35', NULL, '2023-04-03 19:35:07');
 
 -- --------------------------------------------------------
 
@@ -311,7 +327,7 @@ CREATE TABLE IF NOT EXISTS `files` (
   `deleted_at` timestamp NULL DEFAULT NULL,
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `files`
@@ -331,7 +347,8 @@ INSERT INTO `files` (`id`, `practice_id`, `user_id`, `status`, `name`, `org_name
 (11, 4, 18, 14, 'WPBx6rp0eCQCltRmF5kAAhOFIwNZ1Dw91ncjbz61.pdf', 'Document.pdf', 'uploads/files/02-2023/WPBx6rp0eCQCltRmF5kAAhOFIwNZ1Dw91ncjbz61.pdf', 'pdf', '13.62 KB', '2023-03-09', 4, '2023-02-22 17:10:45', NULL, '2023-03-23 00:42:31'),
 (12, 4, 19, 14, 'GDVa4jNRLK581Sr5yXfeeMqI32ltZ1MlcM50UGdA.xlsx', 'AttendanceList123.xlsx', 'uploads/files/02-2023/GDVa4jNRLK581Sr5yXfeeMqI32ltZ1MlcM50UGdA.xlsx', 'xlsx', '22.46 KB', '2023-03-09', 4, '2023-02-22 17:53:13', NULL, '2023-03-23 00:42:40'),
 (13, 4, 20, 14, '5f5TDxQLrmDtjt1CUToQYDPerLUMakXWku3HTFbp.xlsx', 'AttendanceList (1).xlsx', 'uploads/files/03-2023/5f5TDxQLrmDtjt1CUToQYDPerLUMakXWku3HTFbp.xlsx', 'xlsx', '22.49 KB', '2023-03-09', 4, '2023-03-21 14:24:07', NULL, '2023-03-27 21:25:36'),
-(14, 4, 15, 14, '2RiQeo0dhS2M9d45LxRbNsA1bIYRg89L8gAx8ZcH.xlsx', 'AttendanceList.xlsx', 'uploads/files/03-2023/2RiQeo0dhS2M9d45LxRbNsA1bIYRg89L8gAx8ZcH.xlsx', 'xlsx', '22.46 KB', '2023-03-09', 4, '2023-03-21 14:24:07', NULL, '2023-03-22 01:44:28');
+(14, 4, 15, 14, '2RiQeo0dhS2M9d45LxRbNsA1bIYRg89L8gAx8ZcH.xlsx', 'AttendanceList.xlsx', 'uploads/files/03-2023/2RiQeo0dhS2M9d45LxRbNsA1bIYRg89L8gAx8ZcH.xlsx', 'xlsx', '22.46 KB', '2023-03-09', 4, '2023-03-21 14:24:07', NULL, '2023-03-22 01:44:28'),
+(15, 4, 15, 14, 'vvwGLaPpkKuEUuGrdjcqJAW6QvZ0g9NNf3ul7ZZt.pdf', 'Document.pdf', 'uploads/files/04-2023/vvwGLaPpkKuEUuGrdjcqJAW6QvZ0g9NNf3ul7ZZt.pdf', 'pdf', '13.62 KB', NULL, 8, '2023-04-04 19:50:14', NULL, '2023-04-04 19:50:14');
 
 -- --------------------------------------------------------
 
@@ -424,7 +441,7 @@ CREATE TABLE IF NOT EXISTS `permissions` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `permissions_name_guard_name_unique` (`name`,`guard_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=104 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=105 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `permissions`
@@ -433,7 +450,7 @@ CREATE TABLE IF NOT EXISTS `permissions` (
 INSERT INTO `permissions` (`id`, `name`, `display_name`, `type`, `guard_name`, `created_at`, `updated_at`) VALUES
 (13, 'add role', 'can create', 'role', 'web', '2023-01-19 11:17:29', '2023-01-19 11:17:29'),
 (14, 'view role', 'can view', 'role', 'web', '2023-01-19 11:21:41', '2023-01-19 11:21:41'),
-(15, 'view user', 'can view', 'user', 'web', '2023-01-19 11:53:09', '2023-01-19 11:53:09'),
+(15, 'view user', 'can view all', 'user', 'web', '2023-01-19 11:53:09', '2023-01-19 11:53:09'),
 (16, 'add user', 'can create', 'user', 'web', '2023-01-19 11:54:04', '2023-01-19 11:54:04'),
 (17, 'delete user', 'can delete', 'user', 'web', '2023-01-19 11:56:04', '2023-01-19 11:56:04'),
 (19, 'create ticket', 'can create', 'ticket', 'web', '2023-01-25 10:07:00', '2023-01-25 10:07:00'),
@@ -517,7 +534,8 @@ INSERT INTO `permissions` (`id`, `name`, `display_name`, `type`, `guard_name`, `
 (99, 'view designation', 'can view', 'designation', 'web', '2023-01-19 11:21:41', '2023-01-19 11:21:41'),
 (100, 'external ticket', 'can external', 'ticket', 'web', '2023-01-25 10:07:00', '2023-01-25 10:07:00'),
 (102, 'update company setting', 'can update', 'company', 'web', '2023-01-25 10:07:00', '2023-01-25 10:07:00'),
-(103, 'view audit system log', 'can audit system log', 'reports', 'web', '2023-02-06 14:30:49', '2023-02-06 14:30:49');
+(103, 'view audit system log', 'can audit system log', 'reports', 'web', '2023-02-06 14:30:49', '2023-02-06 14:30:49'),
+(104, 'view his own users', 'can view his own', 'user', 'web', '2023-01-19 11:53:09', '2023-01-19 11:53:09');
 
 -- --------------------------------------------------------
 
@@ -614,21 +632,25 @@ CREATE TABLE IF NOT EXISTS `practice_user` (
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `practice_user`
 --
 
 INSERT INTO `practice_user` (`id`, `user_id`, `practice_id`, `type`, `user_type`, `is_parent`, `created_at`, `updated_at`) VALUES
-(2, 17, 5, 2, 1, NULL, '2023-02-24 03:08:43', '2023-02-27 20:00:55'),
 (6, 19, 4, 1, 1, NULL, '2023-03-03 01:50:31', '2023-03-03 01:50:31'),
 (7, 16, 4, 1, 1, NULL, '2023-03-03 01:50:40', '2023-03-03 01:50:40'),
 (8, 20, 4, 1, 1, NULL, '2023-03-03 02:12:52', '2023-03-03 02:12:52'),
 (9, 20, 5, 1, 1, NULL, '2023-03-03 02:12:52', '2023-03-03 02:12:52'),
 (15, 15, 4, 1, 1, NULL, '2023-03-22 23:17:19', '2023-03-22 23:17:19'),
 (16, 15, 5, 1, 1, NULL, '2023-03-22 23:17:19', '2023-03-22 23:17:19'),
-(17, 15, 6, 1, 1, NULL, '2023-03-22 23:17:19', '2023-03-22 23:17:19');
+(17, 15, 6, 1, 1, NULL, '2023-03-22 23:17:19', '2023-03-22 23:17:19'),
+(28, 17, 6, 1, 1, NULL, '2023-04-05 00:22:54', '2023-04-05 00:22:54'),
+(29, 18, 4, 1, 1, NULL, '2023-04-05 00:26:26', '2023-04-05 00:26:26'),
+(30, 18, 5, 1, 1, NULL, '2023-04-05 00:26:26', '2023-04-05 00:26:26'),
+(31, 18, 6, 1, 1, NULL, '2023-04-05 00:26:26', '2023-04-05 00:26:26'),
+(32, 18, 7, 1, 1, NULL, '2023-04-05 00:26:26', '2023-04-05 00:26:26');
 
 -- --------------------------------------------------------
 
@@ -725,7 +747,6 @@ INSERT INTO `role_has_permissions` (`permission_id`, `role_id`) VALUES
 (17, 15),
 (13, 18),
 (14, 18),
-(15, 18),
 (16, 18),
 (17, 18),
 (19, 18),
@@ -808,7 +829,9 @@ INSERT INTO `role_has_permissions` (`permission_id`, `role_id`) VALUES
 (98, 18),
 (99, 18),
 (100, 18),
+(102, 18),
 (103, 18),
+(104, 18),
 (15, 19),
 (16, 19),
 (19, 19),
@@ -1091,7 +1114,7 @@ INSERT INTO `tickets` (`id`, `company_id`, `user_id`, `user_type`, `department_i
 (3, 6, 15, 2, 3, 5, 0, 'Info/Other', 'Low', 'Test', 'message', 'New Test Company', '2023-02-27 11:23:47', 26, NULL, 0, 1, '2023-02-27 11:23:47', NULL, '2023-02-27 11:23:47'),
 (4, 6, 15, 2, 3, 5, 4, 'Info/Other', 'Concerning', 'Test', 'dsadsad', 'New Test Company', NULL, 26, NULL, 0, 1, '2023-02-27 11:51:23', NULL, '2023-02-27 11:51:23'),
 (5, 6, 15, 2, 3, 5, 4, 'Info/Other', 'Concerning', 'dsf', 'dsfdsfsd', 'New Test Company', NULL, 26, NULL, 0, 1, '2023-02-27 11:56:17', NULL, '2023-02-27 11:56:17'),
-(6, 6, 15, 2, 3, 5, 4, 'Info/Other', 'High', 'Testdsadsa', 'asdsadsadsad', 'New Test Company', NULL, 26, NULL, 0, 1, '2023-02-27 11:57:24', NULL, '2023-03-23 09:42:54'),
+(6, 6, 15, 2, 3, 5, 4, 'Info/Other', 'Concerning', 'Testdsadsa', 'asdsadsadsad', 'New Test Company', '2023-04-04 15:51:10', 26, NULL, 0, 1, '2023-02-27 11:57:24', NULL, '2023-04-04 15:51:10'),
 (7, 6, 15, 2, 3, 5, 5, 'Info/Other', 'Concerning', 'Test', 'sadsadsad', 'New Test Company', NULL, 26, NULL, 0, 1, '2023-02-27 14:34:36', NULL, '2023-02-27 14:34:36'),
 (8, 6, 15, 2, 3, 4, 0, 'Info/Other', 'Concerning', 'Testsadsa', 'asdsadsadsad', 'New Test Company', NULL, 26, NULL, 0, 1, '2023-02-27 14:41:23', NULL, '2023-02-27 14:41:23'),
 (9, 6, 15, 2, 3, 5, 5, 'Info/Other', 'Concerning', 'Test', 'sadsad', 'New Test Company', NULL, 26, NULL, 0, 1, '2023-02-27 15:27:16', NULL, '2023-02-27 15:27:16'),
@@ -1104,12 +1127,12 @@ INSERT INTO `tickets` (`id`, `company_id`, `user_id`, `user_type`, `department_i
 (16, 6, 16, 3, 6, 4, 3, 'Info/Other', 'Concerning', 'Client ticket', '<p>Client ticket message</p>', 'Provider', NULL, 26, NULL, 0, 1, '2023-03-02 16:40:14', NULL, '2023-03-02 16:40:14'),
 (17, 6, 16, 3, 6, 4, 3, 'Info/Other', 'Concerning', 'Client ticket', '<p>Client ticket message</p>', 'Provider', NULL, 26, NULL, 0, 1, '2023-03-02 16:40:53', NULL, '2023-03-02 16:40:53'),
 (18, 6, 16, 3, 6, 4, 3, 'Info/Other', 'Concerning', 'Client ticket', '<p>Client ticket message</p>', 'Provider', NULL, 26, NULL, 0, 1, '2023-03-02 16:42:38', NULL, '2023-03-02 16:42:38'),
-(19, 6, 15, 2, 4, 5, 3, 'Info/Other', 'High', 'Testing notification', '<h2>What is Lorem Ipsum?</h2>\r\n\r\n<p><strong>Lorem Ipsum</strong>&nbsp;is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry&#39;s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>', 'New Test Company', NULL, 26, 'Ticket Forward Remarks', 1, 1, '2023-03-03 12:13:55', NULL, '2023-03-23 12:27:00'),
-(20, 6, 15, 2, 7, 4, 3, 'Info/Other', 'Concerning', 'Test', '<p>sdadsadsa</p>', 'New Test Company', NULL, 0, NULL, 0, 1, '2023-03-29 12:24:55', NULL, '2023-03-29 12:24:55'),
-(21, 6, 15, 2, 4, 7, 0, 'Info/Other', 'Concerning', 'Ticket 21', '<p>message 21</p>', 'New Test Company', NULL, 0, NULL, 0, 0, '2023-03-29 12:42:25', NULL, '2023-03-29 12:42:25'),
+(19, 6, 15, 2, 4, 5, 3, 'Info/Other', 'Low', 'Testing notification', '<h2>What is Lorem Ipsum?</h2>\r\n\r\n<p><strong>Lorem Ipsum</strong>&nbsp;is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry&#39;s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>', 'New Test Company', '2023-04-04 15:54:10', 23, 'Ticket Forward Remarks', 1, 1, '2023-03-03 12:13:55', NULL, '2023-04-04 15:54:10'),
+(20, 6, 15, 2, 7, 4, 3, 'Info/Other', 'Low', 'Test', '<p>sdadsadsa</p>', 'New Test Company', '2023-04-04 15:54:41', 26, NULL, 0, 1, '2023-03-29 12:24:55', NULL, '2023-04-04 15:54:41'),
+(21, 6, 15, 2, 4, 7, 0, 'Info/Other', 'Medium', 'Ticket 21', '<p>message 21</p>', 'New Test Company', '2023-04-04 15:59:14', 26, NULL, 0, 0, '2023-03-29 12:42:25', NULL, '2023-04-04 15:59:14'),
 (22, 6, 15, 2, 4, 3, 0, 'Info/Other', 'Concerning', 'Ticket 22', '<p>message 22</p>', 'New Test Company', NULL, 0, NULL, 0, 0, '2023-03-29 13:02:14', NULL, '2023-03-29 13:02:14'),
 (23, 6, 15, 2, 4, 3, 0, 'Info/Other', 'Concerning', 'Ticket 23', '<p>message 23</p>', 'New Test Company', NULL, 0, NULL, 0, 0, '2023-03-29 13:03:42', NULL, '2023-03-29 13:03:42'),
-(24, 6, 15, 2, 4, 7, 0, 'Info/Other', 'Concerning', 'Ticket 24', '<p>Message 24</p>', 'New Test Company', NULL, 0, NULL, 0, 1, '2023-03-29 13:06:45', NULL, '2023-03-29 13:06:45');
+(24, 6, 15, 2, 4, 7, 0, 'Info/Other', 'High', 'Ticket 24', '<p>Message 24</p>', 'New Test Company', '2023-04-04 15:11:52', 26, NULL, 0, 1, '2023-03-29 13:06:45', NULL, '2023-04-04 15:11:52');
 
 -- --------------------------------------------------------
 
@@ -1298,15 +1321,15 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 
 INSERT INTO `users` (`id`, `company_id`, `employee_id`, `designation_id`, `type`, `status`, `firstname`, `lastname`, `psudo_name`, `email`, `username`, `email_verified_at`, `password`, `remember_token`, `last_activity`, `timezone`, `created_at`, `updated_at`) VALUES
-(10, 0, 0, 2, 0, 1, 'Rahmat', 'Ali', NULL, 'admin@mail.com', '', NULL, '$2y$10$cEJsuBpta26C6aMp.MaCY.5apeaYbYNQ2pY1azhsk1cvfo4GhMaNy', 'KtWFy3D6RihiQYwg2xlCZ0NtoNlDrsDkfJsuOaNF4jC2Ckq7hUQmaemU8nbh', NULL, 0, '2023-01-04 04:24:33', '2023-02-24 09:42:42'),
+(10, 0, 0, 2, 0, 1, 'Rahmat', 'Ali', NULL, 'admin@mail.com', '', NULL, '$2y$10$cEJsuBpta26C6aMp.MaCY.5apeaYbYNQ2pY1azhsk1cvfo4GhMaNy', 'DOGMciFOE9hAZ2z8kbr1FdaDASBRhGKe8TtNEEGxdUnH5R3FEym6IRdzs4yo', NULL, 0, '2023-01-04 04:24:33', '2023-02-24 09:42:42'),
 (11, 4, 0, 2, 2, 1, 'Super', 'Admin', NULL, 'superadmin4@bmb.com', '', NULL, '$2y$10$cEJsuBpta26C6aMp.MaCY.5apeaYbYNQ2pY1azhsk1cvfo4GhMaNy', NULL, NULL, 0, '2023-01-19 13:39:09', '2023-01-19 13:39:09'),
 (12, 5, 0, 2, 2, 1, 'Super', 'Admin', NULL, 'superadmin5@test.com', '', NULL, '$2y$10$cEJsuBpta26C6aMp.MaCY.5apeaYbYNQ2pY1azhsk1cvfo4GhMaNy', NULL, NULL, 0, '2023-01-22 12:33:56', '2023-01-22 12:33:56'),
 (13, 1, 0, 2, 2, 1, 'John D.', 'John D.', NULL, 'JohnDMurray@teleworm.us', '', NULL, '$2y$10$cEJsuBpta26C6aMp.MaCY.5apeaYbYNQ2pY1azhsk1cvfo4GhMaNy', NULL, NULL, 0, '2023-01-25 10:36:08', '2023-01-25 10:36:08'),
 (14, 1, 0, 2, 3, 1, 'test', 'client', NULL, 'client@gmail.com', '', NULL, '$2y$10$cEJsuBpta26C6aMp.MaCY.5apeaYbYNQ2pY1azhsk1cvfo4GhMaNy', NULL, NULL, 0, '2023-02-05 10:19:42', '2023-02-05 10:19:42'),
 (15, 6, 2703, 6, 2, 2, 'Asad', 'Nazir', 'Asad Nazir Awan', 'superadmin6@new.com', 'superadmin6', NULL, '$2y$10$cEJsuBpta26C6aMp.MaCY.5apeaYbYNQ2pY1azhsk1cvfo4GhMaNy', NULL, NULL, 7, '2023-02-16 16:08:10', '2023-03-20 15:18:50'),
 (16, 6, 0, 2, 3, 10, 'New', 'Client 1', NULL, 'newclient@gmail.com', 'newclient', NULL, '$2y$10$cEJsuBpta26C6aMp.MaCY.5apeaYbYNQ2pY1azhsk1cvfo4GhMaNy', NULL, NULL, 4, '2023-02-16 16:10:37', '2023-03-20 15:27:50'),
-(17, 6, 23213, 2, 2, 2, 'Test', 'Test', 'Asad Nazir Awan', 'test@gmail.com', 'admin', NULL, '$2y$10$cEJsuBpta26C6aMp.MaCY.5apeaYbYNQ2pY1azhsk1cvfo4GhMaNy', NULL, NULL, 0, '2023-02-21 12:54:37', '2023-03-28 14:57:06'),
-(18, 6, 2312, 2, 2, 12, 'Test', 'User', 'abc', 'testuser@gmail.com', 'frank', NULL, '$2y$10$cEJsuBpta26C6aMp.MaCY.5apeaYbYNQ2pY1azhsk1cvfo4GhMaNy', NULL, NULL, 0, '2023-02-27 12:43:41', '2023-03-29 14:34:23'),
+(17, 6, 23213, 5, 2, 2, 'Test', 'Test', 'Asad Nazir Awan', 'test@gmail.com', 'admin', NULL, '$2y$10$cEJsuBpta26C6aMp.MaCY.5apeaYbYNQ2pY1azhsk1cvfo4GhMaNy', NULL, NULL, 0, '2023-02-21 12:54:37', '2023-04-04 11:12:23'),
+(18, 6, 2312, 4, 2, 12, 'Test', 'User', 'abc', 'testuser@gmail.com', 'frank', NULL, '$2y$10$cEJsuBpta26C6aMp.MaCY.5apeaYbYNQ2pY1azhsk1cvfo4GhMaNy', NULL, NULL, 0, '2023-02-27 12:43:41', '2023-04-04 11:12:36'),
 (19, 6, 0, 2, 3, 1, 'New', 'Client 2', NULL, 'newclient2@gmail.com', '', NULL, '$2y$10$cEJsuBpta26C6aMp.MaCY.5apeaYbYNQ2pY1azhsk1cvfo4GhMaNy', NULL, NULL, 0, '2023-03-02 15:49:40', '2023-03-02 15:49:40'),
 (20, 6, 0, 2, 3, 1, 'New', 'Client 3', NULL, 'newclient3@gmail.com', '', NULL, '$2y$10$cEJsuBpta26C6aMp.MaCY.5apeaYbYNQ2pY1azhsk1cvfo4GhMaNy', NULL, NULL, 0, '2023-03-02 16:12:25', '2023-03-02 16:12:25');
 

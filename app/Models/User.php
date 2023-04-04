@@ -62,10 +62,10 @@ class User extends Authenticatable implements Auditable
     {
         return get_timezone($value);
     }
-    public function getDesignationIdAttribute($value)
-    {
-        return get_designation($value);
-    }
+    // public function getDesignationIdAttribute($value)
+    // {
+    //     return get_designation($value);
+    // }
     // public function getFullnameAttribute($value)
     // {
     //     return ucfirst($this->firstname) . " " . ucfirst($this->lastname);
@@ -81,6 +81,10 @@ class User extends Authenticatable implements Auditable
     public function company()
     {
         return $this->belongsTo(Company::class);
+    }
+    public function designation()
+    {
+        return $this->belongsTo(Designation::class);
     }
     public function departments()
     {

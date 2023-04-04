@@ -1,5 +1,6 @@
 @extends('includes.main')
 @section('content')
+<link rel="stylesheet" href="{{ asset('assets/Multiselect/jquery.multiselect.css') }}">
 <style>
     span.role {
         background-color: #e3e8ee;
@@ -149,8 +150,8 @@
         </div>
     </div>
 </div>
-
 @push('scripts')
+<script src="{{ asset('assets/Multiselect/jquery.multiselect.js') }}"></script>
 <script>
     var ref = '';
     $('.assign-department').click(function() {
@@ -193,6 +194,9 @@
             success: function(response) {
                 if (response.success == 1) {
                     $('#assign-practice-body').html(response.content);
+                    $(function() {
+                        $('[name="user_practices[]"]').gs_multiselect();
+                    });
                     $('.select2-multi').select2({
                         theme: 'bootstrap4',
                     });

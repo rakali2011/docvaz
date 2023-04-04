@@ -116,7 +116,7 @@
       </li>
     </ul>
     @endcan
-    @can('view user')
+    @canany(['view user', 'view his own users'])
     <ul class="navbar-nav flex-fill w-100 mb-2">
       <li class="nav-item dropdown">
         <a href="#user-management-sub" id="user-management" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link menu">
@@ -124,16 +124,14 @@
           <span class="ml-3 item-text">Users Management</span>
         </a>
         <ul class="collapse list-unstyled pl-4 w-100" id="user-management-sub">
-          @can('view user')
           <li class="nav-item">
             <a class="nav-link pl-3 sub-menu" id="users" href="{{ route('users') }}"><span class="ml-1 item-text">Users</span>
             </a>
           </li>
-          @endcan
         </ul>
       </li>
     </ul>
-    @endcan
+    @endcanany
     @canany(['view client','view practice'])
     <ul class="navbar-nav flex-fill w-100 mb-2">
       <li class="nav-item dropdown">
@@ -158,7 +156,7 @@
       </li>
     </ul>
     @endcan
-    @canany(['view team'])
+    @canany(['view team','view department','view designation','view document type','view status'])
     <ul class="navbar-nav flex-fill w-100 mb-2">
       <li class="nav-item dropdown">
         <a href="#general-management-sub" id="general-management" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link menu">

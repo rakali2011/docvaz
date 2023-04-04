@@ -98,6 +98,25 @@ if (!function_exists('users')) {
         return $users;
     }
 }
+function get_users()
+{
+    $users = [];
+    if (auth()->user()->can("view user")) {
+        $users = User::where('company_id', Auth::user()->company_id)->where('type', 2)->get();
+    } else if (auth()->user()->can("view his own users")) {
+        $rank = auth()->user()->designation()->first()->rank;
+        $departments = auth()->user()->assinged_departments();
+        foreach ($departments as $key => $department) {
+            $assinged_users = $department->assinged_users();
+            foreach ($assinged_users as $index => $user) {
+                if ($rank < $user->designation()->first()->rank && $user->type == 2) {
+                    $users[] = $user;
+                }
+            }
+        }
+    }
+    return $users;
+}
 function share_to()
 {
     if (auth()->user()->can('assign practice user'))

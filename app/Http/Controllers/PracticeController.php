@@ -655,7 +655,7 @@ class PracticeController extends Controller
             $assigned_practices = $user->assinged_practices_array();
             $response['success'] = 1;
             $response['role'] = auth()->user()->getRoleNames();
-            $select = $this->multiselect($practices, $assigned_practices, 'user_practices[]', 'User Practices');
+            $select = $this->multiselect1($practices, $assigned_practices, 'user_practices[]', 'User Practices');
             $response['content'] = $select;
         } catch (\Throwable $th) {
             $response['success'] = 0;

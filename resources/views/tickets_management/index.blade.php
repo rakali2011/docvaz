@@ -85,8 +85,8 @@
                       </select>
                     </div>
                     <div class="form-group col-md-2">
-                      <label for="status"></label>
-                      <select name="status" id="status" class="form-control">
+                      <label for="status-filter"></label>
+                      <select name="status" id="status-filter" class="form-control">
                         <option value="">Select Status</option>
                         @foreach (statuses('ticket') as $status)
                         <option value="{{ $status->id }}">{{ $status->name }}</option>
@@ -199,8 +199,8 @@
           <div class="form-group col-12" id="ticket-replies-body">
             <div class="row">
               <div class="form-group col-md-5">
-                <label>Practice</label>
-                <input type="text" id="practice" class="form-control" value="" disabled="disabled">
+                <label>To</label>
+                <input type="text" id="practice-name" class="form-control" value="" disabled="disabled">
               </div>
               <div class="form-group col-md-3">
                 <label>Sender</label>
@@ -374,7 +374,7 @@
             return $("#practice").val();
           },
           'status_filter': function() {
-            return $("#status").val();
+            return $("#status-filter").val();
           },
           'department_filter': function() {
             return $("#department").val();
@@ -483,6 +483,7 @@
       success: function(response) {
         console.log(response);
         if (response.success == 1) {
+          $('#practice-name').val('');
           $('#ticket-replies-form')[0].reset();
           CKEDITOR.instances.message.setData('');
           $('#important').removeClass('orange');
@@ -496,7 +497,7 @@
           $('#ticket-number').text(response.content.id);
           $('#ticket-status').text(response.content.status);
           $('#ticket-date--').text(response.content.created_at);
-          $('#practice').val(response.content.practice_name);
+          $('#practice-name').val(response.content.target_name);
           $('#sender').val(response.content.department_name);
           $('#type').val(response.content.type);
           $('#priority').val(response.content.priority);
@@ -583,10 +584,10 @@
           $('#ticket-replies-form')[0].reset();
           CKEDITOR.instances.message.setData('');
           ref = "";
-          Swal.fire({
-            icon: 'success',
-            text: data.message,
-          });
+          // Swal.fire({
+          //   icon: 'success',
+          //   text: data.message,
+          // });
           $('#tickets-table').DataTable().ajax.reload(null, true);
         } else {
           Swal.fire({
