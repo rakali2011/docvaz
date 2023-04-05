@@ -177,12 +177,12 @@
 
   $('#filter-form [type="submit"]').on('click', function(e) {
     e.preventDefault();
-    $('#files-table').DataTable().ajax.reload(null, true);
+    $('#files-table').DataTable().ajax.reload(null, false);
   });
   $('#c_filter').click(function() {
     $('select').val('');
     $('input').val('');
-    $('#files-table').DataTable().ajax.reload(null, true);
+    $('#files-table').DataTable().ajax.reload(null, false);
   });
 </script>
 @endpush

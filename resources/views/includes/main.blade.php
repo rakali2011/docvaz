@@ -37,6 +37,10 @@
     label {
       font-weight: 700;
     }
+
+    li.nav-item {
+      margin-top: 2px;
+    }
   </style>
 </head>
 

@@ -588,7 +588,7 @@
           //   icon: 'success',
           //   text: data.message,
           // });
-          $('#tickets-table').DataTable().ajax.reload(null, true);
+          $('#tickets-table').DataTable().ajax.reload(null, false);
         } else {
           Swal.fire({
             icon: 'error',
@@ -625,12 +625,12 @@
   }
   $('#filter-form [type="submit"]').on('click', function(e) {
     e.preventDefault();
-    $('#tickets-table').DataTable().ajax.reload(null, true);
+    $('#tickets-table').DataTable().ajax.reload(null, false);
   });
   $('#c_filter').click(function() {
     $('#team,#practice,#status,#department,#priority_f,#created_by,#date_from,#date_to').val('');
     $('#flaged').prop('checked', false);
-    $('#tickets-table').DataTable().ajax.reload(null, true);
+    $('#tickets-table').DataTable().ajax.reload(null, false);
   });
 </script>
 @endpush

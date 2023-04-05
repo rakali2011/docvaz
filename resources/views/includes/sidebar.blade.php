@@ -9,7 +9,6 @@
         <h3>DocuHub</h3>
         {{-- <img width="auto" height="500" src="{{ asset('assets/assets/avatars/face-1.jpg') }}"class="avatar-img rounded-circle border">--}}
       </a>
-
     </div>
     <ul style="list-style-type: none;padding:0;" class="mx-auto text-center">
       <li class="nav-item dropdown">
