@@ -1,37 +1,3 @@
-<style>
-  .nav-active {
-    background: #000000;
-    color: #ffffff !important;
-  }
-
-  .nav-tabs .nav-link:active {
-    color: #fff;
-    background-color: #000 !important;
-  }
-
-  .nav-link {
-    color: #fff;
-  }
-
-  .vertnav>.navbar-nav .nav-item:hover,
-  .nav-link:hover,
-  .nav-link:focus {
-    color: #fff !important;
-    background-color: #000 !important;
-    border-color: #6c757d;
-  }
-
-  .navbar-brand>img {
-    height: 70px;
-    width: auto;
-  }
-
-  .nav-item {
-    margin-top: 2px;
-  }
-</style>
-
-
 <aside class="sidebar-left border-right bg-white shadow" id="leftSidebar" data-simplebar style=" background: #b6c6d7  !important;">
   <a href="#" class="btn collapseSidebar toggle-btn d-lg-none text-muted ml-2 mt-3" data-toggle="toggle">
     <i class="fe fe-x"><span class="sr-only"></span></i>
@@ -42,14 +8,13 @@
         {{-- <img width="auto" height="500" src="{{ asset('assets/assets/avatars/face-1.jpg') }}"class="avatar-img rounded-circle border">--}}
         <h3>DocuHub</h3>
         {{-- <img width="auto" height="500" src="{{ asset('assets/assets/avatars/face-1.jpg') }}"class="avatar-img rounded-circle border">--}}
-
       </a>
 
     </div>
     <ul style="list-style-type: none;padding:0;" class="mx-auto text-center">
       <li class="nav-item dropdown">
         <a class="navbar-brand mr-0">
-          <img src="{{ asset('assets/assets/avatars/face-1.jpg') }}" class="avatar-img rounded-circle border">
+          <img src="{{ asset('assets/assets/avatars/face-1.jpg') }}" class="avatar-sidebar-img rounded-circle border">
         </a>
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <span class="font-weight-bold text-black ">{{ auth()->user()->firstname ." ".auth()->user()->lastname  }}</span>
