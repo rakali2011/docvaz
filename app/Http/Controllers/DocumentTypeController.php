@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\DocumentType;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -114,5 +115,26 @@ class DocumentTypeController extends Controller
     {
         $documentType->delete();
         return redirect()->route('document_types.index')->with('success', 'Document Type Deleted Successfully');
+    }
+    public function get_document_types(Request $request)
+    {
+        $response = array();
+        try {
+            $user_id = $this->clean_id($request->ref);
+            $user = User::find($user_id);
+            if (auth()->user()->can('assign department user')) {
+                $document_types = DocumentType::where('company_id', $user->company_id)->orderBy('name', 'ASC')->get();
+            } else {
+                $document_types = Auth::user()->assinged_document_types();
+            }
+            $assigned_document_types = $user->assinged_document_types_array();
+            $response['success'] = 1;
+            $select = $this->multiselect($document_types, $assigned_document_types, 'user_document_types[]', 'User Documents');
+            $response['content'] = $select;
+        } catch (\Throwable $th) {
+            $response['success'] = 0;
+            $response['message'] = $th->getMessage();
+        }
+        return response()->json($response);
     }
 }

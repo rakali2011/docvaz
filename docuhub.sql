@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Apr 04, 2023 at 09:32 PM
+-- Generation Time: Apr 06, 2023 at 05:12 PM
 -- Server version: 5.7.36
 -- PHP Version: 7.4.26
 
@@ -68,7 +68,7 @@ CREATE TABLE IF NOT EXISTS `audits` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=51 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=60 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `audits`
@@ -124,7 +124,16 @@ INSERT INTO `audits` (`id`, `user_type`, `user_id`, `event`, `auditable_type`, `
 (47, 'App\\Models\\User', 15, 'updated', 'App\\Models\\Ticket', 19, '{\"priority\":\"Concerning\",\"response_at\":\"2023-04-04 20:50:18\"}', '{\"priority\":\"Low\",\"response_at\":\"2023-04-04 20:54:10\"}', 'http://127.0.0.1:8000/ticket_replies', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36', NULL, '2023-04-04 15:54:10', '2023-04-04 15:54:10'),
 (48, 'App\\Models\\User', 15, 'updated', 'App\\Models\\Ticket', 20, '{\"priority\":\"Concerning\",\"response_at\":null,\"status\":0}', '{\"priority\":\"Low\",\"response_at\":\"2023-04-04 20:54:41\",\"status\":\"26\"}', 'http://127.0.0.1:8000/ticket_replies', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36', NULL, '2023-04-04 15:54:41', '2023-04-04 15:54:41'),
 (49, 'App\\Models\\User', 15, 'updated', 'App\\Models\\Ticket', 21, '{\"priority\":\"Concerning\",\"response_at\":null,\"status\":0}', '{\"priority\":\"Low\",\"response_at\":\"2023-04-04 20:58:12\",\"status\":\"26\"}', 'http://127.0.0.1:8000/ticket_replies', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36', NULL, '2023-04-04 15:58:12', '2023-04-04 15:58:12'),
-(50, 'App\\Models\\User', 15, 'updated', 'App\\Models\\Ticket', 21, '{\"priority\":\"Low\",\"response_at\":\"2023-04-04 20:58:12\"}', '{\"priority\":\"Medium\",\"response_at\":\"2023-04-04 20:59:14\"}', 'http://127.0.0.1:8000/ticket_replies', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36', NULL, '2023-04-04 15:59:14', '2023-04-04 15:59:14');
+(50, 'App\\Models\\User', 15, 'updated', 'App\\Models\\Ticket', 21, '{\"priority\":\"Low\",\"response_at\":\"2023-04-04 20:58:12\"}', '{\"priority\":\"Medium\",\"response_at\":\"2023-04-04 20:59:14\"}', 'http://127.0.0.1:8000/ticket_replies', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36', NULL, '2023-04-04 15:59:14', '2023-04-04 15:59:14'),
+(51, 'App\\Models\\User', 15, 'updated', 'App\\Models\\Ticket', 24, '{\"priority\":\"High\",\"response_at\":\"2023-04-04 20:11:52\"}', '{\"priority\":\"Medium\",\"response_at\":\"2023-04-05 15:06:17\"}', 'http://127.0.0.1:8000/ticket_replies', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36', NULL, '2023-04-05 10:06:17', '2023-04-05 10:06:17'),
+(52, 'App\\Models\\User', 15, 'updated', 'App\\Models\\Ticket', 21, '{\"priority\":\"Medium\",\"response_at\":\"2023-04-04 20:59:14\"}', '{\"priority\":\"Low\",\"response_at\":\"2023-04-05 15:24:03\"}', 'http://127.0.0.1:8000/ticket_replies', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36', NULL, '2023-04-05 10:24:03', '2023-04-05 10:24:03'),
+(53, 'App\\Models\\User', 15, 'updated', 'App\\Models\\Ticket', 22, '{\"priority\":\"Concerning\",\"response_at\":null,\"status\":0}', '{\"priority\":\"Medium\",\"response_at\":\"2023-04-05 15:34:35\",\"status\":\"26\"}', 'http://127.0.0.1:8000/ticket_replies', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36', NULL, '2023-04-05 10:34:35', '2023-04-05 10:34:35'),
+(54, 'App\\Models\\User', 15, 'updated', 'App\\Models\\Ticket', 1, '{\"response_at\":null}', '{\"response_at\":\"2023-04-06 14:44:42\"}', 'http://127.0.0.1:8000/ticket_replies', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36', NULL, '2023-04-06 09:44:42', '2023-04-06 09:44:42'),
+(55, 'App\\Models\\User', 15, 'created', 'App\\Models\\TicketReply', 18, '[]', '{\"ticket_id\":\"1\",\"user_id\":15,\"creator_name\":\"Asad Nazir\",\"message\":\"<p>test reply<\\/p>\",\"is_refered\":0,\"id\":18}', 'http://127.0.0.1:8000/ticket_replies', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36', NULL, '2023-04-06 09:44:43', '2023-04-06 09:44:43'),
+(56, 'App\\Models\\User', 15, 'created', 'App\\Models\\TicketAttachment', 7, '[]', '{\"ticket_id\":\"1\",\"reply_id\":18,\"type\":1,\"name\":\"y4MrxeRWDeuC7k0eMwZ2p9AcqlyFHLDiZostSU3u.xlsx\",\"org_name\":\"AttendanceList.xlsx\",\"path\":\"uploads\\/ticket_attachments\\/y4MrxeRWDeuC7k0eMwZ2p9AcqlyFHLDiZostSU3u.xlsx\",\"ext\":\"xlsx\",\"size\":\"22.46 KB\",\"id\":7}', 'http://127.0.0.1:8000/ticket_replies', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36', NULL, '2023-04-06 09:44:43', '2023-04-06 09:44:43'),
+(57, 'App\\Models\\User', 15, 'created', 'App\\Models\\TicketAttachment', 8, '[]', '{\"ticket_id\":\"1\",\"reply_id\":18,\"type\":1,\"name\":\"FkEwDt1hJI7123H0nNu5OCXq5kk1rmJ3LQKTIl1R.xls\",\"org_name\":\"16740728274397_#_ADD-Clinic-Of-Idaho-AR-Report (1).xls\",\"path\":\"uploads\\/ticket_attachments\\/FkEwDt1hJI7123H0nNu5OCXq5kk1rmJ3LQKTIl1R.xls\",\"ext\":\"xls\",\"size\":\"115.00 KB\",\"id\":8}', 'http://127.0.0.1:8000/ticket_replies', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36', NULL, '2023-04-06 09:44:43', '2023-04-06 09:44:43'),
+(58, 'App\\Models\\User', 15, 'created', 'App\\Models\\TicketAttachment', 9, '[]', '{\"ticket_id\":\"1\",\"reply_id\":18,\"type\":1,\"name\":\"r498Bqqrb5vRQkzieHn7z0viS1piKCeO4jUiA3wz.xlsx\",\"org_name\":\"20220509093844_Practice Info Sheet.xlsx\",\"path\":\"uploads\\/ticket_attachments\\/r498Bqqrb5vRQkzieHn7z0viS1piKCeO4jUiA3wz.xlsx\",\"ext\":\"xlsx\",\"size\":\"12.57 KB\",\"id\":9}', 'http://127.0.0.1:8000/ticket_replies', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36', NULL, '2023-04-06 09:44:43', '2023-04-06 09:44:43'),
+(59, 'App\\Models\\User', 15, 'created', 'App\\Models\\TicketAttachment', 10, '[]', '{\"ticket_id\":\"1\",\"reply_id\":18,\"type\":1,\"name\":\"DESDToPAZwM7IHhDckovKZDvHZ4w78kJpnNzv2sx.xlsx\",\"org_name\":\"20220915010715_Practice Info Sheet.xlsx\",\"path\":\"uploads\\/ticket_attachments\\/DESDToPAZwM7IHhDckovKZDvHZ4w78kJpnNzv2sx.xlsx\",\"ext\":\"xlsx\",\"size\":\"12.59 KB\",\"id\":10}', 'http://127.0.0.1:8000/ticket_replies', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36', NULL, '2023-04-06 09:44:43', '2023-04-06 09:44:43');
 
 -- --------------------------------------------------------
 
@@ -288,6 +297,36 @@ INSERT INTO `document_types` (`id`, `company_id`, `name`, `created_at`, `updated
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `document_type_user`
+--
+
+DROP TABLE IF EXISTS `document_type_user`;
+CREATE TABLE IF NOT EXISTS `document_type_user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `document_type_id` int(11) NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `document_type_user`
+--
+
+INSERT INTO `document_type_user` (`id`, `user_id`, `document_type_id`, `created_at`, `updated_at`) VALUES
+(1, 18, 8, '2023-04-06 21:36:40', '2023-04-06 21:36:40'),
+(2, 18, 3, '2023-04-06 21:36:40', '2023-04-06 21:36:40'),
+(3, 17, 8, '2023-04-06 21:37:19', '2023-04-06 21:37:19'),
+(4, 17, 6, '2023-04-06 21:37:19', '2023-04-06 21:37:19'),
+(5, 17, 3, '2023-04-06 21:46:34', '2023-04-06 21:46:34'),
+(6, 15, 8, '2023-04-06 22:07:00', '2023-04-06 22:07:00'),
+(7, 15, 3, '2023-04-06 22:07:00', '2023-04-06 22:07:00'),
+(8, 15, 4, '2023-04-06 22:07:00', '2023-04-06 22:07:00');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `failed_jobs`
 --
 
@@ -441,7 +480,7 @@ CREATE TABLE IF NOT EXISTS `permissions` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `permissions_name_guard_name_unique` (`name`,`guard_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=105 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=106 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `permissions`
@@ -535,7 +574,8 @@ INSERT INTO `permissions` (`id`, `name`, `display_name`, `type`, `guard_name`, `
 (100, 'external ticket', 'can external', 'ticket', 'web', '2023-01-25 10:07:00', '2023-01-25 10:07:00'),
 (102, 'update company setting', 'can update', 'company', 'web', '2023-01-25 10:07:00', '2023-01-25 10:07:00'),
 (103, 'view audit system log', 'can audit system log', 'reports', 'web', '2023-02-06 14:30:49', '2023-02-06 14:30:49'),
-(104, 'view his own users', 'can view his own', 'user', 'web', '2023-01-19 11:53:09', '2023-01-19 11:53:09');
+(104, 'view his own users', 'can view his own', 'user', 'web', '2023-01-19 11:53:09', '2023-01-19 11:53:09'),
+(105, 'assign document user', 'can assign document type', 'user', 'web', '2023-02-06 10:02:32', '2023-02-06 10:02:32');
 
 -- --------------------------------------------------------
 
@@ -747,6 +787,7 @@ INSERT INTO `role_has_permissions` (`permission_id`, `role_id`) VALUES
 (17, 15),
 (13, 18),
 (14, 18),
+(15, 18),
 (16, 18),
 (17, 18),
 (19, 18),
@@ -831,7 +872,7 @@ INSERT INTO `role_has_permissions` (`permission_id`, `role_id`) VALUES
 (100, 18),
 (102, 18),
 (103, 18),
-(104, 18),
+(105, 18),
 (15, 19),
 (16, 19),
 (19, 19),
@@ -1109,7 +1150,7 @@ CREATE TABLE IF NOT EXISTS `tickets` (
 --
 
 INSERT INTO `tickets` (`id`, `company_id`, `user_id`, `user_type`, `department_id`, `target_id`, `team_id`, `type`, `priority`, `subject`, `message`, `creator`, `response_at`, `status`, `remarks`, `flag`, `is_external`, `created_at`, `deleted_at`, `updated_at`) VALUES
-(1, 6, 15, 2, 3, 4, 0, 'Info/Other', 'High', 'Test subject', '<p>test message abc</p>', 'New Test Company', NULL, 26, NULL, 0, 1, '2023-02-24 16:17:37', NULL, '2023-03-28 15:00:22'),
+(1, 6, 15, 2, 3, 4, 0, 'Info/Other', 'High', 'Test subject', '<p>test message abc</p>', 'New Test Company', '2023-04-06 09:44:42', 26, NULL, 0, 1, '2023-02-24 16:17:37', NULL, '2023-04-06 09:44:42'),
 (2, 6, 15, 2, 3, 5, 0, 'Info/Other', 'Concerning', 'Test subject', 'test message', 'New Test Company', NULL, 26, NULL, 0, 1, '2023-02-24 16:17:37', NULL, '2023-02-24 16:17:37'),
 (3, 6, 15, 2, 3, 5, 0, 'Info/Other', 'Low', 'Test', 'message', 'New Test Company', '2023-02-27 11:23:47', 26, NULL, 0, 1, '2023-02-27 11:23:47', NULL, '2023-02-27 11:23:47'),
 (4, 6, 15, 2, 3, 5, 4, 'Info/Other', 'Concerning', 'Test', 'dsadsad', 'New Test Company', NULL, 26, NULL, 0, 1, '2023-02-27 11:51:23', NULL, '2023-02-27 11:51:23'),
@@ -1129,10 +1170,10 @@ INSERT INTO `tickets` (`id`, `company_id`, `user_id`, `user_type`, `department_i
 (18, 6, 16, 3, 6, 4, 3, 'Info/Other', 'Concerning', 'Client ticket', '<p>Client ticket message</p>', 'Provider', NULL, 26, NULL, 0, 1, '2023-03-02 16:42:38', NULL, '2023-03-02 16:42:38'),
 (19, 6, 15, 2, 4, 5, 3, 'Info/Other', 'Low', 'Testing notification', '<h2>What is Lorem Ipsum?</h2>\r\n\r\n<p><strong>Lorem Ipsum</strong>&nbsp;is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry&#39;s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>', 'New Test Company', '2023-04-04 15:54:10', 23, 'Ticket Forward Remarks', 1, 1, '2023-03-03 12:13:55', NULL, '2023-04-04 15:54:10'),
 (20, 6, 15, 2, 7, 4, 3, 'Info/Other', 'Low', 'Test', '<p>sdadsadsa</p>', 'New Test Company', '2023-04-04 15:54:41', 26, NULL, 0, 1, '2023-03-29 12:24:55', NULL, '2023-04-04 15:54:41'),
-(21, 6, 15, 2, 4, 7, 0, 'Info/Other', 'Medium', 'Ticket 21', '<p>message 21</p>', 'New Test Company', '2023-04-04 15:59:14', 26, NULL, 0, 0, '2023-03-29 12:42:25', NULL, '2023-04-04 15:59:14'),
-(22, 6, 15, 2, 4, 3, 0, 'Info/Other', 'Concerning', 'Ticket 22', '<p>message 22</p>', 'New Test Company', NULL, 0, NULL, 0, 0, '2023-03-29 13:02:14', NULL, '2023-03-29 13:02:14'),
+(21, 6, 15, 2, 4, 7, 0, 'Info/Other', 'Low', 'Ticket 21', '<p>message 21</p>', 'New Test Company', '2023-04-05 10:24:03', 26, NULL, 0, 0, '2023-03-29 12:42:25', NULL, '2023-04-05 10:24:03'),
+(22, 6, 15, 2, 4, 3, 0, 'Info/Other', 'Medium', 'Ticket 22', '<p>message 22</p>', 'New Test Company', '2023-04-05 10:34:35', 26, NULL, 0, 0, '2023-03-29 13:02:14', NULL, '2023-04-05 10:34:35'),
 (23, 6, 15, 2, 4, 3, 0, 'Info/Other', 'Concerning', 'Ticket 23', '<p>message 23</p>', 'New Test Company', NULL, 0, NULL, 0, 0, '2023-03-29 13:03:42', NULL, '2023-03-29 13:03:42'),
-(24, 6, 15, 2, 4, 7, 0, 'Info/Other', 'High', 'Ticket 24', '<p>Message 24</p>', 'New Test Company', '2023-04-04 15:11:52', 26, NULL, 0, 1, '2023-03-29 13:06:45', NULL, '2023-04-04 15:11:52');
+(24, 6, 15, 2, 4, 7, 0, 'Info/Other', 'Medium', 'Ticket 24', '<p>Message 24</p>', 'New Test Company', '2023-04-05 10:06:17', 26, NULL, 0, 1, '2023-03-29 13:06:45', NULL, '2023-04-05 10:06:17');
 
 -- --------------------------------------------------------
 
@@ -1154,7 +1195,7 @@ CREATE TABLE IF NOT EXISTS `ticket_attachments` (
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `ticket_attachments`
@@ -1165,7 +1206,11 @@ INSERT INTO `ticket_attachments` (`id`, `ticket_id`, `reply_id`, `type`, `name`,
 (2, 12, 0, 0, 'UIRQAfyGBerJlnjksiN7awLYXb6qaicdy7i4OAAb.xlsx', 'AttendanceList.xlsx', 'uploads/ticket_attachments/UIRQAfyGBerJlnjksiN7awLYXb6qaicdy7i4OAAb.xlsx', 'xlsx', '22.46 KB', '2023-02-27 20:34:19', '2023-02-27 20:34:19'),
 (3, 13, 0, 0, 'fcyAw274dujqS6KP8l8xN2cg0ObhhigBoK2jS83d.xlsx', 'AttendanceList (1).xlsx', 'uploads/ticket_attachments/fcyAw274dujqS6KP8l8xN2cg0ObhhigBoK2jS83d.xlsx', 'xlsx', '22.49 KB', '2023-02-27 20:37:35', '2023-02-27 20:37:35'),
 (5, 24, 0, 0, 'ukxQBLcBpKtvkIBuArVLZW8AA31D3u1JDQCl1jN1.xlsx', '20220509093844_Practice Info Sheet.xlsx', 'uploads/ticket_attachments/ukxQBLcBpKtvkIBuArVLZW8AA31D3u1JDQCl1jN1.xlsx', 'xlsx', '12.57 KB', '2023-03-29 18:06:46', '2023-03-29 18:06:46'),
-(6, 24, 0, 0, 'ci3Pal8Tujw4q6dCI2HdLrl1gFqgrZAxPwqitqam.xlsx', '20220915010715_Practice Info Sheet.xlsx', 'uploads/ticket_attachments/ci3Pal8Tujw4q6dCI2HdLrl1gFqgrZAxPwqitqam.xlsx', 'xlsx', '12.59 KB', '2023-03-29 18:06:47', '2023-03-29 18:06:47');
+(6, 24, 0, 0, 'ci3Pal8Tujw4q6dCI2HdLrl1gFqgrZAxPwqitqam.xlsx', '20220915010715_Practice Info Sheet.xlsx', 'uploads/ticket_attachments/ci3Pal8Tujw4q6dCI2HdLrl1gFqgrZAxPwqitqam.xlsx', 'xlsx', '12.59 KB', '2023-03-29 18:06:47', '2023-03-29 18:06:47'),
+(7, 1, 18, 1, 'y4MrxeRWDeuC7k0eMwZ2p9AcqlyFHLDiZostSU3u.xlsx', 'AttendanceList.xlsx', 'uploads/ticket_attachments/y4MrxeRWDeuC7k0eMwZ2p9AcqlyFHLDiZostSU3u.xlsx', 'xlsx', '22.46 KB', '2023-04-06 14:44:43', '2023-04-06 14:44:43'),
+(8, 1, 18, 1, 'FkEwDt1hJI7123H0nNu5OCXq5kk1rmJ3LQKTIl1R.xls', '16740728274397_#_ADD-Clinic-Of-Idaho-AR-Report (1).xls', 'uploads/ticket_attachments/FkEwDt1hJI7123H0nNu5OCXq5kk1rmJ3LQKTIl1R.xls', 'xls', '115.00 KB', '2023-04-06 14:44:43', '2023-04-06 14:44:43'),
+(9, 1, 18, 1, 'r498Bqqrb5vRQkzieHn7z0viS1piKCeO4jUiA3wz.xlsx', '20220509093844_Practice Info Sheet.xlsx', 'uploads/ticket_attachments/r498Bqqrb5vRQkzieHn7z0viS1piKCeO4jUiA3wz.xlsx', 'xlsx', '12.57 KB', '2023-04-06 14:44:43', '2023-04-06 14:44:43'),
+(10, 1, 18, 1, 'DESDToPAZwM7IHhDckovKZDvHZ4w78kJpnNzv2sx.xlsx', '20220915010715_Practice Info Sheet.xlsx', 'uploads/ticket_attachments/DESDToPAZwM7IHhDckovKZDvHZ4w78kJpnNzv2sx.xlsx', 'xlsx', '12.59 KB', '2023-04-06 14:44:43', '2023-04-06 14:44:43');
 
 -- --------------------------------------------------------
 
@@ -1261,7 +1306,7 @@ CREATE TABLE IF NOT EXISTS `ticket_replies` (
   `deleted_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `ticket_replies`
@@ -1284,7 +1329,8 @@ INSERT INTO `ticket_replies` (`id`, `ticket_id`, `user_id`, `creator_name`, `mes
 (14, 19, 15, 'Asad Nazir', '<p>asdsadsadsadsad</p>', 0, '2023-03-23 12:44:19', NULL, '2023-03-23 12:44:19'),
 (15, 19, 15, 'Asad Nazir', '<p class=\"text-center text-danger mb-0 font-weight-bold\">This ticket is forwarded from Audit to Audit</p>', 1, '2023-03-23 12:44:19', NULL, '2023-03-23 12:44:19'),
 (16, 19, 15, 'Asad Nazir', '<p>asdsadsadsadsad</p>', 0, '2023-03-23 12:45:20', NULL, '2023-03-23 12:45:20'),
-(17, 19, 15, 'Asad Nazir', '<p class=\"text-center text-danger mb-0 font-weight-bold\">This ticket is forwarded from Audit to Audit</p>', 1, '2023-03-23 12:45:20', NULL, '2023-03-23 12:45:20');
+(17, 19, 15, 'Asad Nazir', '<p class=\"text-center text-danger mb-0 font-weight-bold\">This ticket is forwarded from Audit to Audit</p>', 1, '2023-03-23 12:45:20', NULL, '2023-03-23 12:45:20'),
+(18, 1, 15, 'Asad Nazir', '<p>test reply</p>', 0, '2023-04-06 09:44:42', NULL, '2023-04-06 09:44:42');
 
 -- --------------------------------------------------------
 

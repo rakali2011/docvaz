@@ -16,6 +16,7 @@ use App\Http\Controllers\SettingController;
 use App\Http\Controllers\StatusController;
 use App\Http\Controllers\TeamController;
 use App\Http\Controllers\TicketController;
+use App\Http\Controllers\TicketAttachmentController;
 use App\Http\Controllers\TicketReplyController;
 use App\Http\Controllers\UserController;
 use GuzzleHttp\Middleware;
@@ -101,6 +102,7 @@ Route::post('/update_profile', [UserController::class, 'update_profile'])->middl
 Route::get('/change-password', [UserController::class, 'change_password'])->middleware('permission:update user')->name('change_password');
 Route::post('/update-password', [UserController::class, 'update_password'])->middleware('permission:update user')->name('update_password');
 Route::post('/update_user_departments', [UserController::class, 'update_user_departments'])->middleware('permission:assign department user')->name('update_user_departments');
+Route::post('/update_user_document_types', [UserController::class, 'update_user_document_types'])->middleware('permission:assign document user')->name('update_user_document_types');
 Route::post('/update_user_practices', [UserController::class, 'update_user_practices'])->middleware('permission:assign practice user')->name('update_user_practices');
 Route::post('/update_user_teams', [UserController::class, 'update_user_teams'])->middleware('permission:assign team user')->name('update_user_teams');
 // Statuses
@@ -108,11 +110,14 @@ Route::resource('statuses', StatusController::class);
 Route::post('/default-status', [StatusController::class, 'default_status'])->middleware('permission:update status')->name('default_status');
 // Document Types
 Route::resource('document_types', DocumentTypeController::class);
+Route::post('/get_document_types', [DocumentTypeController::class, 'get_document_types'])->middleware('permission:assign department user')->name('get_document_types');
 // Tickets
 Route::resource('tickets', TicketController::class);
 Route::post('/all-tickets', [TicketController::class, 'allTickets'])->middleware('permission:view ticket')->name('all_tickets');
 Route::post('/get-ticket', [TicketController::class, 'getTicket'])->middleware('permission:view ticket')->name('get_ticket');
 Route::post('/get-flag', [TicketController::class, 'ticketFlag'])->middleware('permission:view ticket')->name('ticket_flag');
+// Ticket Attachment
+Route::resource('ticket_attachments', TicketAttachmentController::class);
 // Ticket Replies
 Route::resource('ticket_replies', TicketReplyController::class);
 // Designations

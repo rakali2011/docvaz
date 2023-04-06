@@ -32,7 +32,10 @@ if (!function_exists('get_designation')) {
 if (!function_exists('document_types')) {
     function document_types()
     {
-        return DocumentType::where('company_id', Auth::user()->company_id)->orderBy('name', 'ASC')->get();
+        if (auth()->user()->can("assign document user"))
+            return DocumentType::where('company_id', Auth::user()->company_id)->orderBy('name', 'ASC')->get();
+        else
+            return Auth::user()->assinged_document_types();
     }
 }
 if (!function_exists('get_document_type')) {

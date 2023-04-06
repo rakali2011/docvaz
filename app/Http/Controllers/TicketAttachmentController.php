@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\TicketAttachment;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response;
 
 class TicketAttachmentController extends Controller
 {
@@ -46,7 +47,12 @@ class TicketAttachmentController extends Controller
      */
     public function show(TicketAttachment $ticketAttachment)
     {
-        //
+        if (auth()->user()->can('view file')) {
+            $file = storage_path() . "/app/" . $ticketAttachment->path;
+            return Response::file($file);
+        } else {
+            return abort(403);
+        }
     }
 
     /**

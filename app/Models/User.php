@@ -99,6 +99,21 @@ class User extends Authenticatable implements Auditable
         $Department = $this->belongsToMany(Department::class, 'department_user')->wherePivot('user_id', '=', $this->id)->pluck('departments.id');
         return json_decode(json_encode($Department), true);
     }
+    // Document Types
+    public function document_types()
+    {
+        return $this->belongsToMany(DocumentType::class, 'document_type_user', 'user_id', 'document_type_id');
+    }
+    public function assinged_document_types()
+    {
+        return $this->belongsToMany(DocumentType::class, 'document_type_user')->wherePivot('user_id', '=', $this->id)->get();
+    }
+    public function assinged_document_types_array()
+    {
+        $document_types = $this->belongsToMany(DocumentType::class, 'document_type_user')->wherePivot('user_id', '=', $this->id)->pluck('document_types.id');
+        return json_decode(json_encode($document_types), true);
+    }
+    // Practices
     public function practices()
     {
         return $this->belongsToMany(Practice::class, 'practice_user', 'user_id', 'practice_id');

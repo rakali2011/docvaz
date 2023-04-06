@@ -101,7 +101,7 @@ class TicketReplyController extends Controller
                 $ticket_reply->message = '<p class="text-center text-danger mb-0 font-weight-bold">This ticket is forwarded from ' . $department_old . ' to ' . $department_new . '</p>';
                 $ticket_reply->is_refered = 1;
                 $ticket_reply->save();
-                $user_ids = get_department_practice_users($ticket->practice_id, $request->refer_to);
+                $user_ids = get_department_practice_users($ticket->practice_id, $request->refer_to, $ticket->is_external);
                 foreach ($user_ids["department_users"] as $user_id) {
                     TicketLog::where("ticket_id", $ticket->id)->where("user_id", $user_id)->where("seen", 1)->delete();
                     $ticket_log = new TicketLog();

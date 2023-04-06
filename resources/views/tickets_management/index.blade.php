@@ -50,6 +50,23 @@
   i.fa.fa-flag.orange {
     color: orange;
   }
+
+  .uppy-Dashboard-progressindicators {
+    display: none;
+  }
+
+  .uppy-size--xl .uppy-Dashboard-Item {
+    width: 50px;
+    height: 50px;
+  }
+
+  .uppy-size--xl .uppy-Dashboard-Item-preview {
+    height: 50px;
+  }
+
+  .uppy-Dashboard-Item-previewIconWrap {
+    height: 30px;
+  }
 </style>
 <div class="container-fluid">
   <div class="row justify-content-center">
@@ -517,8 +534,18 @@
             color = key % 2 == 0 ? '#fffaf0' : '#e9ecef';
             if (value.is_refered)
               replies += '<div class="row reply" style="background:' + color + ';"><div class="col-md-12"><div class="reply-container">' + value.message + '<p class="text-center">' + value.creator_name + '<br>' + value.created_at + '</p></div></div></div>';
-            else
-              replies += '<div class="row reply" style="background:' + color + ';"><div class="col-md-8"><strong class="text-main"><img class="icon" src="https://docuhub.com/chat/user-icon.png">' + value.creator_name + '</strong><span>' + value.created_at + '</span><div class="reply-container">' + value.message + '</div></div></div>';
+            else {
+              attachments = '';
+              $.each(response.content.attachments, function(index, attachment) {
+                if (attachment.reply_id == value.id && attachment.type == 1) {
+                  var id = attachment.id;
+                  var url = "{{ route('ticket_attachments.show', ':id') }}";
+                  url = url.replace(':id', id);
+                  attachments += '<a href="' + url + '" target="_blank" rel="noopener noreferrer" class="mr-2">' + attachment.org_name + '</a>';
+                }
+              });
+              replies += '<div class="row reply" style="background:' + color + ';"><div class="col-md-8"><strong class="text-main"><img class="icon" src="https://docuhub.com/chat/user-icon.png">' + value.creator_name + '</strong><span>' + value.created_at + '</span><div class="reply-container">' + value.message + attachments + '</div></div></div>';
+            }
           });
           $('#ticket-replies').html(replies);
           $('#share_to').select2('destroy');

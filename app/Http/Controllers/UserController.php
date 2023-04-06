@@ -230,6 +230,25 @@ class UserController extends Controller
         }
         return response()->json($response);
     }
+    public function update_user_document_types(Request $request)
+    {
+        $response = array();
+        try {
+            $user_id = $this->clean_id($request->ref);
+            $document_types = $request->user_document_types;
+            $user = User::findorfail($user_id);
+            foreach ($document_types as $key => $value) {
+                $document_types[$key] = $this->clean_id($value);
+            }
+            $user->document_types()->sync($document_types, TRUE);
+            $response['success'] = 1;
+            $response['message'] = "Updated Successfully";
+        } catch (\Throwable $th) {
+            $response['success'] = 0;
+            $response['message'] = $th->getMessage();
+        }
+        return response()->json($response);
+    }
     public function update_user_practices(Request $request)
     {
         $response = array();
