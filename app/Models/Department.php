@@ -24,11 +24,11 @@ class Department extends Model implements Auditable
     {
         return $this->belongsToMany(User::class, 'department_user', 'department_id', 'user_id');
     }
-    public function assinged_users()
+    public function assigned_users()
     {
         return $this->belongsToMany(User::class, 'department_user')->wherePivot('department_id', '=', $this->id)->get();
     }
-    public function assinged_users_array()
+    public function assigned_users_array()
     {
         $User = $this->belongsToMany(User::class, 'department_user')->wherePivot('department_id', '=', $this->id)->pluck('departments.id');
         return json_decode(json_encode($User), true);

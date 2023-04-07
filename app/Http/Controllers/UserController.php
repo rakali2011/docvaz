@@ -32,7 +32,7 @@ class UserController extends Controller
         }
         foreach ($users as $user) {
             $user->roles = $user->roles()->pluck('display_name');
-            $user->departments = $user->assinged_departments()->pluck('name');
+            $user->departments = $user->assigned_departments()->pluck('name');
             $roles = "";
             $departments = "";
             foreach ($user->roles as $role) {
@@ -59,7 +59,7 @@ class UserController extends Controller
         if (auth()->user()->can('assign team user'))
             $teams = Team::where('company_id', Auth::user()->company->id)->orderBy('name', 'ASC')->get();
         else
-            $teams = Auth::user()->assinged_teams();
+            $teams = Auth::user()->assigned_teams();
         $assigned_teams = [];
         return view('user_management.add_user', compact('data', 'roles', 'userRole', 'teams', 'assigned_teams'));
     }
@@ -78,8 +78,8 @@ class UserController extends Controller
         if (auth()->user()->can('assign team user'))
             $teams = Team::where('company_id', Auth::user()->company->id)->orderBy('name', 'ASC')->get();
         else
-            $teams = Auth::user()->assinged_teams();
-        $assigned_teams = $user->assinged_teams_array();
+            $teams = Auth::user()->assigned_teams();
+        $assigned_teams = $user->assigned_teams_array();
         return view('user_management.add_user', compact('data', 'user', 'roles', 'userRole', 'teams', 'assigned_teams'));
     }
     public function post_user(PostUser $req)
@@ -164,7 +164,7 @@ class UserController extends Controller
             $team_id = $this->clean_id($req->ref);
             $team = Team::find($team_id);
             $users = User::select('id', DB::raw("CONCAT(users.firstname,' ',users.lastname) as name"))->where('company_id', $team->company_id)->where('type', 2)->orderBy('firstname', 'ASC')->get();
-            $assigned_users = $team->assinged_users_array();
+            $assigned_users = $team->assigned_users_array();
             $response['success'] = 1;
             $select = $this->multiselect($users, $assigned_users, 'team_users[]', 'User teams');
             $response['content'] = $select;

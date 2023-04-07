@@ -20,8 +20,7 @@ class FileController extends Controller
     }
     public function show($id)
     {
-        if (auth()->user()->can('view file')) {
-            // $id = $this->clean_id($id);
+        if (auth()->user()->can('view file') && ownership($id, "file")) {
             $document = File::findOrFail($id);
             $file = storage_path() . "/app/" . $document->path;
             return Response::file($file);
@@ -34,8 +33,8 @@ class FileController extends Controller
         $data = array();
         $data['menu'] = "files-management";
         $data['sub_menu'] = "files";
-        $practices = Auth::user()->assinged_practices();
-        $teams = Auth::user()->assinged_teams();
+        $practices = Auth::user()->assigned_practices();
+        $teams = Auth::user()->assigned_teams();
         $files = new Collection();
         foreach ($practices as $key => $value) {
             $pro = $value->file->all();
@@ -53,7 +52,7 @@ class FileController extends Controller
         if (auth()->user()->hasRole('dev')) {
             $practices = Practice::orderBy('id', 'DESC')->get();
         } else {
-            $practices = Auth::user()->assinged_practices();
+            $practices = Auth::user()->assigned_practices();
         }
         return view('files_management.import', compact('data', 'practices'));
     }
@@ -66,7 +65,7 @@ class FileController extends Controller
         if (auth()->user()->hasRole('dev')) {
             $practices = Practice::orderBy('id', 'DESC')->get();
         } else {
-            $practices = Auth::user()->assinged_practices();
+            $practices = Auth::user()->assigned_practices();
         }
         return view('files_management.update', compact('data', 'practices', 'file'));
     }

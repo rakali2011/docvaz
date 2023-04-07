@@ -23,11 +23,11 @@ class Practice extends Model implements Auditable
     {
         return $this->belongsToMany(User::class, 'practice_user', 'practice_id', 'user_id');
     }
-    public function assinged_users()
+    public function assigned_users()
     {
         return $this->belongsToMany(User::class, 'practice_user')->wherePivot('practice_id', '=', $this->id)->get();
     }
-    public function assinged_users_array()
+    public function assigned_users_array()
     {
         $User = $this->belongsToMany(User::class, 'practice_user')->wherePivot('practice_id', '=', $this->id)->pluck('users.id');
         return json_decode(json_encode($User), true);

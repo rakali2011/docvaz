@@ -125,9 +125,9 @@ class DocumentTypeController extends Controller
             if (auth()->user()->can('assign department user')) {
                 $document_types = DocumentType::where('company_id', $user->company_id)->orderBy('name', 'ASC')->get();
             } else {
-                $document_types = Auth::user()->assinged_document_types();
+                $document_types = Auth::user()->assigned_document_types();
             }
-            $assigned_document_types = $user->assinged_document_types_array();
+            $assigned_document_types = $user->assigned_document_types_array();
             $response['success'] = 1;
             $select = $this->multiselect($document_types, $assigned_document_types, 'user_document_types[]', 'User Documents');
             $response['content'] = $select;

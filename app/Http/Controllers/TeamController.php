@@ -91,9 +91,9 @@ class TeamController extends Controller
             if (auth()->user()->can('assign team user')) {
                 $team = Team::where('company_id', $user->company_id)->orderBy('name', 'ASC')->get();
             } else {
-                $team = Auth::user()->assinged_teams();
+                $team = Auth::user()->assigned_teams();
             }
-            $assigned_team = $user->assinged_teams_array();
+            $assigned_team = $user->assigned_teams_array();
             $response['success'] = 1;
             $name = empty($type) ? "user_teams[]" : "user_teams";
 

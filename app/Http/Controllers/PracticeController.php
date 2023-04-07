@@ -650,9 +650,9 @@ class PracticeController extends Controller
             if (auth()->user()->can('assign practice user')) {
                 $practices = Practice::where('status', ">", 1)->where('company_id', $user->company_id)->orderBy('name', 'ASC')->get(['id', 'name']);
             } else {
-                $practices = Auth::user()->assinged_practices();
+                $practices = Auth::user()->assigned_practices();
             }
-            $assigned_practices = $user->assinged_practices_array();
+            $assigned_practices = $user->assigned_practices_array();
             $response['success'] = 1;
             $response['role'] = auth()->user()->getRoleNames();
             $select = $this->multiselect1($practices, $assigned_practices, 'user_practices[]', 'User Practices');

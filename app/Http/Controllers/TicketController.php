@@ -40,9 +40,9 @@ class TicketController extends Controller
         if (auth()->user()->can('assign department user'))
             $departments = Department::where('company_id', auth()->user()->company_id)->orderBy('name', 'ASC')->get();
         else
-            $departments = Auth::user()->assinged_departments();
-        $practices = Auth::user()->assinged_practices();
-        $teams = Auth::user()->assinged_teams();
+            $departments = Auth::user()->assigned_departments();
+        $practices = Auth::user()->assigned_practices();
+        $teams = Auth::user()->assigned_teams();
         $company_name = Company::where('id', Auth::user()->company_id)->pluck("name")[0];
         return view('tickets_management.index', compact('data', 'tickets', 'departments', 'practices', 'teams', 'company_name'));
     }
@@ -60,7 +60,7 @@ class TicketController extends Controller
         if (auth()->user()->can('assign department user'))
             $departments = Department::where('company_id', $user->company_id)->orderBy('name', 'ASC')->get();
         else
-            $departments = Auth::user()->assinged_departments();
+            $departments = Auth::user()->assigned_departments();
 
         $share_to = share_to();
         $practices = $share_to["practices"];
@@ -93,7 +93,7 @@ class TicketController extends Controller
                 $practice = Practice::findorfail($to_value);
                 $associated_client = $practice->associated_user(3);
                 $client_id = isset($associated_client->pluck("id")[0]) ? $associated_client->pluck("id")[0] : 0;
-                $team = $client_id > 0 ? User::findorfail($client_id)->assinged_teams() : "";
+                $team = $client_id > 0 ? User::findorfail($client_id)->assigned_teams() : "";
                 $ticket["company_id"] = $company_id;
                 $ticket["user_id"] = $user->id;
                 $ticket["user_type"] = $user->type;

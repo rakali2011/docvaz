@@ -22,11 +22,11 @@ class Team extends Model implements Auditable
     {
         return $this->belongsToMany(User::class, 'team_user', 'team_id', 'user_id');
     }
-    public function assinged_users()
+    public function assigned_users()
     {
         return $this->belongsToMany(User::class, 'team_user')->wherePivot('team_id', '=', $this->id)->get();
     }
-    public function assinged_users_array()
+    public function assigned_users_array()
     {
         $teams = $this->belongsToMany(User::class, 'team_user')->wherePivot('team_id', '=', $this->id)->pluck('users.id');
         return json_decode(json_encode($teams), true);

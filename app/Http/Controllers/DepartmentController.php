@@ -95,9 +95,9 @@ class DepartmentController extends Controller
             if (auth()->user()->can('assign department user')) {
                 $department = Department::where('company_id', $user->company_id)->orderBy('name', 'ASC')->get();
             } else {
-                $department = Auth::user()->assinged_departments();
+                $department = Auth::user()->assigned_departments();
             }
-            $assigned_department = $user->assinged_departments_array();
+            $assigned_department = $user->assigned_departments_array();
             $response['success'] = 1;
             $select = $this->multiselect($department, $assigned_department, 'user_departments[]', 'User Departments');
             $response['content'] = $select;

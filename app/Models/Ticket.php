@@ -39,11 +39,11 @@ class Ticket extends Model implements Auditable
     //     $practice = Practice::findorfail($value);
     //     return isset($practice->name) ? $practice->name : "";
     // }
-    public function getDepartmentIdAttribute($value)
-    {
-        $department = Department::findorfail($value);
-        return isset($department->name) ? $department->name : "";
-    }
+    // public function getDepartmentIdAttribute($value)
+    // {
+    //     $department = Department::findorfail($value);
+    //     return isset($department->name) ? $department->name : "";
+    // }
     public function getTeamIdAttribute($value)
     {
         if (!$value)

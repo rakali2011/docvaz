@@ -32,7 +32,7 @@ class ClientController extends Controller
         }
         foreach ($clients as $client) {
             $client->roles = $client->roles()->pluck('display_name');
-            $client->departments = $client->assinged_departments()->pluck('name');
+            $client->departments = $client->assigned_departments()->pluck('name');
             $roles = "";
             $departments = "";
             foreach ($client->roles as $role) {
@@ -58,7 +58,7 @@ class ClientController extends Controller
         if (auth()->user()->can('assign team user'))
             $teams = Team::where('company_id', Auth::user()->company->id)->orderBy('name', 'ASC')->get();
         else
-            $teams = Auth::user()->assinged_teams();
+            $teams = Auth::user()->assigned_teams();
         $assigned_teams = [];
 
         return view('user_management.add_client', compact('data', 'roles', 'userRole', 'teams', 'assigned_teams'));
@@ -78,8 +78,8 @@ class ClientController extends Controller
         if (auth()->user()->can('assign team user'))
             $teams = Team::where('company_id', Auth::user()->company->id)->orderBy('name', 'ASC')->get();
         else
-            $teams = Auth::user()->assinged_teams();
-        $assigned_teams = $user->assinged_teams_array();
+            $teams = Auth::user()->assigned_teams();
+        $assigned_teams = $user->assigned_teams_array();
         return view('user_management.add_client', compact('data', 'user', 'roles', 'userRole', 'teams', 'assigned_teams'));
     }
     public function post_client(PostClient $req)

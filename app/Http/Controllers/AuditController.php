@@ -18,8 +18,8 @@ class AuditController extends Controller
     {
         $data['menu'] = "report-management";
         $data['sub_menu'] = "audits";
-        $practices = Auth::user()->assinged_practices();
-        $teams = Auth::user()->assinged_teams();
+        $practices = Auth::user()->assigned_practices();
+        $teams = Auth::user()->assigned_teams();
         return view('reports_management.audits', compact('data', 'practices', 'teams'));
     }
 

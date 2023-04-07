@@ -5,8 +5,10 @@ use App\Models\Company;
 use App\Models\Department;
 use App\Models\Designation;
 use App\Models\DocumentType;
+use App\Models\File;
 use App\Models\Practice;
 use App\Models\Status;
+use App\Models\Ticket;
 use App\Models\User;
 
 if (!function_exists('companies')) {
@@ -35,7 +37,7 @@ if (!function_exists('document_types')) {
         if (auth()->user()->can("assign document user"))
             return DocumentType::where('company_id', Auth::user()->company_id)->orderBy('name', 'ASC')->get();
         else
-            return Auth::user()->assinged_document_types();
+            return Auth::user()->assigned_document_types();
     }
 }
 if (!function_exists('get_document_type')) {
@@ -108,10 +110,10 @@ function get_users()
         $users = User::where('company_id', Auth::user()->company_id)->where('type', 2)->get();
     } else if (auth()->user()->can("view his own users")) {
         $rank = auth()->user()->designation()->first()->rank;
-        $departments = auth()->user()->assinged_departments();
+        $departments = auth()->user()->assigned_departments();
         foreach ($departments as $key => $department) {
-            $assinged_users = $department->assinged_users();
-            foreach ($assinged_users as $index => $user) {
+            $assigned_users = $department->assigned_users();
+            foreach ($assigned_users as $index => $user) {
                 if ($rank < $user->designation()->first()->rank && $user->type == 2) {
                     $users[] = $user;
                 }
@@ -125,7 +127,7 @@ function share_to()
     if (auth()->user()->can('assign practice user'))
         $practices = Practice::where('company_id', auth()->user()->company_id)->orderBy('name', 'ASC')->get();
     else
-        $practices = Auth::user()->assinged_practices();
+        $practices = Auth::user()->assigned_practices();
     $share_to = [];
     if (auth()->user()->type == 3) {
         foreach ($practices as $key => $value) {
@@ -143,20 +145,20 @@ function share_to()
     }
     return ["practices" => $practices, "share_to" => $share_to];
 }
-function get_assinged_practices()
+function get_assigned_practices()
 {
-    $practices = Auth::user()->assinged_practices()->pluck("id");
+    $practices = Auth::user()->assigned_practices()->pluck("id");
     return $practices;
 }
 function get_assigned_teams_user_ids($team_id = NULL)
 {
     $user_ids = [];
-    $assinged_teams = auth()->user()->assinged_teams();
-    foreach ($assinged_teams as $key => $team) {
+    $assigned_teams = auth()->user()->assigned_teams();
+    foreach ($assigned_teams as $key => $team) {
         if ($team->id != $team_id && $team_id != NULL)
             continue;
-        $assinged_users = json_decode(json_encode($team->assinged_users()->pluck("id")), true);
-        $user_ids = array_merge($user_ids, $assinged_users);
+        $assigned_users = json_decode(json_encode($team->assigned_users()->pluck("id")), true);
+        $user_ids = array_merge($user_ids, $assigned_users);
     }
     $user_ids = array_unique($user_ids);
     sort($user_ids);
@@ -169,9 +171,9 @@ function get_department_practice_users($to_id, $department_id, $is_external)
     $practice_users = [];
     if ($is_external) {
         $practice = Practice::findorfail($to_id);
-        $assinged_users = $practice->assinged_users();
-        $practice_users = $assinged_users->pluck("id");
-        foreach ($assinged_users as $key => $user) {
+        $assigned_users = $practice->assigned_users();
+        $practice_users = $assigned_users->pluck("id");
+        foreach ($assigned_users as $key => $user) {
             $departments = $user->departments()->get()->pluck("id");
             foreach ($departments as $index => $department)
                 if ($department == $department_id)
@@ -179,9 +181,35 @@ function get_department_practice_users($to_id, $department_id, $is_external)
         }
     } else {
         $department = Department::findorfail($to_id);
-        $department_users = $department->assinged_users()->pluck("id");
+        $department_users = $department->assigned_users()->pluck("id");
     }
     $response["department_users"] = json_decode(json_encode($department_users), true);
     $response["practice_users"] = json_decode(json_encode($practice_users), true);
     return $response;
+}
+function ownership($target_id, $type = "ticket_attachment")
+{
+    if ($type == "ticket_attachment") {
+        $departments = auth()->user()->departments()->get()->pluck("id");
+        $departments = json_decode(json_encode($departments), true);
+        $ticket = Ticket::findorfail($target_id);
+        if ($ticket->is_external) {
+            if (in_array($ticket->department_id, $departments))
+                return true;
+            else
+                return false;
+        } else {
+            if (in_array($ticket->department_id, $departments) || in_array($ticket->target_id, $departments))
+                return true;
+            else
+                return false;
+        }
+    } else if ($type == "file") {
+        $practices = Auth::user()->assigned_practices_array();
+        $file = File::findorfail($target_id);
+        if (in_array($file->practice_id, $practices))
+            return true;
+        else
+            return false;
+    }
 }

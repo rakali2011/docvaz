@@ -90,11 +90,11 @@ class User extends Authenticatable implements Auditable
     {
         return $this->belongsToMany(Department::class, 'department_user', 'user_id', 'department_id');
     }
-    public function assinged_departments()
+    public function assigned_departments()
     {
         return $this->belongsToMany(Department::class, 'department_user')->wherePivot('user_id', '=', $this->id)->get();
     }
-    public function assinged_departments_array()
+    public function assigned_departments_array()
     {
         $Department = $this->belongsToMany(Department::class, 'department_user')->wherePivot('user_id', '=', $this->id)->pluck('departments.id');
         return json_decode(json_encode($Department), true);
@@ -104,11 +104,11 @@ class User extends Authenticatable implements Auditable
     {
         return $this->belongsToMany(DocumentType::class, 'document_type_user', 'user_id', 'document_type_id');
     }
-    public function assinged_document_types()
+    public function assigned_document_types()
     {
         return $this->belongsToMany(DocumentType::class, 'document_type_user')->wherePivot('user_id', '=', $this->id)->get();
     }
-    public function assinged_document_types_array()
+    public function assigned_document_types_array()
     {
         $document_types = $this->belongsToMany(DocumentType::class, 'document_type_user')->wherePivot('user_id', '=', $this->id)->pluck('document_types.id');
         return json_decode(json_encode($document_types), true);
@@ -118,11 +118,11 @@ class User extends Authenticatable implements Auditable
     {
         return $this->belongsToMany(Practice::class, 'practice_user', 'user_id', 'practice_id');
     }
-    public function assinged_practices()
+    public function assigned_practices()
     {
         return $this->belongsToMany(Practice::class, 'practice_user')->wherePivot('user_id', '=', $this->id)->get();
     }
-    public function assinged_practices_array()
+    public function assigned_practices_array()
     {
         $practices = $this->belongsToMany(Practice::class, 'practice_user')->wherePivot('user_id', '=', $this->id)->pluck('practices.id');
         return json_decode(json_encode($practices), true);
@@ -135,11 +135,11 @@ class User extends Authenticatable implements Auditable
     {
         return $this->belongsToMany(Team::class, 'team_user', 'user_id', 'team_id');
     }
-    public function assinged_teams()
+    public function assigned_teams()
     {
         return $this->belongsToMany(Team::class, 'team_user')->wherePivot('user_id', '=', $this->id)->get();
     }
-    public function assinged_teams_array()
+    public function assigned_teams_array()
     {
         $teams = $this->belongsToMany(Team::class, 'team_user')->wherePivot('user_id', '=', $this->id)->pluck('teams.id');
         return json_decode(json_encode($teams), true);

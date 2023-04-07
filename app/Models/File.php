@@ -55,7 +55,7 @@ class File extends Model implements Auditable
         if (!empty($filter["practice_id"])) {
             $query = $query->where('practice_id', $filter['practice_id']);
         } else {
-            $query = $query->whereIn('practice_id', get_assinged_practices());
+            $query = $query->whereIn('practice_id', get_assigned_practices());
         }
         if (!empty($filter["status"])) {
             $query = $query->where('status', $filter['status']);
@@ -88,7 +88,7 @@ class File extends Model implements Auditable
         if (!empty($filter["practice_id"])) {
             $query = $query->where('practice_id', $filter['practice_id']);
         } else {
-            $query = $query->whereIn('practice_id', get_assinged_practices());
+            $query = $query->whereIn('practice_id', get_assigned_practices());
         }
         if (!empty($filter["status"])) {
             $query = $query->where('status', $filter['status']);

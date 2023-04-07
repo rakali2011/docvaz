@@ -47,7 +47,7 @@ class TicketAttachmentController extends Controller
      */
     public function show(TicketAttachment $ticketAttachment)
     {
-        if (auth()->user()->can('view file')) {
+        if (ownership($ticketAttachment->ticket_id)) {
             $file = storage_path() . "/app/" . $ticketAttachment->path;
             return Response::file($file);
         } else {
