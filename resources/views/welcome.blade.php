@@ -139,7 +139,7 @@
                 <div class="col-lg-6 col-md-6">
                     <div class="card shadow" style="background:aliceblue;">
                         <div class="card-header shadow text-center">
-                            <h5>Document Statistics</h5>
+                            <h5>Document Status</h5>
                         </div>
                         <div class="card-body p-2 position-relative">
                             <div class="chartbox mr-4">
