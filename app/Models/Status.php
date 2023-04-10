@@ -16,4 +16,16 @@ class Status extends Model implements Auditable
         'name',
         'type'
     ];
+    public function files()
+    {
+        return $this->hasMany(File::class, "status");
+    }
+    public function tickets()
+    {
+        return $this->hasMany(Ticket::class, "status");
+    }
+    public function users()
+    {
+        return $this->hasMany(User::class, "status");
+    }
 }

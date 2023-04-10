@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DocumentType;
 use App\Models\User;
 use App\Models\Project;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use phpDocumentor\Reflection\Types\Null_;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\PermissionRegistrar;
@@ -41,7 +43,39 @@ class HomeController extends Controller
         if (auth()->user()->hasRole('dev')) {
             return view('welcome-dev', compact('data'));
         } else {
-            return view('welcome', compact('data'));
+            // Documents
+            $documents = document_types();
+            $total = 0;
+            foreach ($documents as $key => $document) {
+                $document->files_count =  $document->files()->count();
+                $total += $document->files_count;
+            }
+            $documents->total = $total;
+            // Document Statistics
+            $statuses = statuses("document");
+            foreach ($statuses as $key => $status)
+                $status->files_count =  $status->files()->count();
+            $donut_name = json_decode(json_encode($statuses->pluck('name')), true);
+            $donut_value = json_decode(json_encode($statuses->pluck('files_count')), true);
+            // Users by status
+            $statuses = NULL;
+            $statuses = statuses("user");
+            foreach ($statuses as $key => $status)
+                $status->users_count =  $status->users()->count();
+            $users = $statuses;
+            // Users by Designations
+            $designations = designations();
+            foreach ($designations as $key => $designation)
+                $designation->users_count =  $designation->users()->count();
+
+
+            $statuses = Null;
+            $statuses = statuses("ticket");
+            foreach ($statuses as $key => $status)
+                $status->tickets_count =  $status->tickets()->count();
+
+
+            return view('welcome', compact('data', 'documents', 'donut_name', 'donut_value', 'designations', 'users'));
         }
     }
 

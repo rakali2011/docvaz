@@ -15,4 +15,8 @@ class Designation extends Model implements Auditable
         'company_id',
         'name'
     ];
+    public function users()
+    {
+        return $this->hasMany(User::class, "designation_id");
+    }
 }

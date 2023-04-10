@@ -69,7 +69,9 @@ class File extends Model implements Auditable
         if (!empty($search)) {
             $query = $query->where(function ($query) use ($search) {
                 $query->where('name', 'LIKE', "%{$search}%");
+                $query->orWhere('org_name', 'LIKE', "%{$search}%");
                 $query->orWhere('ext', 'LIKE', "%{$search}%");
+                $query->orWhere('path', 'LIKE', "%{$search}%");
                 $query->orWhere('date', 'LIKE', "%{$search}%");
             });
         }
@@ -102,7 +104,9 @@ class File extends Model implements Auditable
         if (!empty($search)) {
             $query = $query->where(function ($query) use ($search) {
                 $query->where('name', 'LIKE', "%{$search}%");
+                $query->orWhere('org_name', 'LIKE', "%{$search}%");
                 $query->orWhere('ext', 'LIKE', "%{$search}%");
+                $query->orWhere('path', 'LIKE', "%{$search}%");
                 $query->orWhere('date', 'LIKE', "%{$search}%");
             });
         }

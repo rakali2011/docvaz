@@ -21,7 +21,7 @@ if (!function_exists('companies')) {
 if (!function_exists('designations')) {
     function designations()
     {
-        return Designation::where('company_id', Auth::user()->company_id)->orderBy('name', 'ASC')->get();
+        return Designation::where('company_id', Auth::user()->company_id)->orderBy('rank', 'ASC')->get();
     }
 }
 if (!function_exists('get_designation')) {

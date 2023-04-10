@@ -15,4 +15,8 @@ class DocumentType extends Model implements Auditable
         'name',
         'type'
     ];
+    public function files()
+    {
+        return $this->hasMany(File::class, "doc_type");
+    }
 }
