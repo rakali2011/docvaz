@@ -98,6 +98,7 @@ Route::get('/edit-user/{id}', [UserController::class, 'edit_user'])->middleware(
 Route::post('/update-user/{id}', [UserController::class, 'update_user'])->middleware('permission:update user')->name('update_user');
 Route::post('/get_users', [UserController::class, 'get_users'])->middleware('permission:update user')->name('get_users');
 Route::get('/profile', [UserController::class, 'profile'])->middleware('permission:update user')->name('profile');
+Route::post('/all_users', [UserController::class, 'all_users'])->name('all_users');
 Route::post('/update_profile', [UserController::class, 'update_profile'])->middleware('permission:update user')->name('update_profile');
 Route::get('/change-password', [UserController::class, 'change_password'])->middleware('permission:update user')->name('change_password');
 Route::post('/update-password', [UserController::class, 'update_password'])->middleware('permission:update user')->name('update_password');

@@ -157,12 +157,12 @@
                             <div class="row">
                                 <div class="col-4">
                                     @foreach($users as $key => $user)
-                                    <div class="box p-2 m-2 user-designation" data-id="{{ $user->id }}" style="background-color: #b1cfffd9">{{ $user->name }}<span class="float-right">{{ $user->users_count }}</span></div>
+                                    <div class="box p-2 m-2 user" data-status="{{ $user->id }}" data-designation="" style="background-color: #b1cfffd9">{{ $user->name }}<span class="float-right">{{ $user->users_count }}</span></div>
                                     @endforeach
                                 </div>
                                 <div class="col-8">
                                     @foreach($designations as $key => $designation)
-                                    <div class="box p-2 m-2 user-designation" data-id="{{ $designation->id }}" style="background-color: #b1cfffd9">{{ $designation->name }}<span class="float-right">{{ $designation->users_count }}</span></div>
+                                    <div class="box p-2 m-2 user" data-status="" data-designation="{{ $designation->id }}" style="background-color: #b1cfffd9">{{ $designation->name }}<span class="float-right">{{ $designation->users_count }}</span></div>
                                     @endforeach
                                 </div>
                             </div>
@@ -180,56 +180,15 @@
                     <div class="card shadow card-statistics">
                         <div class="card-body">
                             <div class="d-flex flex-column flex-md-row align-items-center justify-content-between">
+                                @foreach($tickets_by_status as $key => $ticket)
                                 <div class="statistics-item">
                                     <p>
-                                        <img src="{{asset('assets/assets/images/open.svg') }}" class="f-right">
-                                        Open
+                                        <!-- <img src="{{asset('assets/assets/images/open.svg') }}" class="f-right"> -->
+                                        {{ $ticket->name }}
                                     </p>
-                                    <h5>540</h5>
+                                    <h5>{{ $ticket->tickets_count }}</h5>
                                 </div>
-                                <div class="statistics-item">
-                                    <p>
-                                        <img src="{{asset('assets/assets/images/inprogress.svg') }}" class="f-right">
-                                        Inprocess
-                                    </p>
-                                    <h5>123</h5>
-                                </div>
-                                <div class="statistics-item">
-                                    <p>
-                                        <img src="{{asset('assets/assets/images/closed-tickets.svg') }}" class="f-right">
-                                        Closed
-                                    </p>
-                                    <h5>350</h5>
-                                </div>
-                                <div class="statistics-item">
-                                    <p>
-                                        <img src="{{asset('assets/assets/images/on-hold.svg') }}" class="f-right">
-
-                                        Onhold
-                                    </p>
-                                    <h5>75</h5>
-                                </div>
-                                <div class="statistics-item">
-                                    <p>
-                                        <img src="{{asset('assets/assets/images/on-hold.svg') }}" class="f-right">
-                                        Reopen
-                                    </p>
-                                    <h5>90</h5>
-                                </div>
-                                <div class="statistics-item">
-                                    <p>
-                                        <img src="{{asset('assets/assets/images/overdue.svg') }}" class="f-right">
-                                        Reopen
-                                    </p>
-                                    <h5>25</h5>
-                                </div>
-                                <div class="statistics-item">
-                                    <p>
-                                        <img src="{{asset('assets/assets/images/overdue.svg') }}" class="f-right">
-                                        Overdue
-                                    </p>
-                                    <h5>750</h5>
-                                </div>
+                                @endforeach
                             </div>
                         </div>
                     </div>
@@ -304,59 +263,14 @@
                         </div>
                         <div class="card-body shadow card_menu">
                             <div class="row">
+                                @foreach($departments as $key => $department)
                                 <div class="col-lg-2 col-md-2 col-sm-12 box pt-3 m-2" style="background-color: #fdaa57; ">
-                                    <h6 class="text-center">Coding</h6>
+                                    <h6 class="text-center">{{ $department->name }}</h6>
                                     <hr class="m-1">
-                                    <p>My<b class="float-right">10</b></p>
-                                    <p>BellMedEx<b class="float-right">0</b></p>
+                                    <p>My<b class="float-right">{{ $department->external }}</b></p>
+                                    <p>{{ $departments->company_name }}<b class="float-right">{{ $department->internal }}</b></p>
                                 </div>
-                                <div class="col-lg-2 col-md-2 col-sm-12 box pt-3 m-2" style="background-color: #fdaa57; ">
-                                    <h6 class="text-center">Patient Help Desk</h6>
-                                    <hr class="m-1">
-                                    <p>My<b class="float-right">8</b></p>
-                                    <p>BellMedEx<b class="float-right">4</b></p>
-                                </div>
-                                <div class="col-lg-2 col-md-2 col-sm-12 box pt-3 m-2" style="background-color: #fdaa57; ">
-                                    <h6 class="text-center">Client Relation Dept</h6>
-                                    <hr class="m-1">
-                                    <p>My<b class="float-right">6</b></p>
-                                    <p>BellMedEx<b class="float-right">4</b></p>
-                                </div>
-
-                                <div class="col-lg-2 col-md-2 col-sm-12 box pt-3 m-2" style="background-color: #fdaa57; ">
-                                    <h6 class="text-center">Sales</h6>
-                                    <hr class="m-1">
-                                    <p>My<b class="float-right">4</b></p>
-                                    <p>BellMedEx<b class="float-right">8</b></p>
-                                </div>
-
-                                <div class="col-lg-2 col-md-2 col-sm-12 box pt-3 m-2" style="background-color: #fdaa57; ">
-                                    <a data-toggle="modal" id="smallButton" data-target="#smallModal" title="show">
-                                        <h6 class="text-center">Billing</h6>
-                                    </a>
-                                    <hr class="m-1">
-                                    <p>My<b class="float-right">1</b></p>
-                                    <p>BellMedEx<b class="float-right">4</b></p>
-                                </div>
-                                <div class="col-lg-3 col-md-3 col-sm-12 box pt-3 m-2" style="background-color: #fdaa57; ">
-                                    <h6 class="text-center">System Support</h6>
-                                    <hr class="m-1">
-                                    <p>My<b class="float-right">4</b></p>
-                                    <p>BellMedEx<b class="float-right">6</b></p>
-                                </div>
-                                <div class="col-lg-3 col-md-3 col-sm-12 box pt-3 m-2" style="background-color: #fdaa57; ">
-                                    <h6 class="text-center">Accounts Payable / Invoicing</h6>
-                                    <hr class="m-1">
-                                    <p>My<b class="float-right">5</b></p>
-                                    <p>BellMedEx<b class="float-right">0</b></p>
-                                </div>
-                                <div class="col-lg-3 col-md-3 col-sm-12 box pt-3 m-2" style="background-color: #fdaa57; ">
-                                    <h6 class="text-center">Credentialing / Enrollment</h6>
-                                    <hr class="m-1">
-                                    <p>My<b class="float-right">3</b></p>
-                                    <p>BellMedEx<b class="float-right">1</b></p>
-                                </div>
-
+                                @endforeach
                             </div>
                         </div>
                     </div>
@@ -482,6 +396,57 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="user-listing" tabindex="-1" role="dialog" aria-labelledby="verticalModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <form action="" method="POST" id="filter-form-user">
+                @csrf
+                <div class="modal-header">
+                    <h5 class="modal-title" id="verticalModalTitle">Users</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="doc_type">
+                    <div class="form-group col-12">
+                        <input type="hidden" id="user_designation">
+                        <input type="hidden" id="user_status">
+                        <table id="users-table" class="display" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>First Name</th>
+                                    <th>Last Name</th>
+                                    <th>Psudo Name</th>
+                                    <th>Email</th>
+                                    <th>Username</th>
+                                    <th>Employee ID</th>
+                                    <th>Designation</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <th>First Name</th>
+                                    <th>Last Name</th>
+                                    <th>Psudo Name</th>
+                                    <th>Email</th>
+                                    <th>Username</th>
+                                    <th>Employee ID</th>
+                                    <th>Designation</th>
+                                    <th>Status</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn mb-2 btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 @push('scripts')
 <script>
     // display a modal (small modal)
@@ -592,6 +557,76 @@
             //   provider_activate_event();
             // }
         });
+        $('#users-table').DataTable({
+            "processing": true,
+            "serverSide": true,
+            "ajax": {
+                "url": "{{ route('all_users') }}",
+                "dataType": "json",
+                "type": "POST",
+                "data": {
+                    _token: "{{csrf_token()}}",
+                    'designation_filter': function() {
+                        return $("#user_designation").val();
+                    },
+                    'status_filter': function() {
+                        return $("#user_status").val();
+                    },
+                }
+            },
+            "columns": [{
+                    "data": "first_name",
+                    "orderable": true
+                },
+                {
+                    "data": "last_name",
+                    "orderable": true
+                },
+                {
+                    "data": "psudo_name",
+                    "orderable": true
+                },
+                {
+                    "data": "email",
+                    "orderable": true
+                },
+                {
+                    "data": "username",
+                    "orderable": true
+                },
+                {
+                    "data": "employee_id",
+                    "orderable": true
+                },
+                {
+                    "data": "designation_id",
+                    "orderable": false
+                },
+                {
+                    "data": "status",
+                    "orderable": false
+                }
+            ],
+            dom: 'Bfrtip',
+            lengthMenu: [
+                [10, 50, 500, 1000],
+                ['10 Rows', '50 Rows', '500 Rows', '1000 Rows']
+            ],
+            buttons: [
+                //{ extend: 'pdf', text: '<i class="fas fa-file-pdf fa-1x" aria-hidden="true"> Export in PDF</i>' },
+                //{ extend: 'csv', text: '<i class="fas fa-file-csv fa-1x"> Export in CSV</i>'},
+                {
+                    extend: 'excel',
+                    text: '<i class="fas fa-file-excel" aria-hidden="true"> Export in EXCEL</i>'
+                },
+                'pageLength'
+            ],
+            // "drawCallback": function(settings) {
+            //   provider_detail_event();
+            //   provider_history_event();
+            //   provider_activate_event();
+            // }
+        });
     });
     $('.document-type').click(function() {
         id = $(this).data('id');
@@ -599,10 +634,18 @@
         $('#files-table').DataTable().ajax.reload(null, false);
         $('#file-listing').modal('show');
     });
+    $('.user').click(function() {
+        designation = $(this).data('designation');
+        status = $(this).data('status');
+        $('#user_designation').val(designation);
+        $('#user_status').val(status);
+        $('#users-table').DataTable().ajax.reload(null, false);
+        $('#user-listing').modal('show');
+    });
     // Document Statistics
     var donutchart,
         donutChartOptions = {
-            series: <?= json_encode($donut_value); ?>,
+            series: <?= json_encode($documents->count); ?>,
             chart: {
                 type: "donut",
                 height: 250,
@@ -621,7 +664,7 @@
                     expandOnClick: !1
                 }
             },
-            labels: <?= json_encode($donut_name); ?>,
+            labels: <?= json_encode($documents->name); ?>,
             legend: {
                 position: "bottom",
                 fontFamily: base.defaultFontFamily,
@@ -660,8 +703,222 @@
             },
         },
         donutchartCtn = document.querySelector("#donutChart");
-    donutchartCtn &&
-        (donutchart = new ApexCharts(donutchartCtn, donutChartOptions)).render();
+    donutchartCtn && (donutchart = new ApexCharts(donutchartCtn, donutChartOptions)).render();
+    // Ticket Priority
+    var columnChart,
+        columnChartoptions = {
+            series: [{
+                    name: "Total Files",
+                    data: <?= json_encode(array_values($tickets_by_priority)); ?>,
+                },
+                // {
+                //     name: "Visitors",
+                //     data: [
+                //         7, 30, 13, 23
+                //     ],
+                // },
+            ],
+            chart: {
+                type: "bar",
+                height: 205,
+                stacked: !1,
+                columnWidth: "30%",
+                zoom: {
+                    enabled: !0
+                },
+                toolbar: {
+                    show: !1
+                },
+                background: "transparent",
+            },
+            dataLabels: {
+                enabled: !1
+            },
+            theme: {
+                mode: colors.chartTheme
+            },
+            responsive: [{
+                breakpoint: 480,
+                options: {
+                    legend: {
+                        position: "bottom",
+                        offsetX: -10,
+                        offsetY: 0
+                    },
+                },
+            }, ],
+            plotOptions: {
+                bar: {
+                    horizontal: !1,
+                    columnWidth: "20%",
+                    radius: 30,
+                    enableShades: !1,
+                    endingShape: "rounded",
+                },
+            },
+            xaxis: {
+                type: "text",
+                categories: <?= json_encode(array_keys($tickets_by_priority)); ?>,
+                labels: {
+                    show: !0,
+                    trim: !0,
+                    minHeight: void 0,
+                    maxHeight: 120,
+                    style: {
+                        colors: colors.mutedColor,
+                        cssClass: "text-muted",
+                        fontFamily: base.defaultFontFamily,
+                        fontSize: 10,
+                    },
+                },
+                axisBorder: {
+                    show: !1
+                },
+            },
+            yaxis: {
+                labels: {
+                    show: !0,
+                    trim: !1,
+                    offsetX: -10,
+                    minHeight: void 0,
+                    maxHeight: 120,
+                    style: {
+                        colors: colors.mutedColor,
+                        cssClass: "text-muted",
+                        fontFamily: base.defaultFontFamily,
+                    },
+                },
+            },
+            legend: {
+                position: "top",
+                fontFamily: base.defaultFontFamily,
+                fontWeight: 400,
+                labels: {
+                    colors: colors.mutedColor,
+                    useSeriesColors: !1
+                },
+                markers: {
+                    width: 10,
+                    height: 10,
+                    strokeWidth: 0,
+                    strokeColor: "#fff",
+                    fillColors: [extend.primaryColor, extend.primaryColorLighter],
+                    radius: 6,
+                    customHTML: void 0,
+                    onClick: void 0,
+                    offsetX: 0,
+                    offsetY: 0,
+                },
+                itemMargin: {
+                    horizontal: 2,
+                    vertical: 0
+                },
+                onItemClick: {
+                    toggleDataSeries: !0
+                },
+                onItemHover: {
+                    highlightDataSeries: !0
+                },
+            },
+            fill: {
+                opacity: 1,
+                colors: [base.primaryColor, extend.primaryColorLighter],
+            },
+            grid: {
+                show: !0,
+                borderColor: colors.borderColor,
+                strokeDashArray: 0,
+                position: "back",
+                xaxis: {
+                    lines: {
+                        show: !1
+                    }
+                },
+                yaxis: {
+                    lines: {
+                        show: !0
+                    }
+                },
+                row: {
+                    colors: void 0,
+                    opacity: 0.5
+                },
+                column: {
+                    colors: void 0,
+                    opacity: 0.5
+                },
+                padding: {
+                    top: 0,
+                    right: 0,
+                    bottom: 0,
+                    left: 0
+                },
+            },
+        },
+        columnChartCtn = document.querySelector("#columnChart2");
+    // Recent Statistics
+    columnChartCtn && (columnChart = new ApexCharts(columnChartCtn, columnChartoptions)).render();
+    var donutchart,
+        donutChartOptions = {
+            series: <?= json_encode($ticket_chart['count']); ?>,
+            chart: {
+                type: "donut",
+                height: 250,
+                zoom: {
+                    enabled: !1
+                }
+            },
+            theme: {
+                mode: colors.chartTheme
+            },
+            plotOptions: {
+                pie: {
+                    donut: {
+                        size: "45%"
+                    },
+                    expandOnClick: !1
+                }
+            },
+            labels: <?= json_encode($ticket_chart['name']); ?>,
+            legend: {
+                position: "bottom",
+                fontFamily: base.defaultFontFamily,
+                fontWeight: 400,
+                labels: {
+                    colors: colors.mutedColor,
+                    useSeriesColors: !1
+                },
+                horizontalAlign: "left",
+                fontFamily: base.defaultFontFamily,
+                markers: {
+                    width: 10,
+                    height: 10,
+                    strokeWidth: 0,
+                    strokeColor: "#fff",
+                    radius: 6,
+                },
+                itemMargin: {
+                    horizontal: 2,
+                    vertical: 2
+                },
+                onItemClick: {
+                    toggleDataSeries: !0
+                },
+                onItemHover: {
+                    highlightDataSeries: !0
+                },
+            },
+            stroke: {
+                colors: [colors.borderColor],
+                width: 1
+            },
+            fill: {
+                opacity: 1,
+                colors: chartColors
+            },
+        },
+        donutchartCtn = document.querySelector("#donutChart2");
+    donutchartCtn && (donutchart = new ApexCharts(donutchartCtn, donutChartOptions)).render();
 </script>
 @endpush
 @endsection

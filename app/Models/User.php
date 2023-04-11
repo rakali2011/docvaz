@@ -149,4 +149,61 @@ class User extends Authenticatable implements Auditable
         return $this->last_activity;
         // > Carbon::now()->subMinutes(config('session.lifetime'));
     }
+    public function countTotal()
+    {
+        $user_ids = get_users()->pluck('id');
+        $query = $this;
+        $query = $this->whereIn('id', $user_ids);
+        return $query->count();
+    }
+    public function countFiltered($date_range, $filter, $search)
+    {
+        $user_ids = get_users()->pluck('id');
+        $query = $this;
+        $query = $this->whereIn('id', $user_ids);
+        if (!empty($filter["designation_id"])) {
+            $query = $query->where('designation_id', $filter['designation_id']);
+        }
+        if (!empty($filter["status"])) {
+            $query = $query->where('status', $filter['status']);
+        }
+        if (!empty($date_range["date_from"])) {
+            $query = $query->whereBetween('created_at', [$date_range["date_from"], $date_range["date_to"]]);
+        }
+        if (!empty($search)) {
+            $query = $query->where(function ($query) use ($search) {
+                $query->where('firstname', 'LIKE', "%{$search}%");
+                $query->orWhere('lastname', 'LIKE', "%{$search}%");
+                $query->orWhere('psudo_name', 'LIKE', "%{$search}%");
+                $query->orWhere('email', 'LIKE', "%{$search}%");
+                $query->orWhere('username', 'LIKE', "%{$search}%");
+            });
+        }
+        return $query->count();
+    }
+    public function getData($date_range, $filter, $search, $start, $limit, $order, $dir)
+    {
+        $user_ids = get_users()->pluck('id');
+        $query = $this;
+        $query = $this->whereIn('id', $user_ids);
+        if (!empty($filter["designation_id"])) {
+            $query = $query->where('designation_id', $filter['designation_id']);
+        }
+        if (!empty($filter["status"])) {
+            $query = $query->where('status', $filter['status']);
+        }
+        if (!empty($date_range["date_from"])) {
+            $query = $query->whereBetween('created_at', [$date_range["date_from"], $date_range["date_to"]]);
+        }
+        if (!empty($search)) {
+            $query = $query->where(function ($query) use ($search) {
+                $query->where('firstname', 'LIKE', "%{$search}%");
+                $query->orWhere('lastname', 'LIKE', "%{$search}%");
+                $query->orWhere('psudo_name', 'LIKE', "%{$search}%");
+                $query->orWhere('email', 'LIKE', "%{$search}%");
+                $query->orWhere('username', 'LIKE', "%{$search}%");
+            });
+        }
+        return $query->offset($start)->limit($limit)->orderBy($order, $dir)->get();
+    }
 }

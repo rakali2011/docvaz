@@ -10,6 +10,8 @@ use Spatie\Permission\Models\Permission;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\PostUser;
 use App\Http\Requests\PostClient;
+use App\Models\Designation;
+use App\Models\Status;
 use Illuminate\Support\Facades\DB;
 use Exception;
 use App\Rules\MatchOldPassword;
@@ -289,5 +291,59 @@ class UserController extends Controller
             $response['message'] = $th->getMessage();
         }
         return response()->json($response);
+    }
+    public function all_users(Request $request)
+    {
+        $columns = ['firstname', 'lastname', 'psudo_name', 'email', 'username', 'employee_id', 'designation_id', 'status'];
+        $date_range = [
+            "date_from" => $request->input('date_from_filter') != "" ? date("Y-m-d", strtotime($request->input('date_from_filter'))) . ' 00:00:00' : $request->input('date_from_filter'),
+            "date_to" => $request->input('date_to_filter') != "" ? date("Y-m-d", strtotime($request->input('date_to_filter'))) . ' 23:59:59' : date("Y-m-d H:i:s")
+        ];
+        $filter = array(
+            "designation_id" => $request->input('designation_filter'),
+            "status" => $request->input('status_filter')
+        );
+        $limit = $request->input('length');
+        $start = $request->input('start');
+        $order = !empty($request->input('order.0.column')) ? $request->input('order.0.column') : 0;
+        $order = $columns[$order];
+        $dir = !empty($request->input('order.0.dir')) ? strtoupper($request->input('order.0.dir')) : "DESC";
+        $search = $request->input('search.value');
+        $user = new User();
+        $totalData = $user->countTotal();
+        $totalFiltered = $user->countFiltered($date_range, $filter, $search);
+        $users = $user->getData($date_range, $filter, $search, $start, $limit, $order, $dir);
+        $data = array();
+        if (!empty($users)) {
+            foreach ($users as $user) {
+                // $edit = '';
+                // $view = '';
+                // $delete = '';
+                // if (auth()->user()->can('update file'))
+                //     $edit = '<a class="dropdown-item" href="' . route('edit_file', ['id' => $file->id]) . '">Edit</a>';
+                // if (auth()->user()->can('view file'))
+                //     $view = '<a class="dropdown-item" href="' . route('file', ['id' => $file->id]) . '" target="_blank" rel="noopener noreferrer">View</a>';
+                // if (auth()->user()->can('delete file')) {
+                //     $delete = '<form method="POST" action="' . route('delete_file', $file->id) . '" accept-charset="UTF-8" style="display:inline"><input name="_token" type="hidden" value="' . csrf_token() . '"><input class="dropdown-item" type="submit" value="Delete"></form>';
+                // }
+                $nestedData['first_name'] = $user->firstname;
+                $nestedData['last_name'] = $user->lastname;
+                $nestedData['psudo_name'] = $user->psudo_name;
+                $nestedData['email'] = $user->email;
+                $nestedData['username'] = $user->username;
+                $nestedData['employee_id'] = $user->employee_id;
+                $nestedData['designation_id'] = Designation::findorfail($user->designation_id)->name;
+                $nestedData['status'] = Status::findorfail($user->status)->name;
+                // $nestedData['action'] = '<button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="text-muted sr-only">Action</span></button><div class="dropdown-menu dropdown-menu-right">' . $view . $edit . $delete . '</div>';
+                $data[] = $nestedData;
+            }
+        }
+        $json_data = array(
+            "draw" => intval($request->input('draw')),
+            "recordsTotal" => intval($totalData),
+            "recordsFiltered" => intval($totalFiltered),
+            "data" => $data
+        );
+        echo json_encode($json_data);
     }
 }

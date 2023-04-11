@@ -11,6 +11,7 @@ use phpDocumentor\Reflection\Types\Null_;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\PermissionRegistrar;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -51,31 +52,40 @@ class HomeController extends Controller
                 $total += $document->files_count;
             }
             $documents->total = $total;
-            // Document Statistics
+            // Document Status
             $statuses = statuses("document");
             foreach ($statuses as $key => $status)
                 $status->files_count =  $status->files()->count();
-            $donut_name = json_decode(json_encode($statuses->pluck('name')), true);
-            $donut_value = json_decode(json_encode($statuses->pluck('files_count')), true);
+            $documents->name = json_decode(json_encode($statuses->pluck('name')), true);
+            $documents->count = json_decode(json_encode($statuses->pluck('files_count')), true);
             // Users by status
+            $user_ids = get_users()->pluck('id');
             $statuses = NULL;
             $statuses = statuses("user");
             foreach ($statuses as $key => $status)
-                $status->users_count =  $status->users()->count();
+                $status->users_count =  $status->users()->whereIn('users.id', $user_ids)->count();
             $users = $statuses;
             // Users by Designations
             $designations = designations();
             foreach ($designations as $key => $designation)
-                $designation->users_count =  $designation->users()->count();
-
-
+                $designation->users_count =  $designation->users()->whereIn('users.id', $user_ids)->count();
+            // Tickets by status
             $statuses = Null;
             $statuses = statuses("ticket");
             foreach ($statuses as $key => $status)
                 $status->tickets_count =  $status->tickets()->count();
-
-
-            return view('welcome', compact('data', 'documents', 'donut_name', 'donut_value', 'designations', 'users'));
+            $tickets_by_status = $statuses;
+            $ticket_chart['name'] = json_decode(json_encode($tickets_by_status->pluck('name')), true);
+            $ticket_chart['count'] = json_decode(json_encode($statuses->pluck('tickets_count')), true);
+            foreach (ticket_priorities() as $key => $priority)
+                $tickets_by_priority[$priority[0]] = DB::table('tickets')->where('priority', $priority)->where('company_id', Auth::user()->company_id)->selectRaw('COUNT(priority) AS priority')->pluck('priority')[0];
+            $departments = departments();
+            foreach ($departments as $key => $department) {
+                $department->external =  $department->tickets()->where('company_id', Auth::user()->company_id)->where('is_external', 1)->count();
+                $department->internal =  $department->tickets()->where('company_id', Auth::user()->company_id)->where('is_external', 0)->count();
+            }
+            $departments->company_name = Auth::user()->company->name;
+            return view('welcome', compact('data', 'documents', 'designations', 'users', 'tickets_by_status', 'ticket_chart', 'tickets_by_priority', 'departments'));
         }
     }
 

@@ -18,6 +18,14 @@ if (!function_exists('companies')) {
         return $companies;
     }
 }
+function departments()
+{
+    if (auth()->user()->can('assign department user'))
+        $departments = Department::where('company_id', Auth::user()->company_id)->orderBy('name', 'ASC')->get();
+    else
+        $departments = Auth::user()->assigned_departments();
+    return $departments;
+}
 if (!function_exists('designations')) {
     function designations()
     {

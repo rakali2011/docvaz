@@ -15,7 +15,6 @@ class Department extends Model implements Auditable
     {
         return $this->belongsTo(Company::class);
     }
-
     public function teams()
     {
         return $this->belongsToMany(Team::class, 'team_departments')->wherePivot('department_id', '=', $this->id)->get();
@@ -32,5 +31,9 @@ class Department extends Model implements Auditable
     {
         $User = $this->belongsToMany(User::class, 'department_user')->wherePivot('department_id', '=', $this->id)->pluck('departments.id');
         return json_decode(json_encode($User), true);
+    }
+    public function tickets()
+    {
+        return $this->hasMany(Ticket::class, "department_id");
     }
 }
