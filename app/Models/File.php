@@ -37,7 +37,7 @@ class File extends Model implements Auditable
     }
     public function countTotal()
     {
-        $user_ids = get_assigned_teams_user_ids();
+        $user_ids = get_departments_users();
         $query = $this;
         $query = $this->whereIn('user_id', $user_ids);
         return $query->count();

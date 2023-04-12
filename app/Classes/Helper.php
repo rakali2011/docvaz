@@ -18,13 +18,35 @@ if (!function_exists('companies')) {
         return $companies;
     }
 }
-function departments()
-{
-    if (auth()->user()->can('assign department user'))
-        $departments = Department::where('company_id', Auth::user()->company_id)->orderBy('name', 'ASC')->get();
-    else
-        $departments = Auth::user()->assigned_departments();
-    return $departments;
+if (!function_exists('departments')) {
+    function departments()
+    {
+        if (auth()->user()->can('assign department user'))
+            $departments = Department::where('company_id', Auth::user()->company_id)->orderBy('name', 'ASC')->get();
+        else
+            $departments = Auth::user()->assigned_departments();
+        return $departments;
+    }
+}
+if (!function_exists('department_users')) {
+    function department_users($department_id)
+    {
+        $department = Department::findorfail($department_id);
+        $department_users = $department->assigned_users()->pluck("id");
+        return json_decode(json_encode($department_users, true));
+    }
+}
+if (!function_exists('get_departments_users')) {
+    function get_departments_users()
+    {
+        $user_ids = [];
+        $departments = departments();
+        foreach ($departments as $key => $department)
+            $user_ids = array_merge($user_ids, department_users($department->id));
+        $user_ids = array_unique($user_ids);
+        sort($user_ids);
+        return $user_ids;
+    }
 }
 if (!function_exists('designations')) {
     function designations()

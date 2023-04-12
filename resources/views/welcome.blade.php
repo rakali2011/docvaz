@@ -264,11 +264,11 @@
                         <div class="card-body shadow card_menu">
                             <div class="row">
                                 @foreach($departments as $key => $department)
-                                <div class="col-lg-2 col-md-2 col-sm-12 box pt-3 m-2" style="background-color: #fdaa57; ">
+                                <div class="col-lg-2 col-md-2 col-sm-12 box pt-3 m-2" style="background-color:#dcdcdc;">
                                     <h6 class="text-center">{{ $department->name }}</h6>
                                     <hr class="m-1">
-                                    <p>My<b class="float-right">{{ $department->external }}</b></p>
-                                    <p>{{ $departments->company_name }}<b class="float-right">{{ $department->internal }}</b></p>
+                                    <p>{{ Auth::user()->type==3 ? 'My' : 'Client' }}<b class="float-right">{{ $department->client }}</b></p>
+                                    <p>{{ $departments->company_name }}<b class="float-right">{{ $department->company }}</b></p>
                                 </div>
                                 @endforeach
                             </div>
