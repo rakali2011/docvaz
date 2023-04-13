@@ -9,6 +9,7 @@ use App\Http\Controllers\DesignationController;
 use App\Http\Controllers\DocumentTypeController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LinkController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\PracticeController;
 use App\Http\Controllers\RoleController;
@@ -76,6 +77,7 @@ Route::post('/post-practice', [PracticeController::class, 'post_practice'])->mid
 Route::get('/edit-practice/{id}', [PracticeController::class, 'edit_practice'])->middleware('permission:update practice')->name('edit_practice');
 Route::post('/update-practice/{id}', [PracticeController::class, 'update_practice'])->middleware('permission:update practice')->name('update_practice');
 Route::post('/get_practices', [PracticeController::class, 'get_practices'])->middleware('permission:assign practice user')->name('get_practices');
+Route::get('/practice-info-form/{id}', [PracticeController::class, 'practiceInfoForm'])->name('practice_info_form');
 // Roles
 Route::get('/roles', [RoleController::class, 'roles'])->middleware('permission:view role')->name('roles');
 Route::get('/add-role', [RoleController::class, 'add_role'])->middleware('permission:add role')->name('add_role');
@@ -130,3 +132,5 @@ Route::post('/get_setting', [SettingController::class, 'getSetting'])->middlewar
 // Audits
 Route::get('/audits', [AuditController::class, 'index'])->middleware('permission:view audit system log')->name('audits');
 Route::post('/get-audits', [AuditController::class, 'audits'])->middleware('permission:view audit system log')->name('get_audits');
+// Links
+Route::resource('links', LinkController::class);

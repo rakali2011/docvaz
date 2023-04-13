@@ -86,6 +86,7 @@ class UserController extends Controller
     }
     public function post_user(PostUser $req)
     {
+
         DB::beginTransaction();
         try {
             if (auth()->user()->hasRole('dev')) {

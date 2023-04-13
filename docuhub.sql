@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Apr 11, 2023 at 08:33 PM
+-- Generation Time: Apr 13, 2023 at 08:39 PM
 -- Server version: 5.7.36
 -- PHP Version: 7.4.26
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `docuhub__1_`
+-- Database: `docuhub`
 --
 
 -- --------------------------------------------------------
@@ -258,11 +258,11 @@ CREATE TABLE IF NOT EXISTS `designations` (
 --
 
 INSERT INTO `designations` (`id`, `company_id`, `name`, `rank`, `created_at`, `deleted_at`, `updated_at`) VALUES
-(1, 6, 'General Manager (GM)', 2, '2023-03-20 13:07:51', NULL, '2023-04-03 19:35:07'),
+(1, 6, 'General Manager (GM)', 3, '2023-03-20 13:07:51', NULL, '2023-04-11 20:40:07'),
 (2, 5, 'Director', NULL, '2023-03-20 13:15:33', NULL, '2023-04-03 18:51:25'),
-(3, 6, 'Vice President (VP)', 3, '2023-03-20 13:15:51', NULL, '2023-04-03 19:29:49'),
-(4, 6, 'Manager Operations (MO)', 6, '2023-03-20 13:16:37', NULL, '2023-04-03 19:24:22'),
-(5, 6, 'Assistant Manager Operations (AMO)', 5, '2023-03-20 13:16:46', NULL, '2023-04-04 16:42:11'),
+(3, 6, 'Vice President (VP)', 2, '2023-03-20 13:15:51', NULL, '2023-04-11 20:40:07'),
+(4, 6, 'Manager Operations (MO)', 5, '2023-03-20 13:16:37', NULL, '2023-04-11 20:39:46'),
+(5, 6, 'Assistant Manager Operations (AMO)', 6, '2023-03-20 13:16:46', NULL, '2023-04-11 20:39:46'),
 (6, 6, 'Senior Manager Operations (SMO)', 4, '2023-03-20 13:16:55', NULL, '2023-04-04 16:42:11'),
 (7, 6, 'Director', 1, '2023-04-03 14:00:35', NULL, '2023-04-03 19:35:07');
 
@@ -375,21 +375,48 @@ CREATE TABLE IF NOT EXISTS `files` (
 --
 
 INSERT INTO `files` (`id`, `practice_id`, `user_id`, `status`, `name`, `org_name`, `path`, `ext`, `size`, `date`, `doc_type`, `created_at`, `deleted_at`, `updated_at`) VALUES
-(1, 4, 10, 14, 'qjbT8BZTaBs80aDtRk1FLxHKXOGmdXnQKVA6R2gD.png', 'secretm.me-verticle-share.png', 'uploads/files/02-2023/qjbT8BZTaBs80aDtRk1FLxHKXOGmdXnQKVA6R2gD.png', 'png', '385.82 KB', '2023-03-09', 4, '2023-02-06 20:16:08', NULL, '2023-03-22 19:29:43'),
+(1, 4, 10, 13, 'qjbT8BZTaBs80aDtRk1FLxHKXOGmdXnQKVA6R2gD.png', 'secretm.me-verticle-share.png', 'uploads/files/02-2023/qjbT8BZTaBs80aDtRk1FLxHKXOGmdXnQKVA6R2gD.png', 'png', '385.82 KB', '2023-03-09', 4, '2023-02-06 20:16:08', NULL, '2023-04-12 20:10:24'),
 (2, 4, 10, 14, 'McPTd5iZYNSVvNXHxXoiMS1H0gPrugq2lfXz1qQK.png', 'screencapture-secretm-me-inbox-php-2022-09-08-21_15_52.png', 'uploads/files/02-2023/McPTd5iZYNSVvNXHxXoiMS1H0gPrugq2lfXz1qQK.png', 'png', '2.56 MB', '2023-03-09', 4, '2023-02-06 20:16:08', NULL, '2023-03-22 19:29:40'),
-(3, 4, 10, 14, 'K2S7gNAjlvGAWZhqFq2brsnY2hZ90hd0CoM884Oh.png', 'screencapture-publishers-adsterra-stats-2022-10-06-12_35_35.png', 'uploads/files/02-2023/K2S7gNAjlvGAWZhqFq2brsnY2hZ90hd0CoM884Oh.png', 'png', '191.23 KB', '2023-03-09', 4, '2023-02-06 20:16:08', NULL, '2023-03-22 19:29:37'),
-(4, 4, 10, 14, 'UmPHvRQg1nFiSUy8QSQIKaPZ5qGyBLwvyBUVr3De.png', 'secretm.me-verticle-share.png', 'uploads/files/02-2023/UmPHvRQg1nFiSUy8QSQIKaPZ5qGyBLwvyBUVr3De.png', 'png', '385.82 KB', '2023-03-09', 4, '2023-02-06 20:16:18', NULL, '2023-03-22 19:29:45'),
-(5, 4, 10, 14, '8DiR6bU392EtXfnlR2iuxS5ZRw7wOSTNK0P0zZsM.png', 'screencapture-secretm-me-inbox-php-2022-09-08-21_15_52.png', 'uploads/files/02-2023/8DiR6bU392EtXfnlR2iuxS5ZRw7wOSTNK0P0zZsM.png', 'png', '2.56 MB', '2023-03-09', 4, '2023-02-06 20:16:18', NULL, '2023-03-22 19:29:42'),
-(6, 4, 10, 14, 'VSfKIATTISBcvvDvY326lC1PIf9oVKqt0upd9MYi.png', 'screencapture-publishers-adsterra-stats-2022-10-06-12_35_35.png', 'uploads/files/02-2023/VSfKIATTISBcvvDvY326lC1PIf9oVKqt0upd9MYi.png', 'png', '191.23 KB', '2023-03-09', 4, '2023-02-06 20:16:18', NULL, '2023-03-22 19:29:38'),
-(7, 4, 10, 14, '7iO2YMMujOSB7GwIsBOCgruGBs0TVzF309q24SGu.png', 'Web Developer Php Laravel.png', 'uploads/files/02-2023/7iO2YMMujOSB7GwIsBOCgruGBs0TVzF309q24SGu.png', 'png', '52.81 KB', '2023-03-09', 4, '2023-02-06 20:17:47', NULL, '2023-03-22 19:29:47'),
-(8, 4, 15, 14, 'cqDk3feTSHL8ARw3xVExMCZMNVOFYHR0jZyaUAMk.jpg', 'image004.jpg', 'uploads/files/02-2023/cqDk3feTSHL8ARw3xVExMCZMNVOFYHR0jZyaUAMk.jpg', 'jpg', '97.22 KB', '2023-03-09', 4, '2023-02-16 21:13:24', NULL, '2023-03-22 19:29:32'),
+(3, 4, 10, 15, 'K2S7gNAjlvGAWZhqFq2brsnY2hZ90hd0CoM884Oh.png', 'screencapture-publishers-adsterra-stats-2022-10-06-12_35_35.png', 'uploads/files/02-2023/K2S7gNAjlvGAWZhqFq2brsnY2hZ90hd0CoM884Oh.png', 'png', '191.23 KB', '2023-03-09', 4, '2023-02-06 20:16:08', NULL, '2023-04-12 20:10:27'),
+(4, 4, 10, 16, 'UmPHvRQg1nFiSUy8QSQIKaPZ5qGyBLwvyBUVr3De.png', 'secretm.me-verticle-share.png', 'uploads/files/02-2023/UmPHvRQg1nFiSUy8QSQIKaPZ5qGyBLwvyBUVr3De.png', 'png', '385.82 KB', '2023-03-09', 4, '2023-02-06 20:16:18', NULL, '2023-04-12 20:10:34'),
+(5, 4, 10, 17, '8DiR6bU392EtXfnlR2iuxS5ZRw7wOSTNK0P0zZsM.png', 'screencapture-secretm-me-inbox-php-2022-09-08-21_15_52.png', 'uploads/files/02-2023/8DiR6bU392EtXfnlR2iuxS5ZRw7wOSTNK0P0zZsM.png', 'png', '2.56 MB', '2023-03-09', 4, '2023-02-06 20:16:18', NULL, '2023-04-12 20:10:37'),
+(6, 4, 10, 18, 'VSfKIATTISBcvvDvY326lC1PIf9oVKqt0upd9MYi.png', 'screencapture-publishers-adsterra-stats-2022-10-06-12_35_35.png', 'uploads/files/02-2023/VSfKIATTISBcvvDvY326lC1PIf9oVKqt0upd9MYi.png', 'png', '191.23 KB', '2023-03-09', 4, '2023-02-06 20:16:18', NULL, '2023-04-12 20:10:39'),
+(7, 4, 10, 19, '7iO2YMMujOSB7GwIsBOCgruGBs0TVzF309q24SGu.png', 'Web Developer Php Laravel.png', 'uploads/files/02-2023/7iO2YMMujOSB7GwIsBOCgruGBs0TVzF309q24SGu.png', 'png', '52.81 KB', '2023-03-09', 4, '2023-02-06 20:17:47', NULL, '2023-04-12 20:10:42'),
+(8, 4, 15, 13, 'cqDk3feTSHL8ARw3xVExMCZMNVOFYHR0jZyaUAMk.jpg', 'image004.jpg', 'uploads/files/02-2023/cqDk3feTSHL8ARw3xVExMCZMNVOFYHR0jZyaUAMk.jpg', 'jpg', '97.22 KB', '2023-03-09', 4, '2023-02-16 21:13:24', NULL, '2023-04-12 20:10:46'),
 (9, 4, 16, 14, 'e892BTm1RqGla3X7RsDNoajOAi9G6za5WteoYtT8.jpg', '1933136_188282907860672_4388842_o.jpg', 'uploads/files/02-2023/e892BTm1RqGla3X7RsDNoajOAi9G6za5WteoYtT8.jpg', 'jpg', '408.74 KB', '2023-03-09', 3, '2023-02-16 22:41:32', NULL, '2023-03-28 19:59:28'),
-(10, 4, 17, 14, 'SbQPg6d3akY0Kv0bprp2H3rmMQXcnlu5nlYb6xwy.jpg', 'image004.jpg', 'uploads/files/02-2023/SbQPg6d3akY0Kv0bprp2H3rmMQXcnlu5nlYb6xwy.jpg', 'jpg', '97.22 KB', '2023-03-09', 4, '2023-02-21 22:32:24', NULL, '2023-03-23 00:42:28'),
-(11, 4, 18, 14, 'WPBx6rp0eCQCltRmF5kAAhOFIwNZ1Dw91ncjbz61.pdf', 'Document.pdf', 'uploads/files/02-2023/WPBx6rp0eCQCltRmF5kAAhOFIwNZ1Dw91ncjbz61.pdf', 'pdf', '13.62 KB', '2023-03-09', 4, '2023-02-22 17:10:45', NULL, '2023-03-23 00:42:31'),
-(12, 4, 19, 14, 'GDVa4jNRLK581Sr5yXfeeMqI32ltZ1MlcM50UGdA.xlsx', 'AttendanceList123.xlsx', 'uploads/files/02-2023/GDVa4jNRLK581Sr5yXfeeMqI32ltZ1MlcM50UGdA.xlsx', 'xlsx', '22.46 KB', '2023-03-09', 4, '2023-02-22 17:53:13', NULL, '2023-03-23 00:42:40'),
-(13, 4, 20, 14, '5f5TDxQLrmDtjt1CUToQYDPerLUMakXWku3HTFbp.xlsx', 'AttendanceList (1).xlsx', 'uploads/files/03-2023/5f5TDxQLrmDtjt1CUToQYDPerLUMakXWku3HTFbp.xlsx', 'xlsx', '22.49 KB', '2023-03-09', 4, '2023-03-21 14:24:07', NULL, '2023-03-27 21:25:36'),
-(14, 4, 15, 14, '2RiQeo0dhS2M9d45LxRbNsA1bIYRg89L8gAx8ZcH.xlsx', 'AttendanceList.xlsx', 'uploads/files/03-2023/2RiQeo0dhS2M9d45LxRbNsA1bIYRg89L8gAx8ZcH.xlsx', 'xlsx', '22.46 KB', '2023-03-09', 4, '2023-03-21 14:24:07', NULL, '2023-03-22 01:44:28'),
+(10, 4, 17, 15, 'SbQPg6d3akY0Kv0bprp2H3rmMQXcnlu5nlYb6xwy.jpg', 'image004.jpg', 'uploads/files/02-2023/SbQPg6d3akY0Kv0bprp2H3rmMQXcnlu5nlYb6xwy.jpg', 'jpg', '97.22 KB', '2023-03-09', 4, '2023-02-21 22:32:24', NULL, '2023-04-12 20:10:50'),
+(11, 4, 18, 16, 'WPBx6rp0eCQCltRmF5kAAhOFIwNZ1Dw91ncjbz61.pdf', 'Document.pdf', 'uploads/files/02-2023/WPBx6rp0eCQCltRmF5kAAhOFIwNZ1Dw91ncjbz61.pdf', 'pdf', '13.62 KB', '2023-03-09', 4, '2023-02-22 17:10:45', NULL, '2023-04-12 20:10:52'),
+(12, 4, 19, 17, 'GDVa4jNRLK581Sr5yXfeeMqI32ltZ1MlcM50UGdA.xlsx', 'AttendanceList123.xlsx', 'uploads/files/02-2023/GDVa4jNRLK581Sr5yXfeeMqI32ltZ1MlcM50UGdA.xlsx', 'xlsx', '22.46 KB', '2023-03-09', 4, '2023-02-22 17:53:13', NULL, '2023-04-12 20:10:54'),
+(13, 4, 20, 18, '5f5TDxQLrmDtjt1CUToQYDPerLUMakXWku3HTFbp.xlsx', 'AttendanceList (1).xlsx', 'uploads/files/03-2023/5f5TDxQLrmDtjt1CUToQYDPerLUMakXWku3HTFbp.xlsx', 'xlsx', '22.49 KB', '2023-03-09', 4, '2023-03-21 14:24:07', NULL, '2023-04-12 20:11:01'),
+(14, 4, 15, 19, '2RiQeo0dhS2M9d45LxRbNsA1bIYRg89L8gAx8ZcH.xlsx', 'AttendanceList.xlsx', 'uploads/files/03-2023/2RiQeo0dhS2M9d45LxRbNsA1bIYRg89L8gAx8ZcH.xlsx', 'xlsx', '22.46 KB', '2023-03-09', 4, '2023-03-21 14:24:07', NULL, '2023-04-12 20:11:04'),
 (15, 4, 15, 14, 'vvwGLaPpkKuEUuGrdjcqJAW6QvZ0g9NNf3ul7ZZt.pdf', 'Document.pdf', 'uploads/files/04-2023/vvwGLaPpkKuEUuGrdjcqJAW6QvZ0g9NNf3ul7ZZt.pdf', 'pdf', '13.62 KB', NULL, 8, '2023-04-04 19:50:14', NULL, '2023-04-04 19:50:14');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `links`
+--
+
+DROP TABLE IF EXISTS `links`;
+CREATE TABLE IF NOT EXISTS `links` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `company_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `provider_name` varchar(64) NOT NULL,
+  `token` varchar(32) NOT NULL,
+  `link` varchar(256) NOT NULL,
+  `created_at` timestamp NOT NULL,
+  `expired_at` timestamp NOT NULL,
+  `updated_at` timestamp NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `links`
+--
+
+INSERT INTO `links` (`id`, `company_id`, `user_id`, `provider_name`, `token`, `link`, `created_at`, `expired_at`, `updated_at`) VALUES
+(1, 6, 6, 'Test Provider', '5dd0768dacfd73dcd198b755d1d48b88', 'http://127.0.0.1:8000/practice-info-form/5dd0768dacfd73dcd198b755d1d48b88', '2023-04-13 14:45:11', '2023-04-13 18:45:11', '2023-04-13 14:45:11');
 
 -- --------------------------------------------------------
 
@@ -482,7 +509,7 @@ CREATE TABLE IF NOT EXISTS `permissions` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `permissions_name_guard_name_unique` (`name`,`guard_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=106 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=107 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `permissions`
@@ -577,7 +604,8 @@ INSERT INTO `permissions` (`id`, `name`, `display_name`, `type`, `guard_name`, `
 (102, 'update company setting', 'can update', 'company', 'web', '2023-01-25 10:07:00', '2023-01-25 10:07:00'),
 (103, 'view audit system log', 'can audit system log', 'reports', 'web', '2023-02-06 14:30:49', '2023-02-06 14:30:49'),
 (104, 'view his own users', 'can view his own', 'user', 'web', '2023-01-19 11:53:09', '2023-01-19 11:53:09'),
-(105, 'assign document user', 'can assign document type', 'user', 'web', '2023-02-06 10:02:32', '2023-02-06 10:02:32');
+(105, 'assign document user', 'can assign document type', 'user', 'web', '2023-02-06 10:02:32', '2023-02-06 10:02:32'),
+(106, 'create link', 'can create link', 'user', 'web', '2023-02-06 10:02:32', '2023-02-06 10:02:32');
 
 -- --------------------------------------------------------
 
@@ -875,6 +903,7 @@ INSERT INTO `role_has_permissions` (`permission_id`, `role_id`) VALUES
 (102, 18),
 (103, 18),
 (105, 18),
+(106, 18),
 (15, 19),
 (16, 19),
 (19, 19),
@@ -1152,30 +1181,30 @@ CREATE TABLE IF NOT EXISTS `tickets` (
 --
 
 INSERT INTO `tickets` (`id`, `company_id`, `user_id`, `user_type`, `department_id`, `target_id`, `team_id`, `type`, `priority`, `subject`, `message`, `creator`, `response_at`, `status`, `remarks`, `flag`, `is_external`, `created_at`, `deleted_at`, `updated_at`) VALUES
-(1, 6, 15, 2, 3, 4, 0, 'Info/Other', 'High', 'Test subject', '<p>test message abc</p>', 'New Test Company', '2023-04-06 09:44:42', 26, NULL, 0, 1, '2023-02-24 16:17:37', NULL, '2023-04-06 09:44:42'),
-(2, 6, 15, 2, 3, 5, 0, 'Info/Other', 'Concerning', 'Test subject', 'test message', 'New Test Company', NULL, 26, NULL, 0, 1, '2023-02-24 16:17:37', NULL, '2023-02-24 16:17:37'),
-(3, 6, 15, 2, 3, 5, 0, 'Info/Other', 'Low', 'Test', 'message', 'New Test Company', '2023-02-27 11:23:47', 26, NULL, 0, 1, '2023-02-27 11:23:47', NULL, '2023-02-27 11:23:47'),
-(4, 6, 15, 2, 3, 5, 4, 'Info/Other', 'Concerning', 'Test', 'dsadsad', 'New Test Company', NULL, 26, NULL, 0, 1, '2023-02-27 11:51:23', NULL, '2023-02-27 11:51:23'),
+(1, 6, 15, 2, 3, 4, 0, 'Info/Other', 'High', 'Test subject', '<p>test message abc</p>', 'New Test Company', '2023-04-06 09:44:42', 22, NULL, 0, 1, '2023-02-24 16:17:37', NULL, '2023-04-06 09:44:42'),
+(2, 6, 15, 2, 3, 5, 0, 'Info/Other', 'Concerning', 'Test subject', 'test message', 'New Test Company', NULL, 23, NULL, 0, 1, '2023-02-24 16:17:37', NULL, '2023-02-24 16:17:37'),
+(3, 6, 15, 2, 3, 5, 0, 'Info/Other', 'Low', 'Test', 'message', 'New Test Company', '2023-02-27 11:23:47', 24, NULL, 0, 1, '2023-02-27 11:23:47', NULL, '2023-02-27 11:23:47'),
+(4, 6, 15, 2, 3, 5, 4, 'Info/Other', 'Concerning', 'Test', 'dsadsad', 'New Test Company', NULL, 25, NULL, 0, 1, '2023-02-27 11:51:23', NULL, '2023-02-27 11:51:23'),
 (5, 6, 15, 2, 3, 5, 4, 'Info/Other', 'Concerning', 'dsf', 'dsfdsfsd', 'New Test Company', NULL, 26, NULL, 0, 1, '2023-02-27 11:56:17', NULL, '2023-02-27 11:56:17'),
-(6, 6, 15, 2, 3, 5, 4, 'Info/Other', 'Concerning', 'Testdsadsa', 'asdsadsadsad', 'New Test Company', '2023-04-04 15:51:10', 26, NULL, 0, 1, '2023-02-27 11:57:24', NULL, '2023-04-04 15:51:10'),
-(7, 6, 15, 2, 3, 5, 5, 'Info/Other', 'Concerning', 'Test', 'sadsadsad', 'New Test Company', NULL, 26, NULL, 0, 1, '2023-02-27 14:34:36', NULL, '2023-02-27 14:34:36'),
-(8, 6, 15, 2, 3, 4, 0, 'Info/Other', 'Concerning', 'Testsadsa', 'asdsadsadsad', 'New Test Company', NULL, 26, NULL, 0, 1, '2023-02-27 14:41:23', NULL, '2023-02-27 14:41:23'),
-(9, 6, 15, 2, 3, 5, 5, 'Info/Other', 'Concerning', 'Test', 'sadsad', 'New Test Company', NULL, 26, NULL, 0, 1, '2023-02-27 15:27:16', NULL, '2023-02-27 15:27:16'),
-(10, 6, 15, 2, 3, 5, 5, 'Info/Other', 'Concerning', 'Test', 'sadsad', 'New Test Company', NULL, 26, NULL, 0, 1, '2023-02-27 15:29:38', NULL, '2023-02-27 15:29:38'),
+(6, 6, 15, 2, 3, 5, 4, 'Info/Other', 'Concerning', 'Testdsadsa', 'asdsadsadsad', 'New Test Company', '2023-04-04 15:51:10', 27, NULL, 0, 1, '2023-02-27 11:57:24', NULL, '2023-04-04 15:51:10'),
+(7, 6, 15, 2, 3, 5, 5, 'Info/Other', 'Concerning', 'Test', 'sadsadsad', 'New Test Company', NULL, 22, NULL, 0, 1, '2023-02-27 14:34:36', NULL, '2023-02-27 14:34:36'),
+(8, 6, 15, 2, 3, 4, 0, 'Info/Other', 'Concerning', 'Testsadsa', 'asdsadsadsad', 'New Test Company', NULL, 23, NULL, 0, 1, '2023-02-27 14:41:23', NULL, '2023-02-27 14:41:23'),
+(9, 6, 15, 2, 3, 5, 5, 'Info/Other', 'Concerning', 'Test', 'sadsad', 'New Test Company', NULL, 24, NULL, 0, 1, '2023-02-27 15:27:16', NULL, '2023-02-27 15:27:16'),
+(10, 6, 15, 2, 3, 5, 5, 'Info/Other', 'Concerning', 'Test', 'sadsad', 'New Test Company', NULL, 25, NULL, 0, 1, '2023-02-27 15:29:38', NULL, '2023-02-27 15:29:38'),
 (11, 6, 15, 2, 6, 5, 5, 'Info/Other', 'Concerning', 'Testfg', 'fdgfdgfdg', 'New Test Company', NULL, 26, NULL, 1, 1, '2023-02-27 15:30:53', NULL, '2023-03-23 10:15:53'),
-(12, 6, 15, 2, 3, 5, 5, 'Info/Other', 'Concerning', 'Test', 'sadsadsad', 'New Test Company', NULL, 26, NULL, 0, 1, '2023-02-27 15:34:19', NULL, '2023-02-27 15:34:19'),
-(13, 6, 15, 2, 3, 5, 5, 'Info/Other', 'Concerning', 'sdsad', 'adsad', 'New Test Company', NULL, 26, NULL, 0, 1, '2023-02-27 15:37:34', NULL, '2023-02-27 15:37:34'),
-(14, 6, 15, 2, 6, 4, 0, 'Info/Other', 'Concerning', 'Test', 'Asad Nazir\r\nsadsadsa\r\nasdsad', 'New Test Company', NULL, 26, NULL, 1, 1, '2023-02-28 16:34:53', NULL, '2023-03-23 10:23:12'),
-(15, 6, 15, 2, 4, 4, 0, 'Info/Other', 'High', 'Test', '<p><strong>Hi Ewa and Team,</strong><br />\n<br />\nAfter reviewing the patient account in detail. We have found that all the services are getting paid by both insurances except the lab services.<br />\nAs we already discussed his lab services amount is on the patient end because of the denials we had received from his both insurance. Now we send all his lab services balance on the patient end. There is a $6744.80 patient balance left as of now.&nbsp;<br />\n<br />\nWarm Regards,<br />\n<strong>Peter Alex!</strong></p>', 'New Test Company', NULL, 26, NULL, 0, 1, '2023-03-01 11:35:16', NULL, '2023-03-23 13:08:49'),
-(16, 6, 16, 3, 6, 4, 3, 'Info/Other', 'Concerning', 'Client ticket', '<p>Client ticket message</p>', 'Provider', NULL, 26, NULL, 0, 1, '2023-03-02 16:40:14', NULL, '2023-03-02 16:40:14'),
+(12, 6, 15, 2, 3, 5, 5, 'Info/Other', 'Concerning', 'Test', 'sadsadsad', 'New Test Company', NULL, 27, NULL, 0, 1, '2023-02-27 15:34:19', NULL, '2023-02-27 15:34:19'),
+(13, 6, 15, 2, 3, 5, 5, 'Info/Other', 'Concerning', 'sdsad', 'adsad', 'New Test Company', NULL, 22, NULL, 0, 1, '2023-02-27 15:37:34', NULL, '2023-02-27 15:37:34'),
+(14, 6, 15, 2, 6, 4, 0, 'Info/Other', 'Concerning', 'Test', 'Asad Nazir\r\nsadsadsa\r\nasdsad', 'New Test Company', NULL, 23, NULL, 1, 1, '2023-02-28 16:34:53', NULL, '2023-03-23 10:23:12'),
+(15, 6, 15, 2, 4, 4, 0, 'Info/Other', 'High', 'Test', '<p><strong>Hi Ewa and Team,</strong><br />\n<br />\nAfter reviewing the patient account in detail. We have found that all the services are getting paid by both insurances except the lab services.<br />\nAs we already discussed his lab services amount is on the patient end because of the denials we had received from his both insurance. Now we send all his lab services balance on the patient end. There is a $6744.80 patient balance left as of now.&nbsp;<br />\n<br />\nWarm Regards,<br />\n<strong>Peter Alex!</strong></p>', 'New Test Company', NULL, 24, NULL, 0, 1, '2023-03-01 11:35:16', NULL, '2023-03-23 13:08:49'),
+(16, 6, 16, 3, 6, 4, 3, 'Info/Other', 'Concerning', 'Client ticket', '<p>Client ticket message</p>', 'Provider', NULL, 25, NULL, 0, 1, '2023-03-02 16:40:14', NULL, '2023-03-02 16:40:14'),
 (17, 6, 16, 3, 6, 4, 3, 'Info/Other', 'Concerning', 'Client ticket', '<p>Client ticket message</p>', 'Provider', NULL, 26, NULL, 0, 1, '2023-03-02 16:40:53', NULL, '2023-03-02 16:40:53'),
-(18, 6, 16, 3, 6, 4, 3, 'Info/Other', 'Concerning', 'Client ticket', '<p>Client ticket message</p>', 'Provider', NULL, 26, NULL, 0, 1, '2023-03-02 16:42:38', NULL, '2023-03-02 16:42:38'),
-(19, 6, 15, 2, 4, 5, 3, 'Info/Other', 'Low', 'Testing notification', '<h2>What is Lorem Ipsum?</h2>\r\n\r\n<p><strong>Lorem Ipsum</strong>&nbsp;is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry&#39;s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>', 'New Test Company', '2023-04-04 15:54:10', 23, 'Ticket Forward Remarks', 1, 1, '2023-03-03 12:13:55', NULL, '2023-04-04 15:54:10'),
-(20, 6, 15, 2, 7, 4, 3, 'Info/Other', 'Low', 'Test', '<p>sdadsadsa</p>', 'New Test Company', '2023-04-04 15:54:41', 26, NULL, 0, 1, '2023-03-29 12:24:55', NULL, '2023-04-04 15:54:41'),
-(21, 6, 15, 2, 4, 7, 0, 'Info/Other', 'Low', 'Ticket 21', '<p>message 21</p>', 'New Test Company', '2023-04-05 10:24:03', 26, NULL, 0, 0, '2023-03-29 12:42:25', NULL, '2023-04-05 10:24:03'),
-(22, 6, 15, 2, 4, 3, 0, 'Info/Other', 'Medium', 'Ticket 22', '<p>message 22</p>', 'New Test Company', '2023-04-05 10:34:35', 26, NULL, 0, 0, '2023-03-29 13:02:14', NULL, '2023-04-05 10:34:35'),
-(23, 6, 15, 2, 4, 3, 0, 'Info/Other', 'Concerning', 'Ticket 23', '<p>message 23</p>', 'New Test Company', NULL, 0, NULL, 0, 0, '2023-03-29 13:03:42', NULL, '2023-03-29 13:03:42'),
-(24, 6, 15, 2, 4, 7, 0, 'Info/Other', 'Medium', 'Ticket 24', '<p>Message 24</p>', 'New Test Company', '2023-04-05 10:06:17', 26, NULL, 0, 1, '2023-03-29 13:06:45', NULL, '2023-04-05 10:06:17');
+(18, 6, 16, 3, 6, 4, 3, 'Info/Other', 'Concerning', 'Client ticket', '<p>Client ticket message</p>', 'Provider', NULL, 27, NULL, 0, 1, '2023-03-02 16:42:38', NULL, '2023-03-02 16:42:38'),
+(19, 6, 15, 2, 4, 5, 3, 'Info/Other', 'Low', 'Testing notification', '<h2>What is Lorem Ipsum?</h2>\r\n\r\n<p><strong>Lorem Ipsum</strong>&nbsp;is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry&#39;s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>', 'New Test Company', '2023-04-04 15:54:10', 22, 'Ticket Forward Remarks', 1, 1, '2023-03-03 12:13:55', NULL, '2023-04-04 15:54:10'),
+(20, 6, 15, 2, 7, 4, 3, 'Info/Other', 'Low', 'Test', '<p>sdadsadsa</p>', 'New Test Company', '2023-04-04 15:54:41', 23, NULL, 0, 1, '2023-03-29 12:24:55', NULL, '2023-04-04 15:54:41'),
+(21, 6, 15, 2, 4, 7, 0, 'Info/Other', 'Low', 'Ticket 21', '<p>message 21</p>', 'New Test Company', '2023-04-05 10:24:03', 24, NULL, 0, 0, '2023-03-29 12:42:25', NULL, '2023-04-05 10:24:03'),
+(22, 6, 15, 2, 4, 3, 0, 'Info/Other', 'Medium', 'Ticket 22', '<p>message 22</p>', 'New Test Company', '2023-04-05 10:34:35', 25, NULL, 0, 0, '2023-03-29 13:02:14', NULL, '2023-04-05 10:34:35'),
+(23, 6, 15, 2, 4, 3, 0, 'Info/Other', 'Concerning', 'Ticket 23', '<p>message 23</p>', 'New Test Company', NULL, 26, NULL, 0, 0, '2023-03-29 13:03:42', NULL, '2023-03-29 13:03:42'),
+(24, 6, 15, 2, 4, 7, 0, 'Info/Other', 'Medium', 'Ticket 24', '<p>Message 24</p>', 'New Test Company', '2023-04-05 10:06:17', 27, NULL, 0, 1, '2023-03-29 13:06:45', NULL, '2023-04-05 10:06:17');
 
 -- --------------------------------------------------------
 
@@ -1369,17 +1398,17 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 
 INSERT INTO `users` (`id`, `company_id`, `employee_id`, `designation_id`, `type`, `status`, `firstname`, `lastname`, `psudo_name`, `email`, `username`, `email_verified_at`, `password`, `remember_token`, `last_activity`, `timezone`, `created_at`, `updated_at`) VALUES
-(10, 0, 0, 2, 0, 2, 'Rahmat', 'Ali', NULL, 'admin@mail.com', '', NULL, '$2y$10$cEJsuBpta26C6aMp.MaCY.5apeaYbYNQ2pY1azhsk1cvfo4GhMaNy', 'DOGMciFOE9hAZ2z8kbr1FdaDASBRhGKe8TtNEEGxdUnH5R3FEym6IRdzs4yo', NULL, 0, '2023-01-04 04:24:33', '2023-02-24 09:42:42'),
-(11, 4, 0, 2, 2, 2, 'Super', 'Admin', NULL, 'superadmin4@bmb.com', '', NULL, '$2y$10$cEJsuBpta26C6aMp.MaCY.5apeaYbYNQ2pY1azhsk1cvfo4GhMaNy', NULL, NULL, 0, '2023-01-19 13:39:09', '2023-01-19 13:39:09'),
-(12, 5, 0, 2, 2, 2, 'Super', 'Admin', NULL, 'superadmin5@test.com', '', NULL, '$2y$10$cEJsuBpta26C6aMp.MaCY.5apeaYbYNQ2pY1azhsk1cvfo4GhMaNy', NULL, NULL, 0, '2023-01-22 12:33:56', '2023-01-22 12:33:56'),
-(13, 1, 0, 2, 2, 2, 'John D.', 'John D.', NULL, 'JohnDMurray@teleworm.us', '', NULL, '$2y$10$cEJsuBpta26C6aMp.MaCY.5apeaYbYNQ2pY1azhsk1cvfo4GhMaNy', NULL, NULL, 0, '2023-01-25 10:36:08', '2023-01-25 10:36:08'),
-(14, 1, 0, 2, 3, 2, 'test', 'client', NULL, 'client@gmail.com', '', NULL, '$2y$10$cEJsuBpta26C6aMp.MaCY.5apeaYbYNQ2pY1azhsk1cvfo4GhMaNy', NULL, NULL, 0, '2023-02-05 10:19:42', '2023-02-05 10:19:42'),
+(10, 0, 123, 2, 0, 2, 'Rahmat', 'Ali', 'Rahmat Ali', 'admin@mail.com', '', NULL, '$2y$10$cEJsuBpta26C6aMp.MaCY.5apeaYbYNQ2pY1azhsk1cvfo4GhMaNy', 'DOGMciFOE9hAZ2z8kbr1FdaDASBRhGKe8TtNEEGxdUnH5R3FEym6IRdzs4yo', NULL, 0, '2023-01-04 04:24:33', '2023-02-24 09:42:42'),
+(11, 4, 1234, 2, 2, 2, 'Super', 'Admin', NULL, 'superadmin4@bmb.com', '', NULL, '$2y$10$cEJsuBpta26C6aMp.MaCY.5apeaYbYNQ2pY1azhsk1cvfo4GhMaNy', NULL, NULL, 0, '2023-01-19 13:39:09', '2023-01-19 13:39:09'),
+(12, 5, 124, 2, 2, 2, 'Super', 'Admin', NULL, 'superadmin5@test.com', '', NULL, '$2y$10$cEJsuBpta26C6aMp.MaCY.5apeaYbYNQ2pY1azhsk1cvfo4GhMaNy', NULL, NULL, 0, '2023-01-22 12:33:56', '2023-01-22 12:33:56'),
+(13, 1, 125, 2, 2, 2, 'John D.', 'John D.', NULL, 'JohnDMurray@teleworm.us', '', NULL, '$2y$10$cEJsuBpta26C6aMp.MaCY.5apeaYbYNQ2pY1azhsk1cvfo4GhMaNy', NULL, NULL, 0, '2023-01-25 10:36:08', '2023-01-25 10:36:08'),
+(14, 1, 126, 2, 3, 2, 'test', 'client', NULL, 'client@gmail.com', '', NULL, '$2y$10$cEJsuBpta26C6aMp.MaCY.5apeaYbYNQ2pY1azhsk1cvfo4GhMaNy', NULL, NULL, 0, '2023-02-05 10:19:42', '2023-02-05 10:19:42'),
 (15, 6, 2703, 6, 2, 2, 'Asad', 'Nazir', 'Asad Nazir Awan', 'superadmin6@new.com', 'superadmin6', NULL, '$2y$10$cEJsuBpta26C6aMp.MaCY.5apeaYbYNQ2pY1azhsk1cvfo4GhMaNy', NULL, NULL, 7, '2023-02-16 16:08:10', '2023-03-20 15:18:50'),
-(16, 6, 0, 2, 3, 12, 'New', 'Client 1', NULL, 'newclient@gmail.com', 'newclient', NULL, '$2y$10$cEJsuBpta26C6aMp.MaCY.5apeaYbYNQ2pY1azhsk1cvfo4GhMaNy', NULL, NULL, 4, '2023-02-16 16:10:37', '2023-03-20 15:27:50'),
+(16, 6, 127, 2, 3, 12, 'New', 'Client 1', NULL, 'newclient@gmail.com', 'newclient', NULL, '$2y$10$cEJsuBpta26C6aMp.MaCY.5apeaYbYNQ2pY1azhsk1cvfo4GhMaNy', NULL, NULL, 4, '2023-02-16 16:10:37', '2023-03-20 15:27:50'),
 (17, 6, 23213, 5, 2, 2, 'Test', 'Test', 'Asad Nazir Awan', 'test@gmail.com', 'admin', NULL, '$2y$10$cEJsuBpta26C6aMp.MaCY.5apeaYbYNQ2pY1azhsk1cvfo4GhMaNy', NULL, NULL, 0, '2023-02-21 12:54:37', '2023-04-04 11:12:23'),
 (18, 6, 2312, 4, 2, 12, 'Test', 'User', 'abc', 'testuser@gmail.com', 'frank', NULL, '$2y$10$cEJsuBpta26C6aMp.MaCY.5apeaYbYNQ2pY1azhsk1cvfo4GhMaNy', NULL, NULL, 0, '2023-02-27 12:43:41', '2023-04-04 11:12:36'),
-(19, 6, 0, 2, 3, 2, 'New', 'Client 2', NULL, 'newclient2@gmail.com', '', NULL, '$2y$10$cEJsuBpta26C6aMp.MaCY.5apeaYbYNQ2pY1azhsk1cvfo4GhMaNy', NULL, NULL, 0, '2023-03-02 15:49:40', '2023-03-02 15:49:40'),
-(20, 6, 0, 2, 3, 2, 'New', 'Client 3', NULL, 'newclient3@gmail.com', '', NULL, '$2y$10$cEJsuBpta26C6aMp.MaCY.5apeaYbYNQ2pY1azhsk1cvfo4GhMaNy', NULL, NULL, 0, '2023-03-02 16:12:25', '2023-03-02 16:12:25');
+(19, 6, 128, 2, 3, 2, 'New', 'Client 2', NULL, 'newclient2@gmail.com', '', NULL, '$2y$10$cEJsuBpta26C6aMp.MaCY.5apeaYbYNQ2pY1azhsk1cvfo4GhMaNy', NULL, NULL, 0, '2023-03-02 15:49:40', '2023-03-02 15:49:40'),
+(20, 6, 129, 2, 3, 2, 'New', 'Client 3', NULL, 'newclient3@gmail.com', '', NULL, '$2y$10$cEJsuBpta26C6aMp.MaCY.5apeaYbYNQ2pY1azhsk1cvfo4GhMaNy', NULL, NULL, 0, '2023-03-02 16:12:25', '2023-03-02 16:12:25');
 
 --
 -- Constraints for dumped tables

@@ -158,6 +158,12 @@
             </a>
           </li> -->
           @endcan
+          @can('create link')
+          <li class="nav-item">
+            <a class="nav-link pl-3 sub-menu" id="links" href="{{ route('links.index') }}"><span class="ml-1 item-text">Link</span>
+            </a>
+          </li>
+          @endcan
         </ul>
       </li>
     </ul>

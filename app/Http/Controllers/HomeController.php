@@ -25,7 +25,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-
         $user_ids = get_departments_users();
         $data = array();
         $data['menu'] = 'dashboard';

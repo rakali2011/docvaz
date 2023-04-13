@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Link;
 use App\Models\User;
 use App\Models\Practice;
 use App\Models\Status;
@@ -662,5 +663,14 @@ class PracticeController extends Controller
             $response['message'] = "Something Went Wrong Try Again";
         }
         return response()->json($response);
+    }
+    public function practiceInfoForm(Request $request, $token)
+    {
+        $link = Link::where('token', $token)->first();
+        if (date("Y-m-d H:i:s") > $link->expired_at)
+            abort(404);
+        else {
+            dd($link);
+        }
     }
 }

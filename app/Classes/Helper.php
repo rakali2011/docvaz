@@ -8,6 +8,7 @@ use App\Models\DocumentType;
 use App\Models\File;
 use App\Models\Practice;
 use App\Models\Status;
+use App\Models\Team;
 use App\Models\Ticket;
 use App\Models\User;
 
@@ -18,6 +19,7 @@ if (!function_exists('companies')) {
         return $companies;
     }
 }
+// Departments
 if (!function_exists('departments')) {
     function departments()
     {
@@ -48,6 +50,7 @@ if (!function_exists('get_departments_users')) {
         return $user_ids;
     }
 }
+// Designations
 if (!function_exists('designations')) {
     function designations()
     {
@@ -61,6 +64,27 @@ if (!function_exists('get_designation')) {
         return $designation->name;
     }
 }
+if (!function_exists('designation_users')) {
+    function designation_users($designation_id)
+    {
+        $designation = Designation::findorfail($designation_id);
+        $designation_users = $designation->users()->pluck("id");
+        return json_decode(json_encode($designation_users, true));
+    }
+}
+if (!function_exists('get_designations_users')) {
+    function get_designations_users()
+    {
+        $user_ids = [];
+        $designations = designations();
+        foreach ($designations as $key => $designation)
+            $user_ids = array_merge($user_ids, designation_users($designation->id));
+        $user_ids = array_unique($user_ids);
+        sort($user_ids);
+        return $user_ids;
+    }
+}
+// Document Types
 if (!function_exists('document_types')) {
     function document_types()
     {
@@ -241,5 +265,36 @@ function ownership($target_id, $type = "ticket_attachment")
             return true;
         else
             return false;
+    }
+}
+// Teams
+if (!function_exists('teams')) {
+    function teams()
+    {
+        if (auth()->user()->can('assign team user'))
+            $teams = Team::where('company_id', Auth::user()->company_id)->orderBy('name', 'ASC')->get();
+        else
+            $teams = auth()->user()->assigned_teams_array();
+        return $teams;
+    }
+}
+if (!function_exists('team_users')) {
+    function team_users($team_id)
+    {
+        $team = Team::findorfail($team_id);
+        $team_users = $team->assigned_users()->pluck("id");
+        return json_decode(json_encode($team_users, true));
+    }
+}
+if (!function_exists('get_teams_users')) {
+    function get_teams_users()
+    {
+        $user_ids = [];
+        $teams = teams();
+        foreach ($teams as $key => $team)
+            $user_ids = array_merge($user_ids, team_users($team->id));
+        $user_ids = array_unique($user_ids);
+        sort($user_ids);
+        return $user_ids;
     }
 }
