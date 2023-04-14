@@ -12,6 +12,7 @@ class DocumentTypeController extends Controller
 {
     function __construct()
     {
+        $this->middleware('auth');
         $this->middleware('permission:add document type|delete document type|update document type|view document type', ['only' => ['index', 'store']]);
         $this->middleware('permission:add document type', ['only' => ['create', 'store']]);
         $this->middleware('permission:update document type', ['only' => ['edit', 'update']]);

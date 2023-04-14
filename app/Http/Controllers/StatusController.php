@@ -11,6 +11,7 @@ class StatusController extends Controller
 {
     function __construct()
     {
+        $this->middleware('auth');
         $this->middleware('permission:add status|delete status|update status|view status', ['only' => ['index', 'store']]);
         $this->middleware('permission:add status', ['only' => ['create', 'store']]);
         $this->middleware('permission:update status', ['only' => ['edit', 'update']]);

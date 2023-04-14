@@ -19,6 +19,7 @@ class TicketController extends Controller
 {
     function __construct()
     {
+        $this->middleware('auth');
         $this->middleware('permission:create ticket|delete ticket|update ticket|view ticket', ['only' => ['index', 'store']]);
         $this->middleware('permission:create ticket', ['only' => ['create', 'store']]);
         $this->middleware('permission:update ticket', ['only' => ['edit', 'update']]);

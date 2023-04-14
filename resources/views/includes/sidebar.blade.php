@@ -160,7 +160,7 @@
           @endcan
           @can('create link')
           <li class="nav-item">
-            <a class="nav-link pl-3 sub-menu" id="links" href="{{ route('links.index') }}"><span class="ml-1 item-text">Link</span>
+            <a class="nav-link pl-3 sub-menu" id="links" href="{{ route('links.index') }}"><span class="ml-1 item-text">New Signup Links</span>
             </a>
           </li>
           @endcan

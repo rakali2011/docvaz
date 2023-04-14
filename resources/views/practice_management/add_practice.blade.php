@@ -9,17 +9,18 @@
   .tab {
     overflow: hidden;
     border: 1px solid #ccc;
-    background-color: #ff9336 ;
+    background-color: #f1f1f1;
   }
 
-  .tablinks{
-        padding: 0.6rem !important;
-  }
   .tabcontent {
     display: none;
     padding: 6px 12px;
     border: 1px solid #ccc;
     border-top: none;
+  }
+
+  .tabcontent .card-body {
+    border: 1px solid #ccc;
   }
 
   .tab button {
@@ -33,11 +34,11 @@
   }
 
   .tab button:hover {
-    background-color: #ff8000;
+    background-color: #ddd;
   }
 
   .tab .active {
-    background-color: #ff8000;
+    background-color: #ccc;
   }
 
   .tabcontent {

@@ -19,6 +19,10 @@
     border-top: none;
   }
 
+  .tabcontent .card-body {
+    border: 1px solid #ccc;
+  }
+
   .tab button {
     background-color: inherit;
     float: left;
@@ -845,108 +849,110 @@
           @endcan
           @can('update business payers enrollment info')
           <div id="payers-enrollment-information" class="tabcontent">
-            <div class="card-body row" id="payers_enrollment">
-              <div class="col-md-2 e-dynamic_add">
-                <div class="mb-3">
-                  <label for="payer_name" class="form-label">Payer Name</label>
-                  <input type="text" class="form-control" value="" id="payer_name" name="payer_name[]" />
+            <div class="card-body">
+              <div class="row" id="payers_enrollment">
+                <div class="col-md-2 e-dynamic_add">
+                  <div class="mb-3">
+                    <label for="payer_name" class="form-label">Payer Name</label>
+                    <input type="text" class="form-control" value="" id="payer_name" name="payer_name[]" />
+                  </div>
                 </div>
-              </div>
-              <div class="col-md-2 e-dynamic_add">
-                <div class="mb-3">
-                  <label for="payer_provider_name" class="form-label">Provider Name</label>
-                  <input type="text" class="form-control payer_provider_name" value="" id="payer_provider_name" name="payer_provider_name[]" />
+                <div class="col-md-2 e-dynamic_add">
+                  <div class="mb-3">
+                    <label for="payer_provider_name" class="form-label">Provider Name</label>
+                    <input type="text" class="form-control payer_provider_name" value="" id="payer_provider_name" name="payer_provider_name[]" />
+                  </div>
                 </div>
-              </div>
-              <div class="col-md-1 e-dynamic_add">
-                <div class="mb-3">
-                  <label for="payer_npi" class="form-label">NPI</label>
-                  <input type="text" class="form-control payer_npi" value="" id="payer_npi" name="payer_npi[]" />
+                <div class="col-md-1 e-dynamic_add">
+                  <div class="mb-3">
+                    <label for="payer_npi" class="form-label">NPI</label>
+                    <input type="text" class="form-control payer_npi" value="" id="payer_npi" name="payer_npi[]" />
+                  </div>
                 </div>
-              </div>
-              <div class="col-md-2 e-dynamic_add">
-                <div class="mb-3">
-                  <label for="payer_enroll_type" class="form-label">Enroll Type</label>
-                  <select name="payer_enroll_type[]" onchange="change_npi()" ref="" class="form-control payer_enroll_type" id="payer_enroll_type">
-                    <option value="">--Please Select--</option>
-                    <option value="individual" {{ !empty(old('payer_enroll_type')) ? (old('payer_enroll_type')[0] == 'individual' ? 'selected' : '') : '' }}>Individual</option>
-                    <option value="group" {{ !empty(old('payer_enroll_type')) ? (old('payer_enroll_type')[0] == 'group' ? 'selected' : '') : '' }}>Group</option>
-                  </select>
+                <div class="col-md-2 e-dynamic_add">
+                  <div class="mb-3">
+                    <label for="payer_enroll_type" class="form-label">Enroll Type</label>
+                    <select name="payer_enroll_type[]" onchange="change_npi()" ref="" class="form-control payer_enroll_type" id="payer_enroll_type">
+                      <option value="">--Please Select--</option>
+                      <option value="individual" {{ !empty(old('payer_enroll_type')) ? (old('payer_enroll_type')[0] == 'individual' ? 'selected' : '') : '' }}>Individual</option>
+                      <option value="group" {{ !empty(old('payer_enroll_type')) ? (old('payer_enroll_type')[0] == 'group' ? 'selected' : '') : '' }}>Group</option>
+                    </select>
+                  </div>
                 </div>
-              </div>
-              <div class="col-md-2 e-dynamic_add">
-                <div class="mb-3">
-                  <label for="payer_enroll_with" class="form-label">Enroll With</label>
-                  <select name="payer_enroll_with[]" class="form-control" id="payer_enroll_with">
-                    <option value="">--Please Select--</option>
-                    <option value="tax_id" {{ !empty(old('payer_enroll_with')) ? (old('payer_enroll_with')[0] == 'tax_id' ? 'selected' : '') : '' }}>Tax Id</option>
-                    <option value="ssn" {{ !empty(old('payer_enroll_with')) ? (old('payer_enroll_with')[0] == 'ssn' ? 'selected' : '') : '' }}>SSN</option>
-                  </select>
+                <div class="col-md-2 e-dynamic_add">
+                  <div class="mb-3">
+                    <label for="payer_enroll_with" class="form-label">Enroll With</label>
+                    <select name="payer_enroll_with[]" class="form-control" id="payer_enroll_with">
+                      <option value="">--Please Select--</option>
+                      <option value="tax_id" {{ !empty(old('payer_enroll_with')) ? (old('payer_enroll_with')[0] == 'tax_id' ? 'selected' : '') : '' }}>Tax Id</option>
+                      <option value="ssn" {{ !empty(old('payer_enroll_with')) ? (old('payer_enroll_with')[0] == 'ssn' ? 'selected' : '') : '' }}>SSN</option>
+                    </select>
+                  </div>
                 </div>
-              </div>
-              <div class="col-md-2 e-dynamic_add">
-                <div class="mb-3">
-                  <label for="payer_effective_date" class="form-label">Enroll Effective</label>
-                  <input type="date" class="form-control" value="" id="payer_effective_date" name="payer_effective_date[]" />
+                <div class="col-md-2 e-dynamic_add">
+                  <div class="mb-3">
+                    <label for="payer_effective_date" class="form-label">Enroll Effective</label>
+                    <input type="date" class="form-control" value="" id="payer_effective_date" name="payer_effective_date[]" />
+                  </div>
                 </div>
-              </div>
-              <div class="col-md-1 d-flex justify-content-center align-items-center e-dynamic_add">
-                <div class="mb-3 pt-4">
-                  <i style="cursor: pointer" id="add-payers_enrollment" class="fa fa-plus-circle fs-2"></i>
+                <div class="col-md-1 d-flex justify-content-center align-items-center e-dynamic_add">
+                  <div class="mb-3 pt-4">
+                    <i style="cursor: pointer" id="add-payers_enrollment" class="fa fa-plus-circle fs-2"></i>
+                  </div>
                 </div>
-              </div>
-              @foreach(json_decode(@$practice->payers_info) as $key => $value)
-              @if(empty($value->payer_name) && empty($value->payer_provider_name) && empty($value->npi) && empty($value->enroll_type) && empty($value->enroll_with) && empty($value->effective_date))
-              @continue
-              @endif
-              <div class="col-md-2 e-dynamic_add-{{$key}}">
-                <div class="mb-3">
-                  <label for="payer_name-{{$key}}" class="form-label">Payer Name</label>
-                  <input type="text" class="form-control" id="payer_name-{{$key}}" name="payer_name[]" value="{{ empty(old('payer_name')) ? @$value->payer_name : old('payer_name') }}">
+                @foreach(json_decode(@$practice->payers_info) as $key => $value)
+                @if(empty($value->payer_name) && empty($value->payer_provider_name) && empty($value->npi) && empty($value->enroll_type) && empty($value->enroll_with) && empty($value->effective_date))
+                @continue
+                @endif
+                <div class="col-md-2 e-dynamic_add-{{$key}}">
+                  <div class="mb-3">
+                    <label for="payer_name-{{$key}}" class="form-label">Payer Name</label>
+                    <input type="text" class="form-control" id="payer_name-{{$key}}" name="payer_name[]" value="{{ empty(old('payer_name')) ? @$value->payer_name : old('payer_name') }}">
+                  </div>
                 </div>
-              </div>
-              <div class="col-md-2 e-dynamic_add-{{$key}}">
-                <div class="mb-3">
-                  <label for="payer_provider_name-{{$key}}" class="form-label">Provider Name</label>
-                  <input type="text" class="form-control payer_provider_name" id="payer_provider_name-{{$key}}" name="payer_provider_name[]" value="{{ empty(old('payer_provider_name')) ? @$value->payer_provider_name : old('payer_provider_name') }}">
+                <div class="col-md-2 e-dynamic_add-{{$key}}">
+                  <div class="mb-3">
+                    <label for="payer_provider_name-{{$key}}" class="form-label">Provider Name</label>
+                    <input type="text" class="form-control payer_provider_name" id="payer_provider_name-{{$key}}" name="payer_provider_name[]" value="{{ empty(old('payer_provider_name')) ? @$value->payer_provider_name : old('payer_provider_name') }}">
+                  </div>
                 </div>
-              </div>
-              <div class="col-md-1 e-dynamic_add-{{$key}}">
-                <div class="mb-3">
-                  <label for="payer_npi-{{$key}}" class="form-label">NPI</label>
-                  <input type="text" class="form-control payer_npi" id="payer_npi-{{$key}}" name="payer_npi[]" value="{{ empty(old('payer_npi')) ? @$value->npi : old('payer_npi') }}">
+                <div class="col-md-1 e-dynamic_add-{{$key}}">
+                  <div class="mb-3">
+                    <label for="payer_npi-{{$key}}" class="form-label">NPI</label>
+                    <input type="text" class="form-control payer_npi" id="payer_npi-{{$key}}" name="payer_npi[]" value="{{ empty(old('payer_npi')) ? @$value->npi : old('payer_npi') }}">
+                  </div>
                 </div>
-              </div>
-              <div class="col-md-2 e-dynamic_add-{{$key}}">
-                <div class="mb-3">
-                  <label for="payer_enroll_type-{{$key}}" class="form-label">Enroll Type</label>
-                  <select name="payer_enroll_type[]" onchange="change_npi()" class="form-control payer_enroll_type" id="payer_enroll_type-{{$key}}" value="{{ empty(old('payer_enroll_type')) ? @$value->enroll_type : old('payer_enroll_type') }}">
-                    <option value="individual" {{ !empty(old('payer_enroll_type')) ? (old('payer_enroll_type')[$key] == 'individual' ? 'selected' : '') : (@$value->enroll_type == 'individual' ? 'selected' : '') }}>Individual</option>
-                    <option value="group" {{ !empty(old('payer_enroll_type')) ? (old('payer_enroll_type')[$key] == 'group' ? 'selected' : '') : (@$value->enroll_type == 'group' ? 'selected' : '') }}>Group</option>
-                  </select>
+                <div class="col-md-2 e-dynamic_add-{{$key}}">
+                  <div class="mb-3">
+                    <label for="payer_enroll_type-{{$key}}" class="form-label">Enroll Type</label>
+                    <select name="payer_enroll_type[]" onchange="change_npi()" class="form-control payer_enroll_type" id="payer_enroll_type-{{$key}}" value="{{ empty(old('payer_enroll_type')) ? @$value->enroll_type : old('payer_enroll_type') }}">
+                      <option value="individual" {{ !empty(old('payer_enroll_type')) ? (old('payer_enroll_type')[$key] == 'individual' ? 'selected' : '') : (@$value->enroll_type == 'individual' ? 'selected' : '') }}>Individual</option>
+                      <option value="group" {{ !empty(old('payer_enroll_type')) ? (old('payer_enroll_type')[$key] == 'group' ? 'selected' : '') : (@$value->enroll_type == 'group' ? 'selected' : '') }}>Group</option>
+                    </select>
+                  </div>
                 </div>
-              </div>
-              <div class="col-md-2 e-dynamic_add-{{$key}}">
-                <div class="mb-3">
-                  <label for="payer_enroll_with-{{$key}}" class="form-label">Enroll With</label>
-                  <select name="payer_enroll_with[]" class="form-control" id="payer_enroll_with-{{$key}}" value="{{ empty(old('payer_enroll_with')) ? @$value->enroll_with : old('payer_enroll_with') }}">
-                    <option value="tax_id" {{ !empty(old('payer_enroll_with')) ? (old('payer_enroll_with')[$key] == 'tax_id' ? 'selected' : '') : (@$value->enroll_with == 'tax_id' ? 'selected' : '') }}>Tax Id</option>
-                    <option value="ssn" {{ !empty(old('payer_enroll_with')) ? (old('payer_enroll_with')[$key] == 'ssn' ? 'selected' : '') : (@$value->enroll_with == 'ssn' ? 'selected' : '') }}>SSN</option>
-                  </select>
+                <div class="col-md-2 e-dynamic_add-{{$key}}">
+                  <div class="mb-3">
+                    <label for="payer_enroll_with-{{$key}}" class="form-label">Enroll With</label>
+                    <select name="payer_enroll_with[]" class="form-control" id="payer_enroll_with-{{$key}}" value="{{ empty(old('payer_enroll_with')) ? @$value->enroll_with : old('payer_enroll_with') }}">
+                      <option value="tax_id" {{ !empty(old('payer_enroll_with')) ? (old('payer_enroll_with')[$key] == 'tax_id' ? 'selected' : '') : (@$value->enroll_with == 'tax_id' ? 'selected' : '') }}>Tax Id</option>
+                      <option value="ssn" {{ !empty(old('payer_enroll_with')) ? (old('payer_enroll_with')[$key] == 'ssn' ? 'selected' : '') : (@$value->enroll_with == 'ssn' ? 'selected' : '') }}>SSN</option>
+                    </select>
+                  </div>
                 </div>
-              </div>
-              <div class="col-md-2 e-dynamic_add-{{$key}}">
-                <div class="mb-3">
-                  <label for="payer_effective_date-{{$key}}" class="form-label">Enroll Effective</label>
-                  <input type="date" class="form-control" id="payer_effective_date-{{$key}}" name="payer_effective_date[]" value="{{ empty(old('payer_effective_date')) ? @$value->effective_date : old('payer_effective_date') }}">
+                <div class="col-md-2 e-dynamic_add-{{$key}}">
+                  <div class="mb-3">
+                    <label for="payer_effective_date-{{$key}}" class="form-label">Enroll Effective</label>
+                    <input type="date" class="form-control" id="payer_effective_date-{{$key}}" name="payer_effective_date[]" value="{{ empty(old('payer_effective_date')) ? @$value->effective_date : old('payer_effective_date') }}">
+                  </div>
                 </div>
-              </div>
-              <div class="col-md-1 d-flex justify-content-center align-items-center e-dynamic_add-{{$key}}">
-                <div class="mb-3 pt-4">
-                  <i style="cursor: pointer" onclick="remove_payers_enrollment({{$key}})" id="add-address" class="fa fa-minus-circle fs-2"></i>
+                <div class="col-md-1 d-flex justify-content-center align-items-center e-dynamic_add-{{$key}}">
+                  <div class="mb-3 pt-4">
+                    <i style="cursor: pointer" onclick="remove_payers_enrollment({{$key}})" id="add-address" class="fa fa-minus-circle fs-2"></i>
+                  </div>
                 </div>
+                @endforeach
               </div>
-              @endforeach
             </div>
           </div>
           @endcan

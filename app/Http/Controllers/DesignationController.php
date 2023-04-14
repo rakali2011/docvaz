@@ -12,6 +12,7 @@ class DesignationController extends Controller
 {
     function __construct()
     {
+        $this->middleware('auth');
         $this->middleware('permission:add designation|delete designation|update designation|view designation', ['only' => ['index', 'store']]);
         $this->middleware('permission:add designation', ['only' => ['create', 'store']]);
         $this->middleware('permission:update designation', ['only' => ['edit', 'update']]);

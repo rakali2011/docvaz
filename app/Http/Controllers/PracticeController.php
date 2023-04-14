@@ -664,13 +664,4 @@ class PracticeController extends Controller
         }
         return response()->json($response);
     }
-    public function practiceInfoForm(Request $request, $token)
-    {
-        $link = Link::where('token', $token)->first();
-        if (date("Y-m-d H:i:s") > $link->expired_at)
-            abort(404);
-        else {
-            dd($link);
-        }
-    }
 }

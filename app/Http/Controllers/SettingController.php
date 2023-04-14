@@ -16,6 +16,7 @@ class SettingController extends Controller
      */
     function __construct()
     {
+        $this->middleware('auth');
         $this->middleware('permission:update company setting|delete company setting|update company setting|view company setting', ['only' => ['index', 'store']]);
         $this->middleware('permission:update company setting', ['only' => ['create', 'store']]);
         $this->middleware('permission:create company setting', ['only' => ['edit', 'update']]);
