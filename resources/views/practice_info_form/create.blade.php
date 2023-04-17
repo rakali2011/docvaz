@@ -710,7 +710,6 @@
   <script src="{{ asset('assets/js/datamaps.all.min.js') }}"></script>
   <script src="{{ asset('assets/js/datamaps-zoomto.js') }}"></script>
   <script src="{{ asset('assets/js/datamaps.custom.js') }}"></script>
-
   <script src="{{ asset('assets/js/gauge.min.js') }}"></script>
   <script src="{{ asset('assets/js/jquery.sparkline.min.js') }}"></script>
   <script src="{{ asset('assets/js/jquery.mask.min.js') }}"></script>
@@ -722,7 +721,6 @@
   <script src="{{ asset('assets/js/uppy.min.js') }}"></script>
   <script src="{{ asset('assets/js/quill.min.js') }}"></script>
   <script src="{{ asset('assets/js/apps.js') }}"></script>
-
   <script src="{{ asset('assets/Tagify-4.13.3/js/tagify.min.js') }}"></script>
   <script src="{{ asset('assets/Tagify-4.13.3/js/tagify.polyfills.min.js') }}"></script>
   <script>

@@ -5,17 +5,19 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Team;
 use App\Models\User;
+use App\Models\Designation;
+use App\Models\Status;
 use Spatie\Permission\Models\Role as SpatieRole;
 use Spatie\Permission\Models\Permission;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\PostUser;
 use App\Http\Requests\PostClient;
-use App\Models\Designation;
-use App\Models\Status;
+
 use Illuminate\Support\Facades\DB;
 use Exception;
 use App\Rules\MatchOldPassword;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Crypt;
 
 class UserController extends Controller
 {
@@ -27,26 +29,26 @@ class UserController extends Controller
     {
         $data['menu'] = "user-management";
         $data['sub_menu'] = "users";
-        if (auth()->user()->hasRole('dev')) {
-            $users = User::where('company_id', '!=', 0)->where('type', 2)->orderBy('id', 'DESC')->get();
-        } else {
-            $users = get_users();
-        }
-        foreach ($users as $user) {
-            $user->roles = $user->roles()->pluck('display_name');
-            $user->departments = $user->assigned_departments()->pluck('name');
-            $roles = "";
-            $departments = "";
-            foreach ($user->roles as $role) {
-                $roles .= "<span class='role'>$role</span>";
-            }
-            foreach ($user->departments as $department) {
-                $departments .= "<span class='role'>$department</span>";
-            }
-            $user->roles = $roles;
-            $user->departments = $departments;
-        }
-        return view('user_management.users', compact('data', 'users'));
+        // if (auth()->user()->hasRole('dev')) {
+        //     $users = User::where('company_id', '!=', 0)->where('type', 2)->orderBy('id', 'DESC')->get();
+        // } else {
+        //     $users = get_users();
+        // }
+        // foreach ($users as $user) {
+        //     $user->roles = $user->roles()->pluck('display_name');
+        //     $user->departments = $user->assigned_departments()->pluck('name');
+        //     $roles = "";
+        //     $departments = "";
+        //     foreach ($user->roles as $role) {
+        //         $roles .= "<span class='role'>$role</span>";
+        //     }
+        //     foreach ($user->departments as $department) {
+        //         $departments .= "<span class='role'>$department</span>";
+        //     }
+        //     $user->roles = $roles;
+        //     $user->departments = $departments;
+        // }
+        return view('user_management.users', compact('data'));
     }
 
     public function add_user()
@@ -301,7 +303,10 @@ class UserController extends Controller
             "date_to" => $request->input('date_to_filter') != "" ? date("Y-m-d", strtotime($request->input('date_to_filter'))) . ' 23:59:59' : date("Y-m-d H:i:s")
         ];
         $filter = array(
+            "company_id" => $request->input('company_filter'),
+            "department_id" => $request->input('department_filter'),
             "designation_id" => $request->input('designation_filter'),
+            "role_id" => $request->input('role_filter'),
             "status" => $request->input('status_filter')
         );
         $limit = $request->input('length');
@@ -311,22 +316,35 @@ class UserController extends Controller
         $dir = !empty($request->input('order.0.dir')) ? strtoupper($request->input('order.0.dir')) : "DESC";
         $search = $request->input('search.value');
         $user = new User();
-        $totalData = $user->countTotal();
-        $totalFiltered = $user->countFiltered($date_range, $filter, $search);
-        $users = $user->getData($date_range, $filter, $search, $start, $limit, $order, $dir);
+        $totalData = $user->countTotal(2);
+        $totalFiltered = $user->countFiltered(2, $date_range, $filter, $search);
+        $users = $user->getData(2, $date_range, $filter, $search, $start, $limit, $order, $dir);
         $data = array();
         if (!empty($users)) {
             foreach ($users as $user) {
-                // $edit = '';
-                // $view = '';
-                // $delete = '';
-                // if (auth()->user()->can('update file'))
-                //     $edit = '<a class="dropdown-item" href="' . route('edit_file', ['id' => $file->id]) . '">Edit</a>';
-                // if (auth()->user()->can('view file'))
-                //     $view = '<a class="dropdown-item" href="' . route('file', ['id' => $file->id]) . '" target="_blank" rel="noopener noreferrer">View</a>';
-                // if (auth()->user()->can('delete file')) {
-                //     $delete = '<form method="POST" action="' . route('delete_file', $file->id) . '" accept-charset="UTF-8" style="display:inline"><input name="_token" type="hidden" value="' . csrf_token() . '"><input class="dropdown-item" type="submit" value="Delete"></form>';
-                // }
+                $roles = "";
+                $departments = "";
+                $user->roles = $user->roles()->pluck('display_name');
+                $user->departments = $user->assigned_departments()->pluck('name');
+                foreach ($user->roles as $role) {
+                    $roles .= "<span class='role'>$role</span>";
+                }
+                foreach ($user->departments as $department) {
+                    $departments .= "<span class='role'>$department</span>";
+                }
+                $edit = '';
+                $assign_department = '';
+                $assign_document = '';
+                $assign_practice = '';
+                if (auth()->user()->can('update user'))
+                    $edit = '<a class="dropdown-item" href="' . route('edit_user', ['id' => Crypt::encrypt($user->id)]) . '">Edit</a>';
+                if (auth()->user()->can('assign department user'))
+                    $assign_department = '<a class="dropdown-item assign-department" ref="' . Crypt::encrypt($user->id) . '" href="javascript:;">Assign Department</a>';
+                if (auth()->user()->can('assign document user'))
+                    $assign_document = '<a class="dropdown-item assign-document" ref="' . Crypt::encrypt($user->id) . '" href="javascript:;">Allow Document Types</a>';
+                if (auth()->user()->can('assign practice user'))
+                    $assign_practice = '<a class="dropdown-item assign-practice" ref="' . Crypt::encrypt($user->id) . '" href="javascript:;">Assign Practice</a>';
+
                 $nestedData['first_name'] = $user->firstname;
                 $nestedData['last_name'] = $user->lastname;
                 $nestedData['psudo_name'] = $user->psudo_name;
@@ -335,7 +353,10 @@ class UserController extends Controller
                 $nestedData['employee_id'] = $user->employee_id;
                 $nestedData['designation_id'] = Designation::findorfail($user->designation_id)->name;
                 $nestedData['status'] = Status::findorfail($user->status)->name;
-                // $nestedData['action'] = '<button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="text-muted sr-only">Action</span></button><div class="dropdown-menu dropdown-menu-right">' . $view . $edit . $delete . '</div>';
+                $nestedData['roles'] = $roles;
+                $nestedData['departments'] = $departments;
+                $nestedData['company_name'] = $user->company->name;
+                $nestedData['action'] = '<button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="text-muted sr-only">Action</span></button><div class="dropdown-menu dropdown-menu-right">' . $edit . $assign_department . $assign_document . $assign_practice . '</div>';
                 $data[] = $nestedData;
             }
         }

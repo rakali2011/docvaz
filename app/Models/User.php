@@ -149,18 +149,21 @@ class User extends Authenticatable implements Auditable
         return $this->last_activity;
         // > Carbon::now()->subMinutes(config('session.lifetime'));
     }
-    public function countTotal()
+    public function countTotal($type)
     {
-        $user_ids = get_users()->pluck('id');
+        $user_ids = get_users($type)->pluck('id');
         $query = $this;
         $query = $this->whereIn('id', $user_ids);
         return $query->count();
     }
-    public function countFiltered($date_range, $filter, $search)
+    public function countFiltered($type, $date_range, $filter, $search)
     {
-        $user_ids = get_users()->pluck('id');
+        $user_ids = get_users($type)->pluck('id');
         $query = $this;
         $query = $this->whereIn('id', $user_ids);
+        if (!empty($filter["company_id"])) {
+            $query = $query->where('company_id', $filter['company_id']);
+        }
         if (!empty($filter["designation_id"])) {
             $query = $query->where('designation_id', $filter['designation_id']);
         }
@@ -181,16 +184,25 @@ class User extends Authenticatable implements Auditable
         }
         return $query->count();
     }
-    public function getData($date_range, $filter, $search, $start, $limit, $order, $dir)
+    public function getData($type, $date_range, $filter, $search, $start, $limit, $order, $dir)
     {
-        $user_ids = get_users()->pluck('id');
+        $user_ids = get_users($type)->pluck('id');
         $query = $this;
         $query = $this->whereIn('id', $user_ids);
+        if (!empty($filter["company_id"])) {
+            $query = $query->where('company_id', $filter['company_id']);
+        }
+        if (!empty($filter["department_id"])) {
+            // $query = $query->where('designation_id', $filter['designation_id']);
+        }
         if (!empty($filter["designation_id"])) {
             $query = $query->where('designation_id', $filter['designation_id']);
         }
         if (!empty($filter["status"])) {
             $query = $query->where('status', $filter['status']);
+        }
+        if (!empty($filter["role_id"])) {
+            // $query = $query->where('status', $filter['status']);
         }
         if (!empty($date_range["date_from"])) {
             $query = $query->whereBetween('created_at', [$date_range["date_from"], $date_range["date_to"]]);

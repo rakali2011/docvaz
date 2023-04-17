@@ -11,7 +11,13 @@ use App\Models\Status;
 use App\Models\Team;
 use App\Models\Ticket;
 use App\Models\User;
+use Spatie\Permission\Models\Role as SpatieRole;
 
+function roles()
+{
+    $roles = SpatieRole::where('company_id', Auth::user()->company->id)->pluck('display_name', 'id')->all();
+    return $roles;
+}
 if (!function_exists('companies')) {
     function companies()
     {
@@ -157,18 +163,20 @@ if (!function_exists('users')) {
         return $users;
     }
 }
-function get_users()
+function get_users($type)
 {
     $users = [];
-    if (auth()->user()->can("view user")) {
-        $users = User::where('company_id', Auth::user()->company_id)->where('type', 2)->get();
+    if (auth()->user()->hasRole('dev')) {
+        $users = User::where('company_id', '!=', 0)->where('type', $type)->get();
+    } else if (auth()->user()->can("view user")) {
+        $users = User::where('company_id', Auth::user()->company_id)->where('type', $type)->get();
     } else if (auth()->user()->can("view his own users")) {
         $rank = auth()->user()->designation()->first()->rank;
         $departments = auth()->user()->assigned_departments();
         foreach ($departments as $key => $department) {
             $assigned_users = $department->assigned_users();
             foreach ($assigned_users as $index => $user) {
-                if ($rank < $user->designation()->first()->rank && $user->type == 2) {
+                if ($rank < $user->designation()->first()->rank && $user->type == $type) {
                     $users[] = $user;
                 }
             }
@@ -296,5 +304,17 @@ if (!function_exists('get_teams_users')) {
         $user_ids = array_unique($user_ids);
         sort($user_ids);
         return $user_ids;
+    }
+}
+if (!function_exists('get_tagsinput')) {
+    function get_tagsinput($json)
+    {
+        if (!empty($json)) {
+            $json = json_decode($json, true);
+            $json = array_column($json, "value");
+            $json = implode(",", $json);
+            return $json;
+        } else
+            return $json;
     }
 }

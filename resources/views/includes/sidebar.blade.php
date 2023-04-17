@@ -120,6 +120,8 @@
       </li>
     </ul>
     @endcan
+    @role('dev')
+    @else
     @canany(['view team','view department','view designation','view document type','view status'])
     <ul class="navbar-nav flex-fill w-100 mb-2">
       <li class="nav-item dropdown">
@@ -226,5 +228,6 @@
         </ul>
       </li>
     </ul>
+    @endrole
   </nav>
 </aside>

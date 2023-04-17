@@ -47,7 +47,7 @@ class HomeController extends Controller
             $documents->name = json_decode(json_encode($statuses->pluck('name')), true);
             $documents->count = json_decode(json_encode($statuses->pluck('files_count')), true);
             // Users by status
-            $user_ids = get_users()->pluck('id');
+            $user_ids = get_users(2)->pluck('id');
             $statuses = NULL;
             $statuses = statuses("user");
             foreach ($statuses as $key => $status)

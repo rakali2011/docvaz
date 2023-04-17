@@ -25,56 +25,37 @@
         <div class="col-md-12">
           <div class="card shadow">
             <div class="card-body">
-              <!-- table -->
-              <table class="table datatables" id="dataTable-1">
+              <table id="users-table" class="display" style="width:100%">
                 <thead>
                   <tr>
                     <th>First Name</th>
                     <th>Last Name</th>
                     <th>Email</th>
                     <th>Username</th>
+                    <th>Status</th>
                     <th>Roles</th>
                     <th>Departments</th>
                     @role('dev')
-                    <th>Company</th>
+                    <th>Company Name</th>
                     @endrole
                     <th>Action</th>
                   </tr>
                 </thead>
-                <tbody>
-                  @foreach ($clients as $item)
+                <tfoot>
                   <tr>
-                    <td>{{ $item->firstname }}</td>
-                    <td>{{ $item->lastname }}</td>
-                    <td>{{ $item->email }}</td>
-                    <td>{{ $item->username }}</td>
-                    <td><?= $item->roles; ?></td>
-                    <td><?= $item->departments; ?></td>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                    <th>Username</th>
+                    <th>Status</th>
+                    <th>Roles</th>
+                    <th>Departments</th>
                     @role('dev')
-                    <td>{{ @$item->company->name }}</td>
+                    <th>Company Name</th>
                     @endrole
-                    <td>
-                      <button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <span class="text-muted sr-only">Action</span>
-                      </button>
-                      <div class="dropdown-menu dropdown-menu-right">
-                        @can('update client')
-                        <a class="dropdown-item" href="{{ route('edit_client', ['id' => Crypt::encrypt($item->id)]) }}">Edit</a>
-                        @endcan
-                        @can('assign department user')
-                        <a class="dropdown-item assign-department" ref="{{ Crypt::encrypt($item->id) }}" href="javascript:;">Assign Department</a>
-                        @endcan
-                        @can('assign practice user')
-                        <a class="dropdown-item assign-practice" ref="{{ Crypt::encrypt($item->id) }}" href="javascript:;">Assign Practice</a>
-                        @endcan
-                        <!--  @can('assign team user')
-                        <a class="dropdown-item assign-team" ref="{{ Crypt::encrypt($item->id) }}" href="javascript:;">Assign Team</a>
-                        @endcan -->
-                      </div>
-                    </td>
+                    <th>Action</th>
                   </tr>
-                  @endforeach
-                </tbody>
+                </tfoot>
               </table>
             </div>
           </div>
@@ -153,8 +134,84 @@
 @push('scripts')
 <script src="{{ asset('assets/Multiselect/jquery.multiselect.js') }}"></script>
 <script>
+  $(document).ready(function() {
+    $('#users-table').DataTable({
+      "processing": true,
+      "serverSide": true,
+      "ajax": {
+        "url": "{{ route('all_clients') }}",
+        "dataType": "json",
+        "type": "POST",
+        "data": {
+          _token: "{{csrf_token()}}",
+          'designation_filter': function() {
+            return $("#user_designation").val();
+          },
+          'status_filter': function() {
+            return $("#user_status").val();
+          },
+        }
+      },
+      "columns": [{
+          "data": "first_name",
+          "orderable": true
+        },
+        {
+          "data": "last_name",
+          "orderable": true
+        },
+        {
+          "data": "email",
+          "orderable": true
+        },
+        {
+          "data": "username",
+          "orderable": true
+        },
+        {
+          "data": "status",
+          "orderable": false
+        },
+        {
+          "data": "roles",
+          "orderable": false
+        },
+        {
+          "data": "departments",
+          "orderable": false
+        },
+        <?php if (Auth::user()->roles[0]->name === 'dev') : ?> {
+            "data": "company_name",
+            "orderable": false
+          },
+        <?php endif; ?> {
+          "data": "action",
+          "orderable": false
+        }
+      ],
+      dom: 'Bfrtip',
+      lengthMenu: [
+        [10, 50, 500, 1000],
+        ['10 Rows', '50 Rows', '500 Rows', '1000 Rows']
+      ],
+      buttons: [
+        //{ extend: 'pdf', text: '<i class="fas fa-file-pdf fa-1x" aria-hidden="true"> Export in PDF</i>' },
+        //{ extend: 'csv', text: '<i class="fas fa-file-csv fa-1x"> Export in CSV</i>'},
+        {
+          extend: 'excel',
+          text: '<i class="fas fa-file-excel" aria-hidden="true"> Export in EXCEL</i>'
+        },
+        'pageLength'
+      ],
+      // "drawCallback": function(settings) {
+      //   provider_detail_event();
+      //   provider_history_event();
+      //   provider_activate_event();
+      // }
+    });
+  });
   var ref = '';
-  $('.assign-department').click(function() {
+  $(document).on('click', '.assign-department', function() {
     ref = $(this).attr('ref');
     $.ajax({
       type: "post",
@@ -180,7 +237,7 @@
     });
     $('#assign-department-modal').modal('show');
   });
-  $('.assign-practice').click(function() {
+  $(document).on('click', '.assign-practice', function() {
     ref = $(this).attr('ref');
     $.ajax({
       type: "post",
@@ -209,7 +266,7 @@
     });
     $('#assign-practice-modal').modal('show');
   });
-  $('.assign-team').click(function() {
+  $(document).on('click', '.assign-team', function() {
     ref = $(this).attr('ref');
     $.ajax({
       type: "post",

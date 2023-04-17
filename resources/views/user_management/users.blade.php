@@ -24,61 +24,116 @@
                 <div class="col-md-12">
                     <div class="card shadow">
                         <div class="card-body">
-                            <!-- table -->
-                            <table class="table datatables" id="dataTable-1">
+                            <div class="card mb-3">
+                                <div class="card-body shadow background-panel">
+                                    <form action="" id="filter-form" class="row">
+                                        @role('dev')
+                                        <div class="form-group col-md-2">
+                                            <label for="company-filter"></label>
+                                            <select name="company-filter" id="company-filter" class="form-control">
+                                                <option value="">Select Company</option>
+                                                @foreach (companies() as $company)
+                                                <option value="{{ $company->id }}">{{ $company->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        @else
+                                        <div class="form-group col-md-2">
+                                            <label for="departments-filter"></label>
+                                            <select name="departments-filter" id="departments-filter" class="form-control">
+                                                <option value="">Select Departments</option>
+                                                @foreach (departments() as $department)
+                                                <option value="{{ $department->id }}">{{ $department->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-2">
+                                            <label for="designation-filter"></label>
+                                            <select name="designation-filter" id="designation-filter" class="form-control">
+                                                <option value="">Select Designation</option>
+                                                @foreach (designations() as $designation)
+                                                <option value="{{ $designation->id }}">{{ $designation->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-2">
+                                            <label for="status-filter"></label>
+                                            <select name="status-filter" id="status-filter" class="form-control">
+                                                <option value="">Select Status</option>
+                                                @foreach (statuses('user') as $status)
+                                                <option value="{{ $status->id }}">{{ $status->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-2">
+                                            <label for="role-filter"></label>
+                                            <select name="role-filter" id="role-filter" class="form-control">
+                                                <option value="">Select Role</option>
+                                                @foreach (roles() as $key => $role)
+                                                <option value="{{ $key }}">{{ $role }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        @endrole
+                                        <div class="form-group col-md-2">
+                                            <label for="date_from"></label>
+                                            <input type="text" name="date_from" id="date_from" class="form-control datepicker" placeholder="Date From">
+                                        </div>
+                                        <div class="form-group col-md-2">
+                                            <label for="date_to"></label>
+                                            <input type="text" name="date_to" id="date_to" class="form-control datepicker" placeholder="Date To">
+                                        </div>
+                                        @role('dev')
+                                        <div class="col-md-4 text-right" style="margin:auto;">
+                                            <button type="submit" class="btn btn-sm btn-primary">Filter</button>
+                                            <button type="button" class="btn btn-sm btn-primary" id="c_filter">Clear Filter</button>
+                                        </div>
+                                        @else
+                                        <div class="col-md-12 text-right" style="margin:auto;">
+                                            <button type="submit" class="btn btn-sm btn-primary">Filter</button>
+                                            <button type="button" class="btn btn-sm btn-primary" id="c_filter">Clear Filter</button>
+                                        </div>
+                                        @endrole
+                                    </form>
+                                </div>
+                            </div>
+                            <table id="users-table" class="display" style="width:100%">
                                 <thead>
                                     <tr>
                                         <th>First Name</th>
                                         <th>Last Name</th>
-                                        <th>Designation</th>
+                                        <th>Psudo Name</th>
                                         <th>Email</th>
                                         <th>Username</th>
+                                        <th>Employee ID</th>
+                                        <th>Designation</th>
+                                        <th>Status</th>
                                         <th>Roles</th>
                                         <th>Departments</th>
                                         @role('dev')
-                                        <th>Company</th>
+                                        <th>Company Name</th>
                                         @endrole
                                         <th>Action</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    @foreach ($users as $item)
+                                <tfoot>
                                     <tr>
-                                        <td>{{ $item->firstname }}</td>
-                                        <td>{{ $item->lastname }}</td>
-                                        <td>{{ $item->designation_id }}</td>
-                                        <td>{{ $item->email }}</td>
-                                        <td>{{ $item->username }}</td>
-                                        <td><?= $item->roles; ?></td>
-                                        <td><?= $item->departments; ?></td>
+                                        <th>First Name</th>
+                                        <th>Last Name</th>
+                                        <th>Psudo Name</th>
+                                        <th>Email</th>
+                                        <th>Username</th>
+                                        <th>Employee ID</th>
+                                        <th>Designation</th>
+                                        <th>Status</th>
+                                        <th>Roles</th>
+                                        <th>Departments</th>
                                         @role('dev')
-                                        <td>{{ @$item->company->name }}</td>
+                                        <th>Company Name</th>
                                         @endrole
-                                        <td>
-                                            <button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <span class="text-muted sr-only">Action</span>
-                                            </button>
-                                            <div class="dropdown-menu dropdown-menu-right">
-                                                @can('update user')
-                                                <a class="dropdown-item" href="{{ route('edit_user', ['id' => Crypt::encrypt($item->id)]) }}">Edit</a>
-                                                @endcan
-                                                @can('assign department user')
-                                                <a class="dropdown-item assign-department" ref="{{ Crypt::encrypt($item->id) }}" href="javascript:;">Assign Department</a>
-                                                @endcan
-                                                @can('assign document user')
-                                                <a class="dropdown-item assign-document" ref="{{ Crypt::encrypt($item->id) }}" href="javascript:;">Allow Document Types</a>
-                                                @endcan
-                                                @can('assign practice user')
-                                                <a class="dropdown-item assign-practice" ref="{{ Crypt::encrypt($item->id) }}" href="javascript:;">Assign Practice</a>
-                                                @endcan
-                                                <!-- @can('assign team user')
-                                                <a class="dropdown-item assign-team" ref="{{ Crypt::encrypt($item->id) }}" href="javascript:;">Assign Team</a>
-                                                @endcan -->
-                                            </div>
-                                        </td>
+                                        <th>Action</th>
                                     </tr>
-                                    @endforeach
-                                </tbody>
+                                </tfoot>
                             </table>
                         </div>
                     </div>
@@ -178,8 +233,111 @@
 @push('scripts')
 <script src="{{ asset('assets/Multiselect/jquery.multiselect.js') }}"></script>
 <script>
+    $(document).ready(function() {
+        $('#users-table').DataTable({
+            "processing": true,
+            "serverSide": true,
+            "ajax": {
+                "url": "{{ route('all_users') }}",
+                "dataType": "json",
+                "type": "POST",
+                "data": {
+                    _token: "{{csrf_token()}}",
+                    'department_filter': function() {
+                        return $("#departments-filter").val();
+                    },
+                    'designation_filter': function() {
+                        return $("#designation-filter").val();
+                    },
+                    'company_filter': function() {
+                        return $("#company-filter").val();
+                    },
+                    'status_filter': function() {
+                        return $("#status-filter").val();
+                    },
+                    'role_filter': function() {
+                        return $("#role-filter").val();
+                    },
+                    'date_from_filter': function() {
+                        return $("#date_from").val();
+                    },
+                    'date_to_filter': function() {
+                        return $("#date_to").val();
+                    },
+                }
+            },
+            "columns": [{
+                    "data": "first_name",
+                    "orderable": true
+                },
+                {
+                    "data": "last_name",
+                    "orderable": true
+                },
+                {
+                    "data": "psudo_name",
+                    "orderable": true
+                },
+                {
+                    "data": "email",
+                    "orderable": true
+                },
+                {
+                    "data": "username",
+                    "orderable": true
+                },
+                {
+                    "data": "employee_id",
+                    "orderable": true
+                },
+                {
+                    "data": "designation_id",
+                    "orderable": false
+                },
+                {
+                    "data": "status",
+                    "orderable": false
+                },
+                {
+                    "data": "roles",
+                    "orderable": false
+                },
+                {
+                    "data": "departments",
+                    "orderable": false
+                },
+                <?php if (Auth::user()->roles[0]->name === 'dev') : ?> {
+                        "data": "company_name",
+                        "orderable": false
+                    },
+                <?php endif; ?> {
+                    "data": "action",
+                    "orderable": false
+                }
+            ],
+            dom: 'Bfrtip',
+            lengthMenu: [
+                [10, 50, 500, 1000],
+                ['10 Rows', '50 Rows', '500 Rows', '1000 Rows']
+            ],
+            buttons: [
+                //{ extend: 'pdf', text: '<i class="fas fa-file-pdf fa-1x" aria-hidden="true"> Export in PDF</i>' },
+                //{ extend: 'csv', text: '<i class="fas fa-file-csv fa-1x"> Export in CSV</i>'},
+                {
+                    extend: 'excel',
+                    text: '<i class="fas fa-file-excel" aria-hidden="true"> Export in EXCEL</i>'
+                },
+                'pageLength'
+            ],
+            // "drawCallback": function(settings) {
+            //   provider_detail_event();
+            //   provider_history_event();
+            //   provider_activate_event();
+            // }
+        });
+    });
     var ref = '';
-    $('.assign-department').click(function() {
+    $(document).on('click', '.assign-department', function() {
         ref = $(this).attr('ref');
         $.ajax({
             type: "post",
@@ -206,7 +364,7 @@
         });
         $('#assign-department-modal').modal('show');
     });
-    $('.assign-document').click(function() {
+    $(document).on('click', '.assign-document', function() {
         ref = $(this).attr('ref');
         $.ajax({
             type: "post",
@@ -232,7 +390,7 @@
         });
         $('#assign-document-modal').modal('show');
     });
-    $('.assign-practice').click(function() {
+    $(document).on('click', '.assign-practice', function() {
         ref = $(this).attr('ref');
         $.ajax({
             type: "post",
@@ -262,7 +420,7 @@
         });
         $('#assign-practice-modal').modal('show');
     });
-    $('.assign-team').click(function() {
+    $(document).on('click', '.assign-team', function() {
         ref = $(this).attr('ref');
         $.ajax({
             type: "post",
@@ -425,6 +583,14 @@
                     });
                 }
             }).catch(error => console.error("There was a problem with the fetch operation:", error));
+    });
+    $('#filter-form [type="submit"]').on('click', function(e) {
+        e.preventDefault();
+        $('#users-table').DataTable().ajax.reload(null, false);
+    });
+    $('#c_filter').click(function() {
+        $('select,input').val('');
+        $('#users-table').DataTable().ajax.reload(null, false);
     });
 </script>
 @endpush

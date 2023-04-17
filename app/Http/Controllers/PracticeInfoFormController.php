@@ -47,7 +47,7 @@ class PracticeInfoFormController extends Controller
             // Practice Information Section
             $practice_information_section = [];
             $practice_information_section["name"] = $request->practice;
-            $practice_information_section["speciality"] = $request->speciality;
+            $practice_information_section["speciality"] = get_tagsinput($request->speciality);
             $practice_information_section["avg_charges"] = $request->avg_charges;
             $practice_information_section["group_npi"] = $request->group_npi;
             $practice_information_section["group_ptan"] = $request->group_ptan;
@@ -139,7 +139,7 @@ class PracticeInfoFormController extends Controller
                 $row["phone"] = $phone[$key];
                 $focal_info[] = $row;
             }
-            $contact_information_section["dmail_emails"] = $request->dmail_emails;
+            $contact_information_section["dmail_emails"] = get_tagsinput($request->dmail_emails);
             $contact_information_section["focal_info"] = json_encode($focal_info);
             $contact_information_section["owner_info"] = json_encode($owner_info);
             // Provider Information Section
@@ -286,7 +286,7 @@ class PracticeInfoFormController extends Controller
             // Practice Information Section
             $practice_information_section = [];
             $practice_information_section["name"] = $request->practice;
-            $practice_information_section["speciality"] = $request->speciality;
+            $practice_information_section["speciality"] = get_tagsinput($request->speciality);
             $practice_information_section["avg_charges"] = $request->avg_charges;
             $practice_information_section["group_npi"] = $request->group_npi;
             $practice_information_section["group_ptan"] = $request->group_ptan;
@@ -378,7 +378,7 @@ class PracticeInfoFormController extends Controller
                 $row["phone"] = $phone[$key];
                 $focal_info[] = $row;
             }
-            $contact_information_section["dmail_emails"] = $request->dmail_emails;
+            $contact_information_section["dmail_emails"] = get_tagsinput($request->dmail_emails);
             $contact_information_section["focal_info"] = json_encode($focal_info);
             $contact_information_section["owner_info"] = json_encode($owner_info);
             // Provider Information Section

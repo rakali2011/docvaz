@@ -55,6 +55,7 @@ Route::get('/add-client', [ClientController::class, 'add_client'])->middleware('
 Route::post('/post-client', [ClientController::class, 'post_client'])->middleware('permission:add client')->name('post_client');
 Route::get('/edit-client/{id}', [ClientController::class, 'edit_client'])->middleware('permission:update client')->name('edit_client');
 Route::post('/update-client/{id}', [ClientController::class, 'update_client'])->middleware('permission:update client')->name('update_client');
+Route::post('/all_clients', [ClientController::class, 'all_clients'])->name('all_clients');
 // Departments
 Route::get('/departments', [DepartmentController::class, 'departments'])->middleware('permission:view department')->name('departments');
 Route::get('/add-department', [DepartmentController::class, 'add_department'])->middleware('permission:add department')->name('add_department');

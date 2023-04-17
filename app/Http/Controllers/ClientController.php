@@ -5,11 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Team;
 use App\Models\User;
+use App\Models\Designation;
+use App\Models\Status;
 use Spatie\Permission\Models\Role as SpatieRole;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\PostClient;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Crypt;
 
 class ClientController extends Controller
 {
@@ -21,30 +24,29 @@ class ClientController extends Controller
     {
         $data['menu'] = "client-management";
         $data['sub_menu'] = "clients";
-
-        if (auth()->user()->hasRole('dev')) {
-            $clients = User::where('company_id', '!=', 0)->where('type', 3)->orderBy('id', 'DESC')->get();
-        } else {
-            $clients = User::where('company_id', '!=', 0)
-                ->where('company_id', Auth::user()->company->id)
-                ->where('type', 3)
-                ->orderBy('firstname', 'ASC')->get();
-        }
-        foreach ($clients as $client) {
-            $client->roles = $client->roles()->pluck('display_name');
-            $client->departments = $client->assigned_departments()->pluck('name');
-            $roles = "";
-            $departments = "";
-            foreach ($client->roles as $role) {
-                $roles .= "<span class='role'>$role</span>";
-            }
-            foreach ($client->departments as $department) {
-                $departments .= "<span class='role'>$department</span>";
-            }
-            $client->roles = $roles;
-            $client->departments = $departments;
-        }
-        return view('user_management.clients', compact('data', 'clients'));
+        // if (auth()->user()->hasRole('dev')) {
+        //     $clients = User::where('company_id', '!=', 0)->where('type', 3)->orderBy('id', 'DESC')->get();
+        // } else {
+        //     $clients = User::where('company_id', '!=', 0)
+        //         ->where('company_id', Auth::user()->company->id)
+        //         ->where('type', 3)
+        //         ->orderBy('firstname', 'ASC')->get();
+        // }
+        // foreach ($clients as $client) {
+        //     $client->roles = $client->roles()->pluck('display_name');
+        //     $client->departments = $client->assigned_departments()->pluck('name');
+        //     $roles = "";
+        //     $departments = "";
+        //     foreach ($client->roles as $role) {
+        //         $roles .= "<span class='role'>$role</span>";
+        //     }
+        //     foreach ($client->departments as $department) {
+        //         $departments .= "<span class='role'>$department</span>";
+        //     }
+        //     $client->roles = $roles;
+        //     $client->departments = $departments;
+        // }
+        return view('user_management.clients', compact('data'));
     }
     public function add_client()
     {
@@ -143,5 +145,72 @@ class ClientController extends Controller
         } catch (\Exception $e) {
             return back()->withInput()->with('error', $e->getMessage());
         }
+    }
+    public function all_clients(Request $request)
+    {
+        $columns = ['firstname', 'lastname', 'psudo_name', 'email', 'username', 'employee_id', 'designation_id', 'status'];
+        $date_range = [
+            "date_from" => $request->input('date_from_filter') != "" ? date("Y-m-d", strtotime($request->input('date_from_filter'))) . ' 00:00:00' : $request->input('date_from_filter'),
+            "date_to" => $request->input('date_to_filter') != "" ? date("Y-m-d", strtotime($request->input('date_to_filter'))) . ' 23:59:59' : date("Y-m-d H:i:s")
+        ];
+        $filter = array(
+            "designation_id" => $request->input('designation_filter'),
+            "status" => $request->input('status_filter')
+        );
+        $limit = $request->input('length');
+        $start = $request->input('start');
+        $order = !empty($request->input('order.0.column')) ? $request->input('order.0.column') : 0;
+        $order = $columns[$order];
+        $dir = !empty($request->input('order.0.dir')) ? strtoupper($request->input('order.0.dir')) : "DESC";
+        $search = $request->input('search.value');
+        $user = new User();
+        $totalData = $user->countTotal(3);
+        $totalFiltered = $user->countFiltered(3, $date_range, $filter, $search);
+        $users = $user->getData(3, $date_range, $filter, $search, $start, $limit, $order, $dir);
+        $data = array();
+        if (!empty($users)) {
+            foreach ($users as $user) {
+                $roles = "";
+                $departments = "";
+                $user->roles = $user->roles()->pluck('display_name');
+                $user->departments = $user->assigned_departments()->pluck('name');
+                foreach ($user->roles as $role) {
+                    $roles .= "<span class='role'>$role</span>";
+                }
+                foreach ($user->departments as $department) {
+                    $departments .= "<span class='role'>$department</span>";
+                }
+                $edit = '';
+                $assign_department = '';
+                $assign_practice = '';
+                if (auth()->user()->can('update user'))
+                    $edit = '<a class="dropdown-item" href="' . route('edit_user', ['id' => Crypt::encrypt($user->id)]) . '">Edit</a>';
+                if (auth()->user()->can('assign department user'))
+                    $assign_department = '<a class="dropdown-item assign-department" ref="' . Crypt::encrypt($user->id) . '" href="javascript:;">Assign Department</a>';
+                if (auth()->user()->can('assign practice user'))
+                    $assign_practice = '<a class="dropdown-item assign-practice" ref="' . Crypt::encrypt($user->id) . '" href="javascript:;">Assign Practice</a>';
+
+                $nestedData['first_name'] = $user->firstname;
+                $nestedData['last_name'] = $user->lastname;
+                $nestedData['psudo_name'] = $user->psudo_name;
+                $nestedData['email'] = $user->email;
+                $nestedData['username'] = $user->username;
+                $nestedData['employee_id'] = $user->employee_id;
+                $nestedData['designation_id'] = Designation::findorfail($user->designation_id)->name;
+                $nestedData['status'] = Status::findorfail($user->status)->name;
+                $nestedData['roles'] = $roles;
+                $nestedData['departments'] = $departments;
+                $nestedData['company_name'] = $user->company->name;
+                $nestedData['action'] = '<button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="text-muted sr-only">Action</span></button><div class="dropdown-menu dropdown-menu-right">' . $edit . $assign_department  . $assign_practice . '</div>';
+                $data[] = $nestedData;
+            }
+        }
+        $json_data = array(
+            "draw" => intval($request->input('draw')),
+            "recordsTotal" => intval($totalData),
+            "recordsFiltered" => intval($totalFiltered),
+            "data" => $data
+        );
+        echo json_encode($json_data);
     }
 }

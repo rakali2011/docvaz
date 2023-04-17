@@ -75,7 +75,7 @@
     }
 
     .tagify {
-      min-height: 46%;
+      height: 20% !important;
     }
   </style>
 </head>
