@@ -164,11 +164,23 @@ class User extends Authenticatable implements Auditable
         if (!empty($filter["company_id"])) {
             $query = $query->where('company_id', $filter['company_id']);
         }
+        if (!empty($filter["department_id"])) {
+            $department_id = $filter["department_id"];
+            $query = $query->whereHas('departments', function ($q) use ($department_id) {
+                $q->where('department_id', $department_id);
+            });
+        }
         if (!empty($filter["designation_id"])) {
             $query = $query->where('designation_id', $filter['designation_id']);
         }
         if (!empty($filter["status"])) {
             $query = $query->where('status', $filter['status']);
+        }
+        if (!empty($filter["role_id"])) {
+            $role_id = $filter["role_id"];
+            $query = $query->whereHas("roles", function ($q) use ($role_id) {
+                $q->where("role_id", $role_id);
+            });
         }
         if (!empty($date_range["date_from"])) {
             $query = $query->whereBetween('created_at', [$date_range["date_from"], $date_range["date_to"]]);
@@ -193,7 +205,10 @@ class User extends Authenticatable implements Auditable
             $query = $query->where('company_id', $filter['company_id']);
         }
         if (!empty($filter["department_id"])) {
-            // $query = $query->where('designation_id', $filter['designation_id']);
+            $department_id = $filter["department_id"];
+            $query = $query->whereHas('departments', function ($q) use ($department_id) {
+                $q->where('department_id', $department_id);
+            });
         }
         if (!empty($filter["designation_id"])) {
             $query = $query->where('designation_id', $filter['designation_id']);
@@ -202,7 +217,10 @@ class User extends Authenticatable implements Auditable
             $query = $query->where('status', $filter['status']);
         }
         if (!empty($filter["role_id"])) {
-            // $query = $query->where('status', $filter['status']);
+            $role_id = $filter["role_id"];
+            $query = $query->whereHas("roles", function ($q) use ($role_id) {
+                $q->where("role_id", $role_id);
+            });
         }
         if (!empty($date_range["date_from"])) {
             $query = $query->whereBetween('created_at', [$date_range["date_from"], $date_range["date_to"]]);

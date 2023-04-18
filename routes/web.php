@@ -85,6 +85,7 @@ Route::get('/add-role', [RoleController::class, 'add_role'])->middleware('permis
 Route::post('/post-role', [RoleController::class, 'post_role'])->middleware('permission:add role')->name('post_role');
 Route::get('/edit-role/{id}', [RoleController::class, 'edit_role'])->middleware('permission:update team')->name('edit_role');
 Route::post('/update-role/{id}', [RoleController::class, 'update_role'])->middleware('permission:update team')->name('update_role');
+Route::post('/all_roles', [RoleController::class, 'all_roles'])->name('all_roles');
 // Teams
 Route::get('/teams', [TeamController::class, 'teams'])->middleware('permission:view team')->name('teams');
 Route::get('/add-team', [TeamController::class, 'add_team'])->middleware('permission:add team')->name('add_team');

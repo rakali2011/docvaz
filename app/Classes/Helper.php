@@ -66,6 +66,8 @@ if (!function_exists('designations')) {
 if (!function_exists('get_designation')) {
     function get_designation($designation_id)
     {
+        if (empty($designation_id))
+            return "";
         $designation = Designation::findorfail($designation_id);
         return $designation->name;
     }

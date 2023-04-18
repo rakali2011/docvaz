@@ -154,7 +154,10 @@ class ClientController extends Controller
             "date_to" => $request->input('date_to_filter') != "" ? date("Y-m-d", strtotime($request->input('date_to_filter'))) . ' 23:59:59' : date("Y-m-d H:i:s")
         ];
         $filter = array(
+            "company_id" => $request->input('company_filter'),
+            "department_id" => $request->input('department_filter'),
             "designation_id" => $request->input('designation_filter'),
+            "role_id" => $request->input('role_filter'),
             "status" => $request->input('status_filter')
         );
         $limit = $request->input('length');
@@ -196,7 +199,7 @@ class ClientController extends Controller
                 $nestedData['email'] = $user->email;
                 $nestedData['username'] = $user->username;
                 $nestedData['employee_id'] = $user->employee_id;
-                $nestedData['designation_id'] = Designation::findorfail($user->designation_id)->name;
+                $nestedData['designation_id'] = get_designation($user->designation_id);
                 $nestedData['status'] = Status::findorfail($user->status)->name;
                 $nestedData['roles'] = $roles;
                 $nestedData['departments'] = $departments;

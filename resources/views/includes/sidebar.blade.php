@@ -52,7 +52,7 @@
           <li class="nav-item">
             <a class="nav-link pl-3 sub-menu" id="companies" href="{{ route('companies') }}"><span class="ml-1 item-text">Companies</span>
             </a>
-            <a class="nav-link pl-3 sub-menu" id="superadmins" href="{{ route('superadmins') }}"><span class="ml-1 item-text">Super Admins</span>
+            <a class="nav-link pl-3 sub-menu" id="superadmins" href="{{ route('superadmins') }}"><span class="ml-1 item-text">Admin Accounts</span>
             </a>
             <a class="nav-link pl-3 sub-menu" id="permissions" href="{{ route('permissions') }}"><span class="ml-1 item-text">Permissions</span>
             </a>

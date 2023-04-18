@@ -25,6 +25,70 @@
         <div class="col-md-12">
           <div class="card shadow">
             <div class="card-body">
+              <div class="card mb-3">
+                <div class="card-body shadow background-panel">
+                  <form action="" id="filter-form" class="row">
+                    @role('dev')
+                    <div class="form-group col-md-2">
+                      <label for="company-filter"></label>
+                      <select name="company-filter" id="company-filter" class="form-control">
+                        <option value="">Select Company</option>
+                        @foreach (companies() as $company)
+                        <option value="{{ $company->id }}">{{ $company->name }}</option>
+                        @endforeach
+                      </select>
+                    </div>
+                    @else
+                    <div class="form-group col-md-2">
+                      <label for="departments-filter"></label>
+                      <select name="departments-filter" id="departments-filter" class="form-control">
+                        <option value="">Select Departments</option>
+                        @foreach (departments() as $department)
+                        <option value="{{ $department->id }}">{{ $department->name }}</option>
+                        @endforeach
+                      </select>
+                    </div>
+                    <div class="form-group col-md-2">
+                      <label for="status-filter"></label>
+                      <select name="status-filter" id="status-filter" class="form-control">
+                        <option value="">Select Status</option>
+                        @foreach (statuses('user') as $status)
+                        <option value="{{ $status->id }}">{{ $status->name }}</option>
+                        @endforeach
+                      </select>
+                    </div>
+                    <div class="form-group col-md-2">
+                      <label for="role-filter"></label>
+                      <select name="role-filter" id="role-filter" class="form-control">
+                        <option value="">Select Role</option>
+                        @foreach (roles() as $key => $role)
+                        <option value="{{ $key }}">{{ $role }}</option>
+                        @endforeach
+                      </select>
+                    </div>
+                    @endrole
+                    <div class="form-group col-md-2">
+                      <label for="date_from"></label>
+                      <input type="text" name="date_from" id="date_from" class="form-control datepicker" placeholder="Date From">
+                    </div>
+                    <div class="form-group col-md-2">
+                      <label for="date_to"></label>
+                      <input type="text" name="date_to" id="date_to" class="form-control datepicker" placeholder="Date To">
+                    </div>
+                    @role('dev')
+                    <div class="col-md-4 text-right" style="margin:auto;">
+                      <button type="submit" class="btn btn-sm btn-primary">Filter</button>
+                      <button type="button" class="btn btn-sm btn-primary" id="c_filter">Clear Filter</button>
+                    </div>
+                    @else
+                    <div class="col-md-12 text-right" style="margin:auto;">
+                      <button type="submit" class="btn btn-sm btn-primary">Filter</button>
+                      <button type="button" class="btn btn-sm btn-primary" id="c_filter">Clear Filter</button>
+                    </div>
+                    @endrole
+                  </form>
+                </div>
+              </div>
               <table id="users-table" class="display" style="width:100%">
                 <thead>
                   <tr>
@@ -144,11 +208,23 @@
         "type": "POST",
         "data": {
           _token: "{{csrf_token()}}",
-          'designation_filter': function() {
-            return $("#user_designation").val();
+          'department_filter': function() {
+            return $("#departments-filter").val();
+          },
+          'company_filter': function() {
+            return $("#company-filter").val();
           },
           'status_filter': function() {
-            return $("#user_status").val();
+            return $("#status-filter").val();
+          },
+          'role_filter': function() {
+            return $("#role-filter").val();
+          },
+          'date_from_filter': function() {
+            return $("#date_from").val();
+          },
+          'date_to_filter': function() {
+            return $("#date_to").val();
           },
         }
       },
@@ -394,6 +470,14 @@
           });
         }
       }).catch(error => console.error("There was a problem with the fetch operation:", error));
+  });
+  $('#filter-form [type="submit"]').on('click', function(e) {
+    e.preventDefault();
+    $('#users-table').DataTable().ajax.reload(null, false);
+  });
+  $('#c_filter').click(function() {
+    $('select,input').val('');
+    $('#users-table').DataTable().ajax.reload(null, false);
   });
 </script>
 @endpush

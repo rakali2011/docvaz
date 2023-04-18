@@ -13,8 +13,43 @@
         <div class="col-md-12">
           <div class="card shadow">
             <div class="card-body">
-              <!-- table -->
-              <table class="table datatables" id="dataTable-1">
+              <div class="card mb-3">
+                <div class="card-body shadow background-panel">
+                  <form action="" id="filter-form" class="row">
+                    @role('dev')
+                    <div class="form-group col-md-2">
+                      <label for="company-filter"></label>
+                      <select name="company-filter" id="company-filter" class="form-control">
+                        <option value="">Select Company</option>
+                        @foreach (companies() as $company)
+                        <option value="{{ $company->id }}">{{ $company->name }}</option>
+                        @endforeach
+                      </select>
+                    </div>
+                    @endrole
+                    <div class="form-group col-md-2">
+                      <label for="date_from"></label>
+                      <input type="text" name="date_from" id="date_from" class="form-control datepicker" placeholder="Date From">
+                    </div>
+                    <div class="form-group col-md-2">
+                      <label for="date_to"></label>
+                      <input type="text" name="date_to" id="date_to" class="form-control datepicker" placeholder="Date To">
+                    </div>
+                    @role('dev')
+                    <div class="col-md-4 text-right" style="margin:auto;">
+                      <button type="submit" class="btn btn-sm btn-primary">Filter</button>
+                      <button type="button" class="btn btn-sm btn-primary" id="c_filter">Clear Filter</button>
+                    </div>
+                    @else
+                    <div class="col-md-12 text-right" style="margin:auto;">
+                      <button type="submit" class="btn btn-sm btn-primary">Filter</button>
+                      <button type="button" class="btn btn-sm btn-primary" id="c_filter">Clear Filter</button>
+                    </div>
+                    @endrole
+                  </form>
+                </div>
+              </div>
+              <table id="roles-table" class="display" style="width:100%">
                 <thead>
                   <tr>
                     <th>Name</th>
@@ -24,24 +59,15 @@
                     <th>Action</th>
                   </tr>
                 </thead>
-                <tbody>
-                  @foreach ($roles as $item)
+                <tfoot>
                   <tr>
-                    <td>{{ $item->display_name }}</td>
+                    <th>Name</th>
                     @role('dev')
-                    <td>{{ @$item->company_name }}</td>
+                    <th>Company</th>
                     @endrole
-                    <td>
-                      <button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <span class="text-muted sr-only">Action</span>
-                      </button>
-                      <div class="dropdown-menu dropdown-menu-right">
-                        <a class="dropdown-item" href="{{ route('edit_role', ['id' => Crypt::encrypt($item->id)]) }}">Edit</a>
-                      </div>
-                    </td>
+                    <th>Action</th>
                   </tr>
-                  @endforeach
-                </tbody>
+                </tfoot>
               </table>
             </div>
           </div>
@@ -50,5 +76,71 @@
     </div> <!-- .col-12 -->
   </div> <!-- .row -->
 </div>
-
+@push('scripts')
+<script>
+  $(document).ready(function() {
+    $('#roles-table').DataTable({
+      "processing": true,
+      "serverSide": true,
+      "ajax": {
+        "url": "{{ route('all_roles') }}",
+        "dataType": "json",
+        "type": "POST",
+        "data": {
+          _token: "{{csrf_token()}}",
+          'company_filter': function() {
+            return $("#company-filter").val();
+          },
+          'date_from_filter': function() {
+            return $("#date_from").val();
+          },
+          'date_to_filter': function() {
+            return $("#date_to").val();
+          },
+        }
+      },
+      "columns": [{
+          "data": "name",
+          "orderable": true
+        },
+        <?php if (Auth::user()->roles[0]->name === 'dev') : ?> {
+            "data": "company_name",
+            "orderable": false
+          },
+        <?php endif; ?> {
+          "data": "action",
+          "orderable": false
+        }
+      ],
+      dom: 'Bfrtip',
+      lengthMenu: [
+        [10, 50, 500, 1000],
+        ['10 Rows', '50 Rows', '500 Rows', '1000 Rows']
+      ],
+      buttons: [
+        //{ extend: 'pdf', text: '<i class="fas fa-file-pdf fa-1x" aria-hidden="true"> Export in PDF</i>' },
+        //{ extend: 'csv', text: '<i class="fas fa-file-csv fa-1x"> Export in CSV</i>'},
+        {
+          extend: 'excel',
+          text: '<i class="fas fa-file-excel" aria-hidden="true"> Export in EXCEL</i>'
+        },
+        'pageLength'
+      ],
+      // "drawCallback": function(settings) {
+      //   provider_detail_event();
+      //   provider_history_event();
+      //   provider_activate_event();
+      // }
+    });
+  });
+  $('#filter-form [type="submit"]').on('click', function(e) {
+    e.preventDefault();
+    $('#roles-table').DataTable().ajax.reload(null, false);
+  });
+  $('#c_filter').click(function() {
+    $('select,input').val('');
+    $('#roles-table').DataTable().ajax.reload(null, false);
+  });
+</script>
+@endpush
 @endsection
