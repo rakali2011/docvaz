@@ -18,6 +18,7 @@ use Exception;
 use App\Rules\MatchOldPassword;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
@@ -90,40 +91,44 @@ class UserController extends Controller
     {
 
         DB::beginTransaction();
-        try {
-            if (auth()->user()->hasRole('dev')) {
-                $company_id = $req->company;
-            } else {
-                $company_id = Auth::user()->company->id;
-            }
-            $this->validate($req, [
-                'employee_id' => ['required', 'unique:users'],
-                'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-                'username' => ['required', 'string', 'email', 'max:128', 'unique:users'],
-                'password' => ['required', 'string', 'min:8', 'confirmed'],
-            ]);
-            $user = new User;
-            $user->company_id = $company_id;
-            $user->firstname = $req->firstname;
-            $user->lastname = $req->lastname;
-            $user->psudo_name = $req->psudo_name;
-            $user->employee_id = $req->employee_id;
-            $user->email = $req->email;
-            $user->username = $req->username;
-            $user->password = Hash::make($req->password);
-            $user->type = 2;
-            $user->timezone = $req->timezone;
-            $user->status = $req->status;
-            $user->designation_id = $req->designation;
-            $user->save();
-            $user->assignRole($req->input('roles'));
-            $user->teams()->sync($req->teams, TRUE);
-            DB::commit();
-            return redirect()->route('users')->with('success', "User Created Successfully");
-        } catch (\Throwable $th) {
-            DB::rollback();
-            return back()->withInput()->with('error', $th->getMessage());
+        if (auth()->user()->hasRole('dev')) {
+            $company_id = $req->company;
+        } else {
+            $company_id = Auth::user()->company->id;
         }
+        $this->validate($req, [
+            'firstname' => ['required', 'string'],
+            'lastname' => ['required', 'string'],
+            'psudo_name' => ['required', 'string'],
+            'employee_id' => ['required', Rule::unique('users')->where(function ($query) use ($req) {
+                return $query->where('company_id', Auth::user()->company->id);
+            })],
+            'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->where(function ($query) use ($req) {
+                return $query->where('company_id', Auth::user()->company->id);
+            })],
+            'username' => ['required', 'string', 'max:255', Rule::unique('users')->where(function ($query) use ($req) {
+                return $query->where('company_id', Auth::user()->company->id);
+            })],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+        ]);
+        $user = new User;
+        $user->company_id = $company_id;
+        $user->firstname = $req->firstname;
+        $user->lastname = $req->lastname;
+        $user->psudo_name = $req->psudo_name;
+        $user->employee_id = $req->employee_id;
+        $user->email = $req->email;
+        $user->username = $req->username;
+        $user->password = Hash::make($req->password);
+        $user->type = 2;
+        $user->timezone = $req->timezone;
+        $user->status = $req->status;
+        $user->designation_id = $req->designation;
+        $user->save();
+        $user->assignRole($req->input('roles'));
+        $user->teams()->sync($req->teams, TRUE);
+        DB::commit();
+        return redirect()->route('users')->with('success', "User Created Successfully");
     }
     public function update_user(PostUser $req, $id = '')
     {
@@ -131,36 +136,42 @@ class UserController extends Controller
             $id = $this->clean_id($id);
         }
         DB::beginTransaction();
-        try {
-            if (auth()->user()->hasRole('dev')) {
-                $company_id = $req->company;
-            } else {
-                $company_id = Auth::user()->company->id;
-            }
-            $this->validate($req, [
-                'employee_id' => 'required|unique:users,employee_id,' . $id,
-                'email' => 'required|email|unique:users,email,' . $id,
-                'username' => 'required|unique:users,username,' . $id,
-            ]);
-            $user = User::findorfail($id);
-            $user->company_id = $company_id;
-            $user->firstname = $req->firstname;
-            $user->lastname = $req->lastname;
-            $user->psudo_name = $req->psudo_name;
-            $user->employee_id = $req->employee_id;
-            $user->email = $req->email;
-            $user->username = $req->username;
-            $user->timezone = $req->timezone;
-            $user->status = $req->status;
-            $user->designation_id = $req->designation;
-            $user->save();
-            DB::table('model_has_roles')->where('model_id', $id)->delete();
-            $user->assignRole($req->input('roles'));
-            DB::commit();
-            return redirect()->route('users')->with('success', "User Updated Successfully");
-        } catch (\Exception $e) {
-            return back()->withInput()->with('error', $e->getMessage());
+        if (auth()->user()->hasRole('dev')) {
+            $company_id = $req->company;
+        } else {
+            $company_id = Auth::user()->company->id;
         }
+        $this->validate($req, [
+            'firstname' => ['required', 'string'],
+            'lastname' => ['required', 'string'],
+            'psudo_name' => ['required', 'string'],
+            'employee_id' => ['required', Rule::unique('users')->where(function ($query) use ($id) {
+                return $query->where('company_id', Auth::user()->company->id)->where('id', '!=', $id);
+            })],
+            'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->where(function ($query) use ($id) {
+                return $query->where('company_id', Auth::user()->company->id)->where('id', '!=', $id);
+            })],
+            'username' => ['required', 'string', 'max:255', Rule::unique('users')->where(function ($query) use ($id) {
+                return $query->where('company_id', Auth::user()->company->id)->where('id', '!=', $id);
+            })]
+        ]);
+        $user = User::findorfail($id);
+        $user->company_id = $company_id;
+        $user->firstname = $req->firstname;
+        $user->lastname = $req->lastname;
+        $user->psudo_name = $req->psudo_name;
+        $user->employee_id = $req->employee_id;
+        $user->email = $req->email;
+        $user->username = $req->username;
+        $user->timezone = $req->timezone;
+        $user->status = $req->status;
+        $user->designation_id = $req->designation;
+        $user->save();
+        DB::table('model_has_roles')->where('model_id', $id)->delete();
+        $user->assignRole($req->input('roles'));
+        $user->teams()->sync($req->teams, TRUE);
+        DB::commit();
+        return redirect()->route('users')->with('success', "User Updated Successfully");
     }
     public function get_users(Request $req)
     {

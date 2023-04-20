@@ -58,10 +58,10 @@ class User extends Authenticatable implements Auditable
         // return Carbon::createFromFormat('Y-m-d H:i:s', $date)->format('M j, Y h:i A');
         return date("M j, Y h:i A", strtotime($date));
     }
-    public function getTimezoneAttribute($value)
-    {
-        return get_timezone($value);
-    }
+    // public function getTimezoneAttribute($value)
+    // {
+    //     return get_timezone($value);
+    // }
     // public function getDesignationIdAttribute($value)
     // {
     //     return get_designation($value);
