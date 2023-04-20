@@ -10,6 +10,7 @@ use App\Models\Status;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\PostPractice;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Crypt;
 
 class PracticeController extends Controller
 {
@@ -21,12 +22,12 @@ class PracticeController extends Controller
     {
         $data['menu'] = "client-management";
         $data['sub_menu'] = "practices";
-        if (auth()->user()->hasRole('dev')) {
-            $practices = Practice::orderBy('id', 'DESC')->get();
-        } else {
-            $practices = Practice::where('company_id', Auth::user()->company->id)->orderBy('id', 'DESC')->get();
-        }
-        return view('practice_management.practices', compact('data', 'practices'));
+        // if (auth()->user()->hasRole('dev')) {
+        //     $practices = Practice::orderBy('id', 'DESC')->get();
+        // } else {
+        //     $practices = Practice::where('company_id', Auth::user()->company->id)->orderBy('id', 'DESC')->get();
+        // }
+        return view('practice_management.practices', compact('data'));
     }
     public function add_practice()
     {
@@ -663,5 +664,45 @@ class PracticeController extends Controller
             $response['message'] = "Something Went Wrong Try Again";
         }
         return response()->json($response);
+    }
+    public function all_practices(Request $request)
+    {
+        $columns = ['name', 'status'];
+        $date_range = [
+            "date_from" => $request->input('date_from_filter') != "" ? date("Y-m-d", strtotime($request->input('date_from_filter'))) . ' 00:00:00' : $request->input('date_from_filter'),
+            "date_to" => $request->input('date_to_filter') != "" ? date("Y-m-d", strtotime($request->input('date_to_filter'))) . ' 23:59:59' : date("Y-m-d H:i:s")
+        ];
+        $filter = array(
+            "status" => $request->input('status_filter')
+        );
+        $limit = $request->input('length');
+        $start = $request->input('start');
+        $order = !empty($request->input('order.0.column')) ? $request->input('order.0.column') : 0;
+        $order = $columns[$order];
+        $dir = !empty($request->input('order.0.dir')) ? strtoupper($request->input('order.0.dir')) : "DESC";
+        $search = $request->input('search.value');
+        $practice = new Practice();
+        $totalData = $practice->countTotal();
+        $totalFiltered = $practice->countFiltered($date_range, $filter, $search);
+        $practices = $practice->getData($date_range, $filter, $search, $start, $limit, $order, $dir);
+        $data = array();
+        if (!empty($practices)) {
+            foreach ($practices as $practice) {
+                $edit = '';
+                if (auth()->user()->can('update practice'))
+                    $edit = '<a class="dropdown-item" href="' . route('edit_practice', ['id' => Crypt::encrypt($practice->id)]) . '">Edit</a>';
+                $nestedData['name'] = $practice->name;
+                $nestedData['status'] = get_status($practice->status);
+                $nestedData['action'] = '<button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="text-muted sr-only">Action</span></button><div class="dropdown-menu dropdown-menu-right">' . $edit . '</div>';
+                $data[] = $nestedData;
+            }
+        }
+        $json_data = array(
+            "draw" => intval($request->input('draw')),
+            "recordsTotal" => intval($totalData),
+            "recordsFiltered" => intval($totalFiltered),
+            "data" => $data
+        );
+        echo json_encode($json_data);
     }
 }

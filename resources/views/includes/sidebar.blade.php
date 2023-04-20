@@ -110,12 +110,15 @@
             </a>
           </li>
           @endcan
+          @role('dev')
+          @else
           @can('view practice')
           <li class="nav-item">
             <a class="nav-link pl-3 sub-menu" id="practices" href="{{ route('practices') }}"><span class="ml-1 item-text">Practices</span>
             </a>
           </li>
           @endcan
+          @endrole
         </ul>
       </li>
     </ul>
