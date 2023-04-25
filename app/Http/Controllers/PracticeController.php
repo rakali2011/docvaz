@@ -66,7 +66,7 @@ class PracticeController extends Controller
             $practice_information_section = [];
             if (auth()->user()->can('update business info')) {
                 $practice_information_section["name"] = $req->practice;
-                $practice_information_section["speciality"] = $req->speciality;
+                $practice_information_section["speciality"] = get_tagsinput($req->speciality);
                 $practice_information_section["avg_charges"] = $req->avg_charges;
                 $practice_information_section["group_npi"] = $req->group_npi;
                 $practice_information_section["group_ptan"] = $req->group_ptan;
@@ -162,7 +162,7 @@ class PracticeController extends Controller
                     $row["phone"] = $phone[$key];
                     $focal_info[] = $row;
                 }
-                $contact_information_section["dmail_emails"] = $req->dmail_emails;
+                $contact_information_section["dmail_emails"] = get_tagsinput($req->dmail_emails);
                 $contact_information_section["focal_info"] = json_encode($focal_info);
                 $contact_information_section["owner_info"] = json_encode($owner_info);
             }
@@ -359,7 +359,7 @@ class PracticeController extends Controller
             $practice_information_section = [];
             if (auth()->user()->can('update business info')) {
                 $practice_information_section["name"] = $req->practice;
-                $practice_information_section["speciality"] = $req->speciality;
+                $practice_information_section["speciality"] = get_tagsinput($req->speciality);
                 $practice_information_section["avg_charges"] = $req->avg_charges;
                 $practice_information_section["group_npi"] = $req->group_npi;
                 $practice_information_section["group_ptan"] = $req->group_ptan;
@@ -459,7 +459,7 @@ class PracticeController extends Controller
                     $row["phone"] = $phone[$key];
                     $focal_info[] = $row;
                 }
-                $contact_information_section["dmail_emails"] = $req->dmail_emails;
+                $contact_information_section["dmail_emails"] = get_tagsinput($req->dmail_emails);
                 $contact_information_section["focal_info"] = json_encode($focal_info);
                 $contact_information_section["owner_info"] = json_encode($owner_info);
             } else {
@@ -667,7 +667,7 @@ class PracticeController extends Controller
     }
     public function all_practices(Request $request)
     {
-        $columns = ['name', 'status'];
+        $columns = ['name', 'status', 'created_at'];
         $date_range = [
             "date_from" => $request->input('date_from_filter') != "" ? date("Y-m-d", strtotime($request->input('date_from_filter'))) . ' 00:00:00' : $request->input('date_from_filter'),
             "date_to" => $request->input('date_to_filter') != "" ? date("Y-m-d", strtotime($request->input('date_to_filter'))) . ' 23:59:59' : date("Y-m-d H:i:s")
@@ -693,6 +693,7 @@ class PracticeController extends Controller
                     $edit = '<a class="dropdown-item" href="' . route('edit_practice', ['id' => Crypt::encrypt($practice->id)]) . '">Edit</a>';
                 $nestedData['name'] = $practice->name;
                 $nestedData['status'] = get_status($practice->status);
+                $nestedData['created_at'] = date("M j, Y h:i A", strtotime($practice->created_at));
                 $nestedData['action'] = '<button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="text-muted sr-only">Action</span></button><div class="dropdown-menu dropdown-menu-right">' . $edit . '</div>';
                 $data[] = $nestedData;
             }

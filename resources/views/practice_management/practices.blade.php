@@ -46,6 +46,7 @@
                   <tr>
                     <th>Name</th>
                     <th>Status</th>
+                    <th>Created At</th>
                     <th>Action</th>
                   </tr>
                 </thead>
@@ -53,6 +54,7 @@
                   <tr>
                     <th>Name</th>
                     <th>Status</th>
+                    <th>Created At</th>
                     <th>Action</th>
                   </tr>
                 </tfoot>
@@ -93,6 +95,10 @@
         },
         {
           "data": "status",
+          "orderable": true
+        },
+        {
+          "data": "created_at",
           "orderable": true
         },
         {

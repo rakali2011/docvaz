@@ -5,7 +5,7 @@
     <div class="col-12">
       <h2 class="page-title menu-head">{{(@$user) ? 'Update User' : 'Create New User' }}</h2>
       <div class="card shadow mb-4">
-        <form action="{{(@$user) ? route('update_user', ['id' => Crypt::encrypt($user->id)]) : route('post_user')  }}" method="POST">
+        <form action="{{(@$user) ? route('update_user', ['id' => Crypt::encrypt(@$user->id)]) : route('post_user')  }}" method="POST">
           @csrf
           <div class="card-body">
             <div class="row">
@@ -15,7 +15,7 @@
                   <label for="company">Company</label>
                   <select class="form-control @error('company') is-invalid @enderror" name="company" id="company">
                     @foreach (companies() as $company)
-                    <option value="{{ $company->id }}" {{(@$user) ? (@$user->company_id==$company->id ? 'selected' : '') : '' }}>{{ $company->name }}</option>
+                    <option value="{{ $company->id }}" {{ old('company', @$user->company_id) == $company->id ? 'selected=selected' : '' }}>{{ $company->name }}</option>
                     @endforeach
                   </select>
                   @error('company')
@@ -29,7 +29,7 @@
               <div class="col-md-3">
                 <div class="form-group mb-3">
                   <label for="firstname">First Name</label>
-                  <input name="firstname" type="text" id="firstname" class="form-control @error('firstname') is-invalid @enderror" value="{{ old('firstname', $user->firstname) }}">
+                  <input name="firstname" type="text" id="firstname" class="form-control @error('firstname') is-invalid @enderror" value="{{ old('firstname', @$user->firstname) }}">
                   @error('firstname')
                   <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
@@ -40,7 +40,7 @@
               <div class="col-md-3">
                 <div class="form-group mb-3">
                   <label for="lastname">Last Name</label>
-                  <input name="lastname" type="text" id="lastname" class="form-control @error('lastname') is-invalid @enderror" value="{{ old('lastname', $user->lastname) }}">
+                  <input name="lastname" type="text" id="lastname" class="form-control @error('lastname') is-invalid @enderror" value="{{ old('lastname', @$user->lastname) }}">
                   @error('lastname')
                   <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
@@ -51,7 +51,7 @@
               <div class="col-md-3">
                 <div class="form-group mb-3">
                   <label for="psudo_name">Psudo Name</label>
-                  <input name="psudo_name" type="text" id="psudo_name" class="form-control @error('psudo_name') is-invalid @enderror" value="{{ old('psudo_name', $user->psudo_name) }}">
+                  <input name="psudo_name" type="text" id="psudo_name" class="form-control @error('psudo_name') is-invalid @enderror" value="{{ old('psudo_name', @$user->psudo_name) }}">
                   @error('psudo_name')
                   <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
@@ -62,7 +62,7 @@
               <div class="col-md-3">
                 <div class="form-group mb-3">
                   <label for="employee_id">Employee ID</label>
-                  <input name="employee_id" min="0" type="number" id="employee_id" class="form-control @error('employee_id') is-invalid @enderror" value="{{ old('employee_id', $user->employee_id) }}">
+                  <input name="employee_id" min="0" type="number" id="employee_id" class="form-control @error('employee_id') is-invalid @enderror" value="{{ old('employee_id', @$user->employee_id) }}">
                   @error('employee_id')
                   <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
@@ -73,7 +73,7 @@
               <div class="col-md-3">
                 <div class="form-group mb-3">
                   <label for="email">Email</label>
-                  <input name="email" type="email" id="email" class="form-control @error('email') is-invalid @enderror" value="{{ old('email', $user->email) }}">
+                  <input name="email" type="email" id="email" class="form-control @error('email') is-invalid @enderror" value="{{ old('email', @$user->email) }}">
                   @error('email')
                   <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
@@ -84,7 +84,7 @@
               <div class="col-md-3">
                 <div class="form-group mb-3">
                   <label for="username">Username</label>
-                  <input name="username" type="text" id="username" class="form-control @error('username') is-invalid @enderror" value="{{ old('username', $user->username) }}">
+                  <input name="username" type="text" id="username" class="form-control @error('username') is-invalid @enderror" value="{{ old('username', @$user->username) }}">
                   @error('username')
                   <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
@@ -129,7 +129,7 @@
                   <label for="timezone">Timezone</label>
                   <select name="timezone" id="timezone" class="form-control @error('timezone') is-invalid @enderror">
                     @foreach (timezones() as $key => $timezone)
-                    <option value="{{ $key }}" {{ old('timezone', $user->timezone) == $key ? 'selected=selected' : '' }}>{{ $timezone }}</option>
+                    <option value="{{ $key }}" {{ old('timezone', @$user->timezone) == $key ? 'selected=selected' : '' }}>{{ $timezone }}</option>
                     @endforeach
                   </select>
                   @error('timezone')
@@ -145,7 +145,7 @@
                   <select class="form-control @error('practice') is-invalid @enderror" name="status" id="status">
                     <option value="">--Please Select--</option>
                     @foreach (statuses('user') as $status)
-                    <option value="{{ $status->id }}" {{ old('status', $user->status) == $status->id ? 'selected=selected' : '' }}>{{ $status->name }}</option>
+                    <option value="{{ $status->id }}" {{ old('status', @$user->status) == $status->id ? 'selected=selected' : '' }}>{{ $status->name }}</option>
                     @endforeach
                   </select>
                   @error('status')
@@ -196,10 +196,8 @@
             </div>
           </div>
         </form>
-      </div> <!-- / .card -->
-
-    </div> <!-- .col-12 -->
-  </div> <!-- .row -->
+      </div>
+    </div>
+  </div>
 </div>
-
 @endsection

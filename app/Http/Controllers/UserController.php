@@ -89,7 +89,6 @@ class UserController extends Controller
     }
     public function post_user(PostUser $req)
     {
-
         DB::beginTransaction();
         if (auth()->user()->hasRole('dev')) {
             $company_id = $req->company;

@@ -15,7 +15,7 @@
                                     <label for="company">Company</label>
                                     <select class="form-control @error('company') is-invalid @enderror" name="company" id="company">
                                         @foreach (companies() as $company)
-                                        <option value="{{ $company->id }}" {{(@$user) ? (@$user->company_id==$company->id ? 'selected' : '') : '' }}>{{ $company->name }}</option>
+                                        <option value="{{ $company->id }}" {{ old('company', @$user->company_id) == $company->id ? 'selected=selected' : '' }}>{{ $company->name }}</option>
                                         @endforeach
                                     </select>
                                     @error('company')
@@ -29,18 +29,18 @@
                             <div class="col-md-3">
                                 <div class="form-group mb-3">
                                     <label for="firstname">First Name</label>
-                                    <input name="firstname" required type="text" id="firstname" class="form-control @error('firstname') is-invalid @enderror" value="{{ (@$user)?@$user->firstname:old('firstname') }}">
+                                    <input name="firstname" type="text" id="firstname" class="form-control @error('firstname') is-invalid @enderror" value="{{ old('firstname', @$user->firstname) }}">
                                     @error('firstname')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                     @enderror
                                 </div>
-                            </div> <!-- /.col -->
+                            </div>
                             <div class="col-md-3">
                                 <div class="form-group mb-3">
                                     <label for="lastname">Last Name</label>
-                                    <input name="lastname" required type="text" id="lastname" class="form-control @error('lastname') is-invalid @enderror" value="{{ (@$user)?@$user->lastname:old('lastname') }}">
+                                    <input name="lastname" type="text" id="lastname" class="form-control @error('lastname') is-invalid @enderror" value="{{ old('lastname', @$user->lastname) }}">
                                     @error('lastname')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -51,7 +51,7 @@
                             <div class="col-md-3">
                                 <div class="form-group mb-3">
                                     <label for="email">Email</label>
-                                    <input name="email" required type="email" id="email" class="form-control @error('email') is-invalid @enderror" value="{{ (@$user)?@$user->email:old('email') }}">
+                                    <input name="email" type="email" id="email" class="form-control @error('email') is-invalid @enderror" value="{{ old('email', @$user->email) }}">
                                     @error('email')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -62,7 +62,7 @@
                             <div class="col-md-3">
                                 <div class="form-group mb-3">
                                     <label for="username">Username</label>
-                                    <input name="username" type="username" id="username" class="form-control @error('username') is-invalid @enderror" value="{{ (@$user)?@$user->username:old('username') }}">
+                                    <input name="username" type="text" id="username" class="form-control @error('username') is-invalid @enderror" value="{{ old('username', @$user->username) }}">
                                     @error('username')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -88,7 +88,11 @@
                                     <label for="team">Team</label>
                                     <select name="team" id="team" class="form-control @error('team') is-invalid @enderror" required="required">
                                         @foreach ($teams as $team)
-                                        <option value="{{ $team->id }}" {{ in_array($team->id,$assigned_teams)?'selected':'' }}>{{ $team->name }}</option>
+                                        @if (old('team'))
+                                        <option value="{{ $team->id }}" {{ old('team') == $team->id ? 'selected=selected' : '' }}>{{ $team->name }}</option>
+                                        @else
+                                        <option value="{{ $team->id }}" {{ in_array($team->id, $assigned_teams) ? 'selected=selected' : '' }}>{{ $team->name }}</option>
+                                        @endif
                                         @endforeach
                                     </select>
                                     @error('team')
@@ -103,7 +107,7 @@
                                     <label for="timezone">Timezone</label>
                                     <select name="timezone" id="timezone" class="form-control @error('timezone') is-invalid @enderror">
                                         @foreach (timezones() as $key => $timezone)
-                                        <option value="{{ $key }}" {{(@$user) ? (@$user->timezone==$timezone ? 'selected' : '') : '' }}>{{ $timezone }}</option>
+                                        <option value="{{ $key }}" {{ old('timezone', @$user->timezone) == $key ? 'selected=selected' : '' }}>{{ $timezone }}</option>
                                         @endforeach
                                     </select>
                                     @error('timezone')
@@ -119,7 +123,7 @@
                                     <select class="form-control @error('practice') is-invalid @enderror" name="status" id="status">
                                         <option value="">--Please Select--</option>
                                         @foreach (statuses('client') as $status)
-                                        <option value="{{ $status->id }}" {{(@$user) ? (@$user->status==$status->id ? 'selected' : '') : '' }}>{{ $status->name }}</option>
+                                        <option value="{{ $status->id }}" {{ old('status', @$user->status) == $status->id ? 'selected=selected' : '' }}>{{ $status->name }}</option>
                                         @endforeach
                                     </select>
                                     @error('status')
@@ -133,7 +137,7 @@
                             <div class="col-md-3">
                                 <div class="form-group mb-3">
                                     <label for="password">Password</label>
-                                    <input name="password" type="password" id="password" class="form-control @error('password') is-invalid @enderror" value="{{ old('password') }}" {{ (@$user) ? '' : 'required="required="' }}>
+                                    <input name="password" type="password" id="password" class="form-control @error('password') is-invalid @enderror" value="{{ old('password') }}">
                                     @error('password')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -144,10 +148,9 @@
                             <div class="col-md-3">
                                 <div class="form-group mb-3">
                                     <label for="password_confirmation">Confirm Password</label>
-                                    <input name="password_confirmation" type="password" id="password_confirmation" class="form-control" value="{{ old('password_confirmation') }}" {{ (@$user) ? '' : 'required="required="' }}>
+                                    <input name="password_confirmation" type="password" id="password_confirmation" class="form-control" value="{{ old('password_confirmation') }}">
                                 </div>
                             </div>
-
                             @endif
                             <div class="col-12">
                                 <input type="submit" value="{{ (@$user)?'Update':'Create' }}" class="btn btn-success float-right">
@@ -155,10 +158,8 @@
                         </div>
                     </div>
                 </form>
-            </div> <!-- / .card -->
-
-        </div> <!-- .col-12 -->
-    </div> <!-- .row -->
+            </div>
+        </div>
+    </div>
 </div>
-
 @endsection

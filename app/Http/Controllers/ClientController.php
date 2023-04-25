@@ -13,6 +13,7 @@ use App\Http\Requests\PostClient;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Validation\Rule;
 
 class ClientController extends Controller
 {
@@ -87,31 +88,37 @@ class ClientController extends Controller
     public function post_client(PostClient $req)
     {
         DB::beginTransaction();
-        try {
-            if (auth()->user()->hasRole('dev')) {
-                $company_id = $req->company;
-            } else {
-                $company_id = Auth::user()->company->id;
-            }
-            $user = new User;
-            $user->firstname = $req->firstname;
-            $user->lastname = $req->lastname;
-            $user->email = $req->email;
-            $user->username = $req->username;
-            $user->company_id = $company_id;
-            $user->password = Hash::make($req->password);
-            $user->type = 3;
-            $user->timezone = $req->timezone;
-            $user->status = $req->status;
-            $user->save();
-            $user->assignRole($req->input('roles'));
-            $user->teams()->sync([$req->team], TRUE);
-            DB::commit();
-            return redirect()->route('clients')->with('success', "Client Created Successfully");
-        } catch (\Throwable $th) {
-            DB::rollback();
-            return back()->withInput()->with('error', $th->getMessage());
+        if (auth()->user()->hasRole('dev')) {
+            $company_id = $req->company;
+        } else {
+            $company_id = Auth::user()->company->id;
         }
+        $this->validate($req, [
+            'firstname' => ['required', 'string'],
+            'lastname' => ['required', 'string'],
+            'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->where(function ($query) use ($req) {
+                return $query->where('company_id', Auth::user()->company->id);
+            })],
+            'username' => ['required', 'string', 'max:255', Rule::unique('users')->where(function ($query) use ($req) {
+                return $query->where('company_id', Auth::user()->company->id);
+            })],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+        ]);
+        $user = new User;
+        $user->firstname = $req->firstname;
+        $user->lastname = $req->lastname;
+        $user->email = $req->email;
+        $user->username = $req->username;
+        $user->company_id = $company_id;
+        $user->password = Hash::make($req->password);
+        $user->type = 3;
+        $user->timezone = $req->timezone;
+        $user->status = $req->status;
+        $user->save();
+        $user->assignRole($req->input('roles'));
+        $user->teams()->sync([$req->team], TRUE);
+        DB::commit();
+        return redirect()->route('clients')->with('success', "Client Created Successfully");
     }
     public function update_client(Request $req, $id = '')
     {
@@ -119,32 +126,28 @@ class ClientController extends Controller
             $id = $this->clean_id($id);
         }
         DB::beginTransaction();
-        try {
-            if (auth()->user()->hasRole('dev')) {
-                $company_id = $req->company;
-            } else {
-                $company_id = Auth::user()->company->id;
-            }
-            $this->validate($req, [
-                'email' => 'required|email|unique:users,email,' . $id,
-                'username' => 'required|unique:users,username,' . $id,
-            ]);
-            $user = User::findorfail($id);
-            $user->firstname = $req->firstname;
-            $user->lastname = $req->lastname;
-            $user->email = $req->email;
-            $user->username = $req->username;
-            $user->company_id = $company_id;
-            $user->timezone = $req->timezone;
-            $user->status = $req->status;
-            $user->assignRole($req->input('roles'));
-            $user->teams()->sync([$req->team], TRUE);
-            $user->save();
-            DB::commit();
-            return redirect()->route('clients')->with('success', "User Updated Successfully");
-        } catch (\Exception $e) {
-            return back()->withInput()->with('error', $e->getMessage());
+        if (auth()->user()->hasRole('dev')) {
+            $company_id = $req->company;
+        } else {
+            $company_id = Auth::user()->company->id;
         }
+        $this->validate($req, [
+            'email' => 'required|email|unique:users,email,' . $id,
+            'username' => 'required|unique:users,username,' . $id,
+        ]);
+        $user = User::findorfail($id);
+        $user->firstname = $req->firstname;
+        $user->lastname = $req->lastname;
+        $user->email = $req->email;
+        $user->username = $req->username;
+        $user->company_id = $company_id;
+        $user->timezone = $req->timezone;
+        $user->status = $req->status;
+        $user->assignRole($req->input('roles'));
+        $user->teams()->sync([$req->team], TRUE);
+        $user->save();
+        DB::commit();
+        return redirect()->route('clients')->with('success', "User Updated Successfully");
     }
     public function all_clients(Request $request)
     {
@@ -187,7 +190,7 @@ class ClientController extends Controller
                 $assign_department = '';
                 $assign_practice = '';
                 if (auth()->user()->can('update user'))
-                    $edit = '<a class="dropdown-item" href="' . route('edit_user', ['id' => Crypt::encrypt($user->id)]) . '">Edit</a>';
+                    $edit = '<a class="dropdown-item" href="' . route('edit_client', ['id' => Crypt::encrypt($user->id)]) . '">Edit</a>';
                 if (auth()->user()->can('assign department user'))
                     $assign_department = '<a class="dropdown-item assign-department" ref="' . Crypt::encrypt($user->id) . '" href="javascript:;">Assign Department</a>';
                 if (auth()->user()->can('assign practice user'))
