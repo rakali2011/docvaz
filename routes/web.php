@@ -58,20 +58,20 @@ Route::get('/add-client', [ClientController::class, 'add_client'])->middleware('
 Route::post('/post-client', [ClientController::class, 'post_client'])->middleware('permission:add client')->name('post_client');
 Route::get('/edit-client/{id}', [ClientController::class, 'edit_client'])->middleware('permission:update client')->name('edit_client');
 Route::post('/update-client/{id}', [ClientController::class, 'update_client'])->middleware('permission:update client')->name('update_client');
-Route::post('/all_clients', [ClientController::class, 'all_clients'])->name('all_clients');
+Route::post('/all-clients', [ClientController::class, 'all_clients'])->name('all_clients');
 // Departments
 Route::get('/departments', [DepartmentController::class, 'departments'])->middleware('permission:view department')->name('departments');
 Route::get('/add-department', [DepartmentController::class, 'add_department'])->middleware('permission:add department')->name('add_department');
 Route::post('/post-department', [DepartmentController::class, 'post_department'])->middleware('permission:add department')->name('post_department');
 Route::get('/edit-department/{id}', [DepartmentController::class, 'edit_department'])->middleware('permission:update department')->name('edit_department');
 Route::post('/update-department/{id}', [DepartmentController::class, 'update_department'])->middleware('permission:update department')->name('update_department');
-Route::post('/get_departments', [DepartmentController::class, 'get_departments'])->middleware('permission:assign department user')->name('get_departments');
+Route::post('/get-departments', [DepartmentController::class, 'get_departments'])->middleware('permission:assign department user')->name('get_departments');
 // Designations
 Route::resource('designations', DesignationController::class);
 Route::post('/update-rank', [DesignationController::class, 'updateRank'])->middleware('permission:view designation')->name('update_rank');
 // Document Types
 Route::resource('document_types', DocumentTypeController::class);
-Route::post('/get_document_types', [DocumentTypeController::class, 'get_document_types'])->middleware('permission:assign department user')->name('get_document_types');
+Route::post('/get-document-types', [DocumentTypeController::class, 'get_document_types'])->middleware('permission:assign department user')->name('get_document_types');
 // Files
 Route::get('/import', [FileController::class, 'import'])->middleware('permission:import file')->name('import');
 Route::get('/files', [FileController::class, 'files'])->middleware('permission:view file')->name('files');
@@ -89,8 +89,8 @@ Route::get('/add-practice', [PracticeController::class, 'add_practice'])->middle
 Route::post('/post-practice', [PracticeController::class, 'post_practice'])->middleware('permission:add practice')->name('post_practice');
 Route::get('/edit-practice/{id}', [PracticeController::class, 'edit_practice'])->middleware('permission:update practice')->name('edit_practice');
 Route::post('/update-practice/{id}', [PracticeController::class, 'update_practice'])->middleware('permission:update practice')->name('update_practice');
-Route::post('/get_practices', [PracticeController::class, 'get_practices'])->middleware('permission:assign practice user')->name('get_practices');
-Route::post('/all_practices', [PracticeController::class, 'all_practices'])->middleware('permission:view practice')->name('all_practices');
+Route::post('/get-practices', [PracticeController::class, 'get_practices'])->middleware('permission:assign practice user')->name('get_practices');
+Route::post('/all-practices', [PracticeController::class, 'all_practices'])->middleware('permission:view practice')->name('all_practices');
 // Practice Info Form
 Route::resource('practice_info_form', PracticeInfoFormController::class);
 Route::get('/practice-info-form/{id}', [PracticeInfoFormController::class, 'practiceInfoForm'])->name('practice_info_form');
@@ -100,10 +100,10 @@ Route::get('/add-role', [RoleController::class, 'add_role'])->middleware('permis
 Route::post('/post-role', [RoleController::class, 'post_role'])->middleware('permission:add role')->name('post_role');
 Route::get('/edit-role/{id}', [RoleController::class, 'edit_role'])->middleware('permission:update team')->name('edit_role');
 Route::post('/update-role/{id}', [RoleController::class, 'update_role'])->middleware('permission:update team')->name('update_role');
-Route::post('/all_roles', [RoleController::class, 'all_roles'])->name('all_roles');
+Route::post('/all-roles', [RoleController::class, 'all_roles'])->name('all_roles');
 // Settings
 Route::resource('settings', SettingController::class);
-Route::post('/get_setting', [SettingController::class, 'getSetting'])->middleware('permission:update company setting')->name('get_setting');
+Route::post('/get-setting', [SettingController::class, 'getSetting'])->middleware('permission:update company setting')->name('get_setting');
 // Statuses
 Route::resource('statuses', StatusController::class);
 Route::post('/default-status', [StatusController::class, 'default_status'])->middleware('permission:update status')->name('default_status');
@@ -113,8 +113,8 @@ Route::get('/add-team', [TeamController::class, 'add_team'])->middleware('permis
 Route::post('/post-team', [TeamController::class, 'post_team'])->middleware('permission:add team')->name('post_team');
 Route::get('/edit-team/{id}', [TeamController::class, 'edit_team'])->middleware('permission:update team')->name('edit_team');
 Route::post('/update-team/{id}', [TeamController::class, 'update_team'])->middleware('permission:update team')->name('update_team');
-Route::post('/get_teams', [TeamController::class, 'get_teams'])->middleware('permission:assign department user')->name('get_teams');
-Route::post('/update_team_users', [TeamController::class, 'update_team_users'])->middleware('permission:assign team user')->name('update_team_users');
+Route::post('/get-teams', [TeamController::class, 'get_teams'])->middleware('permission:assign department user')->name('get_teams');
+Route::post('/update-team-users', [TeamController::class, 'update_team_users'])->middleware('permission:assign team user')->name('update_team_users');
 // Tickets
 Route::resource('tickets', TicketController::class);
 Route::post('/all-tickets', [TicketController::class, 'allTickets'])->middleware('permission:view ticket')->name('all_tickets');
@@ -130,13 +130,13 @@ Route::get('/add-user', [UserController::class, 'add_user'])->middleware('permis
 Route::post('/post-user', [UserController::class, 'post_user'])->middleware('permission:add user')->name('post_user');
 Route::get('/edit-user/{id}', [UserController::class, 'edit_user'])->middleware('permission:update user')->name('edit_user');
 Route::post('/update-user/{id}', [UserController::class, 'update_user'])->middleware('permission:update user')->name('update_user');
-Route::post('/get_users', [UserController::class, 'get_users'])->middleware('permission:update user')->name('get_users');
+Route::post('/get-users', [UserController::class, 'get_users'])->middleware('permission:update user')->name('get_users');
 Route::get('/profile', [UserController::class, 'profile'])->middleware('permission:update user')->name('profile');
-Route::post('/all_users', [UserController::class, 'all_users'])->name('all_users');
-Route::post('/update_profile', [UserController::class, 'update_profile'])->middleware('permission:update user')->name('update_profile');
+Route::post('/all-users', [UserController::class, 'all_users'])->name('all_users');
+Route::post('/update-profile', [UserController::class, 'update_profile'])->middleware('permission:update user')->name('update_profile');
 Route::get('/change-password', [UserController::class, 'change_password'])->middleware('permission:update user')->name('change_password');
 Route::post('/update-password', [UserController::class, 'update_password'])->middleware('permission:update user')->name('update_password');
-Route::post('/update_user_departments', [UserController::class, 'update_user_departments'])->middleware('permission:assign department user')->name('update_user_departments');
-Route::post('/update_user_document_types', [UserController::class, 'update_user_document_types'])->middleware('permission:assign document user')->name('update_user_document_types');
-Route::post('/update_user_practices', [UserController::class, 'update_user_practices'])->middleware('permission:assign practice user')->name('update_user_practices');
-Route::post('/update_user_teams', [UserController::class, 'update_user_teams'])->middleware('permission:assign team user')->name('update_user_teams');
+Route::post('/update-user-departments', [UserController::class, 'update_user_departments'])->middleware('permission:assign department user')->name('update_user_departments');
+Route::post('/update-user-document-types', [UserController::class, 'update_user_document_types'])->middleware('permission:assign document user')->name('update_user_document_types');
+Route::post('/update-user-practices', [UserController::class, 'update_user_practices'])->middleware('permission:assign practice user')->name('update_user_practices');
+Route::post('/update-user-teams', [UserController::class, 'update_user_teams'])->middleware('permission:assign team user')->name('update_user_teams');
