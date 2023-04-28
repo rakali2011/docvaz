@@ -19,6 +19,7 @@
                   <tr>
                     <th>Provider Name</th>
                     <th>Link</th>
+                    <th>Assigned</th>
                     @role('dev')
                     <th>Company</th>
                     @endrole
@@ -29,6 +30,7 @@
                   <tr>
                     <td>{{ $item->provider_name }}</td>
                     <td>{{ $item->link }}</td>
+                    <td>{{ $item->practice == 1 ? 'Yes' : 'No' }}</td>
                     @role('dev')
                     <td>{{ @$item->company->name }}</td>
                     @endrole

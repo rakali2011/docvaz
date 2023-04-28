@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Link;
+use App\Models\Practice;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -25,6 +26,8 @@ class LinkController extends Controller
         $links = [];
         if (auth()->user()->can('create link'))
             $links = Link::orderBy('id', 'DESC')->get();
+        foreach ($links as $key => $link)
+            $link->practice = Practice::where('link_id', $link->id)->count();
         return view('link_management.index', compact('data', 'links'));
     }
 
@@ -54,7 +57,7 @@ class LinkController extends Controller
         $link->token = md5(time());
         $link->link =  route('practice_info_form', $link->token);
         $link->provider_name = $request->name;
-        $link->expired_at = date('Y-m-d H:i:s', strtotime("+{$request->expired_at} hours"));;
+        $link->expired_at = date('Y-m-d H:i:s', strtotime("+{$request->expired_at} hours"));
         $link->save();
         return redirect()->route('links.index')->with('success', "Link Created Successfully");
     }

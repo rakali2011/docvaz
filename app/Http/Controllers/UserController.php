@@ -99,14 +99,14 @@ class UserController extends Controller
             'firstname' => ['required', 'string'],
             'lastname' => ['required', 'string'],
             'psudo_name' => ['required', 'string'],
-            'employee_id' => ['required', Rule::unique('users')->where(function ($query) use ($req) {
-                return $query->where('company_id', Auth::user()->company->id);
+            'employee_id' => ['required', Rule::unique('users')->where(function ($query) use ($company_id) {
+                return $query->where('company_id', $company_id);
             })],
-            'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->where(function ($query) use ($req) {
-                return $query->where('company_id', Auth::user()->company->id);
+            'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->where(function ($query) use ($company_id) {
+                return $query->where('company_id', $company_id);
             })],
-            'username' => ['required', 'string', 'max:255', Rule::unique('users')->where(function ($query) use ($req) {
-                return $query->where('company_id', Auth::user()->company->id);
+            'username' => ['required', 'string', 'max:255', Rule::unique('users')->where(function ($query) use ($company_id) {
+                return $query->where('company_id', $company_id);
             })],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
@@ -144,14 +144,14 @@ class UserController extends Controller
             'firstname' => ['required', 'string'],
             'lastname' => ['required', 'string'],
             'psudo_name' => ['required', 'string'],
-            'employee_id' => ['required', Rule::unique('users')->where(function ($query) use ($id) {
+            'employee_id' => ['required', Rule::unique('users')->where(function ($query) use ($id, $company_id) {
+                return $query->where('company_id', $company_id)->where('id', '!=', $id);
+            })],
+            'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->where(function ($query) use ($id, $company_id) {
                 return $query->where('company_id', Auth::user()->company->id)->where('id', '!=', $id);
             })],
-            'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->where(function ($query) use ($id) {
-                return $query->where('company_id', Auth::user()->company->id)->where('id', '!=', $id);
-            })],
-            'username' => ['required', 'string', 'max:255', Rule::unique('users')->where(function ($query) use ($id) {
-                return $query->where('company_id', Auth::user()->company->id)->where('id', '!=', $id);
+            'username' => ['required', 'string', 'max:255', Rule::unique('users')->where(function ($query) use ($id, $company_id) {
+                return $query->where('company_id', $company_id)->where('id', '!=', $id);
             })]
         ]);
         $user = User::findorfail($id);
@@ -348,11 +348,11 @@ class UserController extends Controller
                 $assign_practice = '';
                 if (auth()->user()->can('update user'))
                     $edit = '<a class="dropdown-item" href="' . route('edit_user', ['id' => Crypt::encrypt($user->id)]) . '">Edit</a>';
-                if (auth()->user()->can('assign department user'))
+                if (auth()->user()->can('assign department user') && !auth()->user()->hasRole('dev'))
                     $assign_department = '<a class="dropdown-item assign-department" ref="' . Crypt::encrypt($user->id) . '" href="javascript:;">Assign Department</a>';
-                if (auth()->user()->can('assign document user'))
+                if (auth()->user()->can('assign document user') && !auth()->user()->hasRole('dev'))
                     $assign_document = '<a class="dropdown-item assign-document" ref="' . Crypt::encrypt($user->id) . '" href="javascript:;">Allow Document Types</a>';
-                if (auth()->user()->can('assign practice user'))
+                if (auth()->user()->can('assign practice user') && !auth()->user()->hasRole('dev'))
                     $assign_practice = '<a class="dropdown-item assign-practice" ref="' . Crypt::encrypt($user->id) . '" href="javascript:;">Assign Practice</a>';
 
                 $nestedData['first_name'] = $user->firstname;

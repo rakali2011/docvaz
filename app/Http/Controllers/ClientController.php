@@ -96,11 +96,11 @@ class ClientController extends Controller
         $this->validate($req, [
             'firstname' => ['required', 'string'],
             'lastname' => ['required', 'string'],
-            'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->where(function ($query) use ($req) {
-                return $query->where('company_id', Auth::user()->company->id);
+            'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->where(function ($query) use ($company_id) {
+                return $query->where('company_id', $company_id);
             })],
-            'username' => ['required', 'string', 'max:255', Rule::unique('users')->where(function ($query) use ($req) {
-                return $query->where('company_id', Auth::user()->company->id);
+            'username' => ['required', 'string', 'max:255', Rule::unique('users')->where(function ($query) use ($company_id) {
+                return $query->where('company_id', $company_id);
             })],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
@@ -132,8 +132,14 @@ class ClientController extends Controller
             $company_id = Auth::user()->company->id;
         }
         $this->validate($req, [
-            'email' => 'required|email|unique:users,email,' . $id,
-            'username' => 'required|unique:users,username,' . $id,
+            'firstname' => ['required', 'string'],
+            'lastname' => ['required', 'string'],
+            'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->where(function ($query) use ($id, $company_id) {
+                return $query->where('company_id', $company_id)->where('id', '!=', $id);
+            })],
+            'username' => ['required', 'string', 'max:255', Rule::unique('users')->where(function ($query) use ($id, $company_id) {
+                return $query->where('company_id', $company_id)->where('id', '!=', $id);
+            })]
         ]);
         $user = User::findorfail($id);
         $user->firstname = $req->firstname;
