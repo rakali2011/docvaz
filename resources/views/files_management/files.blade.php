@@ -16,7 +16,7 @@
               <div class="card mb-3">
                 <div class="card-body background-panel">
                   <form action="" id="filter-form" class="row">
-                    <div class="form-group col-md-2">
+                    <!-- <div class="form-group col-md-2">
                       <label for="team"></label>
                       <select name="team" id="team" class="form-control">
                         <option value="">Select Team</option>
@@ -24,7 +24,7 @@
                         <option value="{{ $team->id }}">{{ $team->name }}</option>
                         @endforeach
                       </select>
-                    </div>
+                    </div> -->
                     <div class="form-group col-md-2">
                       <label for="practice"></label>
                       <select name="practice" id="practice" class="form-control">

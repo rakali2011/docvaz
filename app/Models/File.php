@@ -37,21 +37,20 @@ class File extends Model implements Auditable
     }
     public function countTotal()
     {
-        $user_ids = get_departments_users();
         $query = $this;
-        $query = $this->whereIn('user_id', $user_ids);
+        $query = $query->whereIn('practice_id', get_assigned_practices());
         return $query->count();
     }
     public function countFiltered($date_range, $filter, $search)
     {
         $query = $this;
-        if (empty($filter["team"])) {
-            $team_user_ids = get_assigned_teams_user_ids();
-            $query = $this->whereIn('user_id', $team_user_ids);
-        } else {
-            $team_user_ids = get_assigned_teams_user_ids($filter["team"]);
-            $query = $query->whereIn('user_id', $team_user_ids);
-        }
+        // if (empty($filter["team"])) {
+        //     $team_user_ids = get_assigned_teams_user_ids();
+        //     $query = $this->whereIn('user_id', $team_user_ids);
+        // } else {
+        //     $team_user_ids = get_assigned_teams_user_ids($filter["team"]);
+        //     $query = $query->whereIn('user_id', $team_user_ids);
+        // }
         if (!empty($filter["practice_id"])) {
             $query = $query->where('practice_id', $filter['practice_id']);
         } else {
@@ -80,13 +79,13 @@ class File extends Model implements Auditable
     public function getData($date_range, $filter, $search, $start, $limit, $order, $dir)
     {
         $query = $this;
-        if (empty($filter["team"])) {
-            $team_user_ids = get_assigned_teams_user_ids();
-            $query = $this->whereIn('user_id', $team_user_ids);
-        } else {
-            $team_user_ids = get_assigned_teams_user_ids($filter["team"]);
-            $query = $query->whereIn('user_id', $team_user_ids);
-        }
+        // if (empty($filter["team"])) {
+        //     $team_user_ids = get_assigned_teams_user_ids();
+        //     $query = $this->whereIn('user_id', $team_user_ids);
+        // } else {
+        //     $team_user_ids = get_assigned_teams_user_ids($filter["team"]);
+        //     $query = $query->whereIn('user_id', $team_user_ids);
+        // }
         if (!empty($filter["practice_id"])) {
             $query = $query->where('practice_id', $filter['practice_id']);
         } else {

@@ -58,13 +58,12 @@ class ClientController extends Controller
         else
             $roles = SpatieRole::where('company_id', Auth::user()->company->id)->pluck('display_name', 'name')->all();
         $userRole = [];
-        if (auth()->user()->can('assign team user'))
-            $teams = Team::where('company_id', Auth::user()->company->id)->orderBy('name', 'ASC')->get();
-        else
-            $teams = Auth::user()->assigned_teams();
-        $assigned_teams = [];
-
-        return view('user_management.add_client', compact('data', 'roles', 'userRole', 'teams', 'assigned_teams'));
+        // if (auth()->user()->can('assign team user'))
+        //     $teams = Team::where('company_id', Auth::user()->company->id)->orderBy('name', 'ASC')->get();
+        // else
+        //     $teams = Auth::user()->assigned_teams();
+        // $assigned_teams = [];
+        return view('user_management.add_client', compact('data', 'roles', 'userRole'));
     }
     public function edit_client($id)
     {
@@ -78,12 +77,12 @@ class ClientController extends Controller
         else
             $roles = SpatieRole::where('company_id', Auth::user()->company->id)->pluck('display_name', 'name')->all();
         $userRole = $user->roles->pluck('name', 'name')->all();
-        if (auth()->user()->can('assign team user'))
-            $teams = Team::where('company_id', Auth::user()->company->id)->orderBy('name', 'ASC')->get();
-        else
-            $teams = Auth::user()->assigned_teams();
-        $assigned_teams = $user->assigned_teams_array();
-        return view('user_management.add_client', compact('data', 'user', 'roles', 'userRole', 'teams', 'assigned_teams'));
+        // if (auth()->user()->can('assign team user'))
+        //     $teams = Team::where('company_id', Auth::user()->company->id)->orderBy('name', 'ASC')->get();
+        // else
+        //     $teams = Auth::user()->assigned_teams();
+        // $assigned_teams = $user->assigned_teams_array();
+        return view('user_management.add_client', compact('data', 'user', 'roles', 'userRole'));
     }
     public function post_client(PostClient $req)
     {
@@ -112,7 +111,7 @@ class ClientController extends Controller
         $user->status = $req->status;
         $user->save();
         $user->assignRole($req->input('roles'));
-        $user->teams()->sync([$req->team], TRUE);
+        // $user->teams()->sync([$req->team], TRUE);
         DB::commit();
         return redirect()->route('clients')->with('success', "Client Created Successfully");
     }
@@ -146,7 +145,7 @@ class ClientController extends Controller
         $user->timezone = $req->timezone;
         $user->status = $req->status;
         $user->assignRole($req->input('roles'));
-        $user->teams()->sync([$req->team], TRUE);
+        // $user->teams()->sync([$req->team], TRUE);
         $user->save();
         DB::commit();
         return redirect()->route('clients')->with('success', "User Updated Successfully");

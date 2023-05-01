@@ -140,7 +140,7 @@ class FileController extends Controller
             "date_to" => $request->input('date_to_filter') != "" ? date("Y-m-d", strtotime($request->input('date_to_filter'))) . ' 23:59:59' : date("Y-m-d H:i:s")
         ];
         $filter = array(
-            "team" => $request->input('team_filter'),
+            // "team" => $request->input('team_filter'),
             "practice_id" => $request->input('practice_filter'),
             "status" => $request->input('status_filter'),
             "doc_type" => $request->input('doc_type_filter')
