@@ -173,7 +173,7 @@
                 <div class="col-md-4">
                   <div class="mb-3">
                     <label for="avg_charges" class="form-label">Average Monthly Collection</label>
-                    <input type="text" class="form-control" id="avg_charges" name="avg_charges" value="{{ empty(old('avg_charges')) ? @$practice->avg_charges : old('avg_charges') }}">
+                    <input type="number" step="0.01" class="form-control" id="avg_charges" name="avg_charges" value="{{ empty(old('avg_charges')) ? @$practice->avg_charges : old('avg_charges') }}">
                   </div>
                 </div>
                 <div class="col-md-12"></div>

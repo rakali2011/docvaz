@@ -355,7 +355,7 @@ class UserController extends Controller
                 $nestedData['username'] = $user->username;
                 $nestedData['employee_id'] = $user->employee_id;
                 $nestedData['designation_id'] = !empty($user->designation_id) ? Designation::findorfail($user->designation_id)->name : "";
-                $nestedData['status'] = Status::findorfail($user->status)->name;
+                $nestedData['status'] = !empty($user->status) ? Status::findorfail($user->status)->name : "";
                 $nestedData['roles'] = $roles;
                 $nestedData['departments'] = $departments;
                 $nestedData['company_name'] = $user->company->name;

@@ -86,7 +86,7 @@
                             <div class="col-md-3">
                                 <div class="form-group mb-3">
                                     <label for="team">Team</label>
-                                    <select name="team" id="team" class="form-control @error('team') is-invalid @enderror" required="required">
+                                    <select name="team" id="team" class="form-control @error('team') is-invalid @enderror">
                                         @foreach ($teams as $team)
                                         @if (old('team'))
                                         <option value="{{ $team->id }}" {{ old('team') == $team->id ? 'selected=selected' : '' }}>{{ $team->name }}</option>
