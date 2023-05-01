@@ -150,6 +150,28 @@
     </div>
   </div>
 </div>
+<div class="modal fade" id="assign-document-modal" tabindex="-1" role="dialog" aria-labelledby="verticalModalTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <form action="{{ route('update_user_document_types') }}" method="post" id="assign-document-form">
+        @csrf
+        <div class="modal-header">
+          <h5 class="modal-title" id="verticalModalTitle">Allow Document Types</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group col-12" id="assign-document-body"></div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn mb-2 btn-secondary" data-dismiss="modal">Close</button>
+          <input type="submit" class="btn mb-2 btn-primary">
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
 <div class="modal fade" id="assign-practice-modal" tabindex="-1" role="dialog" aria-labelledby="verticalModalTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
@@ -313,6 +335,32 @@
     });
     $('#assign-department-modal').modal('show');
   });
+  $(document).on('click', '.assign-document', function() {
+    ref = $(this).attr('ref');
+    $.ajax({
+      type: "post",
+      data: {
+        ref: ref,
+        _token: '{{ csrf_token() }}'
+      },
+      url: "{{ route('get_document_types') }}",
+      success: function(response) {
+        if (response.success == 1) {
+          $('#assign-document-body').html(response.content);
+          $('.select2-multi').select2({
+            theme: 'bootstrap4',
+          });
+        } else {
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: response.message,
+          });
+        }
+      }
+    });
+    $('#assign-document-modal').modal('show');
+  });
   $(document).on('click', '.assign-practice', function() {
     ref = $(this).attr('ref');
     $.ajax({
@@ -388,6 +436,40 @@
         if (data.success == 1) {
           $('#assign-department-modal').modal('hide');
           $('#assign-department-body').html('');
+          ref = "";
+          Swal.fire({
+            icon: 'success',
+            text: data.message,
+          });
+        } else {
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: data.message,
+          });
+        }
+      })
+      .catch(error => console.error("There was a problem with the fetch operation:", error));
+  });
+  var form4 = document.getElementById('assign-document-form');
+  form4.addEventListener('submit', event => {
+    event.preventDefault();
+    let formData2 = new FormData(form4);
+    formData2.append('ref', ref);
+    fetch(form4.action, {
+        method: "POST",
+        body: formData2
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then(data => {
+        if (data.success == 1) {
+          $('#assign-document-modal').modal('hide');
+          $('#assign-document-body').html('');
           ref = "";
           Swal.fire({
             icon: 'success',

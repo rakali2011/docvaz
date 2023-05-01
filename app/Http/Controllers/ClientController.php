@@ -190,11 +190,14 @@ class ClientController extends Controller
                 }
                 $edit = '';
                 $assign_department = '';
+                $assign_document = '';
                 $assign_practice = '';
                 if (auth()->user()->can('update user'))
                     $edit = '<a class="dropdown-item" href="' . route('edit_client', ['id' => Crypt::encrypt($user->id)]) . '">Edit</a>';
                 if (auth()->user()->can('assign department user'))
                     $assign_department = '<a class="dropdown-item assign-department" ref="' . Crypt::encrypt($user->id) . '" href="javascript:;">Assign Department</a>';
+                if (auth()->user()->can('assign document user') && !auth()->user()->hasRole('dev'))
+                    $assign_document = '<a class="dropdown-item assign-document" ref="' . Crypt::encrypt($user->id) . '" href="javascript:;">Allow Document Types</a>';
                 if (auth()->user()->can('assign practice user'))
                     $assign_practice = '<a class="dropdown-item assign-practice" ref="' . Crypt::encrypt($user->id) . '" href="javascript:;">Assign Practice</a>';
 
@@ -209,7 +212,7 @@ class ClientController extends Controller
                 $nestedData['roles'] = $roles;
                 $nestedData['departments'] = $departments;
                 $nestedData['company_name'] = $user->company->name;
-                $nestedData['action'] = '<button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="text-muted sr-only">Action</span></button><div class="dropdown-menu dropdown-menu-right">' . $edit . $assign_department  . $assign_practice . '</div>';
+                $nestedData['action'] = '<button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="text-muted sr-only">Action</span></button><div class="dropdown-menu dropdown-menu-right">' . $edit . $assign_department . $assign_document . $assign_practice . '</div>';
                 $data[] = $nestedData;
             }
         }
