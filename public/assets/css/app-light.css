@@ -3030,7 +3030,7 @@ input[type="button"].btn-block {
 .tab-content > .active {
   display: block; }
 .avatar-sidebar-img{
-    width: 70px;
+    width: 50px;
     height: auto;
 }
 .navbar {

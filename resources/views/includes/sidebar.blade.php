@@ -3,7 +3,7 @@
     <i class="fe fe-x"><span class="sr-only"></span></i>
   </a>
   <nav class="vertnav navbar navbar-dark" style="color: #444;">
-    <div class="w-100 mb-4 d-flex">
+    <div class="w-100 d-flex">
       <a class="navbar-brand mx-auto mt-2 flex-fill text-center" href="{{ route('home') }}">
         {{-- <img width="auto" height="500" src="{{ asset('assets/assets/avatars/face-1.jpg') }}"class="avatar-img rounded-circle border">--}}
         <h3>DocuHub</h3>
@@ -13,7 +13,7 @@
     <ul style="list-style-type: none;padding:0;" class="mx-auto text-center">
       <li class="nav-item dropdown">
         <a class="navbar-brand mr-0">
-          <img src="{{ asset('assets/assets/avatars/face-1.jpg') }}" class="avatar-sidebar-img rounded-circle border">
+          <img src="{{ asset('assets/assets/avatars/user-icon-jpg-11.jpg') }}" class="avatar-sidebar-img rounded-circle border">
         </a>
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <span class="font-weight-bold text-black ">{{ auth()->user()->firstname ." ".auth()->user()->lastname  }}</span>
@@ -41,7 +41,6 @@
     </ul>
     @role('dev')
     <p class="text-muted nav-heading mt-4 mb-1" style="text-align: center;width: 100%;">
-      <span>Dev</span>
     <ul class="navbar-nav flex-fill w-100 mb-2">
       <li class="nav-item dropdown">
         <a href="#ui" id="dev-tools" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link menu">
