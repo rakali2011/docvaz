@@ -151,14 +151,16 @@ class User extends Authenticatable implements Auditable
     }
     public function countTotal($type)
     {
-        $user_ids = get_users($type)->pluck('id');
+        $user_ids = get_users($type);
+        $user_ids = count($user_ids) ? $user_ids->pluck('id') : $user_ids;
         $query = $this;
         $query = $this->whereIn('id', $user_ids);
         return $query->count();
     }
     public function countFiltered($type, $date_range, $filter, $search)
     {
-        $user_ids = get_users($type)->pluck('id');
+        $user_ids = get_users($type);
+        $user_ids = count($user_ids) ? $user_ids->pluck('id') : $user_ids;
         $query = $this;
         $query = $this->whereIn('id', $user_ids);
         if (!empty($filter["company_id"])) {
@@ -198,7 +200,8 @@ class User extends Authenticatable implements Auditable
     }
     public function getData($type, $date_range, $filter, $search, $start, $limit, $order, $dir)
     {
-        $user_ids = get_users($type)->pluck('id');
+        $user_ids = get_users($type);
+        $user_ids = count($user_ids) ? $user_ids->pluck('id') : $user_ids;
         $query = $this;
         $query = $this->whereIn('id', $user_ids);
         if (!empty($filter["company_id"])) {

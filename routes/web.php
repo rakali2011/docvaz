@@ -133,9 +133,9 @@ Route::post('/update-user/{id}', [UserController::class, 'update_user'])->middle
 Route::post('/get-users', [UserController::class, 'get_users'])->middleware('permission:update user')->name('get_users');
 Route::get('/profile', [UserController::class, 'profile'])->middleware('permission:update user')->name('profile');
 Route::post('/all-users', [UserController::class, 'all_users'])->name('all_users');
-Route::post('/update-profile', [UserController::class, 'update_profile'])->middleware('permission:update user')->name('update_profile');
-Route::get('/change-password', [UserController::class, 'change_password'])->middleware('permission:update user')->name('change_password');
-Route::post('/update-password', [UserController::class, 'update_password'])->middleware('permission:update user')->name('update_password');
+Route::post('/update-profile', [UserController::class, 'update_profile'])->name('update_profile');
+Route::get('/change-password', [UserController::class, 'change_password'])->name('change_password');
+Route::post('/update-password', [UserController::class, 'update_password'])->name('update_password');
 Route::post('/update-user-departments', [UserController::class, 'update_user_departments'])->middleware('permission:assign department user')->name('update_user_departments');
 Route::post('/update-user-document-types', [UserController::class, 'update_user_document_types'])->middleware('permission:assign document user')->name('update_user_document_types');
 Route::post('/update-user-practices', [UserController::class, 'update_user_practices'])->middleware('permission:assign practice user')->name('update_user_practices');
