@@ -354,7 +354,6 @@ class UserController extends Controller
                     $assign_document = '<a class="dropdown-item assign-document" ref="' . Crypt::encrypt($user->id) . '" href="javascript:;">Allow Document Types</a>';
                 if (auth()->user()->can('assign practice user') && !auth()->user()->hasRole('dev'))
                     $assign_practice = '<a class="dropdown-item assign-practice" ref="' . Crypt::encrypt($user->id) . '" href="javascript:;">Assign Practice</a>';
-
                 $nestedData['first_name'] = $user->firstname;
                 $nestedData['last_name'] = $user->lastname;
                 $nestedData['psudo_name'] = $user->psudo_name;
