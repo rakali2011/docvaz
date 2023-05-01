@@ -99,15 +99,9 @@ class UserController extends Controller
             'firstname' => ['required', 'string'],
             'lastname' => ['required', 'string'],
             'psudo_name' => ['required', 'string'],
-            'employee_id' => ['required', Rule::unique('users')->where(function ($query) use ($company_id) {
-                return $query->where('company_id', $company_id);
-            })],
-            'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->where(function ($query) use ($company_id) {
-                return $query->where('company_id', $company_id);
-            })],
-            'username' => ['required', 'string', 'max:255', Rule::unique('users')->where(function ($query) use ($company_id) {
-                return $query->where('company_id', $company_id);
-            })],
+            'employee_id' => ['required', 'unique:users'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'username' => ['required', 'string', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
         $user = new User;
@@ -145,13 +139,13 @@ class UserController extends Controller
             'lastname' => ['required', 'string'],
             'psudo_name' => ['required', 'string'],
             'employee_id' => ['required', Rule::unique('users')->where(function ($query) use ($id, $company_id) {
-                return $query->where('company_id', $company_id)->where('id', '!=', $id);
+                return $query->where('id', '!=', $id);
             })],
             'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->where(function ($query) use ($id, $company_id) {
-                return $query->where('company_id', Auth::user()->company->id)->where('id', '!=', $id);
+                return $query->where('id', '!=', $id);
             })],
             'username' => ['required', 'string', 'max:255', Rule::unique('users')->where(function ($query) use ($id, $company_id) {
-                return $query->where('company_id', $company_id)->where('id', '!=', $id);
+                return $query->where('id', '!=', $id);
             })]
         ]);
         $user = User::findorfail($id);
@@ -360,7 +354,7 @@ class UserController extends Controller
                 $nestedData['email'] = $user->email;
                 $nestedData['username'] = $user->username;
                 $nestedData['employee_id'] = $user->employee_id;
-                $nestedData['designation_id'] = Designation::findorfail($user->designation_id)->name;
+                $nestedData['designation_id'] = !empty($user->designation_id) ? Designation::findorfail($user->designation_id)->name : "";
                 $nestedData['status'] = Status::findorfail($user->status)->name;
                 $nestedData['roles'] = $roles;
                 $nestedData['departments'] = $departments;

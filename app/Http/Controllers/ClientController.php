@@ -96,12 +96,8 @@ class ClientController extends Controller
         $this->validate($req, [
             'firstname' => ['required', 'string'],
             'lastname' => ['required', 'string'],
-            'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->where(function ($query) use ($company_id) {
-                return $query->where('company_id', $company_id);
-            })],
-            'username' => ['required', 'string', 'max:255', Rule::unique('users')->where(function ($query) use ($company_id) {
-                return $query->where('company_id', $company_id);
-            })],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'username' => ['required', 'string', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
         $user = new User;
@@ -135,10 +131,10 @@ class ClientController extends Controller
             'firstname' => ['required', 'string'],
             'lastname' => ['required', 'string'],
             'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->where(function ($query) use ($id, $company_id) {
-                return $query->where('company_id', $company_id)->where('id', '!=', $id);
+                return $query->where('id', '!=', $id);
             })],
             'username' => ['required', 'string', 'max:255', Rule::unique('users')->where(function ($query) use ($id, $company_id) {
-                return $query->where('company_id', $company_id)->where('id', '!=', $id);
+                return $query->where('id', '!=', $id);
             })]
         ]);
         $user = User::findorfail($id);

@@ -75,6 +75,8 @@ class CompanyController extends Controller
             $user->firstname = "Super";
             $user->lastname = "Admin";
             $user->email = "superadmin" . $company->id . "@" . $company->prefix . ".com";
+            $user->username = "superadmin" . $company->id;
+            $user->timezone = 0;
             $user->password = Hash::make('superadmin@' . $company->prefix);
             $user->save();
             $user->assignRole($role);
