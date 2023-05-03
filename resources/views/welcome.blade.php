@@ -121,7 +121,7 @@
                 <h4>Document Portal</h4>
             </div>
             <div class="row mb-2-p-0">
-                <div class="col-lg-12 col-md-12">
+                <div class="{{ Auth::user()->type != 3 ? 'col-lg-12 col-md-12' : 'col-lg-6 col-md-6' }}">
                     <div class="card shadow mb-3" style="background:aliceblue;">
                         <div class="card-header shadow text-center">
                             <h5>Documents</h5>
@@ -148,6 +148,7 @@
                         </div>
                     </div>
                 </div>
+                @if(Auth::user()->type != 3)
                 <div class="col-lg-6 col-md-6">
                     <div class="card shadow mb-3" style="background:aliceblue;">
                         <div class="card-header shadow text-center">
@@ -169,6 +170,7 @@
                         </div>
                     </div>
                 </div>
+                @endif
             </div>
 
             {{--D-MAIL PORTION--}}

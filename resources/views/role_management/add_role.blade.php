@@ -50,7 +50,6 @@
     }
 
     .card-header>strong>label {
-        color: #FFFFFF;
         font-size: 15px;
         font-weight: 700;
         margin: 0px !important;
@@ -107,7 +106,7 @@
                             </div>
                             <div class="col-xs-6 col-sm-6 col-md-3 mb-1">
                                 <div class="card">
-                                    <div class="card-header header_bg">
+                                    <div class="card-header background-panel">
                                         <strong><label for="business">Business Info</label><input type="checkbox" name="check-all" id="business" {{ @$check_all["business"] }}></strong>
                                     </div>
                                     <div class="card-body">
@@ -124,7 +123,7 @@
                             </div>
                             <div class="col-xs-6 col-sm-6 col-md-3 mb-1">
                                 <div class="card">
-                                    <div class="card-header header_bg">
+                                    <div class="card-header background-panel">
                                         <strong><label for="ticket">Ticket</label><input type="checkbox" name="check-all" id="ticket" {{ @$check_all["ticket"] }}></strong>
                                     </div>
                                     <div class="card-body">
@@ -141,7 +140,7 @@
                             </div>
                             <div class="col-xs-6 col-sm-6 col-md-3 mb-1">
                                 <div class="card">
-                                    <div class="card-header header_bg">
+                                    <div class="card-header background-panel">
                                         <strong><label for="client">Client</label><input type="checkbox" name="check-all" id="client" {{ @$check_all["client"] }}></strong>
                                     </div>
                                     <div class="card-body">
@@ -158,7 +157,7 @@
                             </div>
                             <div class="col-xs-6 col-sm-6 col-md-3 mb-1">
                                 <div class="card">
-                                    <div class="card-header header_bg">
+                                    <div class="card-header background-panel">
                                         <strong><label for="company--">Company</label><input type="checkbox" name="check-all" id="company--" {{ @$check_all["company"] }}></strong>
                                     </div>
                                     <div class="card-body">
@@ -175,7 +174,7 @@
                             </div>
                             <div class="col-xs-6 col-sm-6 col-md-3 mb-1">
                                 <div class="card">
-                                    <div class="card-header header_bg">
+                                    <div class="card-header background-panel">
                                         <strong><label for="user">User</label><input type="checkbox" name="check-all" id="user" {{ @$check_all["user"] }}></strong>
                                     </div>
                                     <div class="card-body">
@@ -192,7 +191,7 @@
                             </div>
                             <div class="col-xs-6 col-sm-6 col-md-3 mb-1">
                                 <div class="card">
-                                    <div class="card-header header_bg">
+                                    <div class="card-header background-panel">
                                         <strong><label for="file">File</label><input type="checkbox" name="check-all" id="file" {{ @$check_all["file"] }}></strong>
                                     </div>
                                     <div class="card-body">
@@ -209,7 +208,7 @@
                             </div>
                             <div class="col-xs-6 col-sm-6 col-md-3 mb-1">
                                 <div class="card">
-                                    <div class="card-header header_bg">
+                                    <div class="card-header background-panel">
                                         <strong><label for="role">Role</label><input type="checkbox" name="check-all" id="role" {{ @$check_all["role"] }}></strong>
                                     </div>
                                     <div class="card-body">
@@ -226,7 +225,7 @@
                             </div>
                             <div class="col-xs-6 col-sm-6 col-md-3 mb-1">
                                 <div class="card">
-                                    <div class="card-header header_bg">
+                                    <div class="card-header background-panel">
                                         <strong><label for="team">Team</label><input type="checkbox" name="check-all" id="team" {{ @$check_all["team"] }}></strong>
                                     </div>
                                     <div class="card-body">
@@ -243,7 +242,7 @@
                             </div>
                             <div class="col-xs-6 col-sm-6 col-md-3 mb-1">
                                 <div class="card">
-                                    <div class="card-header header_bg">
+                                    <div class="card-header background-panel">
                                         <strong><label for="department">Department</label><input type="checkbox" name="check-all" id="department" {{ @$check_all["department"] }}></strong>
                                     </div>
                                     <div class="card-body">
@@ -260,7 +259,7 @@
                             </div>
                             <div class="col-xs-6 col-sm-6 col-md-3 mb-1">
                                 <div class="card">
-                                    <div class="card-header header_bg">
+                                    <div class="card-header background-panel">
                                         <strong><label for="designation">Designation</label><input type="checkbox" name="check-all" id="designation" {{ @$check_all["designation"] }}></strong>
                                     </div>
                                     <div class="card-body">
@@ -277,7 +276,7 @@
                             </div>
                             <div class="col-xs-6 col-sm-6 col-md-3 mb-1">
                                 <div class="card">
-                                    <div class="card-header header_bg">
+                                    <div class="card-header background-panel">
                                         <strong><label for="document_type">Document Type</label><input type="checkbox" name="check-all" id="document_type" {{ @$check_all["document_type"] }}></strong>
                                     </div>
                                     <div class="card-body">
@@ -294,7 +293,7 @@
                             </div>
                             <div class="col-xs-6 col-sm-6 col-md-3 mb-1">
                                 <div class="card">
-                                    <div class="card-header header_bg">
+                                    <div class="card-header background-panel">
                                         <strong><label for="status">Status</label><input type="checkbox" name="check-all" id="status" {{ @$check_all["status"] }}></strong>
                                     </div>
                                     <div class="card-body">
@@ -311,7 +310,7 @@
                             </div>
                             <div class="col-xs-6 col-sm-6 col-md-3 mb-1">
                                 <div class="card">
-                                    <div class="card-header header_bg">
+                                    <div class="card-header background-panel">
                                         <strong><label for="practice">Practice</label><input type="checkbox" name="check-all" id="practice" {{ @$check_all["practice"] }}></strong>
                                     </div>
                                     <div class="card-body">
@@ -328,7 +327,7 @@
                             </div>
                             <div class="col-xs-6 col-sm-6 col-md-3 mb-1">
                                 <div class="card">
-                                    <div class="card-header header_bg">
+                                    <div class="card-header background-panel">
                                         <strong><label for="reports">Reports</label><input type="checkbox" name="check-all" id="reports" {{ @$check_all["reports"] }}></strong>
                                     </div>
                                     <div class="card-body">
@@ -345,7 +344,7 @@
                             </div>
                             <div class="col-xs-6 col-sm-6 col-md-3 mb-1">
                                 <div class="card">
-                                    <div class="card-header header_bg">
+                                    <div class="card-header background-panel">
                                         <strong><label for="notification">Notification</label><input type="checkbox" name="check-all" id="notification" {{ @$check_all["notification"] }}></strong>
                                     </div>
                                     <div class="card-body">
@@ -362,7 +361,7 @@
                             </div>
                             <div class="col-xs-6 col-sm-6 col-md-3 mb-1">
                                 <div class="card">
-                                    <div class="card-header header_bg">
+                                    <div class="card-header background-panel">
                                         <strong><label for="setting">Setting</label><input type="checkbox" name="check-all" id="setting" {{ @$check_all["setting"] }}></strong>
                                     </div>
                                     <div class="card-body">
@@ -379,7 +378,7 @@
                             </div>
                             <div class="col-xs-6 col-sm-6 col-md-3 mb-1">
                                 <div class="card">
-                                    <div class="card-header header_bg">
+                                    <div class="card-header background-panel">
                                         <strong><label for="activity">Activity</label><input type="checkbox" name="check-all" id="activity" {{ @$check_all["activity"] }}></strong>
                                     </div>
                                     <div class="card-body">
