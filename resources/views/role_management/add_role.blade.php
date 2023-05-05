@@ -63,6 +63,10 @@
         margin: 0px !important;
         padding: 0px !important;
     }
+
+    .background-panel {
+        background-color: #c0bbbb;
+    }
 </style>
 <div class="container-fluid">
     <div class="row justify-content-center">
@@ -101,8 +105,8 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col-xs-12 col-sm-12 col-md-12 text-center p-3 m-2">
-                                <strong class="p-2" style="background-color: #80d0dd !important;">Permissions:</strong>
+                            <div class="col-xs-12 col-sm-12 col-md-12 p-3 m-2">
+                                <h5 class="p-2" style="background-color: #c0bbbb !important;">Permissions:</h5>
                             </div>
                             <div class="col-xs-6 col-sm-6 col-md-3 mb-1">
                                 <div class="card">
@@ -394,7 +398,7 @@
                                 </div>
                             </div>
                             <div class="col-12">
-                                <input type="submit" value="{{ (@$role) ? 'Update' : 'Save' }}" class="btn btn-success float-right">
+                                <input type="submit" value="{{ (@$role) ? 'Update' : 'Save' }}" class="btn btn-primary float-right">
                             </div>
                         </div>
                     </div>
