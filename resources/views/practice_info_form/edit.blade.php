@@ -252,7 +252,7 @@
                     @endif
                     <div class="col-md-3 m-dynamic_add-{{$key}}">
                       <div class="mb-3">
-                        <label for="mailing_address-{{$key}}" class="form-label">Physical Address</label>
+                        <label for="mailing_address-{{$key}}" class="form-label">Mailing Address</label>
                         <input type="text" class="form-control" id="mailing_address-{{$key}}" name="mailing_address[]" value="{{ is_array(old('mailing_address')) ? old('mailing_address')[$key] : $value->address }}">
                       </div>
                     </div>
@@ -317,7 +317,7 @@
                     @endif
                     <div class="col-md-3 la-dynamic_add-{{$key}}">
                       <div class="mb-3">
-                        <label for="location_address-{{$key}}" class="form-label">Physical Address</label>
+                        <label for="location_address-{{$key}}" class="form-label">Service Location</label>
                         <input type="text" class="form-control" id="location_address-{{$key}}" name="location_address[]" value="{{ is_array(old('location_address')) ? old('location_address')[$key] : $value->address }}">
                       </div>
                     </div>
