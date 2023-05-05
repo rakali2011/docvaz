@@ -214,6 +214,7 @@
       </li>
     </ul>
     @endcan
+    @can('view audit system log')
     <ul class="navbar-nav flex-fill w-100 mb-2">
       <li class="nav-item dropdown">
         <a href="#report-management-sub" id="report-management" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link menu">
@@ -221,15 +222,14 @@
           <span class="ml-3 item-text">Reports</span>
         </a>
         <ul class="collapse list-unstyled pl-4 w-100" id="report-management-sub">
-          @can('view audit system log')
           <li class="nav-item">
             <a class="nav-link pl-3 sub-menu" id="audits" href="{{ route('audits') }}"><span class="ml-1 item-text">Activity Log</span>
             </a>
           </li>
-          @endcan
         </ul>
       </li>
     </ul>
+    @endcan
     @endrole
   </nav>
 </aside>
