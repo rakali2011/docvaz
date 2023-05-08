@@ -214,6 +214,18 @@ function get_assigned_practices()
     $practices = Auth::user()->assigned_practices()->pluck("id");
     return $practices;
 }
+function get_assigned_practices_users()
+{
+    $user_ids = [];
+    $practices = Auth::user()->assigned_practices();
+    foreach ($practices as $key => $practice) {
+        $assigned_users = json_decode(json_encode($practice->assigned_users()->pluck("id")), true);
+        $user_ids = array_merge($user_ids, $assigned_users);
+    }
+    $user_ids = array_unique($user_ids);
+    sort($user_ids);
+    return $user_ids;
+}
 function get_assigned_teams_user_ids($team_id = NULL)
 {
     $user_ids = [];

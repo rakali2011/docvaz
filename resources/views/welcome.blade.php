@@ -92,6 +92,12 @@
     main.main-content {
         background: #eef1f9 !important;
     }
+
+    .statistics-item {
+        background-color: #dcdcdc;
+        padding: 15px;
+        border-radius: 5px;
+    }
 </style>
 {{-- <h3>Dashboard</h3>--}}
 <div class="container-fluid">
@@ -121,10 +127,10 @@
                 <h4>Document Portal</h4>
             </div>
             <div class="row mb-2-p-0">
-                <div class="{{ Auth::user()->type != 3 ? 'col-lg-12 col-md-12' : 'col-lg-6 col-md-6' }}">
+                <div class="{{ Auth::user()->type != 3 ? 'col-lg-12 col-md-12' : 'col-lg-8 col-md-8' }}">
                     <div class="card shadow mb-3" style="background:aliceblue;">
                         <div class="card-header shadow text-center">
-                            <h5>Documents</h5>
+                            <h5>Document</h5>
                         </div>
                         <div class="card-body shadow p-4 card_menu">
                             <div class="row">
@@ -136,7 +142,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-6 col-md-6">
+                <div class="col-lg-4 col-md-4">
                     <div class="card shadow" style="background:aliceblue;">
                         <div class="card-header shadow text-center">
                             <h5>Document Status</h5>
@@ -149,7 +155,7 @@
                     </div>
                 </div>
                 @if(Auth::user()->type != 3)
-                <div class="col-lg-6 col-md-6">
+                <div class="col-lg-8 col-md-8">
                     <div class="card shadow mb-3" style="background:aliceblue;">
                         <div class="card-header shadow text-center">
                             <h5>Users</h5>
@@ -162,9 +168,11 @@
                                     @endforeach
                                 </div>
                                 <div class="col-8">
-                                    @foreach($designations as $key => $designation)
-                                    <div class="box p-2 m-2 user" data-status="" data-designation="{{ $designation->id }}" style="background-color: #b1cfffd9">{{ $designation->name }}<span class="float-right">{{ $designation->users_count }}</span></div>
-                                    @endforeach
+                                    <div class="row">
+                                        @foreach($designations as $key => $designation)
+                                        <div class=" box p-2 m-2 user" data-status="" data-designation="{{ $designation->id }}" style="background-color: #b1cfffd9">{{ $designation->name }}<span class="float-right ml-2">{{ $designation->users_count }}</span></div>
+                                        @endforeach
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -184,11 +192,8 @@
                             <div class="d-flex flex-column flex-md-row align-items-center justify-content-between">
                                 @foreach($tickets_by_status as $key => $ticket)
                                 <div class="statistics-item">
-                                    <p>
-                                        <!-- <img src="{{asset('assets/assets/images/open.svg') }}" class="f-right"> -->
-                                        {{ $ticket->name }}
-                                    </p>
-                                    <h5>{{ $ticket->tickets_count }}</h5>
+                                    <h5>{{ $ticket->name }}</h5>
+                                    <p class="mb-0">{{ $ticket->tickets_count }}</p>
                                 </div>
                                 @endforeach
                             </div>
@@ -261,7 +266,7 @@
                 <div class="col-md-12 col-lg-12 mb-3">
                     <div class="card shadow">
                         <div class="card-header shadow">
-                            <h5 class="text-center">Ticket Send to / Received From</h5>
+                            <h5 class="text-center">Department Tickets</h5>
                         </div>
                         <div class="card-body shadow card_menu">
                             <div class="row">
@@ -269,8 +274,8 @@
                                 <div class="col-lg-2 col-md-2 col-sm-12 box pt-3 m-2" style="background-color:#dcdcdc;">
                                     <h6 class="text-center">{{ $department->name }}</h6>
                                     <hr class="m-1">
-                                    <p>{{ Auth::user()->type==3 ? 'My' : 'Client' }}<b class="float-right">{{ $department->client }}</b></p>
-                                    <p>{{ $departments->company_name }}<b class="float-right">{{ $department->company }}</b></p>
+                                    <p class="mb-0">{{ Auth::user()->type==3 ? 'My' : 'Client' }}<b class="float-right">{{ $department->client }}</b></p>
+                                    <p class="mb-2">{{ $departments->company_name }}<b class="float-right">{{ $department->company }}</b></p>
                                 </div>
                                 @endforeach
                             </div>

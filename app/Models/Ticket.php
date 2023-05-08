@@ -80,14 +80,18 @@ class Ticket extends Model implements Auditable
     public function countTotalTickets()
     {
         $query = $this;
-        $query = $this->where('user_id', '=', auth()->user()->id);
+        $practice_ids = get_assigned_practices();
+        $department_ids = departments()->pluck("id");
+        $query = $this->whereIn('target_id', $practice_ids)->WhereIn('department_id', $department_ids);
         return $query->count();
     }
     public function countFilteredTickets($date_range, $filter, $search)
     {
 
         $query = $this;
-        $query = $this->where('user_id', '=', auth()->user()->id);
+        $practice_ids = get_assigned_practices();
+        $department_ids = departments()->pluck("id");
+        $query = $this->whereIn('target_id', $practice_ids)->WhereIn('department_id', $department_ids);
         if (!empty($filter["team_id"]))
             $query = $query->where('team_id', $filter['team_id']);
         if (!empty($filter["target_id"]))
@@ -123,7 +127,9 @@ class Ticket extends Model implements Auditable
     public function allTickets($date_range, $filter, $search, $start, $limit, $order, $dir)
     {
         $query = $this;
-        $query = $this->where('user_id', '=', auth()->user()->id);
+        $practice_ids = get_assigned_practices();
+        $department_ids = departments()->pluck("id");
+        $query = $this->whereIn('target_id', $practice_ids)->WhereIn('department_id', $department_ids);
         if (!empty($filter["team_id"]))
             $query = $query->where('team_id', $filter['team_id']);
         if (!empty($filter["target_id"]))
