@@ -130,7 +130,7 @@
                 <div class="{{ Auth::user()->type != 3 ? 'col-lg-12 col-md-12' : 'col-lg-8 col-md-8' }}">
                     <div class="card shadow mb-3" style="background:aliceblue;">
                         <div class="card-header shadow text-center">
-                            <h5>Document</h5>
+                            <h5>Document ({{ $documents->total }})</h5>
                         </div>
                         <div class="card-body shadow p-4 card_menu">
                             <div class="row">
@@ -158,7 +158,7 @@
                 <div class="col-lg-8 col-md-8">
                     <div class="card shadow mb-3" style="background:aliceblue;">
                         <div class="card-header shadow text-center">
-                            <h5>Users</h5>
+                            <h5>Users ({{ $total_users; }})</h5>
                         </div>
                         <div class="card-body shadow p-4 card_menu">
                             <div class="row">

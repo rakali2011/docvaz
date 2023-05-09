@@ -247,7 +247,7 @@ class TicketController extends Controller
                 $edit = '';
                 $delete = '';
                 if (auth()->user()->can('update ticket') && count($ticket->replies) == 0)
-                    $edit = '<a class="dropdown-item" href="' . route('tickets.edit', $ticket->id) . '">Edit</a>';
+                    $edit = '<a class="dropdown-item ticket-edit" data-id="' . $ticket->id . '" href="javascript:void(0)">Edit</a>';
                 if (auth()->user()->can('delete ticket')) {
                     $delete = '<form method="POST" action="' . route('tickets.destroy', $ticket->id) . '" accept-charset="UTF-8" style="display:inline"><input name="_method" type="hidden" value="DELETE"><input name="_token" type="hidden" value="' . csrf_token() . '"><input class="dropdown-item" type="submit" value="Delete"></form>';
                 }
@@ -264,8 +264,7 @@ class TicketController extends Controller
                 $nestedData['creator'] = $ticket->creator;
                 $nestedData['creator_name'] = $ticket->user_id;
                 $nestedData['practice_name'] = $name;
-                $nestedData['department_name'] = $ticket->department_id;
-                $nestedData['team_name'] = $ticket->team_id;
+                $nestedData['department_name'] = Department::findorfail($ticket->department_id)->name;
                 $nestedData['subject'] = $ticket->subject;
                 $nestedData['priority'] = '<span class="' . strtolower($ticket->priority) . '">' . $ticket->priority . '</span>';
                 $nestedData['status'] = $ticket->status;
@@ -289,6 +288,7 @@ class TicketController extends Controller
             $id = $request->id;
             $ticket = Ticket::find($id);
             $ticket = $ticket->load("attachments")->load("ccs")->load("replies");
+            $ticket->department_name = Department::findorfail($ticket->department_id)->name;
             if ($ticket->is_external)
                 $ticket->target_name = Practice::findorfail($ticket->target_id)->name;
             else
@@ -311,6 +311,21 @@ class TicketController extends Controller
             else
                 $ticket->flag = 1;
             $ticket->save();
+            $response['success'] = 1;
+        } catch (\Throwable $th) {
+            $response['success'] = 0;
+            $response['message'] = "Something Went Wrong Try Again";
+        }
+        return response()->json($response);
+    }
+    public function updateTicket(Request $request)
+    {
+        $response = array();
+        try {
+            $ticket = Ticket::find($request->update_ticket_id);
+            $ticket->message = $request->message;
+            $ticket->update();
+            $response['data'] = $ticket;
             $response['success'] = 1;
         } catch (\Throwable $th) {
             $response['success'] = 0;

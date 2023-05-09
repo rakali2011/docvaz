@@ -67,6 +67,51 @@
   .uppy-Dashboard-Item-previewIconWrap {
     height: 30px;
   }
+
+  #priority {
+    text-align: center;
+    padding-bottom: 3px;
+  }
+
+  #message-container {
+    background-color: #e9ecef;
+    overflow-y: scroll;
+    min-height: 250px;
+    max-height: 250px;
+    padding: 15px;
+  }
+
+  .reply {
+    padding-top: 15px;
+  }
+
+  .reply .col-md-8 {
+    overflow-wrap: break-word;
+    margin-bottom: 12px
+  }
+
+  strong.text-main {
+    padding: 10px;
+    color: white;
+    background-color: #177dcb;
+  }
+
+  .icon {
+    margin-right: 8px;
+    width: 25px;
+    border-radius: 20px;
+    margin-bottom: -1px;
+  }
+
+  .reply .col-md-8 span {
+    color: darkgray;
+    margin-left: 10px;
+    font-size: 12px;
+  }
+
+  .reply-container {
+    margin-top: 15px;
+  }
 </style>
 <div class="container-fluid">
   <div class="row justify-content-center">
@@ -83,15 +128,6 @@
               <div class="card mb-3">
                 <div class="card-body shadow background-panel">
                   <form action="" id="filter-form" class="row">
-                    <div class="form-group col-md-2">
-                      <label for="team"></label>
-                      <select name="team" id="team" class="form-control">
-                        <option value="">Select Team</option>
-                        @foreach ($teams as $key=> $team)
-                        <option value="{{ $team->id }}">{{ $team->name }}</option>
-                        @endforeach
-                      </select>
-                    </div>
                     <div class="form-group col-md-2">
                       <label for="practice"></label>
                       <select name="practice" id="practice" class="form-control">
@@ -165,7 +201,6 @@
                     <th>User Name</th>
                     <th>To</th>
                     <th>Department</th>
-                    <th>Team</th>
                     <th>Subject</th>
                     <th>Priority</th>
                     <th>Status</th>
@@ -182,7 +217,6 @@
                     <th>User Name</th>
                     <th>To</th>
                     <th>Department</th>
-                    <th>Team</th>
                     <th>Subject</th>
                     <th>Priority</th>
                     <th>Status</th>
@@ -274,66 +308,21 @@
                   @endforeach
                 </select>
               </div>
-              <style>
-                #priority {
-                  text-align: center;
-                  padding-bottom: 3px;
-                }
-
-                #message-container {
-                  background-color: #e9ecef;
-                  overflow-y: scroll;
-                  min-height: 250px;
-                  max-height: 250px;
-                  padding: 15px;
-                }
-
-                .reply {
-                  padding-top: 15px;
-                }
-
-                .reply .col-md-8 {
-                  overflow-wrap: break-word;
-                  margin-bottom: 12px
-                }
-
-                strong.text-main {
-                  padding: 10px;
-                  color: white;
-                  background-color: #177dcb;
-                }
-
-                .icon {
-                  margin-right: 8px;
-                  width: 25px;
-                  border-radius: 20px;
-                  margin-bottom: -1px;
-                }
-
-                .reply .col-md-8 span {
-                  color: darkgray;
-                  margin-left: 10px;
-                  font-size: 12px;
-                }
-
-                .reply-container {
-                  margin-top: 15px;
-                }
-              </style>
               <div class="form-group col-md-12">
                 <label id="remarks">Ticket Forward Remarks</label>
                 <textarea name="remarks" id="remarks" class="form-control"></textarea>
               </div>
-              <div class="form-group col-md-12">
+              <div class="form-group col-md-6">
                 <label>Message</label>
                 <i class="fa fa-flag grey" id="important" data-id="0" style="cursor:pointer;font-size:16px;margin-left:10px;" onclick="flag(this);"></i>
                 <div id="message-container">
                   <div id="ticket-message"></div>
                   <p id="ticket-date"></p>
+                  <p id="ticket-attachments"></p>
                   <div id="ticket-replies"></div>
                 </div>
               </div>
-              <div class="col-md-12">
+              <div class="col-md-6">
                 <label for="">Attachments</label>
                 <div class="form-group mb-3">
                   <div id="uppy"></div>
@@ -343,6 +332,44 @@
                 <div class="form-group mb-3">
                   <label for="message">Message</label>
                   <textarea name="message" id="message" class="form-control @error('message') is-invalid @enderror" rows="10" required="required">{{ old('message') }}</textarea>
+                  @error('message')
+                  <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                  </span>
+                  @enderror
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn mb-2 btn-secondary" data-dismiss="modal">Close</button>
+          <input type="submit" class="btn mb-2 btn-primary">
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="ticket-update-modal" tabindex="-1" role="dialog" aria-labelledby="verticalModalTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <form action="{{ route('update_ticket') }}" method="POST" id="ticket-update-form" enctype="multipart/form-data">
+        @csrf
+        <div class="modal-header">
+          <h6 class="modal-title mr-3"></h6>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group col-12" id="ticket-replies-body">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group mb-3">
+                  <label for="update_ticket_message">Message</label>
+                  <input type="hidden" name="update_ticket_id" id="update-ticket-id">
+                  <textarea name="update_ticket_message" id="update_ticket_message" class="form-control" rows="10" required="required">{{ old('message') }}</textarea>
                   @error('message')
                   <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
@@ -376,6 +403,9 @@
   $(document).ready(function() {
     refer_to();
     $('#tickets-table').DataTable({
+      order: [
+        [0, 'desc']
+      ],
       "processing": true,
       "serverSide": true,
       "ajax": {
@@ -439,10 +469,6 @@
         },
         {
           "data": "department_name",
-          "orderable": true
-        },
-        {
-          "data": "team_name",
           "orderable": true
         },
         {
@@ -526,10 +552,20 @@
           $('#subject').val(response.content.subject);
           $('#ticket-message').html(response.content.message);
           $('#ticket-date').html(response.content.created_at);
+          attachments = '';
+          $.each(response.content.attachments, function(index, attachment) {
+            if (attachment.ticket_id == response.content.id && attachment.type == 0 && attachment.reply_id == 0) {
+              var id = attachment.id;
+              var url = "{{ route('ticket_attachments.show', ':id') }}";
+              url = url.replace(':id', id);
+              attachments += '<a href="' + url + '" target="_blank" rel="noopener noreferrer" class="mr-2">' + attachment.org_name + '</a>';
+            }
+          });
+          $('#ticket-attachments').html(attachments);
           $("select#status option:contains('" + response.content.status + "')").attr("selected", "selected");
           $('#priority-- option[value="' + response.content.priority + '"]').attr("selected", "selected");
           $('#refer_to option[value="' + response.content.department_id + '"]').remove();
-          var replies = '';
+          var replies = '<div class="row" style="background:#fff;padding-top:25px;"></div>';
           $.each(response.content.replies, function(key, value) {
             color = key % 2 == 0 ? '#fffaf0' : '#e9ecef';
             if (value.is_refered)
@@ -567,6 +603,25 @@
     });
     $('#ticket-replies-modal').modal('show');
   });
+  $(document).on('click', '.ticket-edit', function() {
+    id = $(this).data('id');
+    $.ajax({
+      type: "post",
+      data: {
+        id: id,
+        _token: '{{ csrf_token() }}'
+      },
+      url: "{{ route('get_ticket') }}",
+      success: function(response) {
+        console.log(response);
+        $('#update_ticket_message').val(response.content.message);
+        $('#update-ticket-id').val(response.content.id);
+        CKEDITOR.replace('update_ticket_message');
+      }
+    });
+    $('#ticket-update-modal').modal('show');
+  });
+
   CKEDITOR.replace('message');
   var uptarg = document.getElementById('uppy');
   const uppy = Uppy.Core({
@@ -626,6 +681,47 @@
       })
       .catch(error => console.error("There was a problem with the fetch operation:", error));
   });
+
+
+  var form = document.getElementById('ticket-update-form');
+  form.addEventListener('submit', event => {
+    event.preventDefault();
+    let formData = new FormData(form);
+    var data = CKEDITOR.instances.update_ticket_message.getData();
+    formData.append('message', data);
+    fetch(form.action, {
+        method: "POST",
+        body: formData
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then(data => {
+        if (data.success == 1) {
+          $('#ticket-update-modal').modal('hide');
+          $('#ticket-update-form')[0].reset();
+          CKEDITOR.instances.message.setData('');
+          ref = "";
+          // Swal.fire({
+          //   icon: 'success',
+          //   text: data.message,
+          // });
+          $('#tickets-table').DataTable().ajax.reload(null, false);
+        } else {
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: data.message,
+          });
+        }
+      })
+      .catch(error => console.error("There was a problem with the fetch operation:", error));
+  });
+
+
 
   function flag(element) {
     id = $(element).data('id');

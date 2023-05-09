@@ -117,6 +117,7 @@ Route::post('/get-teams', [TeamController::class, 'get_teams'])->middleware('per
 Route::post('/update-team-users', [TeamController::class, 'update_team_users'])->middleware('permission:assign team user')->name('update_team_users');
 // Tickets
 Route::resource('tickets', TicketController::class);
+Route::post('/update-ticket', [TicketController::class, 'updateTicket'])->middleware('permission:update ticket')->name('update_ticket');
 Route::post('/all-tickets', [TicketController::class, 'allTickets'])->middleware('permission:view ticket')->name('all_tickets');
 Route::post('/get-ticket', [TicketController::class, 'getTicket'])->middleware('permission:view ticket')->name('get_ticket');
 Route::post('/get-flag', [TicketController::class, 'ticketFlag'])->middleware('permission:view ticket')->name('ticket_flag');

@@ -50,9 +50,12 @@ class HomeController extends Controller
             $user_ids = get_users(2);
             $user_ids = count($user_ids) ? $user_ids->pluck('id') : $user_ids;
             $statuses = NULL;
+            $total_users = 0;
             $statuses = statuses("user");
-            foreach ($statuses as $key => $status)
+            foreach ($statuses as $key => $status) {
                 $status->users_count =  $status->users()->whereIn('users.id', $user_ids)->count();
+                $total_users += $status->users_count;
+            }
             $users = $statuses;
             // Users by Designations
             $designations = designations();
@@ -76,7 +79,7 @@ class HomeController extends Controller
                 $department->company =  $department->tickets()->where('company_id', Auth::user()->company_id)->where('creator', Auth::user()->company->name)->whereIn('tickets.department_id', $departments_ids)->whereIn('tickets.target_id', $practices_ids)->count();
             }
             $departments->company_name = Auth::user()->company->name;
-            return view('welcome', compact('data', 'documents', 'designations', 'users', 'tickets_by_status', 'ticket_chart', 'tickets_by_priority', 'departments'));
+            return view('welcome', compact('data', 'documents', 'designations', 'users', 'total_users', 'tickets_by_status', 'ticket_chart', 'tickets_by_priority', 'departments'));
         }
     }
     public function files()
