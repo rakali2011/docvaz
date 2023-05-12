@@ -76,9 +76,13 @@
   #message-container {
     background-color: #e9ecef;
     overflow-y: scroll;
-    min-height: 250px;
-    max-height: 250px;
+    height: 250px;
+    margin: 0 auto;
     padding: 15px;
+  }
+
+  .content {
+    height: 400px;
   }
 
   .reply {
@@ -316,10 +320,12 @@
                 <label>Message</label>
                 <i class="fa fa-flag grey" id="important" data-id="0" style="cursor:pointer;font-size:16px;margin-left:10px;" onclick="flag(this);"></i>
                 <div id="message-container">
-                  <div id="ticket-message"></div>
-                  <p id="ticket-date"></p>
-                  <p id="ticket-attachments"></p>
-                  <div id="ticket-replies"></div>
+                  <div class="content">
+                    <div id="ticket-message"></div>
+                    <p id="ticket-date"></p>
+                    <p id="ticket-attachments"></p>
+                    <div id="ticket-replies"></div>
+                  </div>
                 </div>
               </div>
               <div class="col-md-6">
@@ -602,7 +608,20 @@
       }
     });
     $('#ticket-replies-modal').modal('show');
+    scrollToBottom();
   });
+  const scrollToBottom = () => {
+    // get the div element by its id
+    const div = document.getElementById("message-container");
+    // smooth scroll to the bottom of the div
+    div.scrollTo({
+      top: div.scrollHeight,
+      behavior: 'smooth'
+    });
+
+  }
+
+
   $(document).on('click', '.ticket-edit', function() {
     id = $(this).data('id');
     $.ajax({
@@ -671,6 +690,7 @@
           //   text: data.message,
           // });
           $('#tickets-table').DataTable().ajax.reload(null, false);
+          uppy.reset();
         } else {
           Swal.fire({
             icon: 'error',
@@ -683,13 +703,13 @@
   });
 
 
-  var form = document.getElementById('ticket-update-form');
-  form.addEventListener('submit', event => {
+  var form1 = document.getElementById('ticket-update-form');
+  form1.addEventListener('submit', event => {
     event.preventDefault();
-    let formData = new FormData(form);
+    let formData = new FormData(form1);
     var data = CKEDITOR.instances.update_ticket_message.getData();
     formData.append('message', data);
-    fetch(form.action, {
+    fetch(form1.action, {
         method: "POST",
         body: formData
       })
