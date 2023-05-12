@@ -125,6 +125,16 @@
     margin-right: 5px;
   }
 </style>
+<style>
+  .uppy-size--md .uppy-Dashboard-Item {
+    width: unset;
+  }
+
+  .uppy-size--md .uppy-Dashboard-Item-preview {
+    width: 60px;
+    height: 60px;
+  }
+</style>
 <div class="container-fluid">
   <div class="row justify-content-center">
     <div class="col-12">
