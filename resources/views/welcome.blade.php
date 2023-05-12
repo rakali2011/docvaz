@@ -650,7 +650,6 @@
         $('#user-listing').modal('show');
     });
     // Document Statistics
-    console.log(chartColors);
     var donutchart,
         donutChartOptions = {
             series: <?= json_encode($documents->count); ?>,

@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Controllers\AuditController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuditController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\DepartmentController;

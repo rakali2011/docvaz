@@ -116,6 +116,14 @@
   .reply-container {
     margin-top: 15px;
   }
+
+  .attachment-box {
+    background-color: #d4cec1d4;
+    padding: 5px 10px;
+    border-radius: 5px;
+    text-align: center;
+    margin-right: 5px;
+  }
 </style>
 <div class="container-fluid">
   <div class="row justify-content-center">
@@ -564,7 +572,7 @@
               var id = attachment.id;
               var url = "{{ route('ticket_attachments.show', ':id') }}";
               url = url.replace(':id', id);
-              attachments += '<a href="' + url + '" target="_blank" rel="noopener noreferrer" class="mr-2">' + attachment.org_name + '</a>';
+              attachments += '<span class="attachment-box"><a href="' + url + '" target="_blank" rel="noopener noreferrer">' + attachment.org_name + '</a></span>';
             }
           });
           $('#ticket-attachments').html(attachments);
