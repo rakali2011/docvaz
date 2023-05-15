@@ -73,9 +73,9 @@
                         <div class="tab">
                             @foreach(companies() as $key => $company)
                             @if($key==0)
-                            <button type="button" class="tablinks active" onclick="openCity(event, '{{ $company->prefix }}')" data-id="{{ $company->id }}">{{ $company->name }}</button>
+                            <button type="button" class="tablinks active" onclick="openCity(event, '{{ $company->prefix }}')" data-id="{{ $company->id }}" data-status="false">{{ $company->name }}</button>
                             @else
-                            <button type="button" class="tablinks" onclick="openCity(event, '{{ $company->prefix }}')" data-id="{{ $company->id }}">{{ $company->name }}</button>
+                            <button type="button" class="tablinks" onclick="openCity(event, '{{ $company->prefix }}')" data-id="{{ $company->id }}" data-status="false">{{ $company->name }}</button>
                             @endif
                             @endforeach
                         </div>

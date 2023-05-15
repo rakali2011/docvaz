@@ -40,27 +40,45 @@
       </li>
     </ul>
     @role('dev')
-    <p class="text-muted nav-heading mt-4 mb-1" style="text-align: center;width: 100%;">
     <ul class="navbar-nav flex-fill w-100 mb-2">
-      <li class="nav-item dropdown">
-        <a href="#ui" id="dev-tools" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link menu">
-          <i class="fe fe-box fe-16"></i>
-          <span class="ml-3 item-text">Dev Management</span>
+      <li class="nav-item w-100">
+        <a class="nav-link" id="companies" href="{{ route('companies') }}">
+          <i class="fe fe-home fe-16"></i>
+          <span class="ml-3 item-text">Companies</span>
         </a>
-        <ul class="collapse list-unstyled pl-4 w-100" id="ui">
-          <li class="nav-item">
-            <a class="nav-link pl-3 sub-menu" id="companies" href="{{ route('companies') }}"><span class="ml-1 item-text">Companies</span>
-            </a>
-            <a class="nav-link pl-3 sub-menu" id="superadmins" href="{{ route('superadmins') }}"><span class="ml-1 item-text">Admin Accounts</span>
-            </a>
-            <a class="nav-link pl-3 sub-menu" id="permissions" href="{{ route('permissions') }}"><span class="ml-1 item-text">Permissions</span>
-            </a>
-          </li>
-        </ul>
+      </li>
+      <li class="nav-item w-100">
+        <a class="nav-link" id="superadmins" href="{{ route('superadmins') }}">
+          <i class="fe fe-home fe-16"></i>
+          <span class="ml-3 item-text">Admin Accounts</span>
+        </a>
+      </li>
+      <li class="nav-item w-100">
+        <a class="nav-link" id="permissions" href="{{ route('permissions') }}">
+          <i class="fe fe-home fe-16"></i>
+          <span class="ml-3 item-text">Permissions</span>
+        </a>
+      </li>
+      <li class="nav-item w-100">
+        <a class="nav-link" id="roles" href="{{ route('roles') }}">
+          <i class="fe fe-activity fe-16"></i>
+          <span class="ml-3 item-text">Roles</span>
+        </a>
+      </li>
+      <li class="nav-item w-100">
+        <a class="nav-link" id="users" href="{{ route('users') }}">
+          <i class="fe fe-user fe-16"></i>
+          <span class="ml-3 item-text">Users</span>
+        </a>
+      </li>
+      <li class="nav-item w-100">
+        <a class="nav-link" id="clients" href="{{ route('clients') }}">
+          <i class="fe fe-user-check fe-16"></i>
+          <span class="ml-3 item-text">Clients</span>
+        </a>
       </li>
     </ul>
-    </p>
-    @endrole
+    @else
     @can('view role')
     <ul class="navbar-nav flex-fill w-100 mb-2">
       <li class="nav-item dropdown">
@@ -122,8 +140,6 @@
       </li>
     </ul>
     @endcan
-    @role('dev')
-    @else
     @canany(['view team','view department','view designation','view document type','view status'])
     <ul class="navbar-nav flex-fill w-100 mb-2">
       <li class="nav-item dropdown">

@@ -75,8 +75,13 @@
 
   #message-container {
     background-color: #e9ecef;
+    padding: 15px;
+  }
+
+  #reply-container {
+    background-color: #e9ecef;
     overflow-y: scroll;
-    height: 250px;
+    height: 200px;
     margin: 0 auto;
     padding: 15px;
   }
@@ -338,10 +343,12 @@
                 <label>Message</label>
                 <i class="fa fa-flag grey" id="important" data-id="0" style="cursor:pointer;font-size:16px;margin-left:10px;" onclick="flag(this);"></i>
                 <div id="message-container">
+                  <div id="ticket-message"></div>
+                  <p id="ticket-date"></p>
+                  <p id="ticket-attachments"></p>
+                </div>
+                <div id="reply-container">
                   <div class="content">
-                    <div id="ticket-message"></div>
-                    <p id="ticket-date"></p>
-                    <p id="ticket-attachments"></p>
                     <div id="ticket-replies"></div>
                   </div>
                 </div>
@@ -485,15 +492,15 @@
         },
         {
           "data": "creator_name",
-          "orderable": true
+          "orderable": false
         },
         {
           "data": "practice_name",
-          "orderable": true
+          "orderable": false
         },
         {
           "data": "department_name",
-          "orderable": true
+          "orderable": false
         },
         {
           "data": "subject",
@@ -630,7 +637,7 @@
   });
   const scrollToBottom = () => {
     // get the div element by its id
-    const div = document.getElementById("message-container");
+    const div = document.getElementById("reply-container");
     // smooth scroll to the bottom of the div
     div.scrollTo({
       top: div.scrollHeight,

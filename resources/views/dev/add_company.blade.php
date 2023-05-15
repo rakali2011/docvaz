@@ -16,7 +16,7 @@
                 <div class="col-md-6">
                   <div class="form-group mb-3">
                     <label for="name">Name</label>
-                    <input name="name" value="{{ (@$company)?@$company->name:old('name') }}" required type="text" id="name" class="form-control @error('name') is-invalid @enderror">
+                    <input type="text" name="name" id="name" value="{{ old('name', @$company->name) }}" class="form-control @error('name') is-invalid @enderror">
                     @error('name')
                     <span class="invalid-feedback" role="alert">
                       <strong>{{ $message }}</strong>
@@ -27,7 +27,7 @@
                 <div class="col-md-6">
                   <div class="form-group mb-3">
                     <label for="prefix">Prefix</label>
-                    <input name="prefix" value="{{ (@$company)?@$company->prefix:old('prefix') }}" required type="text" id="prefix" class="form-control @error('prefix') is-invalid @enderror">
+                    <input type="text" name="prefix" id="prefix" value="{{ old('prefix', @$company->prefix) }}" class="form-control @error('prefix') is-invalid @enderror">
                     @error('prefix')
                     <span class="invalid-feedback" role="alert">
                       <strong>{{ $message }}</strong>
@@ -35,20 +35,14 @@
                     @enderror
                   </div>
                 </div>
-
-
-
-
                 <div class="col-12">
                   <input type="submit" value="{{ (@$company)?'Update':'Save' }}" class="btn btn-success float-right">
                 </div>
               </div>
             </div>
           </form>
-      </div> <!-- / .card -->
-
-    </div> <!-- .col-12 -->
-  </div> <!-- .row -->
+      </div>
+    </div>
+  </div>
 </div>
-
 @endsection

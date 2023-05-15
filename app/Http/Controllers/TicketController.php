@@ -213,7 +213,7 @@ class TicketController extends Controller
     }
     public function allTickets(Request $request)
     {
-        $columns = ['id', 'response_at', 'created_at', 'creator', 'creator_name', 'practice_name', 'department_name', 'team_name', 'subject', 'priority', 'status', 'remarks'];
+        $columns = ['id', 'response_at', 'created_at', 'creator', 'user_id', 'practice_name', 'department_name', 'subject', 'priority', 'status', 'remarks'];
         $date_range = [
             "date_from" => $request->input('date_from_filter') != "" ? date("Y-m-d", strtotime($request->input('date_from_filter'))) . ' 00:00:00' : $request->input('date_from_filter'),
             "date_to" => $request->input('date_to_filter') != "" ? date("Y-m-d", strtotime($request->input('date_to_filter'))) . ' 23:59:59' : date("Y-m-d H:i:s")

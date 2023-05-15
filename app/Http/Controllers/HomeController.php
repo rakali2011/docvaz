@@ -33,14 +33,14 @@ class HomeController extends Controller
         $data['menu'] = 'dashboard';
         $data['sub_menu'] = 'dashboard';
         if (auth()->user()->hasRole('dev')) {
-            $companies = companies();
-            foreach ($companies as $key => $cpmpany) {
-                $cpmpany->pracrices = Practice::where('company_id', $cpmpany->id)->count();
-                $cpmpany->tickets = Ticket::where('company_id', $cpmpany->id)->count();
-                $cpmpany->clients = User::where('company_id', $cpmpany->id)->where('type', 3)->count();
-                $cpmpany->users = User::where('company_id', $cpmpany->id)->where('type', 2)->count();
-            }
-            dd($companies);
+            // $companies = companies();
+            // foreach ($companies as $key => $cpmpany) {
+            //     $cpmpany->pracrices = Practice::where('company_id', $cpmpany->id)->count();
+            //     $cpmpany->tickets = Ticket::where('company_id', $cpmpany->id)->count();
+            //     $cpmpany->clients = User::where('company_id', $cpmpany->id)->where('type', 3)->count();
+            //     $cpmpany->users = User::where('company_id', $cpmpany->id)->where('type', 2)->count();
+            // }
+            // dd($companies);
             return view('welcome-dev', compact('data'));
         } else {
             // Documents

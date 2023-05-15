@@ -35,7 +35,10 @@ class SettingController extends Controller
     {
         $data['menu'] = "";
         $data['sub_menu'] = "";
-        return view('company_management.create', compact('data'));
+        $smtp = Setting::where("company_id", Auth::user()->company_id)->where('type', 'smtp')->first();
+        $wasabi = Setting::where("company_id", Auth::user()->company_id)->where('type', 'wasabi')->first();
+        $ticket = Setting::where("company_id", Auth::user()->company_id)->where('type', 'ticket')->first();
+        return view('company_management.create', compact('data', 'smtp', 'wasabi', 'ticket'));
     }
 
     /**
@@ -60,6 +63,9 @@ class SettingController extends Controller
             $setting["endpoint"] = $request->endpoint;
             $setting["wkey"] = $request->wkey;
             $setting["secret_key"] = $request->secret_key;
+        } elseif ($request->type == "ticket") {
+            $setting["ticket_review"] = !empty($request->ticket_review) ? $request->ticket_review : 0;
+            $setting["ticke_approval"] = !empty($request->ticke_approval) ? $request->ticke_approval : 0;
         }
         if (Setting::where("company_id", Auth::user()->company_id)->where('type', $setting["type"])->count())
             DB::table('settings')->where("company_id", Auth::user()->company_id)->where('type', $setting["type"])->update($setting);

@@ -25,11 +25,14 @@
                   </tr>
                 </thead>
                 <tbody id="items-1">
+                  <?php $order = false; ?>
+                  @can('set order designation')
+                  <?php $order = true; ?>
+                  @endcan
                   @foreach ($designations as $item)
-                  <tr id="item-{{ $item->id }}" data-id="{{ $item->id }}">
-                    <td><i class="fe fe-move mr-2"></i>{{ $item->name }}</td>
-                    @role('dev')
-                    <td>{{ @$item->company->name }}</td>
+                  <tr <?= $order == true ? 'id="item-' . $item->id . '" data-id="' . $item->id . '"' : ''; ?>>
+                    <td><?= $order == true ? '<i class="fe fe-move mr-2"></i>' : ''; ?>{{ $item->name }}</td>
+                    @role(' dev') <td>{{ @$item->company->name }}</td>
                     @endrole
                     <td>
                       <button class="btn btn-sm dropdown-toggle more-horizontal" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

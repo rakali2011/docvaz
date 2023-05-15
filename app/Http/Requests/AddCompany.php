@@ -24,10 +24,10 @@ class AddCompany extends FormRequest
      */
     public function rules()
     {
-        return [
-            'name' => ['required', 'string', 'max:30'],
-            'prefix' => ['required', 'string', 'max:10'],
-            // 'logo' => ['required', 'image']
-        ];
+        // return [
+        //     'name' => ['required', 'string', 'max:30'],
+        //     'prefix' => ['required', 'string', 'max:10'],
+        //     // 'logo' => ['required', 'image']
+        // ];
     }
 }
